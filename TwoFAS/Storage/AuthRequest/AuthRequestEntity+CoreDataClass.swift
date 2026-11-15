@@ -43,9 +43,14 @@ final class AuthRequestEntity: NSManagedObject {
         extensionID: ExtensionID,
         domain: String
     ) {
-        let content = AuthRequestSensitiveContent(secret: secret.uppercased(), domain: domain)
+        let content = AuthRequestSensitiveContent(
+            secret: secret.uppercased(),
+            domain: domain,
+            extensionID: extensionID
+        )
         let secretHash: Data
         let domainHash: Data
+        let extensionIDHash: Data
         let sealed: Data
         do {
             guard let cipher = context.localStorageCipher else { throw SealedEntity.Failure.missingCipher }
@@ -53,7 +58,12 @@ final class AuthRequestEntity: NSManagedObject {
             try cipher.prepareForWriting()
             secretHash = try Self.secretHash(for: content.secret, cipher: cipher)
             domainHash = try Self.domainHash(for: content.domain, cipher: cipher)
-            sealed = try contentCodec.seal(content, hashes: [secretHash, domainHash], cipher: cipher)
+            extensionIDHash = try Self.extensionIDHash(for: content.extensionID, cipher: cipher)
+            sealed = try contentCodec.seal(
+                content,
+                hashes: [secretHash, domainHash, extensionIDHash],
+                cipher: cipher
+            )
         } catch {
             Log(
                 "\(entityName) - can't seal new entity: \(SealedEntity.describe(error))",
@@ -72,7 +82,7 @@ final class AuthRequestEntity: NSManagedObject {
         auth.domainHash = domainHash
         auth.encryptedContent = sealed
         auth.contentCache.store(content, sealed: sealed)
-        auth.extensionID = extensionID
+        auth.extensionIDHash = extensionIDHash
         auth.creationDate = date
         auth.lastUsed = date
         auth.usedCount = 1

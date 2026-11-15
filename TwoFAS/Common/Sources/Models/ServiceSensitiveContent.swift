@@ -67,3 +67,16 @@ public struct DeletedServiceSensitiveContent: Codable, Equatable {
         self.secret = secret
     }
 }
+
+/// The sealed content of a paired browser extension
+public struct PairingSensitiveContent: Codable, Equatable {
+    public var extensionID: String
+    public var name: String
+    public var publicKey: String
+
+    public init(extensionID: String, name: String, publicKey: String) {
+        self.extensionID = extensionID
+        self.name = name
+        self.publicKey = publicKey
+    }
+}

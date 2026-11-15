@@ -53,7 +53,10 @@ public final class Protection {
     
     public init(isMainApp: Bool = false) {
         localStorageCipher = Self.makeLocalStorageCipher(isMainApp: isMainApp)
-        encryptedStorage = LocalEncryptedStorage(defaults: UserDefaults(suiteName: Config.groupIdentifier)!)
+        encryptedStorage = LocalEncryptedStorage(
+            defaults: UserDefaults(suiteName: Config.groupIdentifier)!,
+            cipher: localStorageCipher
+        )
         biometricAuth = BiometricAuth(storage: encryptedStorage)
         codeStorage = CodeStorage(storage: encryptedStorage)
         tokenStorage = TokenStorage(storage: encryptedStorage)
@@ -72,6 +75,20 @@ public final class Protection {
     }
     #endif
 }
+
+#if os(iOS)
+public extension Protection {
+    /// For the main app, after the local storage key was replaced (the local data was reset): what was sealed with
+    /// the old key – the PIN, the notification token, the device ID – can't be opened any more. It's removed with
+    /// what depends on it: without the PIN there's no app lock, so the PIN type and the biometry setting go too.
+    func resetSealedSettings() {
+        encryptedStorage.removeSealedValues()
+        codeStorage.remove()
+        biometricAuth.disable()
+        tokenStorage.removeAll()
+    }
+}
+#endif
 
 public extension Protection {
     /// For a process that outlives a reset of the local data in the main app (an extension): makes the cipher

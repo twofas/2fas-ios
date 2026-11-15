@@ -28,6 +28,7 @@ import CommonWatch
 struct AuthRequestSensitiveContent: Codable, Equatable {
     var secret: String
     var domain: String
+    var extensionID: String
 }
 
 // Encrypted fields are plain Swift properties (not `@objc`), like in `ServiceEntity`
@@ -35,6 +36,7 @@ extension AuthRequestEntity {
     @nonobjc static let contentCodec = SealedContentCodec<AuthRequestSensitiveContent>(entityName: "AuthRequestEntity")
     @nonobjc private static let secretHashContext = "AuthRequestEntity.secret"
     @nonobjc private static let domainHashContext = "AuthRequestEntity.domain"
+    @nonobjc private static let extensionIDHashContext = "AuthRequestEntity.extensionID"
     
     @nonobjc static func secretHash(for secret: String, cipher: LocalStorageCipher) throws -> Data {
         try cipher.lookupHash(for: secret.uppercased(), context: secretHashContext)
@@ -55,6 +57,16 @@ extension AuthRequestEntity {
         SealedEntity.lookupHash(on: context) { try domainHash(for: domain, cipher: $0) }
     }
     
+    /// The ID isn't normalized – it's compared exactly
+    @nonobjc static func extensionIDHash(for extensionID: String, cipher: LocalStorageCipher) throws -> Data {
+        try cipher.lookupHash(for: extensionID, context: extensionIDHashContext)
+    }
+    
+    /// `nil` when the context has no cipher or the hash can't be computed (e.g. no key) – nothing can match then
+    @nonobjc static func extensionIDHash(for extensionID: String, on context: NSManagedObjectContext) -> Data? {
+        SealedEntity.lookupHash(on: context) { try extensionIDHash(for: extensionID, cipher: $0) }
+    }
+    
     /// `nil` when the content can't be decrypted
     @nonobjc var content: AuthRequestSensitiveContent? {
         SealedEntity.content(
@@ -62,7 +74,7 @@ extension AuthRequestEntity {
             entityName: "AuthRequestEntity",
             module: .storage,
             sealed: { encryptedContent },
-            hashes: { [secretHash, domainHash] },
+            hashes: { [secretHash, domainHash, extensionIDHash] },
             codec: Self.contentCodec,
             cache: contentCache
         )
@@ -70,4 +82,5 @@ extension AuthRequestEntity {
     
     @nonobjc var secret: String { content?.secret ?? "" }
     @nonobjc var domain: String { content?.domain ?? "" }
+    @nonobjc var extensionID: String { content?.extensionID ?? "" }
 }

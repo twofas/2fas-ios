@@ -4,12 +4,15 @@
         <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="domainHash" attributeType="Binary"/>
         <attribute name="encryptedContent" attributeType="Binary"/>
-        <attribute name="extensionID" attributeType="String"/>
+        <attribute name="extensionIDHash" attributeType="Binary"/>
         <attribute name="lastUsed" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="secretHash" attributeType="Binary"/>
         <attribute name="usedCount" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <fetchIndex name="bySecretHash">
             <fetchIndexElement property="secretHash" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byExtensionIDHash">
+            <fetchIndexElement property="extensionIDHash" type="Binary" order="ascending"/>
         </fetchIndex>
         <fetchIndex name="byDomainHash">
             <fetchIndexElement property="domainHash" type="Binary" order="ascending"/>
@@ -42,10 +45,9 @@
     </entity>
     <entity name="PairingEntity" representedClassName="PairingEntity" syncable="YES">
         <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="extensionID" attributeType="String"/>
+        <attribute name="encryptedContent" attributeType="Binary"/>
+        <attribute name="extensionIDHash" attributeType="Binary"/>
         <attribute name="modifcationDate" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="name" attributeType="String"/>
-        <attribute name="publicKey" attributeType="String"/>
     </entity>
     <entity name="SectionEntity" representedClassName="SectionEntity" syncable="YES">
         <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>

@@ -28,7 +28,7 @@ extension AuthRequestEntity {
     @NSManaged var secretHash: Data
     @NSManaged var domainHash: Data
     @NSManaged var encryptedContent: Data
-    @NSManaged var extensionID: String
+    @NSManaged var extensionIDHash: Data
     @NSManaged var lastUsed: Date
     @NSManaged var usedCount: Int32
     @NSManaged var creationDate: Date

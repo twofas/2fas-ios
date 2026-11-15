@@ -77,14 +77,14 @@ final class StorageMigrationTests: XCTestCase {
     private let sectionTitle = "SectionTitleMarker"
     private let sectionCreationDate = Date(timeIntervalSinceReferenceDate: 690_000_000)
     private let sectionModificationDate = Date(timeIntervalSinceReferenceDate: 690_000_500)
-    private let extensionID = "extension-id"
+    private let extensionID = "ExtensionIDMarker"
     private let domain = "domainmarker.example"
     private let otherDomain = "otherdomain.example"
     private let authCreationDate = Date(timeIntervalSinceReferenceDate: 710_000_000)
     private let authLastUsed = Date(timeIntervalSinceReferenceDate: 710_000_900)
     private let authUsedCount: Int32 = 3
-    private let pairingName = "Browser"
-    private let pairingPublicKey = "public-key"
+    private let pairingName = "PairingNameMarker"
+    private let pairingPublicKey = "PublicKeyMarker"
     private let pairingCreationDate = Date(timeIntervalSinceReferenceDate: 705_000_000)
     private let pairingModificationDate = Date(timeIntervalSinceReferenceDate: 705_000_700)
     private let newsID = "news-id"
@@ -393,6 +393,11 @@ final class StorageMigrationTests: XCTestCase {
         let bytes = rawStoreBytes(name: Storage.storeName, in: directory)
         XCTAssertFalse(bytes.isEmpty)
         var markers = [domain, otherDomain, "emptydomain.example", obfuscated, "otpauth://"]
+        // What says which browsers the user paired with
+        markers += [extensionID, pairingName, pairingPublicKey]
+        for marker in [extensionID, pairingName, pairingPublicKey] {
+            XCTAssertNotNil(oldBytes.range(of: Data(marker.utf8)), marker)
+        }
         for service in [regular, trashed, hotp, duplicate, emptySecret] {
             markers += [service.secret, service.secret.encrypt(), service.name]
             markers += [service.additionalInfo, service.rawIssuer].compactMap { $0 }

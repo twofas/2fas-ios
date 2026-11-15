@@ -25,11 +25,10 @@ extension PairingEntity {
         NSFetchRequest<PairingEntity>(entityName: "PairingEntity")
     }
 
-    @NSManaged var extensionID: String
+    @NSManaged var extensionIDHash: Data
+    @NSManaged var encryptedContent: Data
     @NSManaged var modifcationDate: Date
     @NSManaged var creationDate: Date
-    @NSManaged var publicKey: String
-    @NSManaged var name: String
 }
 
 extension PairingEntity: Identifiable {}

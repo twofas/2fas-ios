@@ -78,6 +78,7 @@ public enum LocalStoragePreflight {
             lostKeyCounter: lostKeyCounter
         )
         SyncInstance.scheduleResetFromScratch()
+        protection.resetSealedSettings()
         didChangeStores = true
         return run(userVisible: false)
     }
@@ -102,6 +103,8 @@ public enum LocalStoragePreflight {
             return .keyLost(launchesLeft: launchesLeft)
         case .wipedStores:
             SyncInstance.scheduleResetFromScratch()
+            // Sealed with the key that is gone
+            protection.resetSealedSettings()
             didChangeStores = true
         case .ready:
             break

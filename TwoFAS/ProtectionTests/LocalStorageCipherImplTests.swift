@@ -18,6 +18,7 @@
 //
 
 import XCTest
+import CryptoKit
 import Common
 @testable import Protection
 
@@ -257,5 +258,101 @@ final class LocalStorageCipherImplTests: XCTestCase {
         XCTAssertEqual(failures, 0)
         XCTAssertEqual(keychain.items.count, 1)
         XCTAssertEqual(cipher.state, .available)
+    }
+}
+
+final class LocalEncryptedStorageTests: XCTestCase {
+    private var suiteName: String!
+    private var defaults: UserDefaults!
+    private var cipher: LocalStorageCipherCore!
+
+    override func setUp() {
+        super.setUp()
+        suiteName = "test.\(UUID().uuidString)"
+        defaults = UserDefaults(suiteName: suiteName)
+        cipher = LocalStorageCipherCore(dataKey: SymmetricKey(size: .bits256))
+    }
+
+    override func tearDown() {
+        defaults.removePersistentDomain(forName: suiteName)
+        defaults = nil
+        cipher = nil
+        super.tearDown()
+    }
+
+    private func rawBytes(of key: DataKey) -> Data {
+        if let data = defaults.data(forKey: key.rawValue) { return data }
+        return Data((defaults.string(forKey: key.rawValue) ?? "").utf8)
+    }
+
+    func testSealedValuesRoundTripAndAreNotReadable() {
+        let storage = LocalEncryptedStorage(defaults: defaults, cipher: cipher)
+        let values: [DataKey: String] = [.pinKey: "135790", .gcmToken: "GCMTOKENMARKER", .deviceID: "DEVICEIDMARKER"]
+
+        for (key, value) in values {
+            storage.saveString(for: key, value: value)
+
+            XCTAssertEqual(storage.stringValue(for: key), value)
+            XCTAssertNotNil(defaults.data(forKey: key.rawValue), "\(key) isn't sealed")
+            XCTAssertNil(rawBytes(of: key).range(of: Data(value.utf8)), "\(key) is readable")
+        }
+    }
+
+    func testValueSealedForOneKeyDoesNotOpenAsAnother() {
+        let storage = LocalEncryptedStorage(defaults: defaults, cipher: cipher)
+        storage.saveString(for: .gcmToken, value: "135790")
+
+        defaults.set(defaults.data(forKey: DataKey.gcmToken.rawValue), forKey: DataKey.pinKey.rawValue)
+
+        XCTAssertNil(storage.stringValue(for: .pinKey))
+    }
+
+    func testSealedValueCanNotBeReadWithAnotherKey() {
+        LocalEncryptedStorage(defaults: defaults, cipher: cipher).saveString(for: .pinKey, value: "135790")
+        let other = LocalEncryptedStorage(
+            defaults: defaults,
+            cipher: LocalStorageCipherCore(dataKey: SymmetricKey(size: .bits256))
+        )
+
+        XCTAssertNil(other.stringValue(for: .pinKey))
+    }
+
+    /// A value saved before the values were sealed is read and sealed on the way
+    func testLegacyValueIsSealedWhenRead() {
+        LocalEncryptedStorage(defaults: defaults).saveString(for: .pinKey, value: "135790")
+        XCTAssertNotNil(defaults.string(forKey: DataKey.pinKey.rawValue))
+        let storage = LocalEncryptedStorage(defaults: defaults, cipher: cipher)
+
+        XCTAssertEqual(storage.stringValue(for: .pinKey), "135790")
+
+        XCTAssertNil(defaults.string(forKey: DataKey.pinKey.rawValue))
+        XCTAssertNotNil(defaults.data(forKey: DataKey.pinKey.rawValue))
+        XCTAssertEqual(storage.stringValue(for: .pinKey), "135790")
+    }
+
+    func testOtherValuesAreStoredAsBefore() {
+        let storage = LocalEncryptedStorage(defaults: defaults, cipher: cipher)
+
+        storage.saveString(for: .codeType, value: "PIN6")
+
+        XCTAssertEqual(storage.stringValue(for: .codeType), "PIN6")
+        XCTAssertNotNil(defaults.string(forKey: DataKey.codeType.rawValue))
+        XCTAssertEqual(
+            LocalEncryptedStorage(defaults: defaults).stringValue(for: .codeType),
+            "PIN6"
+        )
+    }
+
+    func testRemoveSealedValues() {
+        let storage = LocalEncryptedStorage(defaults: defaults, cipher: cipher)
+        storage.saveString(for: .pinKey, value: "135790")
+        storage.saveString(for: .deviceID, value: "device")
+        storage.saveString(for: .codeType, value: "PIN6")
+
+        storage.removeSealedValues()
+
+        XCTAssertNil(storage.stringValue(for: .pinKey))
+        XCTAssertNil(storage.stringValue(for: .deviceID))
+        XCTAssertEqual(storage.stringValue(for: .codeType), "PIN6")
     }
 }

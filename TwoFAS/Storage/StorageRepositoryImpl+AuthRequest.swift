@@ -50,15 +50,22 @@ extension StorageRepositoryImpl {
     }
     
     func listAllAuthRequests(for domain: String, extensionID: ExtensionID) -> [PairedAuthRequest] {
-        guard let domainHash = AuthRequestEntity.domainHash(for: domain, on: context) else { return [] }
+        guard let domainHash = AuthRequestEntity.domainHash(for: domain, on: context),
+              let extensionIDHash = AuthRequestEntity.extensionIDHash(for: extensionID, on: context)
+        else { return [] }
         return AuthRequestEntity
-            .listAll(on: context, filterOptions: .domainExtension(domainHash: domainHash, extensionID: extensionID))
+            .listAll(
+                on: context,
+                filterOptions: .domainExtension(domainHash: domainHash, extensionIDHash: extensionIDHash)
+            )
             .compactMap({ $0.pairedAuthRequest })
     }
     
     func listAllAuthRequestsForExtensionID(_ extensionID: ExtensionID) -> [PairedAuthRequest] {
-        AuthRequestEntity
-            .listAll(on: context, filterOptions: .extensionID(extensionID: extensionID))
+        guard let extensionIDHash = AuthRequestEntity.extensionIDHash(for: extensionID, on: context)
+        else { return [] }
+        return AuthRequestEntity
+            .listAll(on: context, filterOptions: .extensionIDHash(extensionIDHash))
             .compactMap({ $0.pairedAuthRequest })
     }
     

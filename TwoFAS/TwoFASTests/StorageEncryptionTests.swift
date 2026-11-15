@@ -822,3 +822,59 @@ extension StorageEncryptionTests {
         XCTAssertEqual(storage.section.listAll().map(\.title), [""])
     }
 }
+
+// MARK: - Browser extension data
+
+extension StorageEncryptionTests {
+    func testPairingIsSealed() throws {
+        repo.createPairing(name: "PairingNameMarker", extensionID: "ExtensionIDMarker", publicKey: "PublicKeyMarker")
+
+        let pairing = try XCTUnwrap(repo.listAllPairings().first)
+        XCTAssertEqual(pairing.name, "PairingNameMarker")
+        XCTAssertEqual(pairing.extensionID, "ExtensionIDMarker")
+        XCTAssertEqual(pairing.publicKey, "PublicKeyMarker")
+        let bytes = rawStoreBytes(name: Storage.storeName, in: directory)
+        for marker in ["PairingNameMarker", "ExtensionIDMarker", "PublicKeyMarker"] {
+            XCTAssertNil(bytes.range(of: Data(marker.utf8)), marker)
+        }
+
+        repo.updatePairing(pairing, name: "RenamedPairingMarker")
+
+        let renamed = try XCTUnwrap(repo.listAllPairings().first)
+        XCTAssertEqual(renamed.name, "RenamedPairingMarker")
+        XCTAssertEqual(renamed.extensionID, "ExtensionIDMarker")
+        XCTAssertEqual(renamed.publicKey, "PublicKeyMarker")
+        XCTAssertNil(
+            rawStoreBytes(name: Storage.storeName, in: directory).range(of: Data("RenamedPairingMarker".utf8))
+        )
+    }
+
+    func testPairingCanNotBeReadWithAnotherKey() {
+        repo.createPairing(name: "Browser", extensionID: "extension", publicKey: "key")
+        XCTAssertEqual(repo.listAllPairings().count, 1)
+
+        reopenStorage(cipher: makeTestCipher())
+
+        XCTAssertTrue(repo.listAllPairings().isEmpty)
+    }
+
+    func testAuthRequestsAreFoundByTheSealedExtensionID() {
+        repo.createAuthRequest(for: "AUTHSECRET", extensionID: "ExtensionIDMarker", domain: "a.example")
+        repo.createAuthRequest(for: "AUTHSECRET", extensionID: "OtherExtensionMarker", domain: "a.example")
+        repo.createAuthRequest(for: "AUTHSECRET", extensionID: "ExtensionIDMarker", domain: "b.example")
+
+        XCTAssertEqual(
+            repo.listAllAuthRequestsForExtensionID("ExtensionIDMarker").map(\.domain),
+            ["a.example", "b.example"]
+        )
+        XCTAssertEqual(
+            repo.listAllAuthRequests(for: "a.example", extensionID: "OtherExtensionMarker").map(\.extensionID),
+            ["OtherExtensionMarker"]
+        )
+        XCTAssertTrue(repo.listAllAuthRequestsForExtensionID("extensionidmarker").isEmpty)
+        let bytes = rawStoreBytes(name: Storage.storeName, in: directory)
+        for marker in ["ExtensionIDMarker", "OtherExtensionMarker"] {
+            XCTAssertNil(bytes.range(of: Data(marker.utf8)), marker)
+        }
+    }
+}

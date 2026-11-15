@@ -243,7 +243,8 @@ extension Storage {
     private static let contentEncryptionPolicies = [
         "ServiceEntity": NSStringFromClass(EncryptServiceContentMigrationPolicy.self),
         "AuthRequestEntity": NSStringFromClass(EncryptAuthRequestContentMigrationPolicy.self),
-        "SectionEntity": NSStringFromClass(EncryptSectionContentMigrationPolicy.self)
+        "SectionEntity": NSStringFromClass(EncryptSectionContentMigrationPolicy.self),
+        "PairingEntity": NSStringFromClass(EncryptPairingContentMigrationPolicy.self)
     ]
     
     static func addContentEncryptionPolicies(

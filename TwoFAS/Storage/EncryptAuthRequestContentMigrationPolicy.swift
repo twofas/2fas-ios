@@ -34,7 +34,6 @@ final class EncryptAuthRequestContentMigrationPolicy: NSEntityMigrationPolicy {
     private static let entityName = "AuthRequestEntity"
     /// Attributes kept in plaintext under the same names
     private static let plainKeys = [
-        "extensionID",
         "creationDate",
         "lastUsed",
         "usedCount"
@@ -55,14 +54,20 @@ final class EncryptAuthRequestContentMigrationPolicy: NSEntityMigrationPolicy {
         }
         let content = AuthRequestSensitiveContent(
             secret: obfuscatedSecret.decrypt().uppercased(),
-            domain: sInstance.value(forKey: "domain") as? String ?? ""
+            domain: sInstance.value(forKey: "domain") as? String ?? "",
+            extensionID: sInstance.value(forKey: "extensionID") as? String ?? ""
         )
 
         // The hashes are part of the associated data, so the key has to exist before hashing
         try cipher.prepareForWriting()
         let secretHash = try AuthRequestEntity.secretHash(for: content.secret, cipher: cipher)
         let domainHash = try AuthRequestEntity.domainHash(for: content.domain, cipher: cipher)
-        let sealed = try AuthRequestEntity.contentCodec.seal(content, hashes: [secretHash, domainHash], cipher: cipher)
+        let extensionIDHash = try AuthRequestEntity.extensionIDHash(for: content.extensionID, cipher: cipher)
+        let sealed = try AuthRequestEntity.contentCodec.seal(
+            content,
+            hashes: [secretHash, domainHash, extensionIDHash],
+            cipher: cipher
+        )
 
         // Through KVC – the class' accessors of the encrypted fields aren't modeled attributes
         let dInstance = NSEntityDescription.insertNewObject(
@@ -71,6 +76,52 @@ final class EncryptAuthRequestContentMigrationPolicy: NSEntityMigrationPolicy {
         )
         dInstance.setValue(secretHash, forKey: "secretHash")
         dInstance.setValue(domainHash, forKey: "domainHash")
+        dInstance.setValue(extensionIDHash, forKey: "extensionIDHash")
+        dInstance.setValue(sealed, forKey: "encryptedContent")
+        for key in Self.plainKeys {
+            dInstance.setValue(sInstance.value(forKey: key), forKey: key)
+        }
+        manager.associate(sourceInstance: sInstance, withDestinationInstance: dInstance, for: mapping)
+    }
+}
+
+/// TwoFAS7 → TwoFAS8: the ID, the name and the public key of a paired browser extension (`PairingEntity`) move
+/// into sealed content
+@objc(EncryptPairingContentMigrationPolicy)
+final class EncryptPairingContentMigrationPolicy: NSEntityMigrationPolicy {
+    enum Failure: Error {
+        case missingCipher
+    }
+
+    private static let entityName = "PairingEntity"
+    /// Attributes kept in plaintext under the same names
+    private static let plainKeys = ["creationDate", "modifcationDate"]
+
+    override func createDestinationInstances(
+        forSource sInstance: NSManagedObject,
+        in mapping: NSEntityMapping,
+        manager: NSMigrationManager
+    ) throws {
+        assert(sInstance.entity.name == Self.entityName, "Policy used for another entity")
+        guard let cipher = manager.localStorageCipher else { throw Failure.missingCipher }
+
+        let content = PairingSensitiveContent(
+            extensionID: sInstance.value(forKey: "extensionID") as? String ?? "",
+            name: sInstance.value(forKey: "name") as? String ?? "",
+            publicKey: sInstance.value(forKey: "publicKey") as? String ?? ""
+        )
+
+        // The hash is part of the associated data, so the key has to exist before hashing
+        try cipher.prepareForWriting()
+        let extensionIDHash = try PairingEntity.extensionIDHash(for: content.extensionID, cipher: cipher)
+        let sealed = try PairingEntity.contentCodec.seal(content, hashes: [extensionIDHash], cipher: cipher)
+
+        // Through KVC – the class' accessors of the encrypted fields aren't modeled attributes
+        let dInstance = NSEntityDescription.insertNewObject(
+            forEntityName: Self.entityName,
+            into: manager.destinationContext
+        )
+        dInstance.setValue(extensionIDHash, forKey: "extensionIDHash")
         dInstance.setValue(sealed, forKey: "encryptedContent")
         for key in Self.plainKeys {
             dInstance.setValue(sInstance.value(forKey: key), forKey: key)

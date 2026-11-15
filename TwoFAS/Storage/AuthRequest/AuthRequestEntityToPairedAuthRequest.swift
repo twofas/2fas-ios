@@ -30,7 +30,7 @@ extension AuthRequestEntity {
     var pairedAuthRequest: PairedAuthRequest? {
         guard let content else { return nil }
         return PairedAuthRequest(
-            extensionID: extensionID,
+            extensionID: content.extensionID,
             secret: content.secret,
             domain: content.domain,
             usedCount: Int(usedCount),

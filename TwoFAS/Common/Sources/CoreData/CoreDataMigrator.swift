@@ -20,6 +20,28 @@
 import Foundation
 import CoreData
 
+/// A migration that couldn't be finished. The store is left as it was before the migration (or restored to it),
+/// so the migration can be tried again.
+public struct CoreDataMigrationError: Error {
+    public enum Stage: String {
+        case unknownStoreVersion
+        case checkpoint
+        case stepStoreDirectory
+        case step
+        case storeSwap
+    }
+
+    public let stage: Stage
+    public let underlying: Error?
+
+    /// Safe for logs: the stage with the domain and the code of the underlying error only
+    public var logDescription: String {
+        guard let underlying else { return stage.rawValue }
+        let error = underlying as NSError
+        return "\(stage.rawValue) (\(error.domain) \(error.code))"
+    }
+}
+
 public protocol CoreDataMigratorProtocol: AnyObject {
     typealias Migrating = ((CoreDataMigrationVersion, CoreDataMigrationVersion) -> Void)
     typealias CustomizeMapping = (
@@ -31,13 +53,27 @@ public protocol CoreDataMigratorProtocol: AnyObject {
     /// Resolves what an interrupted migration left behind – call it before the store is checked or opened.
     func recoverInterruptedMigration(at storeURL: URL)
     func requiresMigrationToCurrentVersion(at storeURL: URL) -> Bool
-    func migrateStoreToCurrentVersion(at storeURL: URL)
+    /// - Throws: `CoreDataMigrationError` – the store is left as it was (or restored), nothing is lost.
+    func migrateStoreToCurrentVersion(at storeURL: URL) throws
     var bundle: Bundle? { get set }
     var migrating: Migrating? { get set }
     /// Set as `userInfo` of every `NSMigrationManager`.
     var migrationUserInfo: [AnyHashable: Any] { get set }
     /// Called once per migration step with the mapping the step would use; the returned mapping is used instead.
     var customizeMapping: CustomizeMapping? { get set }
+}
+
+public extension CoreDataMigratorProtocol {
+    /// Resolves an interrupted migration and migrates the store to the current version when it needs it.
+    /// - Returns: Whether the store was migrated.
+    /// - Throws: `CoreDataMigrationError` – the store is left as it was, so the call can be repeated.
+    @discardableResult
+    func prepareStore(at storeURL: URL) throws -> Bool {
+        recoverInterruptedMigration(at: storeURL)
+        guard requiresMigrationToCurrentVersion(at: storeURL) else { return false }
+        try migrateStoreToCurrentVersion(at: storeURL)
+        return true
+    }
 }
 
 public final class CoreDataMigrator: CoreDataMigratorProtocol {
@@ -99,58 +135,65 @@ public final class CoreDataMigrator: CoreDataMigratorProtocol {
     
     // MARK: - Migration
     
-    public func migrateStoreToCurrentVersion(at storeURL: URL) {
+    public func migrateStoreToCurrentVersion(at storeURL: URL) throws {
         removeStepStores(of: storeURL)
         removeLegacyStepStores()
-        forceWALCheckpointingForStore(at: storeURL)
+        try forceWALCheckpointingForStore(at: storeURL)
         
         var currentURL = storeURL
-        let migrationSteps = self.migrationStepsForStore(at: storeURL, toVersion: versions.current)
+        let migrationSteps = try self.migrationStepsForStore(at: storeURL, toVersion: versions.current)
         guard !migrationSteps.isEmpty else { return }
         
         let stepStoreDirectory = stepStoreDirectory(of: storeURL)
         do {
             try FileManager.default.createDirectory(at: stepStoreDirectory, withIntermediateDirectories: true)
         } catch {
-            fatalError("failed to create the directory of migration step stores, error: \(error)")
+            throw CoreDataMigrationError(stage: .stepStoreDirectory, underlying: error)
         }
         
-        for migrationStep in migrationSteps {
-            Log("Migrating from \(migrationStep.sourceModel) to \(migrationStep.destinationModel)", module: .storage)
-            let manager = NSMigrationManager(
-                sourceModel: migrationStep.sourceModel,
-                destinationModel: migrationStep.destinationModel
-            )
-            manager.userInfo = migrationUserInfo
-            // A store-specific (in-place SQL) migration of an inferred mapping may skip entity migration policies
-            manager.usesStoreSpecificMigrationManager = !migrationStep.usesEntityMigrationPolicies
-            let destinationURL = stepStoreDirectory.appendingPathComponent(UUID().uuidString)
-            
-            do {
-                try manager.migrateStore(
-                    from: currentURL,
-                    sourceType: NSSQLiteStoreType,
-                    options: nil,
-                    with: migrationStep.mappingModel,
-                    toDestinationURL: destinationURL,
-                    destinationType: NSSQLiteStoreType,
-                    destinationOptions: Self.protectionOptions
+        do {
+            for migrationStep in migrationSteps {
+                Log(
+                    "Migrating from \(migrationStep.sourceModel) to \(migrationStep.destinationModel)",
+                    module: .storage
                 )
-            } catch let error {
-                // swiftlint:disable line_length
-                fatalError("failed attempting to migrate from \(migrationStep.sourceModel) to \(migrationStep.destinationModel), error: \(error)")
-                // swiftlint:enable line_length
+                let manager = NSMigrationManager(
+                    sourceModel: migrationStep.sourceModel,
+                    destinationModel: migrationStep.destinationModel
+                )
+                manager.userInfo = migrationUserInfo
+                // A store-specific (in-place SQL) migration of an inferred mapping may skip entity migration policies
+                manager.usesStoreSpecificMigrationManager = !migrationStep.usesEntityMigrationPolicies
+                let destinationURL = stepStoreDirectory.appendingPathComponent(UUID().uuidString)
+                
+                do {
+                    try manager.migrateStore(
+                        from: currentURL,
+                        sourceType: NSSQLiteStoreType,
+                        options: nil,
+                        with: migrationStep.mappingModel,
+                        toDestinationURL: destinationURL,
+                        destinationType: NSSQLiteStoreType,
+                        destinationOptions: Self.protectionOptions
+                    )
+                } catch {
+                    throw CoreDataMigrationError(stage: .step, underlying: error)
+                }
+                
+                if currentURL != storeURL {
+                    // Destroy intermediate step's store
+                    NSPersistentStoreCoordinator.destroyStore(at: currentURL)
+                }
+                
+                currentURL = destinationURL
             }
             
-            if currentURL != storeURL {
-                // Destroy intermediate step's store
-                NSPersistentStoreCoordinator.destroyStore(at: currentURL)
-            }
-            
-            currentURL = destinationURL
+            try Self.replaceStore(at: storeURL, withMigratedStoreAt: currentURL)
+        } catch {
+            // The store at `storeURL` is still (or again) the one from before the migration
+            removeStepStores(of: storeURL, leftover: false)
+            throw error
         }
-        
-        Self.replaceStore(at: storeURL, withMigratedStoreAt: currentURL)
         NSPersistentStoreCoordinator.destroyStore(at: currentURL)
         removeStepStores(of: storeURL, leftover: false)
     }
@@ -232,24 +275,24 @@ public final class CoreDataMigrator: CoreDataMigratorProtocol {
         [NSPersistentStoreFileProtectionKey: CoreDataStack.fileProtection as NSObject]
     }
     
-    private static func replaceStore(at storeURL: URL, withMigratedStoreAt migratedURL: URL) {
+    private static func replaceStore(at storeURL: URL, withMigratedStoreAt migratedURL: URL) throws {
         let files = PersistentStoreFiles(store: storeURL)
         // Leftovers of an earlier swap – the store was just migrated from, so it is the one to keep. A stale marker
         // goes too: left in place, it would make recovery discard the files set aside next.
         guard files.removePremigrationFiles() else {
-            fatalError("failed to remove files left by an earlier migration at \(storeURL)")
+            throw CoreDataMigrationError(stage: .storeSwap, underlying: nil)
         }
         do {
             try files.setAside()
         } catch {
             files.restorePremigrationFiles()
-            fatalError("failed to set aside persistent store at \(storeURL), error: \(error)")
+            throw CoreDataMigrationError(stage: .storeSwap, underlying: error)
         }
         do {
             try files.replace(withStoreAt: migratedURL, options: protectionOptions)
         } catch {
             files.rollBackFailedReplacement()
-            fatalError("failed to replace persistent store at \(storeURL) with \(migratedURL), error: \(error)")
+            throw CoreDataMigrationError(stage: .storeSwap, underlying: error)
         }
         do {
             try files.markSwapCompleted()
@@ -257,7 +300,7 @@ public final class CoreDataMigrator: CoreDataMigratorProtocol {
             // Without the marker recovery would restore the old store – it's restored now, before the new one is used
             files.removeSwapMarker()
             files.rollBackFailedReplacement()
-            fatalError("failed to mark the replacement of persistent store at \(storeURL) completed, error: \(error)")
+            throw CoreDataMigrationError(stage: .storeSwap, underlying: error)
         }
         // On failure, recovery finishes it at the next start
         files.removePremigrationFiles()
@@ -266,7 +309,7 @@ public final class CoreDataMigrator: CoreDataMigratorProtocol {
     private func migrationStepsForStore(
         at storeURL: URL,
         toVersion destinationVersion: CoreDataMigrationVersion
-    ) -> [CoreDataMigrationStep] {
+    ) throws -> [CoreDataMigrationStep] {
         guard let bundle else {
             fatalError("Cant migrate without passed bundle")
         }
@@ -278,7 +321,10 @@ public final class CoreDataMigrator: CoreDataMigratorProtocol {
                 momdSubdirectory: momdSubdirectory,
                 bundle: bundle
             )
-        else { fatalError("unknown store version at URL \(storeURL)") }
+        else {
+            // No metadata or a store of a model this app version doesn't know (e.g. written by a newer one)
+            throw CoreDataMigrationError(stage: .unknownStoreVersion, underlying: nil)
+        }
         
         migrating?(sourceVersion, destinationVersion)
         
@@ -313,7 +359,7 @@ public final class CoreDataMigrator: CoreDataMigratorProtocol {
     
     // MARK: - WAL
 
-    private func forceWALCheckpointingForStore(at storeURL: URL) {
+    private func forceWALCheckpointingForStore(at storeURL: URL) throws {
         guard let metadata = NSPersistentStoreCoordinator.metadata(at: storeURL),
               let currentModel = NSManagedObjectModel.compatibleModelForStoreMetadata(metadata) else {
             return
@@ -323,10 +369,15 @@ public final class CoreDataMigrator: CoreDataMigratorProtocol {
             let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: currentModel)
             
             let options = [NSSQLitePragmasOption: ["journal_mode": "DELETE"]]
-            let store = persistentStoreCoordinator.addPersistentStore(at: storeURL, options: options)
+            let store = try persistentStoreCoordinator.addPersistentStore(
+                ofType: NSSQLiteStoreType,
+                configurationName: nil,
+                at: storeURL,
+                options: options
+            )
             try persistentStoreCoordinator.remove(store)
-        } catch let error {
-            fatalError("failed to force WAL checkpointing, error: \(error)")
+        } catch {
+            throw CoreDataMigrationError(stage: .checkpoint, underlying: error)
         }
     }
 }
@@ -364,8 +415,13 @@ private extension NSPersistentStoreCoordinator {
         do {
             let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: NSManagedObjectModel())
             try persistentStoreCoordinator.destroyPersistentStore(at: storeURL, ofType: NSSQLiteStoreType, options: nil)
-        } catch let error {
-            fatalError("failed to destroy persistent store at \(storeURL), error: \(error)")
+        } catch {
+            // Only a step store – the directory of step stores is removed anyway
+            Log(
+                "Failed to destroy a migration step store, code: \((error as NSError).code)",
+                module: .storage,
+                severity: .error
+            )
         }
     }
     
@@ -375,19 +431,6 @@ private extension NSPersistentStoreCoordinator {
             at: storeURL,
             options: nil
         )
-    }
-    
-    func addPersistentStore(at storeURL: URL, options: [AnyHashable: Any]) -> NSPersistentStore {
-        do {
-            return try addPersistentStore(
-                ofType: NSSQLiteStoreType,
-                configurationName: nil,
-                at: storeURL,
-                options: options
-            )
-        } catch let error {
-            fatalError("failed to add persistent store to coordinator, error: \(error)")
-        }
     }
 }
 

@@ -161,6 +161,46 @@ final class LocalStorageCipherImplTests: XCTestCase {
         XCTAssertEqual(cipher.state, .available)
     }
 
+    func testExtensionLoadsTheKeyThatReplacedTheLostOne() throws {
+        let mainApp = makeCipher(canCreateKey: true)
+        let appExtension = makeCipher(canCreateKey: false)
+        _ = try mainApp.seal(plaintext, associatedData: ad)
+        XCTAssertEqual(appExtension.state, .available)
+        XCTAssertFalse(appExtension.reloadKeyIfChanged())
+
+        // The main app resets the local data: the key is discarded and a new one is created
+        mainApp.discardLostKey()
+        let sealed = try mainApp.seal(plaintext, associatedData: ad)
+        XCTAssertThrowsError(try appExtension.open(sealed, associatedData: ad))
+
+        XCTAssertTrue(appExtension.reloadKeyIfChanged())
+        XCTAssertEqual(try appExtension.open(sealed, associatedData: ad), plaintext)
+        XCTAssertFalse(appExtension.reloadKeyIfChanged())
+    }
+
+    func testLostKeyIsCheckedAgainOnReload() throws {
+        let keyID = UUID().uuidString
+        defaults.set(keyID, forKey: LocalStorageKeyStore.keyIDDefaultsKey)
+        let appExtension = makeCipher(canCreateKey: false)
+        XCTAssertEqual(appExtension.state, .keyLost)
+
+        // The same key ID – the stores weren't replaced, but the key is read again
+        XCTAssertFalse(appExtension.reloadKeyIfChanged())
+        XCTAssertEqual(appExtension.state, .keyLost)
+        XCTAssertEqual(keychain.readCount, 2)
+
+        let mainApp = makeCipher(canCreateKey: true)
+        mainApp.discardLostKey()
+        _ = try mainApp.seal(plaintext, associatedData: ad)
+
+        XCTAssertTrue(appExtension.reloadKeyIfChanged())
+        XCTAssertEqual(appExtension.state, .available)
+    }
+
+    func testReloadBeforeFirstUseReportsNoChange() {
+        XCTAssertFalse(makeCipher(canCreateKey: false).reloadKeyIfChanged())
+    }
+
     func testDiscardLostKeyResetsToNoKey() throws {
         defaults.set(UUID().uuidString, forKey: LocalStorageKeyStore.keyIDDefaultsKey)
         let cipher = makeCipher(canCreateKey: true)

@@ -77,4 +77,20 @@ extension ServiceEntity {
     @nonobjc var iconTypeID: IconTypeID { content?.iconTypeID ?? .default }
 }
 
-extension ServiceEntity: ServiceListable {}
+/// A readable service with its content opened once – filtering and sorting compare the fields many times, and
+/// every read through the entity looks the content up again
+struct ListedService: ServiceListable {
+    let entity: ServiceEntity
+    private let content: ServiceSensitiveContent
+    
+    /// `nil` when the content can't be decrypted
+    init?(entity: ServiceEntity) {
+        guard let content = entity.content else { return nil }
+        self.entity = entity
+        self.content = content
+    }
+    
+    var name: String { content.name }
+    var additionalInfo: String? { content.additionalInfo }
+    var serviceTypeID: ServiceTypeID? { content.serviceTypeID }
+}

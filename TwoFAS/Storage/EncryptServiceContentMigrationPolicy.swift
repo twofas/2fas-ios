@@ -51,7 +51,8 @@ final class EncryptServiceContentMigrationPolicy: NSEntityMigrationPolicy {
         "source"
     ]
 
-    private var secretHashes = Set<Data>()
+    /// Destination instance of every migrated secret, with what decides which duplicate is kept
+    private var migrated: [Data: (instance: NSManagedObject, isTrashed: Bool, modificationDate: Date)] = [:]
 
     override func createDestinationInstances(
         forSource sInstance: NSManagedObject,
@@ -71,9 +72,20 @@ final class EncryptServiceContentMigrationPolicy: NSEntityMigrationPolicy {
         // The hash is part of the associated data, so the key has to exist before hashing
         try cipher.prepareForWriting()
         let secretHash = try ServiceEntity.secretHash(for: secret, cipher: cipher)
-        guard secretHashes.insert(secretHash).inserted else {
-            Log("Migration - \(Self.entityName) skipped: duplicated secret", module: .storage, severity: .warning)
-            return
+        // A secret identifies a service, so only one row of a duplicated secret is kept: one that isn't trashed
+        // rather than a trashed one, then the one modified last
+        let isTrashed = sInstance.value(forKey: "isTrashed") as? Bool ?? false
+        let modificationDate = sInstance.value(forKey: "modificationDate") as? Date ?? .distantPast
+        let duplicate = migrated[secretHash]
+        if let duplicate {
+            let isBetter = duplicate.isTrashed != isTrashed
+                ? !isTrashed
+                : modificationDate > duplicate.modificationDate
+            guard isBetter else {
+                Log("Migration - \(Self.entityName) skipped: duplicated secret", module: .storage, severity: .warning)
+                return
+            }
+            Log("Migration - \(Self.entityName) replaced: duplicated secret", module: .storage, severity: .warning)
         }
 
         let content = ServiceSensitiveContent(
@@ -89,15 +101,19 @@ final class EncryptServiceContentMigrationPolicy: NSEntityMigrationPolicy {
         let sealed = try ServiceEntity.contentCodec.seal(content, hashes: [secretHash], cipher: cipher)
 
         // Through KVC – the class' accessors of the encrypted fields aren't modeled attributes
-        let dInstance = NSEntityDescription.insertNewObject(
+        let dInstance = duplicate?.instance ?? NSEntityDescription.insertNewObject(
             forEntityName: Self.entityName,
             into: manager.destinationContext
         )
+        migrated[secretHash] = (dInstance, isTrashed, modificationDate)
         dInstance.setValue(secretHash, forKey: "secretHash")
         dInstance.setValue(sealed, forKey: "encryptedContent")
         for key in Self.plainKeys {
             dInstance.setValue(sInstance.value(forKey: key), forKey: key)
         }
-        manager.associate(sourceInstance: sInstance, withDestinationInstance: dInstance, for: mapping)
+        // A destination instance is associated with one source only – the row it was first created for
+        if duplicate == nil {
+            manager.associate(sourceInstance: sInstance, withDestinationInstance: dInstance, for: mapping)
+        }
     }
 }

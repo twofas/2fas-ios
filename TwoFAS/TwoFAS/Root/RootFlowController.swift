@@ -34,7 +34,6 @@ protocol RootFlowControlling: AnyObject {
     /// `UnlockTransition`: the lock screen or the introduction.
     func toMain(animated: Bool)
     func toStorageError(error: String)
-    func toLocalDataUnavailable()
 
     func toCover()
     /// `animated`: the app comes in from under the cover flying away, see `UnlockTransition`;
@@ -202,17 +201,7 @@ extension RootFlowController: RootFlowControlling {
         alert.addAction(UIAlertAction(title: T.Commons.ok, style: .cancel, handler: nil))
         viewController.present(alert, animated: false, completion: nil)
     }
-
-    func toLocalDataUnavailable() {
-        let alert = AlertControllerDismissFlow(
-            title: T.Storage.localDataUnavailableTitle,
-            message: T.Storage.localDataUnavailableMsg,
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: T.Commons.ok, style: .cancel, handler: nil))
-        viewController.present(alert, animated: true, completion: nil)
-    }
-
+    
     func toCover() {
         let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
         coverWindow.rootViewController = storyboard.instantiateViewController(withIdentifier: "LaunchScreen")

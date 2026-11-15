@@ -41,9 +41,12 @@ public extension NSMigrationManager {
 
 public struct SealedContentCodec<Content: Codable> {
     private let entityName: String
+    /// The schema version written with the content – also the newest one that can be read
+    private let contentVersion: Int
 
-    public init(entityName: String) {
+    public init(entityName: String, contentVersion: Int = 1) {
         self.entityName = entityName
+        self.contentVersion = contentVersion
     }
 
     public func associatedData(hashes: [Data]) -> Data {
@@ -51,13 +54,53 @@ public struct SealedContentCodec<Content: Codable> {
     }
 
     public func seal(_ content: Content, hashes: [Data], cipher: LocalStorageCipher) throws -> Data {
-        let plaintext = try JSONEncoder().encode(content)
+        let plaintext = try JSONEncoder().encode(VersionedContent(version: contentVersion, content: content))
         return try cipher.seal(plaintext, associatedData: associatedData(hashes: hashes))
     }
 
     public func open(_ sealed: Data, hashes: [Data], cipher: LocalStorageCipher) throws -> Content {
         let plaintext = try cipher.open(sealed, associatedData: associatedData(hashes: hashes))
-        return try JSONDecoder().decode(Content.self, from: plaintext)
+        return try decode(plaintext)
+    }
+
+    /// - Throws: `SealedEntity.Failure.unsupportedContentVersion` for content of a newer schema.
+    func decode(_ plaintext: Data) throws -> Content {
+        let decoder = JSONDecoder()
+        decoder.userInfo[VersionedContent<Content>.newestVersionKey] = contentVersion
+        return try decoder.decode(VersionedContent<Content>.self, from: plaintext).content
+    }
+}
+
+/// The fields of the content and `"v"` in one JSON object – decoded in a single pass
+private struct VersionedContent<Content: Codable>: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case version = "v"
+    }
+
+    // swiftlint:disable:next force_unwrapping
+    static var newestVersionKey: CodingUserInfoKey { CodingUserInfoKey(rawValue: "com.2fas.sealedContentVersion")! }
+
+    let version: Int
+    let content: Content
+
+    init(version: Int, content: Content) {
+        self.version = version
+        self.content = content
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        version = try container.decodeIfPresent(Int.self, forKey: .version) ?? 1
+        if let newest = decoder.userInfo[Self.newestVersionKey] as? Int, version > newest {
+            throw SealedEntity.Failure.unsupportedContentVersion(version)
+        }
+        content = try Content(from: decoder)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        try content.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(version, forKey: .version)
     }
 }
 

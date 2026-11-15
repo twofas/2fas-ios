@@ -26,6 +26,8 @@ public enum SealedEntity {
         case missingCipher
         case missingContext
         case unreadableContent
+        /// The content was sealed with a newer schema than this app version knows
+        case unsupportedContentVersion(Int)
     }
 
     /// `nil` when the context has no cipher or `hash` throws (e.g. no key yet)

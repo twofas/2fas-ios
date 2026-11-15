@@ -49,7 +49,8 @@ final class EncryptServiceCacheContentMigrationPolicy: NSEntityMigrationPolicy {
         "source"
     ]
 
-    private var secretHashes = Set<Data>()
+    /// Destination instance of every migrated secret, with what decides which duplicate is kept
+    private var migrated: [Data: (instance: NSManagedObject, modificationDate: Date)] = [:]
 
     override func createDestinationInstances(
         forSource sInstance: NSManagedObject,
@@ -69,13 +70,23 @@ final class EncryptServiceCacheContentMigrationPolicy: NSEntityMigrationPolicy {
         // The hash is part of the associated data, so the key has to exist before hashing
         try cipher.prepareForWriting()
         let secretHash = try ServiceCacheEntity.secretHash(for: secret, cipher: cipher)
-        guard secretHashes.insert(secretHash).inserted else {
+        // A secret identifies a service, so only the row of a duplicated secret that was modified last is kept
+        let modificationDate = sInstance.value(forKey: "modificationDate") as? Date ?? .distantPast
+        let duplicate = migrated[secretHash]
+        if let duplicate {
+            guard modificationDate > duplicate.modificationDate else {
+                Log(
+                    "Sync Migration - \(Self.entityName) skipped: duplicated secret",
+                    module: .cloudSync,
+                    severity: .warning
+                )
+                return
+            }
             Log(
-                "Sync Migration - \(Self.entityName) skipped: duplicated secret",
+                "Sync Migration - \(Self.entityName) replaced: duplicated secret",
                 module: .cloudSync,
                 severity: .warning
             )
-            return
         }
 
         let content = ServiceSensitiveContent(
@@ -93,17 +104,21 @@ final class EncryptServiceCacheContentMigrationPolicy: NSEntityMigrationPolicy {
         let sealedMetadata = try ServiceCacheEntity.sealMetadata(metadata, secretHash: secretHash, cipher: cipher)
 
         // Through KVC – the class' accessors of the encrypted fields aren't modeled attributes
-        let dInstance = NSEntityDescription.insertNewObject(
+        let dInstance = duplicate?.instance ?? NSEntityDescription.insertNewObject(
             forEntityName: Self.entityName,
             into: manager.destinationContext
         )
+        migrated[secretHash] = (dInstance, modificationDate)
         dInstance.setValue(secretHash, forKey: "secretHash")
         dInstance.setValue(sealed, forKey: "encryptedContent")
         dInstance.setValue(sealedMetadata, forKey: "encryptedMetadata")
         for key in Self.plainKeys {
             dInstance.setValue(sInstance.value(forKey: key), forKey: key)
         }
-        manager.associate(sourceInstance: sInstance, withDestinationInstance: dInstance, for: mapping)
+        // A destination instance is associated with one source only – the row it was first created for
+        if duplicate == nil {
+            manager.associate(sourceInstance: sInstance, withDestinationInstance: dInstance, for: mapping)
+        }
     }
 }
 

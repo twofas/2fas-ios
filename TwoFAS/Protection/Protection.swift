@@ -73,12 +73,21 @@ public final class Protection {
     #endif
 }
 
+public extension Protection {
+    /// For a process that outlives a reset of the local data in the main app (an extension): makes the cipher
+    /// load the current key when it was replaced.
+    /// - Returns: Whether the key was replaced – the stores were replaced along with it and have to be reopened.
+    func reloadLocalStorageKeyIfChanged() -> Bool {
+        (localStorageCipher as? LocalStorageCipherImpl)?.reloadKeyIfChanged() ?? false
+    }
+}
+
 private extension Protection {
     static func makeLocalStorageCipher(isMainApp: Bool) -> LocalStorageCipherAdmin {
         let keyStore = LocalStorageKeyStore(
             defaults: UserDefaults(suiteName: Config.groupIdentifier)!,
             keychain: SystemKeychainItemStore(),
-            protections: [SecureEnclaveDataKeyProtection(), PlainDataKeyProtection()]
+            protections: [PlainDataKeyProtection()]
         )
         return LocalStorageCipherImpl(keyStore: keyStore, canCreateKey: isMainApp)
     }

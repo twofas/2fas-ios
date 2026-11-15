@@ -27,6 +27,7 @@ public enum SyncInstance {
     
     private static var coreDataStack: CoreDataStack!
     private static var cloudHandler: CloudHandlerType!
+    private static var isStateResetPending = false
     private static var logDataChangeImpl: LogDataChangeImpl!
     private static var syncMigrationHandler: SyncMigrationHandling!
     private static var watchPairHandler: WatchPairHandling!
@@ -173,6 +174,11 @@ public enum SyncInstance {
         logDataChangeImpl = LogDataChangeImpl(logHandler: logHandler)
         watchPairHandler = watchPairHandlerInstance
         Self.syncEncryptionHandler = syncEncryptionHandler
+        
+        if isStateResetPending {
+            isStateResetPending = false
+            cloudHandler.resetStateBeforeSync()
+        }
     }
     public static func getCloudHandler() -> CloudHandlerType { cloudHandler }
     public static func getSyncMigrationHandler() -> SyncMigrationHandling { syncMigrationHandler }
@@ -219,6 +225,17 @@ public enum SyncInstance {
         return migrator.requiresMigrationToCurrentVersion(at: CoreDataStack.storeURL(name: storeName, directory: nil))
     }
     
+    /// Resolves an interrupted migration of the default store and migrates it when it needs it – the main app does
+    /// it before `initialize`.
+    /// - Returns: Whether the store was migrated.
+    /// - Throws: `CoreDataMigrationError` – the store is left as it was.
+    @discardableResult
+    public static func prepareStore(cipher: LocalStorageCipher) throws -> Bool {
+        let migrator = makeMigrator(cipher: cipher)
+        migrator.bundle = Bundle(for: SyncHandler.self)
+        return try migrator.prepareStore(at: CoreDataStack.storeURL(name: storeName, directory: nil))
+    }
+    
     /// Sync doesn't run in a launch in which the Storage or the Sync stack was opened in memory because its migration
     /// was deferred: the empty store synced with the saved change tokens would diverge from the cloud (and an empty
     /// cache merged into a file-backed Storage would trash its services).
@@ -255,6 +272,9 @@ public enum SyncInstance {
             migrator: allowsMigration ? migrator : nil,
             storeDirectory: storeDirectory,
             storeKind: storeKind,
+            // Every sync checks that the whole cache can be decrypted and then reads it – the objects keep what
+            // was opened, so each entry is decrypted once, not twice per sync
+            retainsViewContextObjects: true,
             configureContext: { $0.setLocalStorageCipher(cipher) }
         )
     }
@@ -273,7 +293,12 @@ public enum SyncInstance {
                 // Called once per migration with the current version as the destination, so only the source matters
                 if requiresStateResetAfterMigration(from: fromVersion) {
                     Log("Migrating to Sync5!", module: .cloudSync)
-                    SyncInstance.cloudHandler.resetStateBeforeSync()
+                    if let cloudHandler = SyncInstance.cloudHandler {
+                        cloudHandler.resetStateBeforeSync()
+                    } else {
+                        // Migrated before `initialize` – applied there
+                        SyncInstance.isStateResetPending = true
+                    }
                 }
             }
         // Core Data creates migration policies by class name – they get the cipher from the manager

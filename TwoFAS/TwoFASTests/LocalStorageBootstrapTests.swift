@@ -68,6 +68,38 @@ final class LocalStorageBootstrapTests: XCTestCase {
         }
     }
 
+    private var counterDefaults: UserDefaults!
+    private var counterSuiteName: String!
+
+    private func makeCounter() -> LostKeyLaunchCounter {
+        if counterDefaults == nil {
+            counterSuiteName = "test.\(UUID().uuidString)"
+            counterDefaults = UserDefaults(suiteName: counterSuiteName)
+            addTeardownBlock { [counterDefaults, counterSuiteName] in
+                counterDefaults?.removePersistentDomain(forName: counterSuiteName ?? "")
+            }
+        }
+        return LostKeyLaunchCounter(defaults: counterDefaults)
+    }
+
+    /// The main app: launches are counted and the stores are asked for sealed data
+    private func prepareCounting(
+        _ cipher: FakeCipherAdmin,
+        requiringMigration: [String] = [],
+        hasSealedData: Bool = true,
+        countsLaunch: Bool = true
+    ) -> LocalStorageBootstrapResult {
+        LocalStorageBootstrap.prepare(
+            cipher: cipher,
+            storeNames: storeNames,
+            storesRequiringMigration: requiringMigration,
+            hasSealedData: { hasSealedData },
+            lostKeyCounter: makeCounter(),
+            countsLaunch: countsLaunch,
+            directory: directory
+        )
+    }
+
     private func existingFiles() -> [String] {
         files.filter { FileManager.default.fileExists(atPath: directory.appendingPathComponent($0).path) }
     }
@@ -167,5 +199,111 @@ final class LocalStorageBootstrapTests: XCTestCase {
         XCTAssertEqual(prepare(cipher, incompatible: ["TwoFAS"]), .wipedStores)
         XCTAssertEqual(existingFiles(), [])
         XCTAssertEqual(cipher.discardCount, 1)
+    }
+
+    // MARK: - Lost key with a launch counter
+
+    func testLostKeyKeepsStoresUntilTheThirdLaunch() {
+        createFiles()
+        let cipher = FakeCipherAdmin(state: .keyLost)
+
+        XCTAssertEqual(prepareCounting(cipher), .keyLostPending(launchesLeft: 2))
+        XCTAssertEqual(prepareCounting(cipher), .keyLostPending(launchesLeft: 1))
+        XCTAssertEqual(existingFiles(), files)
+        XCTAssertEqual(cipher.discardCount, 0)
+
+        XCTAssertEqual(prepareCounting(cipher), .wipedStores)
+        XCTAssertEqual(existingFiles(), [])
+        XCTAssertEqual(cipher.discardCount, 1)
+        XCTAssertEqual(makeCounter().count, 0)
+    }
+
+    func testRepeatedChecksInOneLaunchAreNotCounted() {
+        createFiles()
+        let cipher = FakeCipherAdmin(state: .keyLost)
+
+        XCTAssertEqual(prepareCounting(cipher), .keyLostPending(launchesLeft: 2))
+        for _ in 0..<5 {
+            XCTAssertEqual(prepareCounting(cipher, countsLaunch: false), .keyLostPending(launchesLeft: 2))
+        }
+        XCTAssertEqual(existingFiles(), files)
+    }
+
+    func testKeyFoundAgainResetsTheCounter() {
+        createFiles()
+        let cipher = FakeCipherAdmin(state: .keyLost)
+        XCTAssertEqual(prepareCounting(cipher), .keyLostPending(launchesLeft: 2))
+        XCTAssertEqual(prepareCounting(cipher), .keyLostPending(launchesLeft: 1))
+
+        cipher.state = .available
+        XCTAssertEqual(prepareCounting(cipher), .ready)
+        XCTAssertEqual(makeCounter().count, 0)
+
+        cipher.state = .keyLost
+        XCTAssertEqual(prepareCounting(cipher), .keyLostPending(launchesLeft: 2))
+        XCTAssertEqual(existingFiles(), files)
+    }
+
+    func testUnavailableKeyDoesNotCount() {
+        createFiles()
+        let cipher = FakeCipherAdmin(state: .keyLost)
+        XCTAssertEqual(prepareCounting(cipher), .keyLostPending(launchesLeft: 2))
+
+        cipher.state = .keyUnavailable
+        XCTAssertEqual(prepareCounting(cipher), .ready)
+        XCTAssertEqual(makeCounter().count, 1)
+        XCTAssertEqual(existingFiles(), files)
+    }
+
+    func testLostKeyWithoutSealedDataOnlyDiscardsTheKey() {
+        createFiles()
+        let cipher = FakeCipherAdmin(state: .keyLost)
+
+        XCTAssertEqual(prepareCounting(cipher, requiringMigration: ["TwoFAS"], hasSealedData: false), .ready)
+        XCTAssertEqual(existingFiles(), files)
+        XCTAssertEqual(cipher.discardCount, 1)
+        // The stores still wait for the migration, which seals the data
+        XCTAssertEqual(cipher.createKeyCount, 1)
+    }
+
+    func testSealedDataWithoutKeyIDIsALostKey() {
+        createFiles()
+        let cipher = FakeCipherAdmin(state: .noKey)
+
+        XCTAssertEqual(prepareCounting(cipher), .keyLostPending(launchesLeft: 2))
+        XCTAssertEqual(prepareCounting(cipher), .keyLostPending(launchesLeft: 1))
+        XCTAssertEqual(cipher.createKeyCount, 0)
+        XCTAssertEqual(existingFiles(), files)
+
+        XCTAssertEqual(prepareCounting(cipher), .wipedStores)
+        XCTAssertEqual(existingFiles(), [])
+    }
+
+    func testNoKeyWithoutSealedDataIsReady() {
+        createFiles()
+        let cipher = FakeCipherAdmin(state: .noKey)
+
+        XCTAssertEqual(prepareCounting(cipher, hasSealedData: false), .ready)
+        XCTAssertEqual(existingFiles(), files)
+        XCTAssertEqual(makeCounter().count, 0)
+    }
+
+    func testResetLocalDataRemovesStoresInAnyState() {
+        for state in [LocalStorageCipherState.keyLost, .keyUnavailable, .noKey, .available] {
+            createFiles()
+            let cipher = FakeCipherAdmin(state: state)
+            makeCounter().increment()
+
+            LocalStorageBootstrap.resetLocalData(
+                cipher: cipher,
+                storeNames: storeNames,
+                lostKeyCounter: makeCounter(),
+                directory: directory
+            )
+
+            XCTAssertEqual(existingFiles(), [], "\(state)")
+            XCTAssertEqual(cipher.discardCount, 1, "\(state)")
+            XCTAssertEqual(makeCounter().count, 0, "\(state)")
+        }
     }
 }

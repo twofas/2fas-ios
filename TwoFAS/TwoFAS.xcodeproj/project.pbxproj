@@ -417,6 +417,7 @@
 		C25D5E782A64908200CA359B /* CameraLastPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25D5E772A64908200CA359B /* CameraLastPass.swift */; };
 		C25DCB2E2B8030B200871035 /* AccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25DCB2D2B8030B200871035 /* AccessManager.swift */; };
 		C25DCB2F2B80318C00871035 /* AccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25DCB2D2B8030B200871035 /* AccessManager.swift */; };
+		64097332AA1C890EC9D857D2 /* AccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25DCB2D2B8030B200871035 /* AccessManager.swift */; };
 		C25E898E2663DF9700A60CE5 /* TokensSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E898D2663DF9700A60CE5 /* TokensSectionHeader.swift */; };
 		C25E89902663F11900A60CE5 /* SectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E898F2663F11900A60CE5 /* SectionData.swift */; };
 		C25E8994266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E8992266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift */; };
@@ -982,6 +983,7 @@
 		C2BD85DA2640290E0087D087 /* IntroductionFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD85D92640290E0087D087 /* IntroductionFlowController.swift */; };
 		C2BDC65D1FBB87C200967D0E /* ServiceData+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDC65C1FBB87C200967D0E /* ServiceData+Extensions.swift */; };
 		C2BDC6C31FC1AC0A00967D0E /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDC6C01FC1AC0A00967D0E /* RootViewController.swift */; };
+		02168D0F138856939112918C /* LocalDataUnavailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37582F94EDDBE8ACF5A8794C /* LocalDataUnavailableView.swift */; };
 		C2BDC6C41FC1AC0A00967D0E /* RootPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDC6C11FC1AC0A00967D0E /* RootPresenter.swift */; };
 		C2BDC6D51FC1CBE100967D0E /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDC6CF1FC1CBE000967D0E /* Theme.swift */; };
 		C2BDC6D61FC1CBE100967D0E /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDC6D01FC1CBE000967D0E /* UIView+Extensions.swift */; };
@@ -1271,6 +1273,7 @@
 		C2E7C3D62ADB2B9C00478D89 /* MainRepositoryImpl+PushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25859352802E73B002DC749 /* MainRepositoryImpl+PushNotifications.swift */; };
 		C2E7C3D72ADB2B9C00478D89 /* MainRepositoryImpl+Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27BE518275D6E0D0090CA12 /* MainRepositoryImpl+Services.swift */; };
 		C2E7C3D82ADB2B9C00478D89 /* MainRepositoryImpl+Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2058E06277D21FB0015F17E /* MainRepositoryImpl+Storage.swift */; };
+		4533BDFA3399C7860C9AAF07 /* LocalStoragePreflight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11871632C2AF648D8647E0C0 /* LocalStoragePreflight.swift */; };
 		C2E7C3D92ADB2B9C00478D89 /* MainRepositoryImpl+General.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D44E74275C1FF40043F5D6 /* MainRepositoryImpl+General.swift */; };
 		C2E7C3DB2ADB2BAC00478D89 /* UserDefaultsRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249AF64278A40FE005F9D80 /* UserDefaultsRepositoryImpl.swift */; };
 		C2E7C3DC2ADB2BAC00478D89 /* UserDefaultsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249AF63278A40FE005F9D80 /* UserDefaultsRepository.swift */; };
@@ -1973,6 +1976,7 @@
 		C2044D84224ECF1B003940AA /* FCMHandlerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMHandlerProtocol.swift; sourceTree = "<group>"; };
 		C20524C22807620500B2B20C /* NavigationBarHiddenHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarHiddenHostingController.swift; sourceTree = "<group>"; };
 		C2058E06277D21FB0015F17E /* MainRepositoryImpl+Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Storage.swift"; sourceTree = "<group>"; };
+		11871632C2AF648D8647E0C0 /* LocalStoragePreflight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoragePreflight.swift; sourceTree = "<group>"; };
 		C2058E08277D24940015F17E /* LogDataChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDataChange.swift; sourceTree = "<group>"; };
 		43879E47C0EEB917075E3DFF /* LogEntity+SealedContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogEntity+SealedContent.swift"; sourceTree = "<group>"; };
 		C205A88B261B508700E00286 /* TwoFAS3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS3.xcdatamodel; sourceTree = "<group>"; };
@@ -2807,6 +2811,7 @@
 		C2BDC65C1FBB87C200967D0E /* ServiceData+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceData+Extensions.swift"; sourceTree = "<group>"; };
 		C2BDC67A1FBE264B00967D0E /* TokenGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenGenerator.swift; sourceTree = "<group>"; };
 		C2BDC6C01FC1AC0A00967D0E /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		37582F94EDDBE8ACF5A8794C /* LocalDataUnavailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataUnavailableView.swift; sourceTree = "<group>"; };
 		C2BDC6C11FC1AC0A00967D0E /* RootPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootPresenter.swift; sourceTree = "<group>"; };
 		C2BDC6CF1FC1CBE000967D0E /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		C2BDC6D01FC1CBE000967D0E /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
@@ -5261,6 +5266,7 @@
 				C2CFA6A52AEEF0CB00E574FC /* RootModuleInteractor.swift */,
 				C2BDC6C11FC1AC0A00967D0E /* RootPresenter.swift */,
 				C2BDC6C01FC1AC0A00967D0E /* RootViewController.swift */,
+				37582F94EDDBE8ACF5A8794C /* LocalDataUnavailableView.swift */,
 				C2C66F8C1FE0683000AD5A1C /* Modules */,
 			);
 			path = Root;
@@ -5503,6 +5509,7 @@
 				C2404854276529FF0076376E /* MainRepositoryImpl+Export.swift */,
 				C2069C8E28C2866900321E44 /* MainRepositoryImpl+Import.swift */,
 				C2058E06277D21FB0015F17E /* MainRepositoryImpl+Storage.swift */,
+				11871632C2AF648D8647E0C0 /* LocalStoragePreflight.swift */,
 				C249AF7F278A537F005F9D80 /* MainRepositoryImpl+AppInfo.swift */,
 				C27CCE9B279DF8DC00C3D88F /* MainRepositoryImpl+Code.swift */,
 				C2B39C7927A5921900D3B579 /* MainRepositoryImpl+Vision.swift */,
@@ -7300,6 +7307,7 @@
 				C284AF7927601BCF00FEE810 /* BackupDeleteFlowController.swift in Sources */,
 				C2E7C34B2ADB021500478D89 /* CameraOutputQRScanner.swift in Sources */,
 				C2BDC6C31FC1AC0A00967D0E /* RootViewController.swift in Sources */,
+				02168D0F138856939112918C /* LocalDataUnavailableView.swift in Sources */,
 				C2F9D60A2A1FEC700085B65A /* TokensRevealButton.swift in Sources */,
 				C27A54A827F0F3C700321D2B /* BrowserExtensionPairingPlainFlowController.swift in Sources */,
 				C2D2F7022FF0250F0008FE4D /* UserIconInfoView.swift in Sources */,
@@ -8193,6 +8201,7 @@
 			files = (
 				C2A7B99026B706B000055738 /* TwoFASWidget.intentdefinition in Sources */,
 				C2C3AE2A269E274700506ACF /* IntentHandler.swift in Sources */,
+				64097332AA1C890EC9D857D2 /* AccessManager.swift in Sources */,
 			);
 		};
 		C2DF71072B5DD31200D85D87 /* Sources */ = {
@@ -8426,6 +8435,7 @@
 				C2E7C4062ADB2BB400478D89 /* PairingWebExtensionInteractor.swift in Sources */,
 				C2E7C4012ADB2BB400478D89 /* TrashingServiceInteractor.swift in Sources */,
 				C2E7C3D82ADB2B9C00478D89 /* MainRepositoryImpl+Storage.swift in Sources */,
+				4533BDFA3399C7860C9AAF07 /* LocalStoragePreflight.swift in Sources */,
 				C2AE5F7E2ADC8B0D00AED670 /* Extensions.swift in Sources */,
 				C22CD3922B913E94005FE348 /* MDMRepository.swift in Sources */,
 				C2E7C3F72ADB2BB400478D89 /* IconInteractor.swift in Sources */,

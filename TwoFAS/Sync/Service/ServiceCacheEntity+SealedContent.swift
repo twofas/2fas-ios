@@ -74,6 +74,7 @@ extension ServiceCacheEntity {
             contentCache.store(updated, sealed: sealedContent)
         }
         encryptedMetadata = sealedMetadata
+        metadataCache.store(metadata, sealed: sealedMetadata)
     }
 
     // MARK: - Metadata
@@ -91,11 +92,17 @@ extension ServiceCacheEntity {
     /// Throws when the metadata can't be decrypted – the cache can't be trusted then
     @nonobjc func decryptedMetadata() throws -> Data {
         guard let context = managedObjectContext else { throw SealedEntity.Failure.missingContext }
+        let sealed = encryptedMetadata
+        if let cached = metadataCache.content(forSealed: sealed) {
+            return cached
+        }
         guard let cipher = context.localStorageCipher else { throw SealedEntity.Failure.missingCipher }
-        return try cipher.open(encryptedMetadata, associatedData: Self.metadataAssociatedData(secretHash: secretHash))
+        let metadata = try cipher.open(sealed, associatedData: Self.metadataAssociatedData(secretHash: secretHash))
+        metadataCache.store(metadata, sealed: sealed)
+        return metadata
     }
 
-    /// Empty when the metadata can't be decrypted – a reset of the cache is scheduled then. Not cached – read rarely.
+    /// Empty when the metadata can't be decrypted – a reset of the cache is scheduled then
     @nonobjc var metadata: Data {
         SyncStoreIntegrity.valueOrScheduleReset(entityName: "ServiceCacheEntity", field: "metadata") {
             try decryptedMetadata()

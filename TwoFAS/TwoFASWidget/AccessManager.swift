@@ -30,11 +30,15 @@ enum AccessManager {
     private static let lock = NSLock()
     private static var cachedStorage: Storage?
 
-    /// A store opened in memory (its migration waits for the main app) isn't kept – the next call checks again, so
-    /// the widget shows the services once the main app has migrated the store
+    /// Checked on every call, as this process may outlive what the main app does with the stores:
+    /// - a store opened in memory (its migration waits for the main app) isn't kept, so the widget shows the
+    ///   services once the main app has migrated the store,
+    /// - when the main app replaced the key (it reset the local data), the stores were replaced with it – the
+    ///   current key is loaded and the store is opened again.
     static var storage: Storage {
         lock.withLock {
-            if let cachedStorage, !cachedStorage.isMigrationDeferred {
+            let isKeyReplaced = protection.reloadLocalStorageKeyIfChanged()
+            if let cachedStorage, !cachedStorage.isMigrationDeferred, !isKeyReplaced {
                 return cachedStorage
             }
             EncryptionHolder.initialize(with: protection.localKeyEncryption)

@@ -168,6 +168,8 @@ public enum SyncInstanceWatch {
             bundle: Bundle(for: SyncHandler.self),
             migrator: nil,
             storeDirectory: storeDirectory,
+            // The objects keep what was opened – each entry is decrypted once, not on every sync
+            retainsViewContextObjects: true,
             configureContext: { $0.setLocalStorageCipher(cipher) }
         )
     }

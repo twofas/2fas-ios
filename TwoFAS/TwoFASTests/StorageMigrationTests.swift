@@ -242,6 +242,61 @@ final class StorageMigrationTests: XCTestCase {
         XCTAssertEqual(try countRows(of: "AuthRequestEntity"), 2)
     }
 
+    func testDuplicatedSecretKeepsTheRowThatIsNotTrashed() throws {
+        let later = Date(timeIntervalSinceReferenceDate: 730_000_000)
+        let trashedCopy = LegacyService(
+            secret: "DUPLICATEDSECRET",
+            name: "NameMarkerTrashedCopy",
+            modificationDate: later,
+            isTrashed: true,
+            trashingDate: later
+        )
+        let active = LegacyService(secret: "DUPLICATEDSECRET", name: "NameMarkerActive")
+
+        // In both orders of the rows
+        for services in [[trashedCopy, active], [active, trashedCopy]] {
+            try makeTwoFAS7Store(at: storeURL, services: services)
+
+            let repo = openMigratedStorage().storageRepository
+
+            let migrated = repo.listAllExistingServices()
+            XCTAssertEqual(migrated.map(\.name), [active.name])
+            XCTAssertEqual(migrated.first?.isTrashed, false)
+            XCTAssertEqual(try countRows(of: "ServiceEntity"), 1)
+            resetStore()
+        }
+    }
+
+    func testDuplicatedSecretKeepsTheRowModifiedLast() throws {
+        let older = LegacyService(secret: "DUPLICATEDSECRET", name: "NameMarkerOlder")
+        let newer = LegacyService(
+            secret: "DUPLICATEDSECRET",
+            name: "NameMarkerNewer",
+            modificationDate: Date(timeIntervalSinceReferenceDate: 730_000_000)
+        )
+
+        for services in [[older, newer], [newer, older]] {
+            try makeTwoFAS7Store(at: storeURL, services: services)
+
+            let repo = openMigratedStorage().storageRepository
+
+            XCTAssertEqual(repo.listAllExistingServices().map(\.name), [newer.name])
+            XCTAssertEqual(try countRows(of: "ServiceEntity"), 1)
+            resetStore()
+        }
+    }
+
+    func testStoreContainsSealedDataOnlyAfterMigration() throws {
+        XCTAssertFalse(Storage.storeContainsSealedData(directory: directory))
+
+        try makeTwoFAS7Store(at: storeURL)
+        // Nothing is sealed in a store that waits for the migration
+        XCTAssertFalse(Storage.storeContainsSealedData(directory: directory))
+
+        _ = openMigratedStorage()
+        XCTAssertTrue(Storage.storeContainsSealedData(directory: directory))
+    }
+
     /// Added ahead of the sync of deletions, so that it needs no migration of its own
     func testMigratedStoreHasEmptyDeletedEntities() throws {
         try makeTwoFAS7Store(at: storeURL)
@@ -527,6 +582,15 @@ final class StorageMigrationTests: XCTestCase {
         object.setValue("news", forKey: "icon")
         object.setValue(Date(timeIntervalSinceReferenceDate: 715_000_000), forKey: "publishedAt")
         object.setValue(false, forKey: "wasRead")
+    }
+
+    /// Closes the store and removes its files, so that another one can be made in the same test
+    private func resetStore() {
+        if let storage {
+            closeStores(of: storage.coreDataStack)
+        }
+        storage = nil
+        CoreDataStack.destroyStoreFiles(name: Storage.storeName, directory: directory)
     }
 
     private func countRows(of entityName: String) throws -> Int {

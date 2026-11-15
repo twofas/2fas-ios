@@ -74,6 +74,10 @@ final class MainRepositoryImpl: MainRepository {
     
     static var shared: MainRepository {
         if _shared == nil {
+            // Every entry point of the app checks the preflight first – nothing may use the data before it's ready
+            guard LocalStoragePreflight.run(userVisible: false) == .ready else {
+                fatalError("MainRepository used while the local storage isn't ready")
+            }
             MainRepositoryImpl.create(
                 serviceNameTranslation: DataExternalTranslations.serviceNameTranslation
             )
@@ -107,35 +111,20 @@ final class MainRepositoryImpl: MainRepository {
     var cachedSortTypeInitialized = false
     var _notificationState: PushNotificationState = .unknown
     
+    /// The local storage has to be ready (`LocalStoragePreflight`): the stores are migrated and the key can be used
     static func create(serviceNameTranslation: String) {
         ServiceIcon.log = { AppEventLog(.missingIcon($0)) }
-        let protection = Protection(isMainApp: true)
+        let protection = LocalStoragePreflight.protection
         
         EncryptionHolder.initialize(with: protection.localKeyEncryption)
         
-        let storesRequiringMigration = [
-            Storage.storeRequiresMigration() ? Storage.storeName : nil,
-            SyncInstance.storeRequiresMigration() ? SyncInstance.storeName : nil
-        ].compactMap { $0 }
-        let bootstrapResult = LocalStorageBootstrap.prepare(
-            cipher: protection.localStorageCipher,
-            storeNames: [Storage.storeName, SyncInstance.storeName],
-            storesRequiringMigration: storesRequiringMigration
-        )
-        if bootstrapResult == .wipedStores {
-            SyncInstance.scheduleResetFromScratch()
-        }
-
-        let migrationTask = storesRequiringMigration.isEmpty ? nil : MigrationBackgroundTask()
-
         let storage = Storage(
             readOnly: false,
             cipher: protection.localStorageCipher,
-            allowsMigration: protection.localStorageCipher.state == .available
+            allowsMigration: true
         ) { error in
             DebugLog(error)
         }
-        // Migrated now, while the background task runs – not on first use
         storage.loadStore()
 
         LogStorage.setStorage(storage.log)
@@ -148,17 +137,13 @@ final class MainRepositoryImpl: MainRepository {
             reference: protection.reference,
             localEncryptionKeyData: protection.localEncryptionKeyData,
             cipher: protection.localStorageCipher,
-            allowsMigration: protection.localStorageCipher.state == .available,
-            storageMigrationDeferred: storage.isMigrationDeferred
+            allowsMigration: true,
+            storageMigrationDeferred: false
         ) {
             DebugLog("Sync: \($0)")
         }
         SyncInstance.migrateStoreIfNeeded()
-        migrationTask?.end()
-        // It would be marked as done for this version on the empty in-memory store
-        if !storage.isMigrationDeferred {
-            serviceMigration.migrateIfNeeded()
-        }
+        serviceMigration.migrateIfNeeded()
         
         let security = Security(biometric: protection.biometricAuth, codeStorage: protection.codeStorage)
                                                                 
@@ -177,8 +162,8 @@ final class MainRepositoryImpl: MainRepository {
             syncMigration: SyncInstance.getSyncMigrationHandler(),
             watchPairing: SyncInstance.getWatchPairHandler()
         )
-        // Until the migration the widget showed that the data is unavailable
-        if migrationTask != nil, !storage.isMigrationDeferred {
+        // Until then the widget showed that the data is unavailable
+        if LocalStoragePreflight.didChangeStores {
             _shared.reloadWidgets()
         }
     }
@@ -232,27 +217,5 @@ final class MainRepositoryImpl: MainRepository {
         storage.addUserPresentableError { [weak self] error in
             self?.storageError?(error)
         }
-    }
-
-    var isLocalDataUnavailable: Bool {
-        storage.isLocalDataUnavailable
-    }
-}
-
-/// Keeps the app running when it goes to the background during the migration of the local stores – suspended in the
-/// middle, the migration would start over at the next launch
-private final class MigrationBackgroundTask {
-    private var identifier = UIBackgroundTaskIdentifier.invalid
-
-    init() {
-        identifier = UIApplication.shared.beginBackgroundTask(withName: "LocalStorageMigration") { [weak self] in
-            self?.end()
-        }
-    }
-
-    func end() {
-        guard identifier != .invalid else { return }
-        UIApplication.shared.endBackgroundTask(identifier)
-        identifier = .invalid
     }
 }

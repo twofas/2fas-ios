@@ -220,7 +220,52 @@ public final class CoreDataStack {
         return model.isConfiguration(withName: nil, compatibleWithStoreMetadata: metadata) ? .compatible : .incompatible
     }
 
+    public static func countObjects(
+        ofEntities entityNames: [String],
+        name: String,
+        bundle: Bundle,
+        directory: URL? = nil
+    ) -> Int? {
+        guard storeCompatibility(name: name, bundle: bundle, directory: directory) == .compatible else { return nil }
+        let coordinator = NSPersistentStoreCoordinator(
+            managedObjectModel: NSManagedObjectModel.currentModel(name: name, bundle: bundle)
+        )
+        do {
+            let store = try coordinator.addPersistentStore(
+                ofType: NSSQLiteStoreType,
+                configurationName: nil,
+                at: storeURL(name: name, directory: directory),
+                options: [NSReadOnlyPersistentStoreOption: true]
+            )
+            defer { try? coordinator.remove(store) }
+            let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+            context.persistentStoreCoordinator = coordinator
+            var count = 0
+            var failure: Error?
+            context.performAndWait {
+                do {
+                    for entityName in entityNames {
+                        count += try context.count(for: NSFetchRequest<NSFetchRequestResult>(entityName: entityName))
+                    }
+                } catch {
+                    failure = error
+                }
+            }
+            return failure == nil ? count : nil
+        } catch {
+            return nil
+        }
+    }
+
     // MARK: - Private
+
+    private static func describe(_ error: Error) -> String {
+        if let error = error as? CoreDataMigrationError {
+            return error.logDescription
+        }
+        let error = error as NSError
+        return "\(error.domain) \(error.code)"
+    }
 
     private func makeBackgroundContext() -> NSManagedObjectContext {
         let context = persistentContainer.newBackgroundContext()
@@ -259,9 +304,14 @@ public final class CoreDataStack {
             fatalError("persistentContainer was not set up properly")
         }
 
-        migrator.recoverInterruptedMigration(at: storeURL)
-        if migrator.requiresMigrationToCurrentVersion(at: storeURL) {
-            migrator.migrateStoreToCurrentVersion(at: storeURL)
+        do {
+            try migrator.prepareStore(at: storeURL)
+        } catch {
+            // The main app migrates in its preflight (and shows the error there) – a failure here means a process
+            // that opens the stack without it
+            let err = "Migration failed for stack: \(name), \(Self.describe(error))"
+            logError?(err)
+            fatalError(err)
         }
         completion()
     }

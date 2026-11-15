@@ -35,6 +35,17 @@ final class UserInfoRecordingMigrationPolicy: NSEntityMigrationPolicy {
     }
 }
 
+@objc(ThrowingMigrationPolicy)
+final class ThrowingMigrationPolicy: NSEntityMigrationPolicy {
+    override func createDestinationInstances(
+        forSource sInstance: NSManagedObject,
+        in mapping: NSEntityMapping,
+        manager: NSMigrationManager
+    ) throws {
+        throw NSError(domain: "test.migration", code: 42)
+    }
+}
+
 final class CoreDataMigratorTests: XCTestCase {
     private static let currentVersionName = "TwoFAS8"
     private static let versionNames = [
@@ -514,7 +525,7 @@ final class CoreDataMigratorTests: XCTestCase {
         )
         try makeTwoFASStore(version: "TwoFAS7", at: leftover, sectionCount: 1)
 
-        migrator.migrateStoreToCurrentVersion(at: storeURL)
+        try migrator.migrateStoreToCurrentVersion(at: storeURL)
 
         XCTAssertEqual(try storeDirectoryContents(temporaryDirectory), [])
         XCTAssertEqual(try countSections(in: makeStack(migrator: nil).context), 1)
@@ -550,7 +561,7 @@ final class CoreDataMigratorTests: XCTestCase {
         try makeTwoFASStore(version: "TwoFAS6", at: temporaryFile(lowercased), sectionCount: 1)
         try makeTwoFASStore(version: "TwoFAS6", at: temporaryFile("other.sqlite"), sectionCount: 1)
 
-        makeMigrator().migrateStoreToCurrentVersion(at: storeURL)
+        try makeMigrator().migrateStoreToCurrentVersion(at: storeURL)
 
         for name in [legacy, legacy + "-wal", legacy + "-shm", orphanedWAL + "-wal", orphanedWAL + "-shm"] {
             XCTAssertFalse(exists(temporaryFile(name)), name)
@@ -572,7 +583,7 @@ final class CoreDataMigratorTests: XCTestCase {
             return mapping
         }
 
-        migrator.migrateStoreToCurrentVersion(at: storeURL)
+        try migrator.migrateStoreToCurrentVersion(at: storeURL)
 
         XCTAssertEqual(UserInfoRecordingMigrationPolicy.recordedUserInfo?["test.marker"] as? String, "marker")
         XCTAssertIdentical(UserInfoRecordingMigrationPolicy.recordedCipher, cipher)
@@ -590,9 +601,57 @@ final class CoreDataMigratorTests: XCTestCase {
             return mapping
         }
 
-        migrator.migrateStoreToCurrentVersion(at: storeURL)
+        try migrator.migrateStoreToCurrentVersion(at: storeURL)
 
         XCTAssertEqual(steps, ["TwoFAS5->TwoFAS6", "TwoFAS6->TwoFAS7", "TwoFAS7->TwoFAS8"])
         XCTAssertEqual(try countSections(in: makeStack(migrator: nil).context), 1)
+    }
+
+    func testFailedStepThrowsAndKeepsTheStore() throws {
+        try makeTwoFASStore(version: "TwoFAS6", at: storeURL, sectionCount: 2)
+        let migrator = makeMigrator()
+        migrator.customizeMapping = { source, _, mapping in
+            guard source.rawValue == "TwoFAS7" else { return mapping }
+            let sectionMapping = mapping.entityMappings.first { $0.sourceEntityName == "SectionEntity" }
+            sectionMapping?.entityMigrationPolicyClassName = "ThrowingMigrationPolicy"
+            sectionMapping?.mappingType = .customEntityMappingType
+            return mapping
+        }
+
+        XCTAssertThrowsError(try migrator.migrateStoreToCurrentVersion(at: storeURL)) { error in
+            let error = error as? CoreDataMigrationError
+            XCTAssertEqual(error?.stage, .step)
+            XCTAssertEqual(error?.logDescription, "step (test.migration 42)")
+        }
+
+        // The store is the one from before the migration – it can be migrated again
+        XCTAssertEqual(try storeDirectoryContents(temporaryDirectory), [])
+        XCTAssertEqual(try premigrationFiles(), [])
+        XCTAssertTrue(migrator.requiresMigrationToCurrentVersion(at: storeURL))
+        migrator.customizeMapping = nil
+        XCTAssertTrue(try migrator.prepareStore(at: storeURL))
+        XCTAssertEqual(try countSections(in: makeStack(migrator: nil).context), 2)
+    }
+
+    func testStoreOfUnknownVersionThrows() throws {
+        try makeTwoFASStore(version: "TwoFAS6", at: storeURL, sectionCount: 1)
+        // A migrator that doesn't know the version of the store
+        let migrator = CoreDataMigrator(
+            momdSubdirectory: twoFASStoreName,
+            versions: ["TwoFAS7", "TwoFAS8"].map { CoreDataMigrationVersion(rawValue: $0) },
+            temporaryDirectory: temporaryDirectory
+        )
+        migrator.bundle = twoFASModelBundle
+
+        XCTAssertThrowsError(try migrator.prepareStore(at: storeURL)) { error in
+            XCTAssertEqual((error as? CoreDataMigrationError)?.stage, .unknownStoreVersion)
+        }
+        XCTAssertTrue(exists(storeURL))
+    }
+
+    func testPrepareStoreDoesNothingForCurrentStore() throws {
+        try makeTwoFASStore(version: Self.currentVersionName, at: storeURL, sectionCount: 1)
+
+        XCTAssertFalse(try makeMigrator().prepareStore(at: storeURL))
     }
 }

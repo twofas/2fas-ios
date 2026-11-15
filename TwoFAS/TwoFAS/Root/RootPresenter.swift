@@ -38,9 +38,7 @@ final class RootPresenter {
     }
 
     private var isCoverActive = false
-    /// Once per launch – not again after every unlock
-    private var wasLocalDataUnavailableShown = false
-
+    
     private let flowController: RootFlowControlling
     private let interactor: RootModuleInteracting
     
@@ -182,15 +180,6 @@ final class RootPresenter {
         if fromColdStart {
             removeCover(animated: true)
         }
-        presentLocalDataUnavailableIfNeeded()
-    }
-
-    /// Tells the user why the list is empty – the local storage key can't be used now
-    private func presentLocalDataUnavailableIfNeeded() {
-        guard !wasLocalDataUnavailableShown, interactor.isLocalDataUnavailable else { return }
-        wasLocalDataUnavailableShown = true
-        Log("Presenting Local Data Unavailable")
-        flowController.toLocalDataUnavailable()
     }
     
     /// `fromColdStart` is `true` when the login screen is the first thing after the system

@@ -91,4 +91,72 @@ final class SealedContentTests: XCTestCase {
         context.setLocalStorageCipher(cipher)
         XCTAssertTrue(context.localStorageCipher === cipher)
     }
+
+    // MARK: - Schema
+
+    private func json(_ plaintext: Data) throws -> [String: Any] {
+        try XCTUnwrap(try JSONSerialization.jsonObject(with: plaintext) as? [String: Any])
+    }
+
+    func testContentIsSealedWithItsSchemaVersion() throws {
+        let cipher = makeTestCipher()
+        let sealed = try codec.seal(makeContent(), hashes: [h1], cipher: cipher)
+        let plaintext = try cipher.open(sealed, associatedData: codec.associatedData(hashes: [h1]))
+
+        let object = try json(plaintext)
+        XCTAssertEqual(object["v"] as? Int, 1)
+        XCTAssertEqual(object["secret"] as? String, "JBSWY3DPEHPK3PXP")
+    }
+
+    func testContentOfNewerSchemaIsRejected() {
+        let plaintext = Data(#"{"v":2,"secret":"S","name":"N","labelTitle":"L","iconTypeID":"\#(UUID().uuidString)"}"#.utf8)
+
+        XCTAssertThrowsError(try codec.decode(plaintext)) { error in
+            guard case SealedEntity.Failure.unsupportedContentVersion(2) = error else {
+                return XCTFail("Unexpected error: \(error)")
+            }
+        }
+    }
+
+    /// Frozen samples of what released versions sealed. A failure here means that rows already stored on devices
+    /// stop decoding – a new field has to be optional (or the schema needs a new version with its own decoding).
+    /// Never edit a sample to make the test pass; add a sample when the schema changes.
+    func testFrozenServiceContentSamplesDecode() throws {
+        let serviceTypeID = "0F6B6C3A-6D3C-4A63-9C39-3A1B5D2E7F10"
+        let iconTypeID = "5B1F7B56-0E7A-4D5A-8C68-6F1C0D2A9E41"
+        let full = #"""
+        {"v":1,"secret":"JBSWY3DPEHPK3PXP","name":"Account","additionalInfo":"info","rawIssuer":"Issuer",\#
+        "otpAuth":"otpauth://totp/x","labelTitle":"AC","serviceTypeID":"\#(serviceTypeID)",\#
+        "iconTypeID":"\#(iconTypeID)"}
+        """#
+        // Without the optional fields and without the version (sealed before it was written)
+        let minimal = #"{"secret":"JBSWY3DPEHPK3PXP","name":"Account","labelTitle":"AC","iconTypeID":"\#(iconTypeID)"}"#
+
+        XCTAssertEqual(
+            try codec.decode(Data(full.utf8)),
+            ServiceSensitiveContent(
+                secret: "JBSWY3DPEHPK3PXP",
+                name: "Account",
+                additionalInfo: "info",
+                rawIssuer: "Issuer",
+                otpAuth: "otpauth://totp/x",
+                labelTitle: "AC",
+                serviceTypeID: UUID(uuidString: serviceTypeID),
+                iconTypeID: try XCTUnwrap(UUID(uuidString: iconTypeID))
+            )
+        )
+        XCTAssertEqual(
+            try codec.decode(Data(minimal.utf8)),
+            ServiceSensitiveContent(
+                secret: "JBSWY3DPEHPK3PXP",
+                name: "Account",
+                additionalInfo: nil,
+                rawIssuer: nil,
+                otpAuth: nil,
+                labelTitle: "AC",
+                serviceTypeID: nil,
+                iconTypeID: try XCTUnwrap(UUID(uuidString: iconTypeID))
+            )
+        )
+    }
 }

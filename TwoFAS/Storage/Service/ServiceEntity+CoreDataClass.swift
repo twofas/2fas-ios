@@ -287,8 +287,9 @@ final class ServiceEntity: NSManagedObject {
         ids: [ServiceTypeID]
     ) -> [ServiceEntity] {
         let readable = listItemsWithOptions(on: context, options: .notTrashedSorted(sort))
-            .filter { $0.content != nil }
+            .compactMap(ListedService.init(entity:))
         return ServiceListing.sort(ServiceListing.filter(readable, phrase: phrase, ids: ids), by: sort)
+            .map(\.entity)
     }
     
     @nonobjc static func listAllExisting(on context: NSManagedObjectContext) -> [ServiceEntity] {
@@ -398,8 +399,9 @@ final class ServiceEntity: NSManagedObject {
     ) -> [ServiceEntity] {
         let excludedHashes = excludeServices.compactMap { Self.secretHash(for: $0, on: context) }
         let readable = listItemsWithOptions(on: context, options: .widget(excludedHashes: excludedHashes))
-            .filter { $0.content != nil }
+            .compactMap(ListedService.init(entity:))
         return ServiceListing.filter(readable, phrase: filter, ids: [])
+            .map(\.entity)
             .filter { $0.tokenType != TokenType.hotp.rawValue }
     }
 }

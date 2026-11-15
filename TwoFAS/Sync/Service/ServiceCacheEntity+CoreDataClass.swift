@@ -32,10 +32,13 @@ final class ServiceCacheEntity: NSManagedObject {
     /// Valid only for the current bytes of `encryptedContent`. Not a transient attribute, so filling it never marks
     /// the object as updated.
     let contentCache = SealedContentCache<ServiceSensitiveContent>()
+    /// Valid only for the current bytes of `encryptedMetadata`
+    let metadataCache = SealedContentCache<Data>()
     
     override func didTurnIntoFault() {
         super.didTurnIntoFault()
         contentCache.clear()
+        metadataCache.clear()
     }
     
     /// `secret` and `metadata` in plain text. Nothing is inserted when they can't be sealed – a reset of the cache is
@@ -104,6 +107,7 @@ final class ServiceCacheEntity: NSManagedObject {
         service.encryptedContent = sealed
         service.contentCache.store(content, sealed: sealed)
         service.encryptedMetadata = sealedMetadata
+        service.metadataCache.store(metadata, sealed: sealedMetadata)
         service.creationDate = creationDate
         service.modificationDate = modificationDate
         if let tokenPeriod {

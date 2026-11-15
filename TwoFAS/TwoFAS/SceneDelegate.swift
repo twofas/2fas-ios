@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 import Data
 
@@ -41,6 +42,21 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         self.window = window
 
+        // Nothing of the app is created before the local storage is ready
+        let status = LocalStoragePreflight.run(userVisible: true)
+        guard status == .ready else {
+            Log("SceneDelegate: local storage isn't ready, presenting Local Data Unavailable")
+            let unavailable = LocalDataUnavailableView(status: status) { [weak self] in
+                self?.startApp(in: window, connectionOptions: connectionOptions)
+            }
+            window.rootViewController = UIHostingController(rootView: unavailable)
+            window.makeKeyAndVisible()
+            return
+        }
+        startApp(in: window, connectionOptions: connectionOptions)
+    }
+
+    private func startApp(in window: UIWindow, connectionOptions: UIScene.ConnectionOptions) {
         rootViewController = RootFlowController.setAsRoot(in: window, parent: self)
         window.makeKeyAndVisible()
 
@@ -66,7 +82,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         performActionFor shortcutItem: UIApplicationShortcutItem,
         completionHandler: @escaping (Bool) -> Void
     ) {
-        guard let action = QuickAction(shortcutType: shortcutItem.type) else {
+        // While the local storage isn't ready the app doesn't exist yet
+        guard LocalStoragePreflight.isReady, let action = QuickAction(shortcutType: shortcutItem.type) else {
             completionHandler(false)
             return
         }

@@ -44,6 +44,8 @@ public final class LocalStorageCipherImpl: LocalStorageCipherAdmin {
     private let now: () -> Date
     private let lock = NSLock()
     private var status: Status?
+    /// The stored key ID at the time `status` was loaded
+    private var loadedKeyID: String?
 
     init(keyStore: LocalStorageKeyStore, canCreateKey: Bool, now: @escaping () -> Date = Date.init) {
         self.keyStore = keyStore
@@ -91,6 +93,23 @@ public final class LocalStorageCipherImpl: LocalStorageCipherAdmin {
         lock.withLock {
             keyStore.discardKeyID()
             status = .noKey(checkedAt: now())
+            loadedKeyID = nil
+        }
+    }
+
+    /// For a process that outlives a reset of the local data in the main app (an extension): `.available` and
+    /// `.keyLost` aren't re-checked on their own. Forgets the loaded key when the stored key ID is another one
+    /// (or the key was lost – it may have been replaced), so the next use loads the current key.
+    /// - Returns: Whether the key ID changed – the stores were replaced along with the key.
+    public func reloadKeyIfChanged() -> Bool {
+        lock.withLock {
+            guard let status else { return false }
+            let isChanged = keyStore.storedKeyID != loadedKeyID
+            let isLost = if case .keyLost = status { true } else { false }
+            if isChanged || isLost {
+                self.status = nil
+            }
+            return isChanged
         }
     }
 
@@ -126,6 +145,7 @@ public final class LocalStorageCipherImpl: LocalStorageCipherAdmin {
         }
         let core = LocalStorageCipherCore(dataKey: dataKey)
         status = .available(core)
+        loadedKeyID = keyStore.storedKeyID
         return core
     }
 
@@ -135,6 +155,7 @@ public final class LocalStorageCipherImpl: LocalStorageCipherAdmin {
             return status
         }
         let checkedAt = now()
+        loadedKeyID = keyStore.storedKeyID
         let status: Status = switch keyStore.load(report: { diagnostics.append($0) }) {
         case .noKey: .noKey(checkedAt: checkedAt)
         case .loaded(let dataKey): .available(LocalStorageCipherCore(dataKey: dataKey))

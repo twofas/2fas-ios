@@ -140,6 +140,38 @@ public final class Storage {
         return migrator.requiresMigrationToCurrentVersion(at: CoreDataStack.storeURL(name: storeName, directory: nil))
     }
     
+    /// Resolves an interrupted migration of the default store and migrates it when it needs it – the main app does
+    /// it before anything opens the store.
+    /// - Returns: Whether the store was migrated.
+    /// - Throws: `CoreDataMigrationError` – the store is left as it was.
+    @discardableResult
+    public static func prepareStore(cipher: LocalStorageCipher) throws -> Bool {
+        guard let migrator = makeMigrator(cipher: cipher) else { return false }
+        migrator.bundle = Bundle(for: Storage.self)
+        return try migrator.prepareStore(at: CoreDataStack.storeURL(name: storeName, directory: nil))
+    }
+    
+    /// Whether the default store holds services or auth requests sealed with the local storage key. `false` for a
+    /// missing store and for one that still waits for the migration (nothing is sealed there). A store that can't
+    /// be read counts as holding sealed data.
+    public static func storeContainsSealedData(directory: URL? = nil) -> Bool {
+        let bundle = Bundle(for: Storage.self)
+        switch CoreDataStack.storeCompatibility(name: storeName, bundle: bundle, directory: directory) {
+        case .noStore, .incompatible:
+            return false
+        case .unreadable:
+            return true
+        case .compatible:
+            let count = CoreDataStack.countObjects(
+                ofEntities: ["ServiceEntity", "AuthRequestEntity"],
+                name: storeName,
+                bundle: bundle,
+                directory: directory
+            )
+            return (count ?? 1) > 0
+        }
+    }
+    
     /// `true` only when a readable store of another model version exists. Not for a missing or unreadable store.
     public static func isStoreIncompatibleWithCurrentModel() -> Bool {
         CoreDataStack.storeCompatibility(name: storeName, bundle: Bundle(for: Storage.self)) == .incompatible

@@ -15,6 +15,21 @@
             <fetchIndexElement property="domainHash" type="Binary" order="ascending"/>
         </fetchIndex>
     </entity>
+    <entity name="DeletedSectionEntity" syncable="YES">
+        <attribute name="deletedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="sectionID" attributeType="UUID" usesScalarValueType="NO"/>
+        <fetchIndex name="bySectionID">
+            <fetchIndexElement property="sectionID" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="DeletedServiceEntity" syncable="YES">
+        <attribute name="deletedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="encryptedContent" optional="YES" attributeType="Binary"/>
+        <attribute name="secretHash" attributeType="Binary"/>
+        <fetchIndex name="bySecretHash">
+            <fetchIndexElement property="secretHash" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
     <entity name="NewsEntity" representedClassName="NewsEntity" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="icon" attributeType="String"/>

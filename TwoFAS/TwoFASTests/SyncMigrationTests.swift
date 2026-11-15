@@ -210,6 +210,25 @@ final class SyncMigrationTests: XCTestCase {
         XCTAssertNotNil(LogEntity.findLog(on: stack.context, entityID: alpha.secret))
     }
 
+    /// Added ahead of the sync of deletions, so that it needs no migration of its own
+    func testMigratedSyncStoreHasEmptyDeletedEntities() throws {
+        try makeSync5Store(at: storeURL)
+
+        let stack = openMigratedStack()
+
+        let model = try XCTUnwrap(stack.context.persistentStoreCoordinator?.managedObjectModel)
+        let expectedAttributes: [String: Set<String>] = [
+            "DeletedServiceCacheEntity": ["secretHash", "deletedAt", "encryptedContent", "encryptedMetadata"],
+            "DeletedSectionCacheEntity": ["sectionID", "deletedAt", "metadata"]
+        ]
+        for (entityName, attributes) in expectedAttributes {
+            let entity = try XCTUnwrap(model.entitiesByName[entityName], entityName)
+            XCTAssertEqual(Set(entity.attributesByName.keys), attributes, entityName)
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+            XCTAssertEqual(try stack.context.count(for: request), 0, entityName)
+        }
+    }
+
     func testMigratedSyncStoreHasNoPlaintext() throws {
         try makeSync5Store(at: storeURL)
         let oldBytes = rawStoreBytes(name: "Sync", in: directory)

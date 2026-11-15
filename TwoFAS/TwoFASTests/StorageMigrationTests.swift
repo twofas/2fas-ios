@@ -242,6 +242,24 @@ final class StorageMigrationTests: XCTestCase {
         XCTAssertEqual(try countRows(of: "AuthRequestEntity"), 2)
     }
 
+    /// Added ahead of the sync of deletions, so that it needs no migration of its own
+    func testMigratedStoreHasEmptyDeletedEntities() throws {
+        try makeTwoFAS7Store(at: storeURL)
+
+        let storage = openMigratedStorage()
+
+        let model = try XCTUnwrap(storage.coreDataStack.context.persistentStoreCoordinator?.managedObjectModel)
+        let expectedAttributes: [String: Set<String>] = [
+            "DeletedServiceEntity": ["secretHash", "deletedAt", "encryptedContent"],
+            "DeletedSectionEntity": ["sectionID", "deletedAt"]
+        ]
+        for (entityName, attributes) in expectedAttributes {
+            let entity = try XCTUnwrap(model.entitiesByName[entityName], entityName)
+            XCTAssertEqual(Set(entity.attributesByName.keys), attributes, entityName)
+            XCTAssertEqual(try countRows(of: entityName), 0, entityName)
+        }
+    }
+
     func testMigrationPreservesAuthRequestsPairingsSections() throws {
         try makeTwoFAS7Store(at: storeURL)
 

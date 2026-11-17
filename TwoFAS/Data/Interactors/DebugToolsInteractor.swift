@@ -20,6 +20,7 @@
 #if DEV
 import UIKit
 import Common
+import Protection
 
 /// Debug-only interactor exposing destructive/diagnostic actions.
 /// Included in the DEV target only.
@@ -37,6 +38,23 @@ public protocol DebugToolsInteracting: AnyObject {
     var sectionsCount: Int { get }
     var isCloudBackupEnabled: Bool { get }
     var cloudStateDescription: String { get }
+    var localStorageKeyStateDescription: String { get }
+    var localStorageKeyID: String? { get }
+    var lostKeyLaunches: Int { get }
+    var keychainUnavailableLaunchesLeft: Int { get }
+    var isProtectedDataAvailable: Bool { get }
+
+    // Local storage key – everything takes effect in the next launch
+    @discardableResult
+    func removeLocalStorageKeyFromKeychain() -> Bool
+    @discardableResult
+    func replaceLocalStorageKey() -> Bool
+    func forgetLocalStorageKeyID()
+    func setLostKeyLaunches(_ launches: Int)
+    func simulateUnavailableKeychain(launches: Int)
+    /// Saves what is pending and ends the process, like a crash would – the system may still launch the app in
+    /// the background afterwards (it doesn't after the user swipes the app away)
+    func terminateApp()
 
     // Actions
     func disableCloudBackup()
@@ -108,6 +126,39 @@ extension DebugToolsInteractor: DebugToolsInteracting {
 
     var cloudStateDescription: String {
         String(describing: mainRepository.cloudCurrentState)
+    }
+
+    var localStorageKeyStateDescription: String { LocalStoragePreflight.debugKeyStateDescription }
+    var localStorageKeyID: String? { LocalStorageKeyDebug.keyID }
+    var lostKeyLaunches: Int { LocalStoragePreflight.debugLostKeyLaunches }
+    var keychainUnavailableLaunchesLeft: Int { LocalStorageKeyDebug.unavailableLaunchesLeft }
+    var isProtectedDataAvailable: Bool { UIApplication.shared.isProtectedDataAvailable }
+
+    func removeLocalStorageKeyFromKeychain() -> Bool {
+        LocalStorageKeyDebug.removeKeyFromKeychain()
+    }
+
+    func replaceLocalStorageKey() -> Bool {
+        LocalStorageKeyDebug.replaceKeyWithNewOne()
+    }
+
+    func forgetLocalStorageKeyID() {
+        LocalStorageKeyDebug.forgetKeyID()
+    }
+
+    func setLostKeyLaunches(_ launches: Int) {
+        LocalStoragePreflight.debugSetLostKeyLaunches(launches)
+    }
+
+    func simulateUnavailableKeychain(launches: Int) {
+        LocalStorageKeyDebug.simulateUnavailableKeychain(launches: launches)
+    }
+
+    func terminateApp() {
+        mainRepository.saveStorage()
+        UserDefaults.standard.synchronize()
+        UserDefaults(suiteName: Config.groupIdentifier)?.synchronize()
+        exit(0)
     }
 
     func disableCloudBackup() {

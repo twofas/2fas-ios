@@ -51,6 +51,11 @@ struct SystemKeychainItemStore: KeychainItemStoring {
     }
 
     func read(account: String) throws -> Data? {
+        #if DEV
+        if LocalStorageKeyDebug.isKeychainUnavailableInThisLaunch {
+            throw KeychainItemError.unavailable(errSecInteractionNotAllowed)
+        }
+        #endif
         do {
             return try keychain.getData(account)
         } catch {
@@ -59,6 +64,11 @@ struct SystemKeychainItemStore: KeychainItemStoring {
     }
 
     func add(_ data: Data, account: String) throws {
+        #if DEV
+        if LocalStorageKeyDebug.isKeychainUnavailableInThisLaunch {
+            throw KeychainItemError.unavailable(errSecInteractionNotAllowed)
+        }
+        #endif
         do {
             try keychain.set(data, key: account)
         } catch {
@@ -215,3 +225,85 @@ final class LocalStorageKeyStore {
         defaults.removeObject(forKey: Self.keyIDDefaultsKey)
     }
 }
+
+// MARK: - Debug
+
+#if DEV
+/// Breaks the local storage key on purpose, so that what the app does without it can be tested. DEV builds only.
+/// Everything takes effect in the next launch – a running app keeps the key it has loaded.
+public enum LocalStorageKeyDebug {
+    static let unavailableLaunchesDefaultsKey = "com.2fas.debug.keychainUnavailableLaunches"
+
+    /// Consumed once per launch of the main app. Extensions have defaults of their own and never see it.
+    static let isKeychainUnavailableInThisLaunch: Bool = {
+        let defaults = UserDefaults.standard
+        let launches = defaults.integer(forKey: unavailableLaunchesDefaultsKey)
+        guard launches > 0 else { return false }
+        defaults.set(launches - 1, forKey: unavailableLaunchesDefaultsKey)
+        return true
+    }()
+
+    private static var groupDefaults: UserDefaults {
+        UserDefaults(suiteName: Config.groupIdentifier)! // swiftlint:disable:this force_unwrapping
+    }
+
+    private static var keychain: Keychain {
+        Keychain(service: Config.keychain)
+            .synchronizable(false)
+            .accessibility(.afterFirstUnlockThisDeviceOnly)
+    }
+
+    private static var account: String? {
+        keyID.flatMap { UUID(uuidString: $0) }.map { LocalStorageKeyStore.account(for: $0) }
+    }
+
+    /// The ID of the current key, `nil` when there is none
+    public static var keyID: String? {
+        groupDefaults.string(forKey: LocalStorageKeyStore.keyIDDefaultsKey)
+    }
+
+    /// The launches left in which Keychain will pretend it can't be used
+    public static var unavailableLaunchesLeft: Int {
+        UserDefaults.standard.integer(forKey: unavailableLaunchesDefaultsKey)
+    }
+
+    /// The key is gone, its ID stays: the app finds the key lost
+    /// - Returns: `false` when there is no key to remove.
+    @discardableResult
+    public static func removeKeyFromKeychain() -> Bool {
+        guard let account else { return false }
+        do {
+            try keychain.remove(account)
+            return true
+        } catch {
+            return false
+        }
+    }
+
+    /// Another key under the same ID: the app finds a key, but it doesn't open what is stored
+    /// - Returns: `false` when there is no key to replace or Keychain refused.
+    @discardableResult
+    public static func replaceKeyWithNewOne() -> Bool {
+        guard let account else { return false }
+        let protection = PlainDataKeyProtection()
+        do {
+            let payload = try protection.protect(SymmetricKey(size: .bits256))
+            try keychain.remove(account)
+            try keychain.set(Data([protection.kind]) + payload, key: account)
+            return true
+        } catch {
+            return false
+        }
+    }
+
+    /// The key stays in Keychain, its ID is forgotten: sealed data without a key ID
+    public static func forgetKeyID() {
+        groupDefaults.removeObject(forKey: LocalStorageKeyStore.keyIDDefaultsKey)
+    }
+
+    /// Keychain pretends it can't be used (as before the first unlock) in the next `launches` launches
+    public static func simulateUnavailableKeychain(launches: Int) {
+        UserDefaults.standard.set(max(0, launches), forKey: unavailableLaunchesDefaultsKey)
+    }
+}
+#endif

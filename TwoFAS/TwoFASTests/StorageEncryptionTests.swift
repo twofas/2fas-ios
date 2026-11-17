@@ -417,6 +417,53 @@ final class StorageEncryptionTests: XCTestCase {
 
     // MARK: - Helpers
 
+    // MARK: - Does the key open what is stored
+
+    func testStoredDataOpensWithTheKeyThatSealedIt() {
+        let cipher = makeTestCipher()
+        reopenStorage(cipher: cipher)
+        XCTAssertTrue(Storage.storedDataOpens(with: cipher, directory: directory), "Nothing stored yet")
+
+        addService(secret: "SECRETA")
+        addService(secret: "SECRETB")
+        storage.save()
+        closeStores(of: storage.coreDataStack)
+
+        XCTAssertTrue(Storage.storedDataOpens(with: cipher, directory: directory))
+        storage = makeStorage(cipher: cipher)
+    }
+
+    func testStoredDataDoesNotOpenWithAnotherKey() {
+        let cipher = makeTestCipher()
+        reopenStorage(cipher: cipher)
+        addService(secret: "SECRETA")
+        addService(secret: "SECRETB")
+        storage.save()
+        closeStores(of: storage.coreDataStack)
+
+        XCTAssertFalse(Storage.storedDataOpens(with: makeTestCipher(), directory: directory))
+        storage = makeStorage(cipher: cipher)
+    }
+
+    /// A key that can't be used now says nothing about the stored data
+    func testUnusableKeyIsNotAMismatch() {
+        let cipher = makeTestCipher()
+        reopenStorage(cipher: cipher)
+        addService(secret: "SECRETA")
+        storage.save()
+        closeStores(of: storage.coreDataStack)
+
+        let unavailable = UnusableCipher()
+        XCTAssertTrue(Storage.storedDataOpens(with: unavailable, directory: directory))
+        storage = makeStorage(cipher: cipher)
+    }
+
+    func testMissingStoreIsNotAMismatch() {
+        let empty = makeTemporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: empty) }
+        XCTAssertTrue(Storage.storedDataOpens(with: makeTestCipher(), directory: empty))
+    }
+
     private func reopenStorage(cipher: LocalStorageCipher) {
         closeStores(of: storage.coreDataStack)
         storage = makeStorage(cipher: cipher)
@@ -877,4 +924,13 @@ extension StorageEncryptionTests {
             XCTAssertNil(bytes.range(of: Data(marker.utf8)), marker)
         }
     }
+}
+
+/// A cipher whose key can't be used now
+private final class UnusableCipher: LocalStorageCipher {
+    var state: LocalStorageCipherState { .keyUnavailable }
+    func seal(_ plaintext: Data, associatedData: Data) throws -> Data { throw LocalStorageCipherError.keyUnavailable }
+    func open(_ sealed: Data, associatedData: Data) throws -> Data { throw LocalStorageCipherError.keyUnavailable }
+    func lookupHash(for value: String, context: String) throws -> Data { throw LocalStorageCipherError.keyUnavailable }
+    func prepareForWriting() throws { throw LocalStorageCipherError.keyUnavailable }
 }

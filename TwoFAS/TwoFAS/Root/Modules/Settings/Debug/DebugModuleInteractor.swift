@@ -33,6 +33,7 @@ protocol DebugModuleInteracting: AnyObject {
     func emptyTrash()
     func reloadPushToken()
     func unpairAllBrowsers()
+    func runLocalStorageKeyAction(_ action: DebugAction)
 
     func generateServices(count: Int, distributeIntoCategories: Bool)
 }
@@ -68,6 +69,19 @@ extension DebugModuleInteractor: DebugModuleInteracting {
                 .init(name: "Services (active)", value: "\(debugTools.totalServicesCount)"),
                 .init(name: "Services (trashed)", value: "\(debugTools.trashedServicesCount)"),
                 .init(name: "Sections", value: "\(debugTools.sectionsCount)")
+            ]),
+            DebugStateSection(title: "Local storage key", rows: [
+                .init(name: "Key state", value: debugTools.localStorageKeyStateDescription),
+                .init(name: "Key ID", value: debugTools.localStorageKeyID ?? "—"),
+                .init(
+                    name: "Lost-key launches",
+                    value: "\(debugTools.lostKeyLaunches) of \(LostKeyLaunchCounter.wipeThreshold)"
+                ),
+                .init(
+                    name: "Simulated unavailable launches left",
+                    value: "\(debugTools.keychainUnavailableLaunchesLeft)"
+                ),
+                .init(name: "Protected data available", value: debugTools.isProtectedDataAvailable.debugValue)
             ]),
             DebugStateSection(title: "Cloud", rows: [
                 .init(name: "Cloud enabled", value: debugTools.isCloudBackupEnabled.debugValue),
@@ -116,6 +130,23 @@ extension DebugModuleInteractor: DebugModuleInteracting {
 
     func unpairAllBrowsers() {
         debugTools.removeAllBrowserPairings()
+    }
+
+    func runLocalStorageKeyAction(_ action: DebugAction) {
+        switch action {
+        case .removeLocalStorageKey: debugTools.removeLocalStorageKeyFromKeychain()
+        case .replaceLocalStorageKey: debugTools.replaceLocalStorageKey()
+        case .forgetLocalStorageKeyID: debugTools.forgetLocalStorageKeyID()
+        case .setLostKeyCounterBeforeWipe:
+            debugTools.setLostKeyLaunches(LostKeyLaunchCounter.wipeThreshold - 1)
+        case .resetLostKeyCounter: debugTools.setLostKeyLaunches(0)
+        case .keychainUnavailableOnce: debugTools.simulateUnavailableKeychain(launches: 1)
+        case .keychainUnavailableFiveTimes: debugTools.simulateUnavailableKeychain(launches: 5)
+        default: return
+        }
+        if action.closesApp {
+            debugTools.terminateApp()
+        }
     }
 
     func generateServices(count: Int, distributeIntoCategories: Bool) {

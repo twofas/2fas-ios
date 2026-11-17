@@ -40,6 +40,7 @@ struct DebugView: View {
         TFListScreen {
             stateSections
             actionsSection
+            localStorageKeySection
             generatorSection
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -122,6 +123,34 @@ struct DebugView: View {
         ]
     }
     
+    private var localStorageKeyActions: [DebugAction] {
+        [
+            .removeLocalStorageKey,
+            .replaceLocalStorageKey,
+            .forgetLocalStorageKeyID,
+            .keychainUnavailableOnce,
+            .keychainUnavailableFiveTimes,
+            .setLostKeyCounterBeforeWipe,
+            .resetLostKeyCounter
+        ]
+    }
+
+    @ViewBuilder
+    private var localStorageKeySection: some View {
+        TFListSection(
+            title: "Local storage key",
+            footer: "The key is read when the app starts: actions that change it close the app. "
+            + "Open it again to see the effect."
+        ) {
+            ForEach(Array(localStorageKeyActions.enumerated()), id: \.element) { index, action in
+                actionRow(action)
+                if index < localStorageKeyActions.count - 1 {
+                    TFListSeparator()
+                }
+            }
+        }
+    }
+
     @ViewBuilder
     private var actionsSection: some View {
         TFListSection(title: "Actions") {

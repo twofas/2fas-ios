@@ -25,6 +25,10 @@ import Data
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     private(set) var rootViewController: RootViewController?
+    /// Starts the app once the local storage is ready. Set while the Local Data Unavailable screen is shown.
+    private var startAppWhenReady: Callback?
+    /// The local storage isn't ready and it wasn't checked as a launch opened by the user yet
+    private var needsCheckOpenedByUser = false
 
     func scene(
         _ scene: UIScene,
@@ -42,18 +46,45 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         self.window = window
 
-        // Nothing of the app is created before the local storage is ready
-        let status = LocalStoragePreflight.run(userVisible: true)
+        // Nothing of the app is created before the local storage is ready.
+        // A scene is connected also when the system launches the app in the background (a push, a background
+        // refresh), and nothing here tells such a launch from the user opening the app – the application state
+        // is `.background` in both. So this check never counts towards removing the data of a lost key and never
+        // removes it: that's left to the check made when the scene comes to the foreground.
+        let status = LocalStoragePreflight.run(userVisible: false)
         guard status == .ready else {
+            // A failed migration has nothing to count – it isn't run twice in a row
+            needsCheckOpenedByUser = status != .migrationFailed
             Log("SceneDelegate: local storage isn't ready, presenting Local Data Unavailable")
-            let unavailable = LocalDataUnavailableView(status: status) { [weak self] in
+            startAppWhenReady = { [weak self] in
+                self?.startAppWhenReady = nil
                 self?.startApp(in: window, connectionOptions: connectionOptions)
             }
-            window.rootViewController = UIHostingController(rootView: unavailable)
+            presentLocalDataUnavailable(status: status, in: window)
             window.makeKeyAndVisible()
             return
         }
         startApp(in: window, connectionOptions: connectionOptions)
+    }
+
+    private func presentLocalDataUnavailable(status: LocalStorageStatus, in window: UIWindow) {
+        let unavailable = LocalDataUnavailableView(status: status) { [weak self] in
+            self?.startAppWhenReady?()
+        }
+        window.rootViewController = UIHostingController(rootView: unavailable)
+    }
+
+    /// The scene comes to the foreground – the user sees the app – while the local storage isn't ready: checks
+    /// it again, this time as a launch opened by the user (counted once per launch).
+    private func recheckLocalStorage() {
+        guard needsCheckOpenedByUser, let startAppWhenReady, let window else { return }
+        needsCheckOpenedByUser = false
+        let status = LocalStoragePreflight.run(userVisible: true)
+        if status == .ready {
+            startAppWhenReady()
+        } else {
+            presentLocalDataUnavailable(status: status, in: window)
+        }
     }
 
     private func startApp(in window: UIWindow, connectionOptions: UIScene.ConnectionOptions) {
@@ -100,6 +131,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
+        recheckLocalStorage()
         rootViewController?.presenter.applicationWillEnterForeground()
     }
 

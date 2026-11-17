@@ -172,6 +172,44 @@ public final class Storage {
         }
     }
     
+    /// Whether the key of `cipher` is the one the stored data was sealed with. A few services are tried:
+    /// `false` only when none of them opens and the reason is the key – another key than the one that sealed
+    /// them. `true` when at least one opens, and also whenever it can't be told (no store, no services, a store
+    /// that can't be read now, a key that can't be used now).
+    ///
+    /// Without this check a key that doesn't match would only show as an empty app: every row that doesn't open
+    /// is skipped.
+    public static func storedDataOpens(with cipher: LocalStorageCipher, directory: URL? = nil) -> Bool {
+        let sampleSize = 5
+        guard let rows = CoreDataStack.fetchValues(
+            ofEntity: "ServiceEntity",
+            properties: ["encryptedContent", "secretHash"],
+            limit: sampleSize,
+            name: storeName,
+            bundle: Bundle(for: Storage.self),
+            directory: directory
+        ) else { return true }
+        var rejectedByKey = 0
+        for row in rows {
+            guard let sealed = row["encryptedContent"] as? Data, let secretHash = row["secretHash"] as? Data
+            else { continue }
+            do {
+                _ = try cipher.open(
+                    sealed,
+                    associatedData: ServiceEntity.contentCodec.associatedData(hashes: [secretHash])
+                )
+                return true
+            } catch is LocalStorageCipherError {
+                // The key can't be used now, or the row itself is damaged – says nothing about the key
+                continue
+            } catch {
+                // The seal doesn't verify: another key
+                rejectedByKey += 1
+            }
+        }
+        return rejectedByKey == 0
+    }
+    
     /// `true` only when a readable store of another model version exists. Not for a missing or unreadable store.
     public static func isStoreIncompatibleWithCurrentModel() -> Bool {
         CoreDataStack.storeCompatibility(name: storeName, bundle: Bundle(for: Storage.self)) == .incompatible

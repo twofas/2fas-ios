@@ -45,26 +45,30 @@ struct LocalDataUnavailableView: View {
 
     var body: some View {
         VStack(spacing: .zero) {
-            ScrollView {
-                AdaptiveReadableContainer {
-                    VStack(spacing: .L) {
-                        TFInfoContent(
-                            icon: .systemImage(.exclamationmarkTriangle, bounces: true),
-                            title: title,
-                            description: description
-                        )
-                        if isStillUnavailable {
-                            Text(T.Storage.stillUnavailable)
-                                .textStyle(.footnote)
-                                .foregroundStyle(.accentsBrand)
-                                .multilineTextAlignment(.center)
-                                .fixedSize(horizontal: false, vertical: true)
+            // The text sits in the middle of the space above the buttons and scrolls when it doesn't fit
+            GeometryReader { proxy in
+                ScrollView {
+                    AdaptiveReadableContainer {
+                        VStack(spacing: .L) {
+                            TFInfoContent(
+                                icon: .systemImage(.exclamationmarkTriangle, bounces: true),
+                                title: title,
+                                description: description
+                            )
+                            if isStillUnavailable {
+                                Text(T.Storage.stillUnavailable)
+                                    .textStyle(.footnote)
+                                    .foregroundStyle(.accentsBrand)
+                                    .multilineTextAlignment(.center)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
                         }
+                        .frame(maxWidth: .infinity)
                     }
-                    .frame(maxWidth: .infinity)
+                    .frame(minHeight: proxy.size.height, alignment: .center)
                 }
+                .scrollBounceBehavior(.basedOnSize)
             }
-            .scrollBounceBehavior(.basedOnSize)
 
             AdaptiveReadableContainer(verticalMargin: .zero) {
                 VStack(spacing: .L) {

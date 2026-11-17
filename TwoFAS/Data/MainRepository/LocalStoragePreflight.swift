@@ -53,14 +53,17 @@ public enum LocalStoragePreflight {
     public static var isReady: Bool { status == .ready }
 
     /// Checks the local storage, migrating the stores when they need it. Can be repeated until it returns `.ready`.
-    /// - Parameter userVisible: The app was opened by the user. Only such launches count towards removing the data
-    ///   of a lost key – once per launch.
+    /// - Parameter userVisible: The app was opened by the user (it's in the foreground or about to be). Only such
+    ///   launches count towards removing the data of a lost key – once per launch – and only they can remove it.
+    ///   A launch in the background (a push, a background refresh) never counts and never removes anything.
     @discardableResult
     public static func run(userVisible: Bool) -> LocalStorageStatus {
         // Once ready, the stores are in use
         if status == .ready { return .ready }
-        let newStatus = evaluate(countsLaunch: userVisible && !didCountLaunch)
-        if userVisible {
+        // While the device is locked, what Keychain, the defaults and the store files answer isn't trusted
+        let countsLaunch = userVisible && !didCountLaunch && UIApplication.shared.isProtectedDataAvailable
+        let newStatus = evaluate(countsLaunch: countsLaunch)
+        if countsLaunch {
             didCountLaunch = true
         }
         status = newStatus
@@ -95,6 +98,7 @@ public enum LocalStoragePreflight {
             storeNames: storeNames,
             storesRequiringMigration: storesRequiringMigration(),
             hasSealedData: { Storage.storeContainsSealedData() },
+            sealedDataOpens: { Storage.storedDataOpens(with: cipher) },
             lostKeyCounter: lostKeyCounter,
             countsLaunch: countsLaunch
         )
@@ -174,3 +178,24 @@ private final class MigrationBackgroundTask {
         identifier = .invalid
     }
 }
+
+#if DEV
+extension LocalStoragePreflight {
+    /// The consecutive launches by the user in which the key was found lost
+    static var debugLostKeyLaunches: Int { lostKeyCounter.count }
+
+    static func debugSetLostKeyLaunches(_ launches: Int) {
+        lostKeyCounter.reset()
+        (0..<max(0, launches)).forEach { _ in lostKeyCounter.increment() }
+    }
+
+    static var debugKeyStateDescription: String {
+        switch protection.localStorageCipher.state {
+        case .noKey: "noKey"
+        case .available: "available"
+        case .keyLost: "keyLost"
+        case .keyUnavailable: "keyUnavailable"
+        }
+    }
+}
+#endif

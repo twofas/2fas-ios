@@ -257,6 +257,44 @@ public final class CoreDataStack {
         }
     }
 
+    /// The values of `properties` of up to `limit` objects of `entityName`, read straight from the store file
+    /// (read-only, no stack). `nil` when the store isn't there, isn't of the current model or can't be read.
+    public static func fetchValues(
+        ofEntity entityName: String,
+        properties: [String],
+        limit: Int,
+        name: String,
+        bundle: Bundle,
+        directory: URL? = nil
+    ) -> [[String: Any]]? {
+        guard storeCompatibility(name: name, bundle: bundle, directory: directory) == .compatible else { return nil }
+        let coordinator = NSPersistentStoreCoordinator(
+            managedObjectModel: NSManagedObjectModel.currentModel(name: name, bundle: bundle)
+        )
+        do {
+            let store = try coordinator.addPersistentStore(
+                ofType: NSSQLiteStoreType,
+                configurationName: nil,
+                at: storeURL(name: name, directory: directory),
+                options: [NSReadOnlyPersistentStoreOption: true]
+            )
+            defer { try? coordinator.remove(store) }
+            let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+            context.persistentStoreCoordinator = coordinator
+            var values: [[String: Any]]?
+            context.performAndWait {
+                let request = NSFetchRequest<NSDictionary>(entityName: entityName)
+                request.resultType = .dictionaryResultType
+                request.propertiesToFetch = properties
+                request.fetchLimit = limit
+                values = (try? context.fetch(request))?.compactMap { $0 as? [String: Any] }
+            }
+            return values
+        } catch {
+            return nil
+        }
+    }
+
     // MARK: - Private
 
     private static func describe(_ error: Error) -> String {

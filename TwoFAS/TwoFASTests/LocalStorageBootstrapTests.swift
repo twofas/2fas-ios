@@ -86,6 +86,7 @@ final class LocalStorageBootstrapTests: XCTestCase {
         _ cipher: FakeCipherAdmin,
         requiringMigration: [String] = [],
         hasSealedData: Bool = true,
+        sealedDataOpens: Bool = true,
         countsLaunch: Bool = true
     ) -> LocalStorageBootstrapResult {
         LocalStorageBootstrap.prepare(
@@ -93,6 +94,7 @@ final class LocalStorageBootstrapTests: XCTestCase {
             storeNames: storeNames,
             storesRequiringMigration: requiringMigration,
             hasSealedData: { hasSealedData },
+            sealedDataOpens: { sealedDataOpens },
             lostKeyCounter: makeCounter(),
             countsLaunch: countsLaunch,
             directory: directory
@@ -225,6 +227,125 @@ final class LocalStorageBootstrapTests: XCTestCase {
         for _ in 0..<5 {
             XCTAssertEqual(prepareCounting(cipher, countsLaunch: false), .keyLostPending(launchesLeft: 2))
         }
+        XCTAssertEqual(existingFiles(), files)
+    }
+
+    /// A push or a background refresh: whatever the key store answers and however many times, nothing is
+    /// counted and nothing is removed
+    func testLaunchesInTheBackgroundNeverCountOrRemove() {
+        createFiles()
+        let cipher = FakeCipherAdmin(state: .keyLost)
+
+        for _ in 0..<10 {
+            XCTAssertEqual(prepareCounting(cipher, countsLaunch: false), .keyLostPending(launchesLeft: 3))
+        }
+        XCTAssertEqual(makeCounter().count, 0)
+        XCTAssertEqual(existingFiles(), files)
+        XCTAssertEqual(cipher.discardCount, 0)
+    }
+
+    /// The counter at the threshold already (left by an interrupted launch): still only a launch opened by the
+    /// user removes the stores
+    func testCounterAtTheThresholdDoesNotRemoveInTheBackground() {
+        createFiles()
+        let cipher = FakeCipherAdmin(state: .keyLost)
+        let counter = makeCounter()
+        (0..<LostKeyLaunchCounter.wipeThreshold + 2).forEach { _ in counter.increment() }
+
+        XCTAssertEqual(prepareCounting(cipher, countsLaunch: false), .keyLostPending(launchesLeft: 1))
+        XCTAssertEqual(existingFiles(), files)
+        XCTAssertEqual(cipher.discardCount, 0)
+
+        XCTAssertEqual(prepareCounting(cipher), .wipedStores)
+        XCTAssertEqual(existingFiles(), [])
+    }
+
+    /// Two launches by the user with background launches in between: the third launch by the user removes
+    func testBackgroundLaunchesBetweenUserLaunchesAreIgnored() {
+        createFiles()
+        let cipher = FakeCipherAdmin(state: .keyLost)
+
+        XCTAssertEqual(prepareCounting(cipher), .keyLostPending(launchesLeft: 2))
+        XCTAssertEqual(prepareCounting(cipher, countsLaunch: false), .keyLostPending(launchesLeft: 2))
+        XCTAssertEqual(prepareCounting(cipher), .keyLostPending(launchesLeft: 1))
+        XCTAssertEqual(prepareCounting(cipher, countsLaunch: false), .keyLostPending(launchesLeft: 1))
+        XCTAssertEqual(prepareCounting(cipher, countsLaunch: false), .keyLostPending(launchesLeft: 1))
+        XCTAssertEqual(existingFiles(), files)
+
+        XCTAssertEqual(prepareCounting(cipher), .wipedStores)
+    }
+
+    /// Keychain that can't be used never leads to removing anything, however many launches
+    func testUnavailableKeyNeverRemoves() {
+        createFiles()
+        let cipher = FakeCipherAdmin(state: .keyUnavailable)
+
+        for _ in 0..<10 {
+            XCTAssertEqual(prepareCounting(cipher), .ready)
+        }
+        XCTAssertEqual(makeCounter().count, 0)
+        XCTAssertEqual(existingFiles(), files)
+        XCTAssertEqual(cipher.discardCount, 0)
+    }
+
+    // MARK: - A key that doesn't open the stored data
+
+    func testKeyThatDoesNotOpenTheDataIsHandledLikeALostOne() {
+        createFiles()
+        let cipher = FakeCipherAdmin(state: .available)
+
+        XCTAssertEqual(prepareCounting(cipher, sealedDataOpens: false), .keyLostPending(launchesLeft: 2))
+        XCTAssertEqual(prepareCounting(cipher, sealedDataOpens: false), .keyLostPending(launchesLeft: 1))
+        XCTAssertEqual(existingFiles(), files)
+        XCTAssertEqual(cipher.discardCount, 0)
+
+        XCTAssertEqual(prepareCounting(cipher, sealedDataOpens: false), .wipedStores)
+        XCTAssertEqual(existingFiles(), [])
+        // The key goes with the stores – a new one is created for the new data
+        XCTAssertEqual(cipher.discardCount, 1)
+        XCTAssertEqual(makeCounter().count, 0)
+    }
+
+    func testKeyThatDoesNotOpenTheDataNeverRemovesInTheBackground() {
+        createFiles()
+        let cipher = FakeCipherAdmin(state: .available)
+
+        for _ in 0..<10 {
+            XCTAssertEqual(
+                prepareCounting(cipher, sealedDataOpens: false, countsLaunch: false),
+                .keyLostPending(launchesLeft: 3)
+            )
+        }
+        XCTAssertEqual(makeCounter().count, 0)
+        XCTAssertEqual(existingFiles(), files)
+        XCTAssertEqual(cipher.discardCount, 0)
+    }
+
+    func testDataThatOpensAgainResetsTheCounter() {
+        createFiles()
+        let cipher = FakeCipherAdmin(state: .available)
+        XCTAssertEqual(prepareCounting(cipher, sealedDataOpens: false), .keyLostPending(launchesLeft: 2))
+
+        XCTAssertEqual(prepareCounting(cipher, sealedDataOpens: true), .ready)
+        XCTAssertEqual(makeCounter().count, 0)
+        XCTAssertEqual(existingFiles(), files)
+    }
+
+    /// The watch and the extensions: no counter, the check isn't made
+    func testWithoutACounterTheDataIsNotChecked() {
+        createFiles()
+        let cipher = FakeCipherAdmin(state: .available)
+
+        let result = LocalStorageBootstrap.prepare(
+            cipher: cipher,
+            storeNames: storeNames,
+            sealedDataOpens: {
+                XCTFail("Not asked without a counter")
+                return false
+            },
+            directory: directory
+        )
+        XCTAssertEqual(result, .ready)
         XCTAssertEqual(existingFiles(), files)
     }
 

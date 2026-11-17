@@ -34,5 +34,32 @@ public struct LastPassData: Decodable {
         public let digits: Int
         public let creationTimestamp: Date
         public let algorithm: String
+
+        enum CodingKeys: String, CodingKey {
+            case issuerName
+            case userName
+            case secret
+            case timeStep
+            case digits
+            case creationTimestamp
+            case algorithm
+        }
+
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            issuerName = try container.decode(String.self, forKey: .issuerName)
+            userName = try container.decode(String.self, forKey: .userName)
+            secret = try container.decode(String.self, forKey: .secret)
+            timeStep = try container.decode(Int.self, forKey: .timeStep)
+            digits = try container.decode(Int.self, forKey: .digits)
+            algorithm = try container.decode(String.self, forKey: .algorithm)
+
+            // Unix epoch. iOS exports use seconds, values too large for that are treated as milliseconds
+            let timestamp = try container.decode(Double.self, forKey: .creationTimestamp)
+            let millisecondsThreshold: Double = 100_000_000_000
+            creationTimestamp = Date(
+                timeIntervalSince1970: timestamp >= millisecondsThreshold ? timestamp / 1000 : timestamp
+            )
+        }
     }
 }

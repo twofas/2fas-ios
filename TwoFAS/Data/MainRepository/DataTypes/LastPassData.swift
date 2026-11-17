@@ -20,8 +20,8 @@
 import Foundation
 
 public struct LastPassData: Decodable {
-    public let localDeviceId: String
-    public let deviceName: String
+    public let localDeviceId: String?
+    public let deviceName: String?
     public let version: Int
     
     public let accounts: [Account]

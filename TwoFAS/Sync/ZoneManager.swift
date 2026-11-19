@@ -27,6 +27,8 @@ import CommonWatch
 
 protocol ZoneManaging: AnyObject {
     var inOldVault: Bool { get }
+    /// The current zone holds sealed records (`Config.vaultV3`)
+    var usesSealedRecords: Bool { get }
     var currentZoneID: CKRecordZone.ID { get }
 }
 
@@ -40,6 +42,10 @@ final class ZoneManager: ZoneManaging {
     
     var inOldVault: Bool {
         currentZoneID.zoneName == Config.vaultV1
+    }
+    
+    var usesSealedRecords: Bool {
+        currentZoneID.zoneName == Config.vaultV3
     }
     
     func setCurrentZoneID(_ zoneName: String) {

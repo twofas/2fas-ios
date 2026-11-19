@@ -34,6 +34,8 @@ protocol MainModuleInteracting: AnyObject {
     var showMissingKey: ((CloudState.NotAvailableReason.EncryptionError) -> Void)? { get set }
 
     func switchCloudEncryptionToSystemKey()
+    /// Reports the encryption problem the backup is stopped with now (if any) again
+    func reportCurrentSyncProblem()
     func enableBackup()
 
     var secretSyncError: ((String) -> Void)? { get set }
@@ -188,6 +190,10 @@ extension MainModuleInteractor: MainModuleInteracting {
 
     func switchCloudEncryptionToSystemKey() {
         syncMigrationInteractor.switchLocallyToUseSystemPassword()
+    }
+
+    func reportCurrentSyncProblem() {
+        syncMigrationInteractor.reportCurrentSyncProblem()
     }
 
     func enableBackup() {

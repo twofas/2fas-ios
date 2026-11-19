@@ -39,8 +39,12 @@ protocol MainFlowControlling: AnyObject {
     func toNeverVersionOfiCloud()
     func toMigrationEndedSuccessfuly()
     func toMigrationError(_ error: CloudState.NotAvailableReason)
-    func toCantCreateEncryptionElements()
-    func toMissingKey(_ error: CloudState.NotAvailableReason.EncryptionError)
+    /// - Returns: `false` when it couldn't be shown now – something else is presented.
+    @discardableResult
+    func toCantCreateEncryptionElements() -> Bool
+    /// - Returns: `false` when it couldn't be shown now – something else is presented.
+    @discardableResult
+    func toMissingKey(_ error: CloudState.NotAvailableReason.EncryptionError) -> Bool
 }
 
 final class MainFlowController: FlowController {
@@ -179,22 +183,26 @@ extension MainFlowController: MainFlowControlling {
         syncMigrationHandler?(.error(error))
     }
 
-    func toCantCreateEncryptionElements() {
+    @discardableResult
+    func toCantCreateEncryptionElements() -> Bool {
         let alertTitle = T.Commons.error
-        let alertMessage = "Can't create encryption elements. Try to reboot the device. If problem persist check if you have disk space and iCloud Keychain is enabled"
+        let alertMessage = T.Backup.cantCreateKeysMsg
         
         let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
         let okButton = UIAlertAction(title: T.Commons.ok, style: .default)
         
         alertController.addAction(okButton)
-        guard viewController.presentedViewController == nil else { return }
+        guard viewController.presentedViewController == nil else { return false }
         
         viewController.present(alertController, animated: true, completion: nil)
+        return true
     }
 
-    func toMissingKey(_ error: CloudState.NotAvailableReason.EncryptionError) {
-        guard viewController.presentedViewController == nil else { return }
+    @discardableResult
+    func toMissingKey(_ error: CloudState.NotAvailableReason.EncryptionError) -> Bool {
+        guard viewController.presentedViewController == nil else { return false }
         MissingKeyFlowController.present(on: viewController, parent: self, encryptionError: error)
+        return true
     }
 }
 

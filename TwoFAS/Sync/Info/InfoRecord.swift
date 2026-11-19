@@ -77,6 +77,7 @@ final class InfoRecord: Equatable {
         allowedDevices: [String],
         enableWatch: Bool,
         encryptionReference: Data,
+        encryptionInfo: SyncCloudEncryptionInfo,
         modificationDate: Date
     ) -> CKRecord? {
         guard let decoder = try? NSKeyedUnarchiver(forReadingFrom: metadata) else { return nil }
@@ -91,6 +92,7 @@ final class InfoRecord: Equatable {
             allowedDevices: allowedDevices,
             enableWatch: enableWatch,
             encryptionReference: encryptionReference,
+            encryptionInfo: encryptionInfo,
             modificationDate: modificationDate
         )
         
@@ -104,6 +106,7 @@ final class InfoRecord: Equatable {
         allowedDevices: [String],
         enableWatch: Bool,
         encryptionReference: Data,
+        encryptionInfo: SyncCloudEncryptionInfo,
         modificationDate: Date
     ) -> CKRecord? {
         let record = CKRecord(recordType: RecordType.info.rawValue, recordID: recordID(with: "", zoneID: zoneID))
@@ -115,6 +118,7 @@ final class InfoRecord: Equatable {
             allowedDevices: allowedDevices,
             enableWatch: enableWatch,
             encryptionReference: encryptionReference,
+            encryptionInfo: encryptionInfo,
             modificationDate: modificationDate
         )
         
@@ -128,6 +132,7 @@ final class InfoRecord: Equatable {
         allowedDevices: [String],
         enableWatch: Bool,
         encryptionReference: Data,
+        encryptionInfo: SyncCloudEncryptionInfo,
         modificationDate: Date
     ) {
         record[.version] = version as CKRecordValue

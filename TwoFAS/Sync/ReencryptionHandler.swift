@@ -25,6 +25,10 @@ final class ReencryptionHandler {
     var didStartReencryption: Callback?
     var didFinishReencryption: Callback?
     
+    /// Gives every record of a vault of sealed records, sealed with the current sync key. `nil` in the older
+    /// vaults, whose service records are encrypted field by field.
+    var sealedRecordsForReencryption: (() -> [CKRecord]?)?
+    
     private var shouldReencrypt = false
     private var isReencrypting = false
     
@@ -62,7 +66,7 @@ extension ReencryptionHandler: ReencryptionHandling {
             didStartReencryption?()
         }
         
-        var listForCreationModification = listV3ForModification() ?? []
+        var listForCreationModification = sealedRecordsForReencryption?() ?? listV3ForModification() ?? []
         infoHandler.update(
             version: Info.version,
             encryption: syncEncryptionHandler.encryptionType,

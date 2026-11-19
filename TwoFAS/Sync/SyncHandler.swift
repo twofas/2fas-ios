@@ -39,6 +39,14 @@ final class SyncHandler {
     private let localReset: SyncLocalReset
     private let isSyncDeferred: Bool
     private let syncContext: () -> NSManagedObjectContext
+    private let infoHandler: InfoHandler
+    private let zoneManager: ZoneManaging
+    private let syncEncryptionHandler: SyncEncryptionHandling
+    
+    /// Called when this device starts writing a vault of sealed records it migrated the data to
+    var willStartSealedVault: Callback?
+    /// Called after a completed sync with the current vault while the older vaults weren't retired yet
+    var retireOldVaults: Callback?
     
     private var isSyncing = false
     private var applyingChanges = false
@@ -72,8 +80,14 @@ final class SyncHandler {
         reencryptionHandler: ReencryptionHandling,
         localReset: SyncLocalReset,
         isSyncDeferred: Bool,
-        syncContext: @autoclosure @escaping () -> NSManagedObjectContext
+        syncContext: @autoclosure @escaping () -> NSManagedObjectContext,
+        infoHandler: InfoHandler,
+        zoneManager: ZoneManaging,
+        syncEncryptionHandler: SyncEncryptionHandling
     ) {
+        self.infoHandler = infoHandler
+        self.zoneManager = zoneManager
+        self.syncEncryptionHandler = syncEncryptionHandler
         self.itemHandler = itemHandler
         self.commonItemHandler = commonItemHandler
         self.logHandler = logHandler
@@ -274,6 +288,12 @@ final class SyncHandler {
         
         itemHandler.cleanUp()
         
+        guard prepareIdentifierKey() else {
+            abortSync()
+            handleNotificationCompletionHandlerError()
+            return
+        }
+        
         Log("SyncHandler -  method: fetch finished successfuly - continuing to sync with data", module: .cloudSync)
         guard mergeHandler.hasChanges else {
             Log("SyncHandler - No logs with changes. Exiting", module: .cloudSync)
@@ -300,13 +320,35 @@ final class SyncHandler {
     private func migrateIfNeeded() {
         applyingChanges = false
         if migrationHandler.migrateIfNeeded() {
-            saveCloudDataToLocalDatabase()                  
+            // The old vault was read – everything it had is set here and then sent to the new one as new items.
+            saveCloudDataToLocalDatabase()
+            let carriedOver = infoHandler.carriedOver
             resetStack()
+            infoHandler.prepareForNewVault(carriedOver)
+            willStartSealedVault?()
             commonItemHandler.logFirstImport()
             synchronize()
         } else {
             syncCompleted()
         }
+    }
+    
+    /// In a vault of sealed records every record is named with the identifier key. The cloud gets its first one
+    /// from the device that starts the vault (clean, or migrated to) – with the Info record that carries it.
+    /// - Returns: `false` when there's no key and none could be created – nothing can be merged then.
+    private func prepareIdentifierKey() -> Bool {
+        guard zoneManager.usesSealedRecords else { return true }
+        if syncEncryptionHandler.identifierKey != nil { return true }
+        guard syncEncryptionHandler.createIdentifierKeyIfNeeded() else {
+            Log("SyncHandler - No identifier key for the sealed records", module: .cloudSync, severity: .error)
+            return false
+        }
+        Log("SyncHandler - Created the identifier key", module: .cloudSync)
+        if infoHandler.metadata != nil {
+            // The Info record is in the cloud already – it has to be sent again, with the key
+            logHandler.log(entityID: Info.id, actionType: .modified, kind: .info)
+        }
+        return true
     }
     
     private func changesSavedSuccessfuly() {
@@ -356,6 +398,11 @@ final class SyncHandler {
         
         reencryptionHandler.syncSucceded()
         finishedSync?()
+        
+        // The data is in the current vault and this device is in sync with it – the older vaults can go
+        if zoneManager.usesSealedRecords, !ConstStorage.oldVaultsRetired {
+            retireOldVaults?()
+        }
     }
     
     private func handleNotificationCompletionHandlerError() {

@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import CloudKit
 
 enum RecordType: String {
     case service1 = "ServiceRecord"
@@ -25,6 +26,10 @@ enum RecordType: String {
     case service3 = "ServiceRecord3"
     case info = "CloudInfo"
     case section = "SectionRecord"
+    case service4 = "ServiceRecord4"
+    case section2 = "SectionRecord2"
+    case deletedService = "DeletedServiceRecord"
+    case deletedSection = "DeletedSectionRecord"
 }
 
 extension RecordType {
@@ -35,6 +40,24 @@ extension RecordType {
         case .service3: ServiceRecord3.self
         case .info: InfoRecord.self
         case .section: SectionRecord.self
+        case .service4, .section2, .deletedService, .deletedSection: SealedRecordIDGenerator.self
         }
+    }
+}
+
+extension RecordType {
+    /// A record whose content is one sealed field and whose name is a derived identifier
+    var isSealed: Bool {
+        switch self {
+        case .service4, .section2, .deletedService, .deletedSection: true
+        case .service1, .service2, .service3, .info, .section: false
+        }
+    }
+}
+
+/// The name of a sealed record is an identifier that was already derived (`SyncIdentifierKey`)
+final class SealedRecordIDGenerator: RecordIDGenerator {
+    static func recordID(with identifier: String, zoneID: CKRecordZone.ID) -> CKRecord.ID {
+        CKRecord.ID(recordName: identifier, zoneID: zoneID)
     }
 }

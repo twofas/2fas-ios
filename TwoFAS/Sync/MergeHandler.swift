@@ -72,6 +72,12 @@ extension MergeHandler {
         if let deleted = changes[.deleted] {
             let deletedEntities: [EntityOfKind] = deleted.compactMap { item in
                 guard let type = RecordType(rawValue: item.kind) else { return nil }
+                // The record of a deletion is removed whenever its item exists again, in case there is one –
+                // asking the cloud to delete a record it doesn't have would fail the whole operation
+                if type == .deletedService || type == .deletedSection {
+                    guard itemHandler.findItemForEntryID(item.entityID, type: type, in: currentCache) != nil
+                    else { return nil }
+                }
                 return (entityID: item.entityID, type: type)
             }
             deleteRecordsIDs += itemHandler.findItemsRecordIDs(for: deletedEntities, zoneID: zoneManager.currentZoneID)

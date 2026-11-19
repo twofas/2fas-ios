@@ -153,6 +153,7 @@ final class InfoHandler {
             allowedDevices: devices,
             enableWatch: enableWatch,
             encryptionReference: encryptionReference,
+            encryptionInfo: syncEncryptionHandler.cloudEncryptionInfo(cached: encryptionInfo),
             modificationDate: date
         )
     }
@@ -172,6 +173,7 @@ final class InfoHandler {
             allowedDevices: allowedDevices,
             enableWatch: enableWatch,
             encryptionReference: encryptionReference,
+            encryptionInfo: encryptionInfo,
             modificationDate: modificationDate
         )
     }

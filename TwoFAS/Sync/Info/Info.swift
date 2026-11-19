@@ -21,7 +21,11 @@ import Foundation
 
 struct Info: Hashable {
     static let id = "info"
-    static let version: Int = 3
+    /// 4 – sealed records in `Config.vaultV3`, with the records of deletions
+    static let version: Int = 4
+    /// The version left in the Info record of a vault that was retired: no app version syncs with such a vault –
+    /// the ones that still use it ask for an update
+    static let retiredVersion: Int = 1000
     
     enum Encryption: String {
         case system

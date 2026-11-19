@@ -23,13 +23,17 @@ import Common
 
 protocol MissingKeyModuleInteracting: AnyObject {
     func eraseBackupAndCreateNewKeys(completion: @escaping () -> Void)
+    /// - Returns: `false` when the password isn't the one the iCloud backup is protected with.
+    func recoverWithPassword(_ password: String) -> Bool
 }
 
 final class MissingKeyModuleInteractor {
     private let cloudBackup: CloudBackupStateInteracting
+    private let syncMigrationInteractor: SyncMigrationInteracting
 
-    init(cloudBackup: CloudBackupStateInteracting) {
+    init(cloudBackup: CloudBackupStateInteracting, syncMigrationInteractor: SyncMigrationInteracting) {
         self.cloudBackup = cloudBackup
+        self.syncMigrationInteractor = syncMigrationInteractor
     }
 }
 
@@ -39,5 +43,9 @@ extension MissingKeyModuleInteractor: MissingKeyModuleInteracting {
             self?.cloudBackup.createEncryptionElements()
             completion()
         }
+    }
+
+    func recoverWithPassword(_ password: String) -> Bool {
+        syncMigrationInteractor.recoverMissingUserKey(password)
     }
 }

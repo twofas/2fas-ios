@@ -53,7 +53,9 @@ struct CommonDataIndex: Equatable {
         case .section: return (lhs.item as? CommonSectionData) == (rhs.item as? CommonSectionData)
         case .service1: return (lhs.item as? ServiceData) == (rhs.item as? ServiceData)
         case .service2: return (lhs.item as? ServiceData) == (rhs.item as? ServiceData)
-        case .service3: return (lhs.item as? ServiceData) == (rhs.item as? ServiceData)
+        case .service3, .service4: return (lhs.item as? ServiceData) == (rhs.item as? ServiceData)
+        case .section2: return (lhs.item as? CommonSectionData) == (rhs.item as? CommonSectionData)
+        case .deletedService, .deletedSection: return (lhs.item as? SyncDeletion) == (rhs.item as? SyncDeletion)
         case .info:
             guard let lhsCKRecord = lhs.item as? CKRecord, let rhsCKRecord = rhs.item as? CKRecord,
                   lhsCKRecord.recordType == rhsCKRecord.recordType,
@@ -75,7 +77,9 @@ struct CommonDataIndex: Equatable {
         case .section: date = (item as? CommonSectionData)?.comparisionDate
         case .service1: date = (item as? ServiceData)?.comparisionDate
         case .service2: date = (item as? ServiceData)?.comparisionDate
-        case .service3: date = (item as? ServiceData)?.comparisionDate
+        case .service3, .service4: date = (item as? ServiceData)?.comparisionDate
+        case .section2: date = (item as? CommonSectionData)?.comparisionDate
+        case .deletedService, .deletedSection: date = (item as? SyncDeletion)?.deletedAt
         case .info: date = {
             guard let record = item as? CKRecord, RecordType(rawValue: record.recordType) == .info else { return nil }
             return InfoRecord(record: record).modificationDate
@@ -89,7 +93,9 @@ struct CommonDataIndex: Equatable {
         case .section: return (item as? CommonSectionData) == (other as? CommonSectionData)
         case .service1: return (item as? ServiceData) == (other as? ServiceData)
         case .service2: return (item as? ServiceData) == (other as? ServiceData)
-        case .service3: return (item as? ServiceData) == (other as? ServiceData)
+        case .service3, .service4: return (item as? ServiceData) == (other as? ServiceData)
+        case .section2: return (item as? CommonSectionData) == (other as? CommonSectionData)
+        case .deletedService, .deletedSection: return (item as? SyncDeletion) == (other as? SyncDeletion)
         case .info:
             guard let lhsCKRecord = item as? CKRecord, let rhsCKRecord = other as? CKRecord,
                   lhsCKRecord.recordType == rhsCKRecord.recordType,

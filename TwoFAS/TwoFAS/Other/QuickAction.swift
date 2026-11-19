@@ -24,19 +24,19 @@ import Data
 extension QuickAction {
     var title: String {
         switch self {
-        case .backup: return T.Shortcuts.backupTitle
-        case .support: return T.Shortcuts.supportTitle
-        case .pair: return T.Shortcuts.pairTitle
-        case .search: return T.Shortcuts.searchTitle
+        case .backup: T.Shortcuts.backupTitle
+        case .support: T.Shortcuts.supportTitle
+        case .pair: T.Shortcuts.pairTitle
+        case .search: T.Shortcuts.searchTitle
         }
     }
 
     var icon: IconName {
         switch self {
-        case .backup: return .doc
-        case .support: return .questionmarkCircle
-        case .pair: return .plus
-        case .search: return .magnifyingglass
+        case .backup: .exclamationmarkTriangleFill
+        case .support: .questionmarkCircle
+        case .pair: .plus
+        case .search: .magnifyingglass
         }
     }
 

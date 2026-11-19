@@ -1617,8 +1617,8 @@ internal enum T {
     internal static let writeAReview = T.tr("Localizable", "settings__write_a_review", fallback: "Write a review")
   }
   internal enum Shortcuts {
-    /// DON'T DELETE ME without full backup
-    internal static let backupTitle = T.tr("Localizable", "shortcuts__backup_title", fallback: "DON'T DELETE ME without full backup")
+    /// CAUTION! Risk of data loss!
+    internal static let backupTitle = T.tr("Localizable", "shortcuts__backup_title", fallback: "CAUTION! Risk of data loss!")
     /// Pair service
     internal static let pairTitle = T.tr("Localizable", "shortcuts__pair_title", fallback: "Pair service")
     /// Search for service

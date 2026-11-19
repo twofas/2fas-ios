@@ -10,11 +10,10 @@
     </entity>
     <entity name="DeletedServiceCacheEntity" syncable="YES">
         <attribute name="deletedAt" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="encryptedContent" optional="YES" attributeType="Binary"/>
         <attribute name="encryptedMetadata" optional="YES" attributeType="Binary"/>
-        <attribute name="secretHash" attributeType="Binary"/>
-        <fetchIndex name="bySecretHash">
-            <fetchIndexElement property="secretHash" type="Binary" order="ascending"/>
+        <attribute name="identifier" attributeType="Binary"/>
+        <fetchIndex name="byIdentifier">
+            <fetchIndexElement property="identifier" type="Binary" order="ascending"/>
         </fetchIndex>
     </entity>
     <entity name="LogEntity" representedClassName="LogEntity" syncable="YES">

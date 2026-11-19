@@ -218,7 +218,7 @@ final class SyncMigrationTests: XCTestCase {
 
         let model = try XCTUnwrap(stack.context.persistentStoreCoordinator?.managedObjectModel)
         let expectedAttributes: [String: Set<String>] = [
-            "DeletedServiceCacheEntity": ["secretHash", "deletedAt", "encryptedContent", "encryptedMetadata"],
+            "DeletedServiceCacheEntity": ["identifier", "deletedAt", "encryptedMetadata"],
             "DeletedSectionCacheEntity": ["sectionID", "deletedAt", "metadata"]
         ]
         for (entityName, attributes) in expectedAttributes {

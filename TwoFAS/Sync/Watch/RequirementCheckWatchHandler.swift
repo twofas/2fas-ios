@@ -61,7 +61,7 @@ extension RequirementCheckWatchHandler: RequirementCheckHandling {
                     return true
                 }
                 
-                encryptionHandler.setEncryptedUserKey(encryptedUserKey)
+                encryptionHandler.setEncryptedUserKey(encryptedUserKey, isLegacyTicket: info.version < Info.version)
                 
                 if !areEncryptionReferenceSame(info) { // password changed - pair again!
                     Log("RequirementCheckHandler - STOP: Different encryption reference!", module: .cloudSync)

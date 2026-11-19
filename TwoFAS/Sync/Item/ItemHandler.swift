@@ -38,6 +38,7 @@ final class ItemHandler {
     private let serviceRecordEncryptionHandler: ServiceRecordEncryptionHandler
     private let syncEncryptionHandler: SyncEncryptionHandling
     private let zoneManager: ZoneManaging
+    private let deletionHandler: DeletionCacheHandler
     
     private let encryption = ExchangeFileEncryption()
     private let embedded = Keys.Sync.key.decrypt()
@@ -52,8 +53,10 @@ final class ItemHandler {
         logHandler: LogHandler,
         serviceRecordEncryptionHandler: ServiceRecordEncryptionHandler,
         syncEncryptionHandler: SyncEncryptionHandling,
-        zoneManager: ZoneManaging
+        zoneManager: ZoneManaging,
+        deletionHandler: DeletionCacheHandler
     ) {
+        self.deletionHandler = deletionHandler
         self.sectionHandler = sectionHandler
         self.serviceHandler = serviceHandler
         self.infoHandler = infoHandler
@@ -71,7 +74,8 @@ extension ItemHandler {
     var isCacheEmpty: Bool {
         sectionHandler.listAllCommonSection().isEmpty &&
         serviceHandler.listAll().isEmpty &&
-        infoHandler.metadata == nil
+        infoHandler.metadata == nil &&
+        deletionHandler.isEmpty
     }
     
     func commit() {
@@ -103,6 +107,7 @@ extension ItemHandler {
         sectionHandler.purge()
         serviceHandler.purge()
         infoHandler.purge()
+        deletionHandler.purge()
     }
     
     func listAllCommonItems() -> [RecordType: [Any]] {
@@ -111,11 +116,24 @@ extension ItemHandler {
         let recordType: RecordType = zoneManager.inOldVault ? .service2 : .service3
         value[recordType] = serviceHandler.listAll()
         value[RecordType.info] = infoHandler.prepareForSendoffCachedVersion()
+        if zoneManager.usesSealedRecords {
+            value[RecordType.deletedService] = deletionHandler.listServices()
+            value[RecordType.deletedSection] = cachedSectionDeletions()
+        }
         return value
     }
     
     func findItemsRecordIDs(for items: [EntityOfKind], zoneID: CKRecordZone.ID) -> [CKRecord.ID] {
-        items.map({ $0.type.recordIDGenerator.recordID(with: $0.entityID, zoneID: zoneID) })
+        guard zoneManager.usesSealedRecords else {
+            return items.map({ $0.type.recordIDGenerator.recordID(with: $0.entityID, zoneID: zoneID) })
+        }
+        return items.compactMap { item in
+            guard let recordName = sealedRecordName(entityID: item.entityID, type: item.type) else {
+                Log("ItemHandler - no record name for an item of \(item.type)", module: .cloudSync, severity: .error)
+                return nil
+            }
+            return CKRecord.ID(recordName: recordName, zoneID: zoneID)
+        }
     }
     
     func filterDeleted(from items: [RecordType: [Any]], deleted: [EntityOfKind]) -> [RecordType: [Any]] {
@@ -127,6 +145,10 @@ extension ItemHandler {
         
         items[.section] = (items[.section] as? [CommonSectionData])?.filter({ !deletedSections.contains($0.sectionID) })
         items[recordType] = (items[recordType] as? [ServiceData])?.filter({ !deletedServices.contains($0.secret) })
+        for type in [RecordType.deletedService, .deletedSection] {
+            let names = deleted.filter({ $0.type == type }).map({ $0.entityID })
+            items[type] = (items[type] as? [SyncDeletion])?.filter({ !names.contains($0.recordName) })
+        }
         
         return items
     }
@@ -138,6 +160,7 @@ extension ItemHandler {
             case .service2: return (item as? ServiceData)?.secret
             case .service3: return (item as? ServiceData)?.secret
             case .info: return ""
+            case .deletedService, .deletedSection: return (item as? SyncDeletion)?.recordName
             default: return nil
             }
         }() else { return nil }
@@ -170,6 +193,12 @@ extension ItemHandler {
         case .info:
             guard let item = items[.info]?.first else { return nil }
             return .init(index: 0, item: item, type: .info)
+        case .deletedService, .deletedSection:
+            // A deletion is found by the name of its record. Deletions have no order of their own – the index
+            // is always 0, so that a list that grows or shrinks never looks like a change of the others.
+            guard let item = (items[type] as? [SyncDeletion])?.first(where: { $0.recordName == entryID })
+            else { return nil }
+            return .init(index: 0, item: item, type: type)
         default: return nil
         }
     }
@@ -181,9 +210,14 @@ extension ItemHandler {
             case .service2: return (item as? ServiceData)?.secret
             case .service3: return (item as? ServiceData)?.secret
             case .info: return ""
+            case .deletedService, .deletedSection: return (item as? SyncDeletion)?.recordName
             default: return nil
             }
         }() else { return nil }
+        
+        if zoneManager.usesSealedRecords, type != .info {
+            return sealedRecord(for: type, entityID: entityID, item: item, modifiedData: from)
+        }
         
         switch type {
         case .section:
@@ -262,6 +296,9 @@ extension ItemHandler {
     }
     
     func record(for type: RecordType, item: Any, index: Int, zoneID: CKRecordZone.ID, allItems: [Any]) -> CKRecord? {
+        if zoneManager.usesSealedRecords, type != .info {
+            return newSealedRecord(for: type, item: item, index: index, zoneID: zoneID, allItems: allItems)
+        }
         switch type {
         case .section:
             guard let new = item as? CommonSectionData else { return nil }
@@ -347,35 +384,304 @@ private extension ItemHandler {
             case .service2: serviceHandler.delete(identifiedBy: entryID)
             case .service3: serviceHandler.delete(identifiedBy: entryID)
             case .info: infoHandler.purge()
+            case .service4:
+                guard let identifierKey = syncEncryptionHandler.identifierKey else { return }
+                serviceHandler.delete(recordName: entryID, identifierKey: identifierKey)
+            case .section2:
+                guard let identifierKey = syncEncryptionHandler.identifierKey else { return }
+                sectionHandler.delete(recordName: entryID, identifierKey: identifierKey)
+            case .deletedService:
+                guard let identifier = SyncDeletion.identifier(recordName: entryID) else { return }
+                deletionHandler.deleteService(identifier: identifier)
+            case .deletedSection:
+                cachedSectionDeletions().filter({ $0.recordName == entryID }).compactMap(\.sectionID)
+                    .forEach { deletionHandler.deleteSection(sectionID: $0) }
             default: break
             }
         }
+        deletionHandler.save()
     }
     
     func queuedUpdateOrCreate(with entries: [CKRecord]) {
-        entries.forEach { record in
+        // The Info record first: it carries the identifier key the sealed records of the same fetch are checked
+        // with
+        let isInfo: (CKRecord) -> Bool = { $0.recordType == RecordType.info.rawValue }
+        (entries.filter(isInfo) + entries.filter { !isInfo($0) }).forEach { record in
             if let recordType = RecordType(rawValue: record.recordType) {
                 switch recordType {
                 case .section: sectionHandler.updateOrCreate(with: SectionRecord(record: record), save: false)
                 case .service2: serviceHandler.updateOrCreate(with: ServiceRecord2(record: record), save: false)
                 case .service3: serviceHandler.updateOrCreate(with: ServiceRecord3(record: record), save: false)
                 case .info: infoHandler.updateUsingRecord(InfoRecord(record: record))
+                case .service4, .section2, .deletedService, .deletedSection:
+                    updateOrCreate(sealed: record, type: recordType)
                 default: break
                 }
             }
         }
         sectionHandler.saveAfterBatch()
         serviceHandler.saveAfterBatch()
+        deletionHandler.save()
     }
 }
 
 extension ItemHandler {
     func allEntityRecordIDs(zoneID: CKRecordZone.ID) -> [CKRecord.ID] { // minus Info - it should stay, but empty
-        let completeList: [CKRecord.ID] =
-        sectionHandler.listAll().map({ SectionRecord.recordID(with: $0.sectionID, zoneID: zoneID) })
-        + serviceHandler.listAll().map({ ServiceRecord3.recordID(with: $0.secret, zoneID: zoneID) })
+        var cached: [EntityOfKind] = sectionHandler.listAll().map({ (entityID: $0.sectionID, type: .section) })
+        cached += serviceHandler.listAll().map({ (entityID: $0.secret, type: .service3) })
+        if zoneManager.usesSealedRecords {
+            cached += deletionHandler.listServices().map({ (entityID: $0.recordName, type: .deletedService) })
+            cached += cachedSectionDeletions().map({ (entityID: $0.recordName, type: .deletedSection) })
+        }
+        let completeList: [CKRecord.ID] = findItemsRecordIDs(for: cached, zoneID: zoneID)
         + updatedCreated.filter({ $0.recordType != RecordType.info.rawValue }).map({ $0.recordID })
         let set = Set(completeList)
         return Array(set)
+    }
+}
+
+// MARK: - Sealed records (Config.vaultV3)
+
+extension ItemHandler {
+    /// The identifier a deleted section is found by
+    func sectionDeletionIdentifier(sectionID: String) -> Data? {
+        syncEncryptionHandler.identifierKey?.identifier(of: sectionID, kind: .deletedSection)
+    }
+    
+    /// The identifier a deleted service is found by
+    func serviceDeletionIdentifier(secret: String) -> Data? {
+        syncEncryptionHandler.identifierKey?.identifier(of: secret.uppercased(), kind: .deletedService)
+    }
+    
+    /// Whether the sealed records can be read and written now: the sync key and the identifier key are there
+    var canUseSealedRecords: Bool {
+        syncEncryptionHandler.recordKey != nil && syncEncryptionHandler.identifierKey != nil
+    }
+}
+
+extension ItemHandler {
+    /// Every record of the vault except the Info one, sealed again with the current sync key – for a change of
+    /// the key. The records keep their names: the identifier key doesn't change with the sync key.
+    func allSealedRecordsRecreated() -> [CKRecord] {
+        let cached = listAllCommonItems()
+        var records: [CKRecord] = []
+        for type in [RecordType.section, .service3, .deletedService, .deletedSection] {
+            for item in cached[type] ?? [] {
+                if let record = record(for: type, item: item, modifiedData: cached) {
+                    records.append(record)
+                } else {
+                    Log("ItemHandler - can't seal a record of \(type) again", module: .cloudSync, severity: .error)
+                }
+            }
+        }
+        return records
+    }
+}
+
+private extension ItemHandler {
+    func cachedSectionDeletions() -> [SyncDeletion] {
+        guard let identifierKey = syncEncryptionHandler.identifierKey else { return [] }
+        return deletionHandler.listSections { identifierKey.identifier(of: $0, kind: .deletedSection) }
+    }
+    
+    /// The name of the sealed record of an item. `entityID` is what the item is known by in the log: the secret of
+    /// a service, the ID of a section, the name of the record of a deletion.
+    func sealedRecordName(entityID: String, type: RecordType) -> String? {
+        switch type {
+        case .info: return Info.id
+        case .deletedService, .deletedSection: return entityID
+        case .section, .section2:
+            return syncEncryptionHandler.identifierKey?.recordName(of: entityID, kind: .section)
+        case .service1, .service2, .service3, .service4:
+            return syncEncryptionHandler.identifierKey?.recordName(of: entityID.uppercased(), kind: .service)
+        }
+    }
+    
+    func sectionOrder(of service: ServiceData, in list: [ServiceData]) -> Int {
+        service.order ?? list.sortedBySection[service.sectionID]?
+            .firstIndex(where: { $0.secret == service.secret }) ?? 0
+    }
+    
+    /// The record of an item that is in the cloud already, with its new content
+    func sealedRecord(for type: RecordType, entityID: String, item: Any, modifiedData from: [RecordType: [Any]]) -> CKRecord? {
+        guard let syncKey = syncEncryptionHandler.recordKey else { return nil }
+        do {
+            switch type {
+            case .section:
+                guard let current = sectionHandler.findSection(by: entityID),
+                      let list = (from[.section] as? [CommonSectionData]),
+                      let modified = list.first(where: { $0.sectionID == entityID }),
+                      let index = list.firstIndex(where: { $0.sectionID == entityID }) else { return nil }
+                return try SealedRecord.recreate(
+                    with: current.metadata,
+                    type: .section2,
+                    content: SectionRecordContent(sectionID: modified.sectionID, title: modified.name, order: index),
+                    syncKey: syncKey
+                )
+            case .service2, .service3:
+                guard let current = serviceHandler.findService(by: entityID),
+                      let list = (from[type] as? [ServiceData]),
+                      let modified = list.first(where: { $0.secret == entityID }) else { return nil }
+                return try SealedRecord.recreate(
+                    with: current.metadata,
+                    type: .service4,
+                    content: ServiceRecordContent(
+                        serviceData: modified,
+                        sectionOrder: sectionOrder(of: modified, in: list)
+                    ),
+                    syncKey: syncKey
+                )
+            case .deletedService:
+                guard let deletion = item as? SyncDeletion,
+                      let metadata = deletionHandler.serviceMetadata(identifier: deletion.identifier)
+                else { return nil }
+                return try SealedRecord.recreate(
+                    with: metadata,
+                    type: .deletedService,
+                    content: DeletedServiceRecordContent(deletedAt: deletion.deletedAt),
+                    syncKey: syncKey
+                )
+            case .deletedSection:
+                guard let deletion = item as? SyncDeletion, let sectionID = deletion.sectionID,
+                      let metadata = deletionHandler.sectionMetadata(sectionID: sectionID) else { return nil }
+                return try SealedRecord.recreate(
+                    with: metadata,
+                    type: .deletedSection,
+                    content: DeletedSectionRecordContent(sectionID: sectionID, deletedAt: deletion.deletedAt),
+                    syncKey: syncKey
+                )
+            default:
+                return nil
+            }
+        } catch {
+            Log("ItemHandler - can't seal a record of \(type)", module: .cloudSync, severity: .error)
+            return nil
+        }
+    }
+    
+    /// The record of an item that isn't in the cloud yet
+    func newSealedRecord(for type: RecordType, item: Any, index: Int, zoneID: CKRecordZone.ID, allItems: [Any]) -> CKRecord? {
+        guard let syncKey = syncEncryptionHandler.recordKey else { return nil }
+        do {
+            switch type {
+            case .section:
+                guard let new = item as? CommonSectionData,
+                      let recordName = sealedRecordName(entityID: new.sectionID, type: .section) else { return nil }
+                return try SealedRecord.create(
+                    type: .section2,
+                    recordName: recordName,
+                    zoneID: zoneID,
+                    content: SectionRecordContent(sectionID: new.sectionID, title: new.name, order: index),
+                    syncKey: syncKey
+                )
+            case .service2, .service3:
+                guard let new = item as? ServiceData, let list = (allItems as? [ServiceData]),
+                      let recordName = sealedRecordName(entityID: new.secret, type: .service3) else { return nil }
+                return try SealedRecord.create(
+                    type: .service4,
+                    recordName: recordName,
+                    zoneID: zoneID,
+                    content: ServiceRecordContent(serviceData: new, sectionOrder: sectionOrder(of: new, in: list)),
+                    syncKey: syncKey
+                )
+            case .deletedService:
+                guard let deletion = item as? SyncDeletion else { return nil }
+                return try SealedRecord.create(
+                    type: .deletedService,
+                    recordName: deletion.recordName,
+                    zoneID: zoneID,
+                    content: DeletedServiceRecordContent(deletedAt: deletion.deletedAt),
+                    syncKey: syncKey
+                )
+            case .deletedSection:
+                guard let deletion = item as? SyncDeletion, let sectionID = deletion.sectionID else { return nil }
+                return try SealedRecord.create(
+                    type: .deletedSection,
+                    recordName: deletion.recordName,
+                    zoneID: zoneID,
+                    content: DeletedSectionRecordContent(sectionID: sectionID, deletedAt: deletion.deletedAt),
+                    syncKey: syncKey
+                )
+            default:
+                return nil
+            }
+        } catch {
+            Log("ItemHandler - can't seal a new record of \(type)", module: .cloudSync, severity: .error)
+            return nil
+        }
+    }
+    
+    /// A sealed record that was fetched. A record that can't be opened, or whose content isn't what its name was
+    /// derived from, is ignored – it's not this user's data.
+    func updateOrCreate(sealed record: CKRecord, type: RecordType) {
+        guard let syncKey = syncEncryptionHandler.recordKey,
+              let identifierKey = syncEncryptionHandler.identifierKey else {
+            Log("ItemHandler - no key for a sealed record of \(type)", module: .cloudSync, severity: .error)
+            return
+        }
+        let recordName = record.recordID.recordName
+        let metadata = record.encodeSystemFields()
+        do {
+            switch type {
+            case .service4:
+                let content = try SealedRecord.content(of: record, as: ServiceRecordContent.self, syncKey: syncKey)
+                guard identifierKey.recordName(of: content.secret.uppercased(), kind: .service) == recordName else {
+                    Log("ItemHandler - a service record with a foreign name", module: .cloudSync, severity: .error)
+                    return
+                }
+                serviceHandler.updateOrCreate(
+                    serviceData: content.serviceData(
+                        createdAt: record.creationDate ?? Date(),
+                        modifiedAt: record.modificationDate ?? Date()
+                    ),
+                    sectionOrder: content.sectionOrder,
+                    metadata: metadata,
+                    save: false
+                )
+            case .section2:
+                let content = try SealedRecord.content(of: record, as: SectionRecordContent.self, syncKey: syncKey)
+                guard identifierKey.recordName(of: content.sectionID, kind: .section) == recordName else {
+                    Log("ItemHandler - a section record with a foreign name", module: .cloudSync, severity: .error)
+                    return
+                }
+                sectionHandler.updateOrCreate(
+                    content: content,
+                    metadata: metadata,
+                    creationDate: record.creationDate ?? Date(),
+                    modificationDate: record.modificationDate,
+                    save: false
+                )
+            case .deletedService:
+                let content = try SealedRecord.content(
+                    of: record,
+                    as: DeletedServiceRecordContent.self,
+                    syncKey: syncKey
+                )
+                guard let identifier = SyncDeletion.identifier(recordName: recordName) else { return }
+                deletionHandler.updateOrCreateService(
+                    SyncDeletion(identifier: identifier, deletedAt: content.deletedAt),
+                    metadata: metadata
+                )
+            case .deletedSection:
+                let content = try SealedRecord.content(
+                    of: record,
+                    as: DeletedSectionRecordContent.self,
+                    syncKey: syncKey
+                )
+                guard identifierKey.recordName(of: content.sectionID, kind: .deletedSection) == recordName else {
+                    Log("ItemHandler - a deletion record with a foreign name", module: .cloudSync, severity: .error)
+                    return
+                }
+                deletionHandler.updateOrCreateSection(
+                    sectionID: content.sectionID,
+                    deletedAt: content.deletedAt,
+                    metadata: metadata
+                )
+            default:
+                break
+            }
+        } catch {
+            Log("ItemHandler - can't open a sealed record of \(type)", module: .cloudSync, severity: .error)
+        }
     }
 }

@@ -32,15 +32,15 @@ final class SyncEncryptionHandler {
     
     var keyDidChange: Callback?
     
-    private let keychain = Keychain(service: Config.keychainSync)
-        .synchronizable(true)
-        .accessibility(.afterFirstUnlock)
-    private let userDefaults = UserDefaults.standard
+    private let keychain: Keychain
+    private let userDefaults: UserDefaults
     
     private let systemKeyKey = "io.twofas.systemKeyKey"
     private let userKeyKey = "io.twofas.userKeyKey"
     private let usedKeyKey = "io.twofas.usedKeyKey"
     private let saltKey = "io.twofas.saltKey"
+    private let kdfParametersKey = "io.twofas.kdfParametersKey"
+    private static let saltByteCount = 16
     
     private let reference: Data
     
@@ -50,11 +50,24 @@ final class SyncEncryptionHandler {
     private var cachedUserKey: SymmetricKey?
     private var cachedEncryptionReference: Data?
     
+    /// What the Info record carried when it was last fetched
+    private var cloudInfo = SyncCloudEncryptionInfo.empty
+    private var cachedIdentifierKey: SyncIdentifierKey?
+    
     private let localEncryptionKey: SymmetricKey
     
-    init(reference: Data, localEncryptionKeyData: Data) {
+    init(
+        reference: Data,
+        localEncryptionKeyData: Data,
+        keychainService: String = Config.keychainSync,
+        userDefaults: UserDefaults = .standard
+    ) {
         self.reference = reference
         self.localEncryptionKey = SymmetricKey(data: localEncryptionKeyData)
+        self.keychain = Keychain(service: keychainService)
+            .synchronizable(true)
+            .accessibility(.afterFirstUnlock)
+        self.userDefaults = userDefaults
     }
     
     func initialize() {
@@ -78,25 +91,27 @@ final class SyncEncryptionHandler {
         cachedEncryptionReference = encrypt(reference)
     }
     
+    /// Makes sure there is a salt and a system key, and uses the system key. What exists is never replaced: both
+    /// are shared by all devices of the user through the iCloud Keychain, and everything in the cloud that was
+    /// sealed with them would be lost with them.
     func create() -> Result<Void, CreationError> {
-        guard let createdSalt = createSalt() else {
-            Log("SyncEncryptionHandler: Can't create salt!", module: .cloudSync, severity: .error)
-            return .failure(.cantCreateSalt)
-        }
-        keychain[data: saltKey] = createdSalt
-        cachedSalt = createdSalt
-        
-        var keyData = Data(count: 32)
-        let result = keyData.withUnsafeMutableBytes {
-            SecRandomCopyBytes(kSecRandomDefault, 32, $0.baseAddress!)
-        }
-        guard result == errSecSuccess else {
-            Log("SyncEncryptionHandler: Can't create system key!", module: .cloudSync, severity: .error)
-            return .failure(.cantCreateSystemKey)
+        if cachedSalt == nil {
+            guard let createdSalt = createSalt() else {
+                Log("SyncEncryptionHandler: Can't create salt!", module: .cloudSync, severity: .error)
+                return .failure(.cantCreateSalt)
+            }
+            keychain[data: saltKey] = createdSalt
+            cachedSalt = createdSalt
         }
         
-        keychain[data: systemKeyKey] = keyData
-        cachedSystemKey = SymmetricKey(data: keyData)
+        if cachedSystemKey == nil {
+            guard let keyData = Self.randomKeyData() else {
+                Log("SyncEncryptionHandler: Can't create system key!", module: .cloudSync, severity: .error)
+                return .failure(.cantCreateSystemKey)
+            }
+            keychain[data: systemKeyKey] = keyData
+            cachedSystemKey = SymmetricKey(data: keyData)
+        }
         
         cachedUsedKey = .system
         setUsedKey(.system)
@@ -104,6 +119,73 @@ final class SyncEncryptionHandler {
         cachedEncryptionReference = encrypt(reference)
         
         return .success(())
+    }
+    
+    private static func randomKeyData() -> Data? {
+        var keyData = Data(count: 32)
+        let result = keyData.withUnsafeMutableBytes {
+            SecRandomCopyBytes(kSecRandomDefault, 32, $0.baseAddress!)
+        }
+        return result == errSecSuccess ? keyData : nil
+    }
+    
+    /// Brings back the user's key on a device that doesn't have it, from the password: the key is derived with
+    /// the salt and the parameters the Info record carries and checked against the encryption reference of the
+    /// cloud. Nothing changes when the password is wrong.
+    ///
+    /// On a device that has no system key either (no iCloud Keychain) a local one is created – the user's key is
+    /// kept sealed with it.
+    /// - Parameter cloudReference: The encryption reference of the Info record.
+    /// - Returns: Whether the password opened the reference and the key is in use now.
+    func recoverUserKey(password: String, cloudReference: Data?) -> Bool {
+        guard let cloudReference else {
+            Log("SyncEncryptionHandler: No reference to check the password with", module: .cloudSync, severity: .error)
+            return false
+        }
+        // What the cloud says comes first: the salt or the parameters kept on this device may be those of
+        // another key. The reference tells which pair is the right one.
+        var candidates: [(salt: Data, parameters: SyncKDFParameters)] = []
+        let cloudParameters = cloudInfo.kdfParameters
+            .flatMap { SyncKDFParameters(encoded: $0) }
+            .flatMap { $0.isSupported ? $0 : nil }
+        let salts = [cloudInfo.kdfSalt, cachedSalt.map { Data($0.prefix(Self.saltByteCount)) }]
+            .compactMap { $0 }
+            .filter { $0.count == Self.saltByteCount }
+        for salt in salts {
+            for parameters in [cloudParameters, userKeyParameters, .legacy].compactMap({ $0 })
+            where !candidates.contains(where: { $0.salt == salt && $0.parameters == parameters }) {
+                candidates.append((salt, parameters))
+            }
+        }
+        var recovered: (key: Data, salt: Data, parameters: SyncKDFParameters)?
+        for candidate in candidates {
+            guard let key = generateKey(for: password, parameters: candidate.parameters, salt: candidate.salt),
+                  decrypt(cloudReference, using: SymmetricKey(data: key)) == reference else { continue }
+            recovered = (key, candidate.salt, candidate.parameters)
+            break
+        }
+        guard let recovered else {
+            Log("SyncEncryptionHandler: The password doesn't open the cloud", module: .cloudSync)
+            return false
+        }
+        if cachedSystemKey == nil {
+            guard let keyData = Self.randomKeyData() else { return false }
+            keychain[data: systemKeyKey] = keyData
+            cachedSystemKey = SymmetricKey(data: keyData)
+        }
+        if cachedSalt.map({ Data($0.prefix(Self.saltByteCount)) }) != recovered.salt {
+            // The salt of the cloud – this device derives the same key from now on
+            keychain[data: saltKey] = recovered.salt
+            cachedSalt = recovered.salt
+        }
+        saveUserKeyParameters(recovered.parameters)
+        saveUserKey(recovered.key)
+        cachedUserKey = SymmetricKey(data: recovered.key)
+        setUsedKey(.user)
+        cachedUsedKey = .user
+        cachedIdentifierKey = nil
+        cachedEncryptionReference = encrypt(reference)
+        return true
     }
     
     func exportKeys() -> (salt: Data, systemKey: Data)? {
@@ -138,11 +220,18 @@ final class SyncEncryptionHandler {
     }
     
     func debugReloadAllKeys() {
+        removeSystemEncryptionElements()
+        userDefaults.removeObject(forKey: userKeyKey)
+        cachedUserKey = nil
+        _ = create()
+    }
+    
+    /// Forgets the salt and the system key – `create()` never replaces the ones that exist
+    func removeSystemEncryptionElements() {
         keychain[data: saltKey] = nil
         keychain[data: systemKeyKey] = nil
-        userDefaults.removeObject(forKey: userKeyKey)
-        setUsedKey(.system)
-        _ = create()
+        cachedSalt = nil
+        cachedSystemKey = nil
     }
 }
 
@@ -188,10 +277,14 @@ extension SyncEncryptionHandler: SyncEncryptionHandling {
     }
     
     func setUserPassword(_ password: String) {
-        guard let key = generateKey(for: password) else {
+        // Opened with the key that is replaced now – the identifiers of the records stay the same
+        _ = identifierKey
+        // A new key never gets weaker parameters than the current ones, whatever the old key was derived with
+        guard let key = generateKey(for: password, parameters: .current) else {
             Log("SyncEncryptionHandler: Can't create user key!", module: .cloudSync, severity: .error)
             return
         }
+        saveUserKeyParameters(.current)
         saveUserKey(key)
         cachedUserKey = SymmetricKey(data: key)
         
@@ -203,7 +296,10 @@ extension SyncEncryptionHandler: SyncEncryptionHandling {
     }
     
     func setSystemKey() {
+        // Opened with the key that is replaced now – the identifiers of the records stay the same
+        _ = identifierKey
         saveUserKey(nil)
+        saveUserKeyParameters(nil)
         cachedUserKey = nil
         
         setUsedKey(.system)
@@ -241,11 +337,71 @@ extension SyncEncryptionHandler: SyncEncryptionHandling {
         cachedUsedKey
     }
     
-    var encryptedWatchTicket: Data? {
-        guard usedKey() == .user, let userKey = userKey() else {
+    /// The user's key for the paired watch `deviceCode`, sealed with the system key – the watch has that one from
+    /// the iCloud Keychain, and nobody who only sees the Info record does. `nil` when the user's key isn't used.
+    func watchTicket(for deviceCode: DeviceCode) -> Data? {
+        guard usedKey() == .user, let userKey = userKey(), let cachedSystemKey else {
             return nil
         }
-        return encrypt(userKey, using: localEncryptionKey)
+        do {
+            return try SyncWatchTicket.seal(userKey: userKey, systemKey: cachedSystemKey, deviceCode: deviceCode.code)
+        } catch {
+            Log("SyncEncryptionHandler: Can't seal the watch ticket", module: .cloudSync, severity: .error)
+            return nil
+        }
+    }
+    
+    // MARK: - Encryption info of the Info record
+    
+    var recordKey: SymmetricKey? { currentKey }
+    
+    var identifierKey: SyncIdentifierKey? {
+        if let cachedIdentifierKey {
+            return cachedIdentifierKey
+        }
+        guard let wrapped = cloudInfo.wrappedIdentifierKey, let currentKey else { return nil }
+        do {
+            let key = try SyncIdentifierKey.unwrap(wrapped, with: currentKey)
+            cachedIdentifierKey = key
+            return key
+        } catch {
+            Log("SyncEncryptionHandler: Can't open the identifier key", module: .cloudSync, severity: .error)
+            return nil
+        }
+    }
+    
+    /// Creates the key of the record identifiers when the cloud has none – for a clean cloud or one that is
+    /// migrated to the format that uses it. An existing key is never replaced: the names of all records depend on
+    /// it.
+    /// - Returns: Whether there is a key now.
+    @discardableResult
+    func createIdentifierKeyIfNeeded() -> Bool {
+        if identifierKey != nil { return true }
+        guard cloudInfo.wrappedIdentifierKey == nil, currentKey != nil else { return false }
+        cachedIdentifierKey = .generate()
+        return true
+    }
+    
+    func cloudEncryptionInfo(cached: SyncCloudEncryptionInfo) -> SyncCloudEncryptionInfo {
+        var info = cached
+        if let salt = kdfSalt {
+            info.kdfSalt = salt
+        }
+        if cachedUsedKey == .user {
+            info.kdfParameters = userKeyParameters.encoded() ?? cached.kdfParameters
+        }
+        if let identifierKey, let currentKey, let wrapped = try? identifierKey.wrapped(with: currentKey) {
+            info.wrappedIdentifierKey = wrapped
+        }
+        return info
+    }
+    
+    func cloudEncryptionInfoFetched(_ info: SyncCloudEncryptionInfo) {
+        if info.wrappedIdentifierKey != cloudInfo.wrappedIdentifierKey {
+            // Sealed again (the password changed elsewhere) or another key (the cloud was erased)
+            cachedIdentifierKey = nil
+        }
+        cloudInfo = info
     }
     
     func purge() {
@@ -286,7 +442,43 @@ private extension SyncEncryptionHandler {
         }
     }
     
-    func generateKey(for password: String) -> Data? {
+    /// The salt the user's key is derived with: this device's (from the iCloud Keychain) or, on a device that
+    /// doesn't have it, the one the Info record carries
+    var kdfSalt: Data? {
+        if let cachedSalt, cachedSalt.count >= Self.saltByteCount {
+            return Data(cachedSalt.prefix(Self.saltByteCount))
+        }
+        guard let salt = cloudInfo.kdfSalt, salt.count == Self.saltByteCount else { return nil }
+        return salt
+    }
+    
+    /// What the current user's key was derived with: saved when the key was set here, otherwise what the Info
+    /// record says, otherwise what was used before the parameters were stored
+    var userKeyParameters: SyncKDFParameters {
+        if let encoded = userDefaults.data(forKey: kdfParametersKey),
+           let parameters = SyncKDFParameters(encoded: encoded), parameters.isSupported {
+            return parameters
+        }
+        if let encoded = cloudInfo.kdfParameters,
+           let parameters = SyncKDFParameters(encoded: encoded), parameters.isSupported {
+            return parameters
+        }
+        return .legacy
+    }
+    
+    private func saveUserKeyParameters(_ parameters: SyncKDFParameters?) {
+        userDefaults.set(parameters?.encoded(), forKey: kdfParametersKey)
+        userDefaults.synchronize()
+    }
+    
+    /// - Parameter parameters: `nil` – what the current user's key was derived with (to derive the same key).
+    /// - Parameter salt: `nil` – the salt of the current user's key.
+    func generateKey(for password: String, parameters: SyncKDFParameters? = nil, salt: Data? = nil) -> Data? {
+        let parameters = parameters ?? userKeyParameters
+        guard parameters.isSupported else {
+            Log("SyncEncryptionHandler: Unsupported key derivation parameters", module: .cloudSync, severity: .error)
+            return nil
+        }
         guard let hexPassword = normalizeStringIntoHEXData(password) else {
             Log("SyncEncryptionHandler: Can't create HEX from Password", module: .cloudSync, severity: .error)
             return nil
@@ -296,18 +488,18 @@ private extension SyncEncryptionHandler {
             Log("SyncEncryptionHandler: Can't create HEX from Key", module: .cloudSync, severity: .error)
             return nil
         }
-        guard let partOfSalt = cachedSalt?[0...15] else {
+        guard let partOfSalt = salt ?? kdfSalt else {
             Log("SyncEncryptionHandler: Cant' get salt!", module: .cloudSync, severity: .error)
             return nil
         }
         do {
             let (rawHash, _) = try Argon2.hash(
-                iterations: UInt32(3),
-                memoryInKiB: UInt32(64 * 1024),
-                threads: UInt32(4),
+                iterations: UInt32(parameters.iterations),
+                memoryInKiB: UInt32(parameters.memoryKiB),
+                threads: UInt32(parameters.parallelism),
                 password: passwordData,
                 salt: partOfSalt,
-                desiredLength: 32,
+                desiredLength: parameters.keyLength,
                 variant: .id,
                 version: .v13
             )

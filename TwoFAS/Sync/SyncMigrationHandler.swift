@@ -40,6 +40,9 @@ public protocol SyncMigrationHandling: AnyObject {
     func migrateToSystemPassword()
     func switchLocallyToUseSystemPassword()
     func setMissingUserPassword(_ password: String)
+    /// Brings back the user's key from the password on a device that lost it (or never had it).
+    /// - Returns: `false` when the password isn't the one the cloud is encrypted with.
+    func recoverMissingUserKey(_ password: String) -> Bool
     
     func verifyUserPassword(_ password: String) -> Bool
     
@@ -79,6 +82,8 @@ final class SyncMigrationHandler {
     
     var showCantCreateEncryptionElements: (() -> Void)?
     var showMissingKey: ((CloudCurrentState.NotAvailableReason.EncryptionError) -> Void)?
+    /// The encryption reference of the Info record, as last fetched
+    var cloudEncryptionReference: (() -> Data?)?
     
     private var canChangePassword = false
     private var passwordChangePending: SyncMigrationChangeType?
@@ -150,10 +155,25 @@ extension SyncMigrationHandler: SyncMigrationHandling {
         guard isiCloudEncryptedByDifferentUserPass else {
             return
         }
-        syncEncryptionHandler.setUserPassword(password)
+        // The key the cloud is encrypted with: derived with the salt and the parameters of the cloud. Without
+        // them (an Info record from before they were stored) the key is derived the way it always was.
+        if !syncEncryptionHandler.recoverUserKey(password: password, cloudReference: cloudEncryptionReference?()) {
+            syncEncryptionHandler.setUserPassword(password)
+        }
         isiCloudEncryptedByDifferentUserPass = false
         enableIfSuccess = true
         synchronize?()
+    }
+    
+    func recoverMissingUserKey(_ password: String) -> Bool {
+        guard syncEncryptionHandler.recoverUserKey(
+            password: password,
+            cloudReference: cloudEncryptionReference?()
+        ) else { return false }
+        isiCloudEncryptedByDifferentUserPass = false
+        enableIfSuccess = true
+        synchronize?()
+        return true
     }
     
     // locally user, but iCloud is using system

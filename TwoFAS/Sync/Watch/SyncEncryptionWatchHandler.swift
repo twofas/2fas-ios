@@ -46,6 +46,10 @@ final class SyncEncryptionWatchHandler {
     
     private var encryptedUserKeyCached: Data?
     
+    /// What the Info record carried when it was last fetched
+    private var cloudInfo = SyncCloudEncryptionInfo.empty
+    private var cachedIdentifierKey: SyncIdentifierKey?
+    
     init(reference: Data, localEncryptionKeyData: Data) {
         self.reference = reference
         self.localEncryptionKey = SymmetricKey(data: localEncryptionKeyData)
@@ -58,13 +62,11 @@ final class SyncEncryptionWatchHandler {
             Log("No system key available!", module: .cloudSync, severity: .error)
         }
         
-        if var usedKeyValue = usedKey() {
-            if usedKeyValue == .user {
-                if let userKeyValue = userKey() {
-                    cachedUserKey = SymmetricKey(data: userKeyValue)
-                } else { // the key is missing - trying to recover
-                    usedKeyValue = .system
-                }
+        if let usedKeyValue = usedKey() {
+            // Without the user's key nothing is read or written until the ticket from the phone brings it again –
+            // the system key isn't used in its place
+            if usedKeyValue == .user, let userKeyValue = userKey() {
+                cachedUserKey = SymmetricKey(data: userKeyValue)
             }
             cachedUsedKey = usedKeyValue
         } else {
@@ -93,17 +95,26 @@ extension SyncEncryptionWatchHandler: SyncEncryptionHandling {
         false // not used in this context
     }
     
-    func setEncryptedUserKey(_ encryptedKey: Data) {
+    /// - Parameter isLegacyTicket: The ticket comes from a vault older than `Config.vaultV3`, where it was made
+    ///   with the key built into the app. Accepted only there, until the phone migrates the cloud.
+    func setEncryptedUserKey(_ encryptedKey: Data, isLegacyTicket: Bool) {
         if let cachedEncrypted = encryptedUserKeyCached, cachedEncrypted == encryptedKey {
             return
         }
         encryptedUserKeyCached = encryptedKey
-        guard let key = decrypt(encryptedKey, using: localEncryptionKey) else {
-            Log("Error while decrypting user key!", module: .cloudSync, severity: .error)
+        let opened: Data? = if isLegacyTicket {
+            decrypt(encryptedKey, using: localEncryptionKey)
+        } else if let cachedSystemKey {
+            // The ticket is sealed with the system key (from the iCloud Keychain) for this watch
+            try? SyncWatchTicket.open(encryptedKey, systemKey: cachedSystemKey, deviceCode: deviceCode.code)
+        } else {
+            nil
+        }
+        guard let key = opened else {
+            Log("Error while opening the user key ticket!", module: .cloudSync, severity: .error)
             return
         }
-        userDefaults.set(encryptedKey, forKey: userKeyKey)
-        userDefaults.synchronize()
+        saveUserKey(key)
         cachedUserKey = SymmetricKey(data: key)
         
         setUsedKey(.user)
@@ -144,6 +155,36 @@ extension SyncEncryptionWatchHandler: SyncEncryptionHandling {
     
     var encryptionReference: Data? {
         cachedEncryptionReference
+    }
+    
+    var recordKey: SymmetricKey? { currentKey }
+    
+    var identifierKey: SyncIdentifierKey? {
+        if let cachedIdentifierKey {
+            return cachedIdentifierKey
+        }
+        guard let wrapped = cloudInfo.wrappedIdentifierKey, let currentKey,
+              let key = try? SyncIdentifierKey.unwrap(wrapped, with: currentKey) else { return nil }
+        cachedIdentifierKey = key
+        return key
+    }
+    
+    /// The watch never creates the key – it only uses the one the phone put in the Info record
+    @discardableResult
+    func createIdentifierKeyIfNeeded() -> Bool {
+        identifierKey != nil
+    }
+    
+    /// The watch never changes the encryption – it keeps what the Info record carried
+    func cloudEncryptionInfo(cached: SyncCloudEncryptionInfo) -> SyncCloudEncryptionInfo {
+        cached
+    }
+    
+    func cloudEncryptionInfoFetched(_ info: SyncCloudEncryptionInfo) {
+        if info.wrappedIdentifierKey != cloudInfo.wrappedIdentifierKey {
+            cachedIdentifierKey = nil
+        }
+        cloudInfo = info
     }
 
     var hasCompleteEncryptionElements: Bool {

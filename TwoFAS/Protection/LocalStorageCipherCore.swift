@@ -34,15 +34,19 @@ public final class LocalStorageCipherCore: LocalStorageCipher {
     private let encryptionKey: SymmetricKey
     private let lookupKey: SymmetricKey
 
-    public init(dataKey: SymmetricKey) {
+    public static let localStorageDomain = "2fas.local-storage"
+
+    /// - Parameter domain: What the key is used for. The same key gives unrelated encryption and lookup keys in
+    ///   every domain, so nothing sealed (or hashed) in one can be used in another.
+    public init(dataKey: SymmetricKey, domain: String = LocalStorageCipherCore.localStorageDomain) {
         encryptionKey = HKDF<SHA256>.deriveKey(
             inputKeyMaterial: dataKey,
-            info: Data("2fas.local-storage.encryption.v1".utf8),
+            info: Data("\(domain).encryption.v1".utf8),
             outputByteCount: 32
         )
         lookupKey = HKDF<SHA256>.deriveKey(
             inputKeyMaterial: dataKey,
-            info: Data("2fas.local-storage.lookup.v1".utf8),
+            info: Data("\(domain).lookup.v1".utf8),
             outputByteCount: 32
         )
     }

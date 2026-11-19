@@ -45,7 +45,10 @@ extension RequirementCheckHandler: RequirementCheckHandling {
                 newerVersion?()
                 return true
             }
-            if !migrationPending && !encryptionPending {
+            // The data of a vault that is migrated is read with the keys too – without them nothing would be read
+            // and an empty vault would be written in its place. Only the oldest vaults had no encryption to check.
+            let checksEncryption = !encryptionPending && (!migrationPending || info.version >= 3)
+            if checksEncryption {
                 if info.encryption.isEmpty {
                     if !firstEncryptionRun() {
                         encryptionError?(.cantCreateEncryptionElements)
@@ -90,7 +93,9 @@ extension RequirementCheckHandler: RequirementCheckHandling {
                     }
                 }
             }
-        } else {
+        } else if infoHandler.metadata == nil {
+            // No Info record in what was fetched and none known from before: a clean cloud. A fetch without the
+            // Info record is otherwise the usual case – it's there, only unchanged – and must never touch the keys.
             if !firstEncryptionRun() {
                 encryptionError?(.cantCreateEncryptionElements)
                 return true

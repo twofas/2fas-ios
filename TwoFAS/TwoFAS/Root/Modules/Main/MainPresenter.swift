@@ -28,6 +28,9 @@ final class MainPresenter {
     private let interactor: MainModuleInteracting
     
     private var handlingViewIsVisible = false
+    /// The encryption problems of the backup the user has seen in this launch. The sync reports a problem every
+    /// time it stops on it; the screen is shown once.
+    private var presentedEncryptionErrors: [CloudState.NotAvailableReason.EncryptionError] = []
 
     init(flowController: MainFlowControlling, interactor: MainModuleInteracting) {
         self.flowController = flowController
@@ -57,11 +60,11 @@ final class MainPresenter {
         interactor.migrationError = { [weak flowController] error in
             flowController?.toMigrationError(error)
         }
-        interactor.showCantCreateEncryptionElements = { [weak flowController] in
-            flowController?.toCantCreateEncryptionElements()
+        interactor.showCantCreateEncryptionElements = { [weak self] in
+            self?.presentEncryptionError(.cantCreateEncryptionElements)
         }
-        interactor.showMissingKey = { [weak flowController] error in
-            flowController?.toMissingKey(error)
+        interactor.showMissingKey = { [weak self] error in
+            self?.presentEncryptionError(error)
         }
     }
     
@@ -151,6 +154,8 @@ final class MainPresenter {
     }
 
     func handleMissingKeyResolved() {
+        // When the problem comes back, it's a new one
+        presentedEncryptionErrors = []
         interactor.enableBackup()
     }
 }
@@ -190,6 +195,19 @@ private extension MainPresenter {
         } else {
             handleAuthRequest()
             handlingViewIsVisible = false
+            // What the sync stopped on while the app was locked or something else was on the screen
+            interactor.reportCurrentSyncProblem()
+        }
+    }
+
+    func presentEncryptionError(_ error: CloudState.NotAvailableReason.EncryptionError) {
+        guard !interactor.isAppLocked, !presentedEncryptionErrors.contains(error) else { return }
+        let presented = switch error {
+        case .cantCreateEncryptionElements: flowController.toCantCreateEncryptionElements()
+        case .missingSystemKey, .missingUserKey, .missingAllKeys: flowController.toMissingKey(error)
+        }
+        if presented {
+            presentedEncryptionErrors.append(error)
         }
     }
     

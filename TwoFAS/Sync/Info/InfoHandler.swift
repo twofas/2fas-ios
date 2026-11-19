@@ -35,6 +35,9 @@ final class InfoHandler {
         case encryptionType
         case allowedDevices
         case enableWatch
+        case kdfSalt
+        case kdfParameters
+        case identifierKey
     }
     private let userDefault = UserDefaults()
     private let syncEncryptionHandler: SyncEncryptionHandling
@@ -53,17 +56,24 @@ final class InfoHandler {
         saveEncryptionReference(record.encryptionReference ?? Data())
         saveEncryptionType(Info.Encryption(rawValue: record.encryption) ?? .system)
         saveModificationDate(record.modificationDate)
+        saveEncryptionInfo(record.encryptionInfo)
+        syncEncryptionHandler.cloudEncryptionInfoFetched(record.encryptionInfo)
         allowedDevicesUpdated?(record.allowedDevices)
     }
     
-    func createNew(encryptionReference: Data) -> CKRecord? { // first creation with default value
-        InfoRecord.create(
+    /// The first Info record of the current vault. In a clean cloud everything has its default value; in a vault
+    /// the data is being migrated to, the encryption and the paired watches are the ones of the old vault
+    /// (`prepareForNewVault()`).
+    func createNew(encryptionReference: Data) -> CKRecord? {
+        let devicesList = allowedList?() ?? []
+        return InfoRecord.create(
             zoneID: zoneManager.currentZoneID,
             version: Info.version,
-            encryption: Info.Encryption.system.rawValue,
-            allowedDevices: [allowedDevicesNone],
-            enableWatch: false,
+            encryption: (encryptionType ?? .system).rawValue,
+            allowedDevices: devicesList.isEmpty ? allowedDevices : devicesList,
+            enableWatch: enableWatch,
             encryptionReference: encryptionReference,
+            encryptionInfo: syncEncryptionHandler.cloudEncryptionInfo(cached: encryptionInfo),
             modificationDate: Date()
         )
     }
@@ -186,6 +196,34 @@ extension InfoHandler {
         }
         userDefault.synchronize()
     }
+    
+    /// What the Info record says and has to keep saying in the vault the data is migrated to
+    struct CarriedOver {
+        let encryptionType: Info.Encryption?
+        let allowedDevices: [String]
+        let enableWatch: Bool
+        let encryptionInfo: SyncCloudEncryptionInfo
+    }
+    
+    var carriedOver: CarriedOver {
+        CarriedOver(
+            encryptionType: encryptionType,
+            allowedDevices: allowedDevices,
+            enableWatch: enableWatch,
+            encryptionInfo: encryptionInfo
+        )
+    }
+    
+    /// After the cache of the old vault was purged: the record of the new vault doesn't exist yet (no metadata,
+    /// no version), but it will say what the old one said.
+    func prepareForNewVault(_ carried: CarriedOver) {
+        if let encryptionType = carried.encryptionType {
+            saveEncryptionType(encryptionType)
+        }
+        saveAllowedDevices(carried.allowedDevices)
+        saveEnableWatch(carried.enableWatch)
+        saveEncryptionInfo(carried.encryptionInfo)
+    }
 
     //
     
@@ -287,6 +325,24 @@ extension InfoHandler {
         } else {
             userDefault.set(false, forKey: Keys.enableWatch.rawValue)
         }
+        userDefault.synchronize()
+    }
+    
+    //
+    
+    /// What the Info record carried about the encryption when it was last fetched
+    var encryptionInfo: SyncCloudEncryptionInfo {
+        SyncCloudEncryptionInfo(
+            kdfSalt: userDefault.data(forKey: Keys.kdfSalt.rawValue),
+            kdfParameters: userDefault.data(forKey: Keys.kdfParameters.rawValue),
+            wrappedIdentifierKey: userDefault.data(forKey: Keys.identifierKey.rawValue)
+        )
+    }
+    
+    func saveEncryptionInfo(_ info: SyncCloudEncryptionInfo) {
+        userDefault.set(info.kdfSalt, forKey: Keys.kdfSalt.rawValue)
+        userDefault.set(info.kdfParameters, forKey: Keys.kdfParameters.rawValue)
+        userDefault.set(info.wrappedIdentifierKey, forKey: Keys.identifierKey.rawValue)
         userDefault.synchronize()
     }
 }

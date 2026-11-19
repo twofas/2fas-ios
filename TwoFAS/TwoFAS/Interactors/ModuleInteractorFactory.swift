@@ -423,7 +423,8 @@ final class ModuleInteractorFactory {
 
     func missingKeyModuleInteractor() -> MissingKeyModuleInteracting {
         MissingKeyModuleInteractor(
-            cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: "")
+            cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: ""),
+            syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor()
         )
     }
 

@@ -101,7 +101,7 @@ extension WatchPairHandler: WatchPairHandling {
     
     func pair(deviceCodePath: DeviceCodePath, deviceName: String) {
         guard let deviceCode = deviceCodePath.extractDeviceCode(),
-              let key = getCurrentKey() else {
+              let key = syncEncryptionHandler.watchTicket(for: deviceCode) else {
             Log("Error while creating DeviceCodeKey from code path", module: .cloudSync, severity: .error)
             return
         }
@@ -113,6 +113,20 @@ extension WatchPairHandler: WatchPairHandling {
             list.append(device)
         }
         saveList(list)
+    }
+    
+    /// Seals the tickets of the paired watches again – for tickets made before they were sealed with the system
+    /// key. The watches get them with the next sync.
+    func resealTickets() {
+        let list = getList()
+        guard !list.isEmpty else { return }
+        let resealed = list.compactMap { device -> DeviceCodeKey? in
+            guard let ticket = syncEncryptionHandler.watchTicket(for: device.deviceCode) else { return nil }
+            return DeviceCodeKey(deviceCode: device.deviceCode, encryptedData: ticket, deviceName: device.deviceName)
+        }
+        // Without the user's key there's nothing to hand to the watches – the list stays as it is
+        guard resealed.count == list.count else { return }
+        saveList(resealed, sync: false)
     }
     
     func clearList() {
@@ -172,10 +186,6 @@ private extension WatchPairHandler {
         logInfoModification?()
     }
         
-    func getCurrentKey() -> Data? {
-        syncEncryptionHandler.encryptedWatchTicket
-    }
-    
     func setNeedsUpdateFlag() {
         userDefaults.set(true, forKey: newDataForSyncKey)
         userDefaults.synchronize()

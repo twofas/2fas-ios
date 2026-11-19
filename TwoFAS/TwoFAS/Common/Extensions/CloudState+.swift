@@ -43,10 +43,10 @@ extension CloudState {
 extension CloudState.NotAvailableReason.EncryptionError {
     var description: String {
         switch self {
-        case .missingSystemKey: "Missing system key"
-        case .missingUserKey: "Missing user key"
-        case .cantCreateEncryptionElements: "Can't create encryption elements"
-        case .missingAllKeys: "Missing all keys"
+        case .missingSystemKey: T.Backup.errorMissingSystemKey
+        case .missingUserKey: T.Backup.errorMissingUserKey
+        case .cantCreateEncryptionElements: T.Backup.errorCantCreateKeys
+        case .missingAllKeys: T.Backup.errorMissingAllKeys
         }
     }
 }
@@ -63,7 +63,7 @@ extension CloudState.NotAvailableReason {
         case .newerVersion: return T.Error.cloudBackupNewerVersion
         case .cloudEncryptedUser: return T.Backup.cloudEncryptedUser
         case .cloudEncryptedSystem: return T.Backup.cloudEncryptedSystem
-        case .encryptionError(let encryptionError): return "Encryption error: \(encryptionError.description)"
+        case .encryptionError(let encryptionError): return encryptionError.description
         }
     }
 }

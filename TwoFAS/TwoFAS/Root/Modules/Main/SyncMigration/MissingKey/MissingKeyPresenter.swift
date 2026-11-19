@@ -29,14 +29,17 @@ final class MissingKeyPresenter: ObservableObject {
 
     var title: String {
         switch encryptionError {
-        case .missingSystemKey:
-            "The system encryption key is missing"
-        case .missingUserKey:
-            "Your encryption password key is missing"
-        case .missingAllKeys:
-            "All encryption keys are missing"
-        case .cantCreateEncryptionElements:
-            "Can't create the encryption keys"
+        case .missingSystemKey: T.Backup.missingKeyTitleSystem
+        case .missingUserKey: T.Backup.missingKeyTitleUser
+        case .missingAllKeys: T.Backup.missingKeyTitleAll
+        case .cantCreateEncryptionElements: T.Backup.errorCantCreateKeys
+        }
+    }
+
+    var canEnterPassword: Bool {
+        switch encryptionError {
+        case .missingUserKey, .missingAllKeys: true
+        case .missingSystemKey, .cantCreateEncryptionElements: false
         }
     }
 
@@ -56,6 +59,10 @@ extension MissingKeyPresenter {
         flowController.toImportKeys()
     }
 
+    func onEnterPassword() {
+        askForPassword(wrongPassword: false)
+    }
+
     func onClearBackup() {
         flowController.toClearBackupConfirmation { [weak self] in
             self?.confirmClearBackup()
@@ -68,6 +75,25 @@ extension MissingKeyPresenter {
 }
 
 private extension MissingKeyPresenter {
+    func askForPassword(wrongPassword: Bool) {
+        flowController.toEnterPassword(wrongPassword: wrongPassword) { [weak self] password in
+            self?.recover(with: password)
+        }
+    }
+
+    func recover(with password: String) {
+        isWorking = true
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            if interactor.recoverWithPassword(password) {
+                flowController.resolve()
+            } else {
+                isWorking = false
+                askForPassword(wrongPassword: true)
+            }
+        }
+    }
+
     func confirmClearBackup() {
         isWorking = true
         interactor.eraseBackupAndCreateNewKeys { [weak self] in

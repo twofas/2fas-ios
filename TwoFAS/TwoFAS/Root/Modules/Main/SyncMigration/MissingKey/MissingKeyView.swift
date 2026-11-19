@@ -26,11 +26,19 @@ struct MissingKeyView: View {
 
     var body: some View {
         NavigationStack {
-            AdaptiveReadableContainer {
+            Group {
                 if presenter.isWorking {
-                    TFLoadingView(title: T.Backup.syncStatusProgress)
+                    AdaptiveReadableContainer {
+                        TFLoadingView(title: T.Backup.syncStatusProgress)
+                    }
                 } else {
-                    content
+                    // The cards don't fit a small screen or a large text size
+                    ScrollView {
+                        AdaptiveReadableContainer {
+                            content
+                        }
+                    }
+                    .scrollBounceBehavior(.basedOnSize)
                 }
             }
             .background(.backgroundsPrimary)
@@ -47,7 +55,7 @@ struct MissingKeyView: View {
                 Image(icon: .lockIcloudFill)
                     .textStyle(.iconLarge)
                     .foregroundStyle(.accentsBrand)
-                    .padding(.top, .XXXXXL)
+                    .padding(.top, .XXL)
 
                 Text(presenter.title)
                     .textStyle(.title1, .emphasized)
@@ -58,17 +66,27 @@ struct MissingKeyView: View {
             }
 
             VStack(spacing: .L) {
+                if presenter.canEnterPassword {
+                    TFInstructionCard(
+                        icon: .password,
+                        title: T.Backup.missingKeyPasswordTitle,
+                        description: T.Backup.missingKeyPasswordMsg,
+                        primaryButton: TFInstructionCardButton(title: T.Backup.missingKeyPasswordAction) {
+                            presenter.onEnterPassword()
+                        }
+                    )
+                }
+
                 TFInstructionCard(
                     icon: .iCloudSync,
-                    title: "Make sure iCloud Keychain is enabled",
-                    description: "Open the Settings app, tap your name, then iCloud, and make sure Passwords & "
-                    + "Keychain is turned on. The missing keys may sync back automatically."
+                    title: T.Backup.missingKeyKeychainTitle,
+                    description: T.Backup.missingKeyKeychainMsg
                 )
 
                 TFInstructionCard(
                     icon: .download,
-                    title: "Import the missing keys",
-                    description: "If you have a backup file with your encryption keys, import it to restore access.",
+                    title: T.Backup.missingKeyImportTitle,
+                    description: T.Backup.missingKeyImportMsg,
                     primaryButton: TFInstructionCardButton(title: T.Backup.import) {
                         presenter.onImport()
                     }
@@ -76,16 +94,13 @@ struct MissingKeyView: View {
 
                 TFInstructionCard(
                     icon: .link,
-                    title: "I don't have the keys",
-                    description: "Clear the iCloud backup and start from scratch using this device's data.",
-                    primaryButton: TFInstructionCardButton(title: "Clear backup") {
+                    title: T.Backup.missingKeyClearTitle,
+                    description: T.Backup.missingKeyClearMsg,
+                    secondaryButton: TFInstructionCardButton(title: T.Backup.missingKeyClearAction) {
                         presenter.onClearBackup()
                     }
                 )
             }
-
-            Spacer()
-                .frame(maxHeight: .infinity)
         }
     }
 }

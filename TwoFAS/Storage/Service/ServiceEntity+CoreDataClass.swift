@@ -187,10 +187,15 @@ final class ServiceEntity: NSManagedObject {
         delete(on: context, serviceEntity: serviceForDeletition)
     }
     
-    @nonobjc static func markAsTrashed(on context: NSManagedObjectContext, secret: String) {
+    /// - Parameter trashingDate: When the service was deleted – another moment than now when it was deleted
+    ///   elsewhere.
+    @nonobjc static func markAsTrashed(
+        on context: NSManagedObjectContext,
+        secret: String,
+        trashingDate: Date = Date()
+    ) {
         guard let serviceForTrashing = listAllExisting(on: context, secret: secret).first
         else { Log("Can't find service for trashing on local storage", module: .storage); return }
-        let trashingDate = Date()
         serviceForTrashing.isTrashed = NSNumber(value: true)
         serviceForTrashing.trashingDate = trashingDate
         // Whatever puts a service in the trash – the service is a deleted one from now on

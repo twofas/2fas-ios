@@ -68,12 +68,19 @@ public enum SyncInstance {
             zoneManager: zoneManager,
             syncEncryptionHandler: syncEncryptionHandler
         )
+        let deletionLogger = DeletionLogger(
+            logHandler: logHandler,
+            zoneManager: zoneManager,
+            syncEncryptionHandler: syncEncryptionHandler
+        )
         let commonItemHandler = CommonItemHandler(
             commonSectionHandler: commonSectionHandler,
             commonServiceHandler: commonServiceHandler,
             infoHandler: infoHandler,
             logHandler: logHandler,
-            zoneManager: zoneManager
+            zoneManager: zoneManager,
+            syncEncryptionHandler: syncEncryptionHandler,
+            deletionLogger: deletionLogger
         )
         
         let itemHandler = ItemHandler(
@@ -83,7 +90,8 @@ public enum SyncInstance {
             logHandler: logHandler,
             serviceRecordEncryptionHandler: serviceRecordEncryptionHandler,
             syncEncryptionHandler: syncEncryptionHandler,
-            zoneManager: zoneManager
+            zoneManager: zoneManager,
+            deletionHandler: DeletionCacheHandler(coreDataStack: coreDataStack)
         )
         let mergeHandler = MergeHandler(
             logHandler: logHandler,
@@ -130,13 +138,24 @@ public enum SyncInstance {
                 storageMigrationDeferred: storageMigrationDeferred,
                 syncStack: coreDataStack
             ),
-            syncContext: coreDataStack.context
+            syncContext: coreDataStack.context,
+            infoHandler: infoHandler,
+            zoneManager: zoneManager,
+            syncEncryptionHandler: syncEncryptionHandler
         )
         let watchPairHandlerInstance = WatchPairHandler(
             syncEncryptionHandler: syncEncryptionHandler,
             infoHandler: infoHandler
         )
         syncEncryptionHandler.keyDidChange = { watchPairHandlerInstance.clearList() }
+        // The tickets of the paired watches made before they were sealed with the system key
+        syncHandler.willStartSealedVault = { watchPairHandlerInstance.resealTickets() }
+        let vaultRetirement = VaultRetirement()
+        syncHandler.retireOldVaults = { vaultRetirement.retireOldVaults() }
+        reencryptionHandler.sealedRecordsForReencryption = { [weak itemHandler, weak zoneManager] in
+            guard zoneManager?.usesSealedRecords == true else { return nil }
+            return itemHandler?.allSealedRecordsRecreated()
+        }
         
         let cloudAvailability = CloudAvailability(container: syncHandler.container)
         cloudHandler = CloudHandler(
@@ -169,9 +188,14 @@ public enum SyncInstance {
         cloudHandler.purgeUserEncryptionKey = { syncEncryptionHandler.purge() }
         cloudHandler.setSystemEncryption = { syncEncryptionHandler.setSystemKey() }
         syncEncryptionHandler.initialize()
+        // What the Info record carried when it was last fetched – the salt, the parameters and the identifier key
+        syncEncryptionHandler.cloudEncryptionInfoFetched(infoHandler.encryptionInfo)
         
+        syncMigrationHandlerInstance.cloudEncryptionReference = { [weak infoHandler] in
+            infoHandler?.encryptionReference
+        }
         syncMigrationHandler = syncMigrationHandlerInstance
-        logDataChangeImpl = LogDataChangeImpl(logHandler: logHandler)
+        logDataChangeImpl = LogDataChangeImpl(logHandler: logHandler, deletionLogger: deletionLogger)
         watchPairHandler = watchPairHandlerInstance
         Self.syncEncryptionHandler = syncEncryptionHandler
         

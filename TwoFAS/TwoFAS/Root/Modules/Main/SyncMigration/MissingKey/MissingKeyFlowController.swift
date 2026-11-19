@@ -29,6 +29,7 @@ protocol MissingKeyFlowControllerParent: AnyObject {
 
 protocol MissingKeyFlowControlling: AnyObject {
     func toImportKeys()
+    func toEnterPassword(wrongPassword: Bool, completion: @escaping (String) -> Void)
     func toClearBackupConfirmation(confirm: @escaping () -> Void)
     func resolve()
     func close()
@@ -68,15 +69,36 @@ extension MissingKeyFlowController: MissingKeyFlowControlling {
         flow.start()
     }
 
+    func toEnterPassword(wrongPassword: Bool, completion: @escaping (String) -> Void) {
+        guard let vc = _viewController else { return }
+        let alert = UIAlertController(
+            title: T.Backup.missingKeyPasswordTitle,
+            message: wrongPassword ? T.Backup.missingKeyPasswordWrong : T.Backup.missingKeyPasswordMsg,
+            preferredStyle: .alert
+        )
+        alert.addTextField { textField in
+            textField.isSecureTextEntry = true
+            textField.textContentType = .password
+            textField.autocorrectionType = .no
+            textField.autocapitalizationType = .none
+        }
+        alert.addAction(UIAlertAction(title: T.Commons.cancel, style: .cancel))
+        alert.addAction(UIAlertAction(title: T.Commons.ok, style: .default) { [weak alert] _ in
+            guard let password = alert?.textFields?.first?.text, !password.isEmpty else { return }
+            completion(password)
+        })
+        vc.present(alert, animated: true)
+    }
+
     func toClearBackupConfirmation(confirm: @escaping () -> Void) {
         guard let vc = _viewController else { return }
         let alert = UIAlertController(
-            title: "Are you sure?",
-            message: "This will delete the iCloud backup.",
+            title: T.Backup.missingKeyClearConfirmTitle,
+            message: T.Backup.missingKeyClearConfirmMsg,
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(title: T.Commons.cancel, style: .cancel))
-        alert.addAction(UIAlertAction(title: "Clear backup", style: .destructive) { _ in confirm() })
+        alert.addAction(UIAlertAction(title: T.Backup.missingKeyClearAction, style: .destructive) { _ in confirm() })
         vc.present(alert, animated: true)
     }
 

@@ -19,7 +19,11 @@
 
 import Foundation
 import CloudKit
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 public protocol CloudProbing: AnyObject {
     func checkForVaults(completion: @escaping (Result<[VaultVersion], Error>) -> Void)
@@ -55,7 +59,8 @@ public final class CloudProbe: CloudProbing {
         queryOperation.database = database
         
         queryOperation.queuePriority = .veryHigh
-        queryOperation.resultsLimit = 2
+        // One Info record per vault: the oldest ones, the previous one and the current one
+        queryOperation.resultsLimit = 10
         
         queryOperation.recordMatchedBlock = recordMatchedBlock
         queryOperation.completionBlock = completionBlock
@@ -72,20 +77,31 @@ public final class CloudProbe: CloudProbing {
                 return
             }
             let zoneID = recordID.zoneID
-            let vaultInfo = InfoRecord(record: record)
-            if vaultInfo.version == 1 {
-                Log("CloudProbe: found V1 in \(zoneID)", module: .cloudSync)
-                foundVaults.append(VaultVersion.v1)
-            } else if vaultInfo.version == 2 {
-                Log("CloudProbe: found V2 in \(zoneID)", module: .cloudSync)
-                foundVaults.append(VaultVersion.v2)
+            let version = record[InfoEntryKey.version.rawValue] as? Int ?? 0
+            if let vault = Self.vaultVersion(zoneName: zoneID.zoneName, infoVersion: version) {
+                Log("CloudProbe: found \(vault) in \(zoneID)", module: .cloudSync)
+                foundVaults.append(vault)
             } else {
-                Log("CloudProbe: found V3 in \(zoneID)", module: .cloudSync)
-                foundVaults.append(VaultVersion.v3)
+                Log("CloudProbe: a retired vault in \(zoneID)", module: .cloudSync)
             }
         case .failure(let error):
             hasError = true
             Log("CloudProbe: Error while checking Vault  \(error)", module: .cloudSync, severity: .error)
+        }
+    }
+    
+    /// What the Info record of a zone says about the vault in it. `nil` for a vault that was retired: after its data
+    /// was moved to `Config.vaultV3` its Info record is left with a newer version, only to make the app versions
+    /// that still use it ask for an update.
+    static func vaultVersion(zoneName: String, infoVersion: Int) -> VaultVersion? {
+        if zoneName == Config.vaultV3 {
+            return .v4
+        }
+        switch infoVersion {
+        case 1: return .v1
+        case 2: return .v2
+        case 3: return .v3
+        default: return nil
         }
     }
     

@@ -174,6 +174,73 @@ final class ServiceHandler {
         }
     }
     
+    /// A service from a sealed record (`RecordType.service4`): `serviceData` is its content, with the dates of
+    /// the record.
+    func updateOrCreate(serviceData: ServiceData, sectionOrder: Int, metadata: Data, save: Bool) {
+        if let service = findService(by: serviceData.secret) {
+            guard update(service, metadata: metadata, content: { content in
+                content.name = serviceData.name
+                content.serviceTypeID = serviceData.serviceTypeID
+                content.additionalInfo = serviceData.additionalInfo
+                content.rawIssuer = serviceData.rawIssuer
+                content.otpAuth = serviceData.otpAuth
+                content.iconTypeID = serviceData.iconTypeID
+                content.labelTitle = serviceData.labelTitle
+            }) else { return }
+            service.creationDate = serviceData.createdAt
+            service.modificationDate = serviceData.modifiedAt
+            service.tokenLength = NSNumber(value: serviceData.tokenLength.rawValue)
+            service.tokenPeriod = intToNumber(serviceData.tokenPeriod?.rawValue)
+            service.iconType = serviceData.iconType.rawValue
+            service.badgeColor = serviceData.badgeColor?.rawValue
+            service.labelColor = serviceData.labelColor.rawValue
+            service.sectionID = serviceData.sectionID
+            service.sectionOrder = sectionOrder
+            service.algorithm = serviceData.algorithm.rawValue
+            service.counter = intToNumber(serviceData.counter)
+            service.tokenType = serviceData.tokenType.rawValue
+            service.source = serviceData.source.rawValue
+        } else {
+            ServiceCacheEntity.create(
+                on: coreDataStack.context,
+                metadata: metadata,
+                name: serviceData.name,
+                secret: serviceData.secret,
+                serviceTypeID: serviceData.serviceTypeID,
+                additionalInfo: serviceData.additionalInfo,
+                rawIssuer: serviceData.rawIssuer,
+                otpAuth: serviceData.otpAuth,
+                creationDate: serviceData.createdAt,
+                modificationDate: serviceData.modifiedAt,
+                tokenPeriod: serviceData.tokenPeriod?.rawValue,
+                tokenLength: serviceData.tokenLength.rawValue,
+                badgeColor: serviceData.badgeColor?.rawValue,
+                iconType: serviceData.iconType.rawValue,
+                iconTypeID: serviceData.iconTypeID,
+                labelColor: serviceData.labelColor.rawValue,
+                labelTitle: serviceData.labelTitle,
+                sectionID: serviceData.sectionID,
+                sectionOrder: sectionOrder,
+                algorithm: serviceData.algorithm.rawValue,
+                counter: serviceData.counter,
+                tokenType: serviceData.tokenType.rawValue,
+                source: serviceData.source.rawValue
+            )
+        }
+        if save {
+            coreDataStack.save()
+        }
+    }
+    
+    /// Removes the cached service whose sealed record has the name `recordName`
+    func delete(recordName: String, identifierKey: SyncIdentifierKey) {
+        let services = ServiceCacheEntity.listAll(on: coreDataStack.context).filter {
+            identifierKey.recordName(of: $0.secret.uppercased(), kind: .service) == recordName
+        }
+        services.forEach { ServiceCacheEntity.delete(on: coreDataStack.context, identifiedBy: $0.secret) }
+        coreDataStack.save()
+    }
+    
     func updateOrCreate(with record: ServiceRecord2, save: Bool) {
         guard
             let encryption,

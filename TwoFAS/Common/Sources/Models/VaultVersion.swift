@@ -21,4 +21,6 @@ public enum VaultVersion: Int {
     case v1 = 1
     case v2 = 2
     case v3 = 3
+    /// Sealed records and the records of deletions (`Config.vaultV3`)
+    case v4 = 4
 }

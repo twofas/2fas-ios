@@ -938,6 +938,287 @@ extension StorageEncryptionTests {
     }
 }
 
+// MARK: - Deletions decided by their records (sync)
+
+extension StorageEncryptionTests {
+    private static let longAgo = Date(timeIntervalSinceReferenceDate: 600_000_000)
+    private var soon: Date { Date().addingTimeInterval(1000) }
+
+    private func identifier(_ secret: String) -> Data { Data("id:\(secret.uppercased())".utf8) }
+
+    private func synced(
+        services: [String: Date] = [:],
+        sections: [String: Date] = [:],
+        keepsLocalOnlyItems: Bool = true
+    ) -> SyncedDeletions {
+        SyncedDeletions(
+            services: Dictionary(uniqueKeysWithValues: services.map { (identifier($0.key), $0.value) }),
+            serviceIdentifier: { self.identifier($0) },
+            sections: sections,
+            keepsLocalOnlyItems: keepsLocalOnlyItems
+        )
+    }
+
+    private func cloud(_ secret: String, modifiedAt: Date) -> ServiceData {
+        var service = cloudService(name: "Cloud \(secret)", secret: secret, order: 0)
+        service = ServiceData(
+            name: service.name,
+            secret: service.secret,
+            serviceTypeID: nil,
+            additionalInfo: nil,
+            rawIssuer: nil,
+            modifiedAt: modifiedAt,
+            createdAt: Self.longAgo,
+            tokenPeriod: .period30,
+            tokenLength: .digits6,
+            badgeColor: nil,
+            iconType: .label,
+            iconTypeID: .default,
+            labelColor: .default,
+            labelTitle: "SE",
+            algorithm: .SHA1,
+            isTrashed: false,
+            trashingDate: nil,
+            counter: nil,
+            tokenType: .totp,
+            source: .manual,
+            otpAuth: nil,
+            order: 0,
+            sectionID: nil
+        )
+        return service
+    }
+
+    private func captureAnnouncements() -> (created: () -> [String], deleted: () -> [String]) {
+        var created: [String] = []
+        var deleted: [String] = []
+        storage.service.commonDidCreate = { created.append($0) }
+        storage.service.commonDidDelete = { deleted.append($0) }
+        return ({ created }, { deleted })
+    }
+
+    private var activeSecrets: [String] { storage.service.getAllServices().map(\.secret).sorted() }
+    private var trashedSecrets: [String] { repo.listTrashedServices().map(\.secret).sorted() }
+
+    /// What made the old sync unreliable: a service that isn't in the cloud is no longer taken for a deleted one
+    func testServiceMissingInCloudWithoutDeletionIsKeptAndSent() {
+        addService(secret: "KEPTSECRET")
+        addService(secret: "LOCALONLYSECRET")
+        let announced = captureAnnouncements()
+
+        storage.service.setServices([cloud("KEPTSECRET", modifiedAt: soon)], deletions: synced())
+
+        XCTAssertEqual(activeSecrets, ["KEPTSECRET", "LOCALONLYSECRET"])
+        XCTAssertEqual(trashedSecrets, [])
+        XCTAssertEqual(announced.created(), ["LOCALONLYSECRET"])
+        XCTAssertEqual(announced.deleted(), [])
+    }
+
+    func testServiceIsDeletedOnlyByTheRecordOfItsDeletion() throws {
+        addService(secret: "KEPTSECRET")
+        addService(secret: "DELETEDSECRET")
+        let deletedAt = soon
+        let announced = captureAnnouncements()
+
+        storage.service.setServices(
+            [cloud("KEPTSECRET", modifiedAt: soon)],
+            deletions: synced(services: ["DELETEDSECRET": deletedAt])
+        )
+
+        XCTAssertEqual(activeSecrets, ["KEPTSECRET"])
+        XCTAssertEqual(trashedSecrets, ["DELETEDSECRET"])
+        let deletion = try XCTUnwrap(DeletedServiceEntity.find(on: context, secret: "DELETEDSECRET"))
+        XCTAssertEqual(deletion.deletedAt, deletedAt)
+        // Known to the cloud by its identifier – the secret isn't kept with it any more
+        XCTAssertEqual(deletion.syncID, identifier("DELETEDSECRET"))
+        XCTAssertNil(deletion.secret)
+        XCTAssertEqual(announced.created(), [])
+        XCTAssertEqual(announced.deleted(), [])
+    }
+
+    func testServiceModifiedAfterItsDeletionWins() {
+        addService(secret: "WINNERSECRET")
+        let announced = captureAnnouncements()
+
+        storage.service.setServices(
+            [cloud("WINNERSECRET", modifiedAt: soon)],
+            deletions: synced(services: ["WINNERSECRET": Self.longAgo])
+        )
+
+        XCTAssertEqual(activeSecrets, ["WINNERSECRET"])
+        XCTAssertEqual(trashedSecrets, [])
+        XCTAssertNil(DeletedServiceEntity.find(on: context, secret: "WINNERSECRET"))
+        // The cloud is told to drop the record of the deletion
+        XCTAssertEqual(announced.created(), ["WINNERSECRET"])
+    }
+
+    func testServiceInCloudOlderThanItsDeletionIsDeleted() {
+        addService(secret: "LOSERSECRET")
+        let announced = captureAnnouncements()
+
+        storage.service.setServices(
+            [cloud("LOSERSECRET", modifiedAt: Self.longAgo)],
+            deletions: synced(services: ["LOSERSECRET": soon])
+        )
+
+        XCTAssertEqual(activeSecrets, [])
+        XCTAssertEqual(trashedSecrets, ["LOSERSECRET"])
+        // Its record is still in the cloud – it has to go
+        XCTAssertEqual(announced.deleted(), ["LOSERSECRET"])
+    }
+
+    func testDeletionMadeHereIsSentWhenTheCloudDoesNotKnowIt() throws {
+        addService(secret: "TRASHEDSECRET")
+        _ = try trash("TRASHEDSECRET")
+        let announced = captureAnnouncements()
+
+        storage.service.setServices([], deletions: synced())
+
+        XCTAssertEqual(trashedSecrets, ["TRASHEDSECRET"])
+        XCTAssertEqual(announced.deleted(), ["TRASHEDSECRET"])
+        XCTAssertEqual(DeletedServiceEntity.find(on: context, secret: "TRASHEDSECRET")?.secret, "TRASHEDSECRET")
+    }
+
+    func testTrashedServiceComesBackWhenTheCloudOneIsNewer() throws {
+        addService(secret: "RESTOREDSECRET")
+        _ = try trash("RESTOREDSECRET")
+
+        storage.service.setServices([cloud("RESTOREDSECRET", modifiedAt: soon)], deletions: synced())
+
+        XCTAssertEqual(activeSecrets, ["RESTOREDSECRET"])
+        XCTAssertEqual(trashedSecrets, [])
+        XCTAssertNil(DeletedServiceEntity.find(on: context, secret: "RESTOREDSECRET"))
+    }
+
+    func testTrashedServiceStaysDeletedWhenTheCloudOneIsOlder() throws {
+        addService(secret: "STAYSSECRET")
+        _ = try trash("STAYSSECRET")
+        let announced = captureAnnouncements()
+
+        storage.service.setServices([cloud("STAYSSECRET", modifiedAt: Self.longAgo)], deletions: synced())
+
+        XCTAssertEqual(activeSecrets, [])
+        XCTAssertEqual(trashedSecrets, ["STAYSSECRET"])
+        XCTAssertEqual(announced.deleted(), ["STAYSSECRET"])
+    }
+
+    /// The cloud knew the deletion and doesn't have it any more: it was undone on another device
+    func testDeletionUndoneElsewhereIsForgotten() throws {
+        addService(secret: "UNDONESECRET")
+        repo.deleteService(try trash("UNDONESECRET"))
+        let deletion = try XCTUnwrap(DeletedServiceEntity.find(on: context, secret: "UNDONESECRET"))
+        deletion.syncID = identifier("UNDONESECRET")
+        deletion.encryptedContent = nil
+        let announced = captureAnnouncements()
+
+        storage.service.setServices([], deletions: synced())
+
+        XCTAssertNil(DeletedServiceEntity.find(on: context, secret: "UNDONESECRET"))
+        XCTAssertEqual(announced.deleted(), [])
+    }
+
+    func testLaterDeletionFromCloudReplacesTheLocalDate() throws {
+        addService(secret: "TWICESECRET")
+        _ = try trash("TWICESECRET")
+        let later = soon
+
+        storage.service.setServices([], deletions: synced(services: ["TWICESECRET": later]))
+
+        XCTAssertEqual(DeletedServiceEntity.find(on: context, secret: "TWICESECRET")?.deletedAt, later)
+        XCTAssertEqual(trashedSecrets, ["TWICESECRET"])
+    }
+
+    /// The watch only mirrors the cloud: what isn't there goes, and nothing is sent
+    func testMirrorRemovesWhatTheCloudDoesNotHave() {
+        addService(secret: "KEPTSECRET")
+        addService(secret: "LOCALONLYSECRET")
+        let announced = captureAnnouncements()
+
+        storage.service.setServices(
+            [cloud("KEPTSECRET", modifiedAt: soon)],
+            deletions: synced(keepsLocalOnlyItems: false)
+        )
+
+        XCTAssertEqual(activeSecrets, ["KEPTSECRET"])
+        XCTAssertEqual(announced.created(), [])
+        XCTAssertEqual(announced.deleted(), [])
+    }
+
+    // MARK: Sections
+
+    private func cloudSection(_ section: SectionData, name: String? = nil, modifiedAt: Date?) -> CommonSectionData {
+        CommonSectionData(
+            name: name ?? section.title,
+            sectionID: section.sectionID.uuidString,
+            creationDate: section.createdAt,
+            modificationDate: modifiedAt,
+            isCollapsed: false
+        )
+    }
+
+    func testSectionMissingInCloudWithoutDeletionIsKeptAndSent() throws {
+        storage.section.create(with: "Kept")
+        storage.section.create(with: "Local only")
+        let sections = storage.section.listAll()
+        let kept = try XCTUnwrap(sections.first { $0.title == "Kept" })
+        let localOnly = try XCTUnwrap(sections.first { $0.title == "Local only" })
+        var created: [String] = []
+        storage.section.commonDidCreate = { created.append($0) }
+
+        storage.section.setSections([cloudSection(kept, modifiedAt: nil)], deletions: synced())
+
+        XCTAssertEqual(storage.section.listAll().map(\.title).sorted(), ["Kept", "Local only"])
+        XCTAssertEqual(created, [localOnly.sectionID.uuidString])
+        XCTAssertTrue(DeletedSectionEntity.listAll(on: context).isEmpty)
+    }
+
+    func testSectionIsDeletedOnlyByTheRecordOfItsDeletion() throws {
+        storage.section.create(with: "Kept")
+        storage.section.create(with: "Deleted")
+        let sections = storage.section.listAll()
+        let kept = try XCTUnwrap(sections.first { $0.title == "Kept" })
+        let deleted = try XCTUnwrap(sections.first { $0.title == "Deleted" })
+        let deletedAt = soon
+
+        storage.section.setSections(
+            [cloudSection(kept, modifiedAt: nil)],
+            deletions: synced(sections: [deleted.sectionID.uuidString: deletedAt])
+        )
+
+        XCTAssertEqual(storage.section.listAll().map(\.title), ["Kept"])
+        XCTAssertEqual(DeletedSectionEntity.find(on: context, sectionID: deleted.sectionID)?.deletedAt, deletedAt)
+    }
+
+    func testSectionModifiedAfterItsDeletionWins() throws {
+        storage.section.create(with: "Section")
+        let section = try XCTUnwrap(storage.section.listAll().first)
+        var created: [String] = []
+        storage.section.commonDidCreate = { created.append($0) }
+
+        storage.section.setSections(
+            [cloudSection(section, name: "Renamed", modifiedAt: soon)],
+            deletions: synced(sections: [section.sectionID.uuidString: Self.longAgo])
+        )
+
+        XCTAssertEqual(storage.section.listAll().map(\.title), ["Renamed"])
+        XCTAssertNil(DeletedSectionEntity.find(on: context, sectionID: section.sectionID))
+        XCTAssertEqual(created, [section.sectionID.uuidString])
+    }
+
+    func testSectionDeletionMadeHereIsSentWhenTheCloudDoesNotKnowIt() throws {
+        storage.section.create(with: "Section")
+        let section = try XCTUnwrap(storage.section.listAll().first)
+        storage.section.delete(section)
+        var deleted: [String] = []
+        storage.section.commonDidDelete = { deleted.append($0) }
+
+        storage.section.setSections([], deletions: synced())
+
+        XCTAssertEqual(deleted, [section.sectionID.uuidString])
+        XCTAssertNotNil(DeletedSectionEntity.find(on: context, sectionID: section.sectionID))
+    }
+}
+
 /// A cipher whose key can't be used now
 private final class UnusableCipher: LocalStorageCipher {
     var state: LocalStorageCipherState { .keyUnavailable }

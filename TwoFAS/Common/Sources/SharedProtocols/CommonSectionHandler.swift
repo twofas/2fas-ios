@@ -30,4 +30,7 @@ public protocol CommonSectionHandler: AnyObject {
         
     func setSections(_ sections: [CommonSectionData]) -> Bool
     func getAllSections() -> [CommonSectionData]
+    
+    func setSections(_ sections: [CommonSectionData], deletions: SyncedDeletions) -> Bool
+    func getAllSectionDeletions() -> [CommonSectionDeletion]
 }

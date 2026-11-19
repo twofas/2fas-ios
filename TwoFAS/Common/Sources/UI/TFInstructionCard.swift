@@ -26,18 +26,20 @@ public enum TFInstructionCardIcon {
     case download
     case iCloudSync
     case link
+    case password
 
     var icon: IconName {
         switch self {
         case .download: .arrowDownCircleFill
         case .iCloudSync: .arrowTrianglehead2ClockwiseRotate90IcloudFill
         case .link: .link
+        case .password: .lockIcloudFill
         }
     }
 
     var color: AppColor {
         switch self {
-        case .download: .accentsBlue
+        case .download, .password: .accentsBlue
         case .iCloudSync, .link: .accentsGreen
         }
     }

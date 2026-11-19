@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22757" systemVersion="23C71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="DeletedSectionCacheEntity" syncable="YES">
+    <entity name="DeletedSectionCacheEntity" representedClassName="DeletedSectionCacheEntity" syncable="YES">
         <attribute name="deletedAt" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="metadata" optional="YES" attributeType="Binary"/>
         <attribute name="sectionID" attributeType="String"/>
@@ -8,7 +8,7 @@
             <fetchIndexElement property="sectionID" type="Binary" order="ascending"/>
         </fetchIndex>
     </entity>
-    <entity name="DeletedServiceCacheEntity" syncable="YES">
+    <entity name="DeletedServiceCacheEntity" representedClassName="DeletedServiceCacheEntity" syncable="YES">
         <attribute name="deletedAt" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="encryptedContent" optional="YES" attributeType="Binary"/>
         <attribute name="encryptedMetadata" optional="YES" attributeType="Binary"/>

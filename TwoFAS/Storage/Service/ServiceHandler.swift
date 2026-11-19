@@ -203,6 +203,139 @@ extension ServiceHandler: CommonServiceHandler {
             .toServiceData()
     }
     
+    public func getAllServiceDeletions() -> [CommonServiceDeletion] {
+        DeletedServiceEntity.listAll(on: coreDataStack.context).map {
+            CommonServiceDeletion(secret: $0.secret, syncID: $0.syncID, deletedAt: $0.deletedAt)
+        }
+    }
+    
+    // swiftlint:disable:next function_body_length
+    @discardableResult
+    public func setServices(_ cloudServices: [ServiceData], deletions: SyncedDeletions) -> Bool {
+        guard canWriteServices() else { return false }
+        let context = coreDataStack.context
+        let currentServices = getAllServices()
+        let currentlyInTrash = getAllTrashedServices()
+        let identifier: (String) -> Data = { deletions.serviceIdentifier($0.uppercased()) }
+        
+        /// When the service was deleted, as far as this device and the cloud know. A local record that the cloud
+        /// knew and doesn't have any more was undone elsewhere (or expired) – it doesn't count.
+        func deletionDate(of secret: String) -> Date? {
+            let cloudDate = deletions.services[identifier(secret)]
+            var localDate: Date?
+            if let record = DeletedServiceEntity.find(on: context, secret: secret),
+               record.syncID == nil || cloudDate != nil {
+                localDate = record.deletedAt
+            }
+            return [cloudDate, localDate].compactMap { $0 }.max()
+        }
+        
+        var servicesToSet: [ServiceData] = []
+        var deletedHere: [(secret: String, deletedAt: Date)] = []
+        // What the cloud has to hear about with the next sync
+        var announceCreated: [String] = []
+        var announceDeleted: [String] = []
+        
+        for service in cloudServices {
+            if let deletedAt = deletionDate(of: service.secret) {
+                if service.modifiedAt > deletedAt {
+                    // Added or changed after it was deleted – the service wins and its deletion is removed
+                    servicesToSet.append(service)
+                    announceCreated.append(service.secret)
+                } else {
+                    deletedHere.append((service.secret, deletedAt))
+                    announceDeleted.append(service.secret)
+                }
+            } else {
+                servicesToSet.append(service)
+            }
+        }
+        for service in currentServices where !cloudServices.contains(service.secret) {
+            if let deletedAt = deletions.services[identifier(service.secret)], service.modifiedAt <= deletedAt {
+                // The only way a service is deleted from elsewhere: the record of its deletion
+                deletedHere.append((service.secret, deletedAt))
+            } else if deletions.keepsLocalOnlyItems {
+                // Not in the cloud and not deleted – it's kept and sent
+                servicesToSet.append(service)
+                announceCreated.append(service.secret)
+            } else {
+                deletedHere.append((service.secret, Date()))
+            }
+        }
+        
+        let hasChanges = currentServices != servicesToSet || !deletedHere.isEmpty
+        if hasChanges {
+            // swiftlint:disable:next line_length
+            Log("ServiceHandler in Storage: Merging. In cloud: \(cloudServices.count), to set: \(servicesToSet.count), deleted: \(deletedHere.count)", module: .storage)
+            let changes = modifiedDeleted(for: currentServices, newServices: servicesToSet)
+            let servicesWithUpdatedCounters = modifyCounters(servicesToSet, current: currentServices)
+            
+            for deleted in deletedHere where currentServices.contains(deleted.secret) {
+                ServiceEntity.markAsTrashed(on: context, secret: deleted.secret, trashingDate: deleted.deletedAt)
+            }
+            removeAllNotTrashed()
+            // A service that is in the trash here and won with its deletion comes back
+            cleanTrash(prepareForTrashRemoval(currentlyInTrash: currentlyInTrash, newServices: servicesToSet))
+            let reorderedWhileAdded = addServices(servicesWithUpdatedCounters.sortedBySection)
+            coreDataStack.save()
+            
+            NotificationCenter.default.post(
+                name: .servicesWereUpdated,
+                object: nil,
+                userInfo: [
+                    Notification.UserInfoKey.modified: changes.modified,
+                    Notification.UserInfoKey.deleted: changes.deleted
+                ]
+            )
+            if currentServices.count == changes.deleted.count && !currentServices.isEmpty {
+                NotificationCenter.default.post(name: .allServicesRemoved, object: nil)
+            }
+            if !reorderedWhileAdded.isEmpty {
+                commonDidModify?(reorderedWhileAdded)
+            }
+        }
+        
+        announceDeleted += reconcileDeletionRecords(with: deletions, identifier: identifier, kept: servicesToSet)
+        coreDataStack.save()
+        
+        if deletions.keepsLocalOnlyItems {
+            announceCreated.forEach { commonDidCreate?($0) }
+            Set(announceDeleted).forEach { commonDidDelete?($0) }
+        }
+        return hasChanges
+    }
+    
+    /// Brings the records of the deletions made here in line with the cloud.
+    /// - Returns: The secrets of the deleted services the cloud doesn't know about yet.
+    private func reconcileDeletionRecords(
+        with deletions: SyncedDeletions,
+        identifier: (String) -> Data,
+        kept: [ServiceData]
+    ) -> [String] {
+        let context = coreDataStack.context
+        var unknownToCloud: [String] = []
+        for record in DeletedServiceEntity.listAll(on: context) {
+            let secret = record.secret
+            guard let syncID = record.syncID ?? secret.map(identifier) else {
+                // Nothing says which service it was
+                context.delete(record)
+                continue
+            }
+            if let cloudDate = deletions.services[syncID] {
+                record.deletedAt = max(record.deletedAt, cloudDate)
+                // The cloud knows the deletion by its identifier – the secret isn't needed any more
+                record.syncID = syncID
+                record.encryptedContent = nil
+            } else if record.syncID != nil {
+                // The cloud knew it and doesn't have it any more: undone elsewhere or expired
+                context.delete(record)
+            } else if let secret, !kept.contains(secret) {
+                unknownToCloud.append(secret)
+            }
+        }
+        return unknownToCloud
+    }
+    
     // --
     
     /// `false` (logged) when the content of new services can't be sealed (e.g. the key is unavailable)

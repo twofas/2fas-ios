@@ -143,6 +143,91 @@ public extension SectionHandler {
         return true
     }
     
+    public func getAllSectionDeletions() -> [CommonSectionDeletion] {
+        DeletedSectionEntity.listAll(on: coreDataStack.context).map {
+            CommonSectionDeletion(sectionID: $0.sectionID.uuidString, deletedAt: $0.deletedAt)
+        }
+    }
+    
+    @discardableResult
+    public func setSections(_ cloudSections: [CommonSectionData], deletions: SyncedDeletions) -> Bool {
+        let context = coreDataStack.context
+        let currentSections = getAllSections()
+        
+        func date(of section: CommonSectionData) -> Date { section.modificationDate ?? section.creationDate }
+        /// When the section was deleted, as far as this device and the cloud know
+        func deletionDate(of sectionID: String) -> Date? {
+            let localDate = UUID(uuidString: sectionID)
+                .flatMap { DeletedSectionEntity.find(on: context, sectionID: $0)?.deletedAt }
+            return [deletions.sections[sectionID], localDate].compactMap { $0 }.max()
+        }
+        
+        var sectionsToSet: [CommonSectionData] = []
+        var deletedHere: [(sectionID: String, deletedAt: Date)] = []
+        var announceCreated: [String] = []
+        var announceDeleted: [String] = []
+        
+        for section in cloudSections {
+            if let deletedAt = deletionDate(of: section.sectionID) {
+                if date(of: section) > deletedAt {
+                    // Changed after it was deleted – the section wins and its deletion is removed
+                    sectionsToSet.append(section)
+                    announceCreated.append(section.sectionID)
+                } else {
+                    deletedHere.append((section.sectionID, deletedAt))
+                    announceDeleted.append(section.sectionID)
+                }
+            } else {
+                sectionsToSet.append(section)
+            }
+        }
+        let cloudIDs = Set(cloudSections.map(\.sectionID))
+        for section in currentSections where !cloudIDs.contains(section.sectionID) {
+            if let deletedAt = deletions.sections[section.sectionID], date(of: section) <= deletedAt {
+                // The only way a section is deleted from elsewhere: the record of its deletion
+                deletedHere.append((section.sectionID, deletedAt))
+            } else if deletions.keepsLocalOnlyItems {
+                // Not in the cloud and not deleted – it's kept and sent
+                sectionsToSet.append(section)
+                announceCreated.append(section.sectionID)
+            } else {
+                deletedHere.append((section.sectionID, Date()))
+            }
+        }
+        
+        let hasChanges = currentSections != sectionsToSet
+        if hasChanges {
+            Log("SectionHandler in Storage: Merging. To set: \(sectionsToSet.count)", module: .storage)
+            let collapsedState = listCollapsedState()
+            removeAll()
+            addSections(sectionsToSet, collapsedState: collapsedState)
+        }
+        for deleted in deletedHere {
+            guard let sectionID = UUID(uuidString: deleted.sectionID) else { continue }
+            DeletedSectionEntity.record(on: context, sectionID: sectionID, deletedAt: deleted.deletedAt)
+        }
+        // The deletions made here that the cloud doesn't know about yet
+        let keptIDs = Set(sectionsToSet.map(\.sectionID))
+        for record in DeletedSectionEntity.listAll(on: context) {
+            let sectionID = record.sectionID.uuidString
+            if let cloudDate = deletions.sections[sectionID] {
+                record.deletedAt = max(record.deletedAt, cloudDate)
+            } else if !keptIDs.contains(sectionID) {
+                announceDeleted.append(sectionID)
+            }
+        }
+        coreDataStack.save()
+        
+        if hasChanges {
+            NotificationCenter.default.post(name: .sectionsWereUpdated, object: nil)
+        }
+        if deletions.keepsLocalOnlyItems {
+            announceCreated.forEach { commonDidCreate?($0) }
+            Set(announceDeleted).forEach { commonDidDelete?($0) }
+        }
+        return hasChanges
+    }
+    
     // MARK: - Import from file
     
     @discardableResult

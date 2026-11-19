@@ -31,6 +31,9 @@ enum InfoEntryKey: String {
     case allowedDevices
     case enableWatch
     case encryptionReference
+    case kdfSalt
+    case kdfParameters
+    case identifierKey
 }
 
 final class InfoRecord: Equatable {
@@ -40,6 +43,7 @@ final class InfoRecord: Equatable {
         lhs.modificationDate == rhs.modificationDate &&
         lhs.allowedDevices == rhs.allowedDevices &&
         lhs.encryptionReference == rhs.encryptionReference &&
+        lhs.encryptionInfo == rhs.encryptionInfo &&
         lhs.enableWatch == rhs.enableWatch
     }
     
@@ -50,6 +54,8 @@ final class InfoRecord: Equatable {
     private(set) var allowedDevices: [String] = []
     private(set) var encryptionReference: Data?
     private(set) var enableWatch = false
+    /// Empty in a record written before the Info version 4
+    private(set) var encryptionInfo = SyncCloudEncryptionInfo.empty
     
     init(record: CKRecord) {
         version = record[.version] as! Int
@@ -59,6 +65,11 @@ final class InfoRecord: Equatable {
         if let er = record[.encryptionReference] as? Data {
             encryptionReference = er
         }
+        encryptionInfo = SyncCloudEncryptionInfo(
+            kdfSalt: record[.kdfSalt] as? Data,
+            kdfParameters: record[.kdfParameters] as? Data,
+            wrappedIdentifierKey: record[.identifierKey] as? Data
+        )
 
         modificationDate = record.modificationDate ?? Date()
 
@@ -140,6 +151,9 @@ final class InfoRecord: Equatable {
         record[.allowedDevices] = (allowedDevices.map({ $0 as NSString }) as NSArray) as CKRecordValue
         record[.enableWatch] = enableWatch as CKRecordValue
         record[.encryptionReference] = encryptionReference as CKRecordValue
+        record[.kdfSalt] = encryptionInfo.kdfSalt.map { $0 as CKRecordValue }
+        record[.kdfParameters] = encryptionInfo.kdfParameters.map { $0 as CKRecordValue }
+        record[.identifierKey] = encryptionInfo.wrappedIdentifierKey.map { $0 as CKRecordValue }
     }
 }
 

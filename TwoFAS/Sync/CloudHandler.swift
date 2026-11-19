@@ -357,6 +357,9 @@ final class CloudHandler: CloudHandlerType {
 
                     self?.setSystemEncryption?()
                     ConstStorage.cloudMigratedToV3 = true
+                    // Every vault was erased – the next sync starts the current one clean
+                    ConstStorage.cloudMigratedToV4 = true
+                    ConstStorage.oldVaultsRetired = true
                     
                     completion(.success(()))
                 case .failure(let error):

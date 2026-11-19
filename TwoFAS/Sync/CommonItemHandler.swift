@@ -30,6 +30,8 @@ final class CommonItemHandler {
     private let infoHandler: InfoHandler
     private let logHandler: LogHandler
     private let zoneManager: ZoneManaging
+    private let syncEncryptionHandler: SyncEncryptionHandling
+    private let deletionLogger: DeletionLogger
     
     private var itemsToAppend: [ServiceData] = []
     
@@ -38,8 +40,12 @@ final class CommonItemHandler {
         commonServiceHandler: CommonServiceHandler,
         infoHandler: InfoHandler,
         logHandler: LogHandler,
-        zoneManager: ZoneManaging
+        zoneManager: ZoneManaging,
+        syncEncryptionHandler: SyncEncryptionHandling,
+        deletionLogger: DeletionLogger
     ) {
+        self.syncEncryptionHandler = syncEncryptionHandler
+        self.deletionLogger = deletionLogger
         self.commonSectionHandler = commonSectionHandler
         self.commonServiceHandler = commonServiceHandler
         self.infoHandler = infoHandler
@@ -49,6 +55,7 @@ final class CommonItemHandler {
         commonSectionHandler.commonDidCreate = { [weak self] sectionID in
             Log("CommonItemHandler - commonSectionHandler - commonDidCreate", module: .cloudSync)
             self?.logHandler.log(entityID: sectionID, actionType: .created, kind: .section)
+            self?.deletionLogger.sectionExists(sectionID: sectionID)
         }
         commonSectionHandler.commonDidModify = { [weak self] sectionIDs in
             Log("CommonItemHandler - commonSectionHandler - commonDidModify", module: .cloudSync)
@@ -59,11 +66,13 @@ final class CommonItemHandler {
         commonSectionHandler.commonDidDelete = { [weak self] sectionID in
             Log("CommonItemHandler - commonSectionHandler - commonDidDelete", module: .cloudSync)
             self?.logHandler.log(entityID: sectionID, actionType: .deleted, kind: .section)
+            self?.deletionLogger.sectionDeleted(sectionID: sectionID)
         }
         
         commonServiceHandler.commonDidCreate = { [weak self] secret in
             Log("CommonItemHandler - commonServiceHandler - commonDidCreate", module: .cloudSync)
             self?.logHandler.log(entityID: secret, actionType: .created, kind: .service3)
+            self?.deletionLogger.serviceExists(secret: secret)
         }
         commonServiceHandler.commonDidModify = { [weak self] secrets in
             Log("CommonItemHandler - commonServiceHandler - commonDidModify", module: .cloudSync)
@@ -74,6 +83,7 @@ final class CommonItemHandler {
         commonServiceHandler.commonDidDelete = { [weak self] secret in
             Log("CommonItemHandler - commonServiceHandler - commonDidDelete", module: .cloudSync)
             self?.logHandler.log(entityID: secret, actionType: .deleted, kind: .service3)
+            self?.deletionLogger.serviceDeleted(secret: secret)
         }
     }
     
@@ -95,10 +105,16 @@ final class CommonItemHandler {
     
     func setItems(_ items: [RecordType: [Any]]) -> Bool {
         var newDataWasSet = false
+        // In the format with the records of deletions nothing is deleted here for being absent in the cloud
+        let deletions = syncedDeletions(from: items)
         
         if let sections = items[.section] as? [CommonSectionData] {
             Log("CommonItemHandler: sections (\(sections.count))")
-            let value = commonSectionHandler.setSections(sections)
+            let value = if let deletions {
+                commonSectionHandler.setSections(sections, deletions: deletions)
+            } else {
+                commonSectionHandler.setSections(sections)
+            }
             newDataWasSet = newDataWasSet || value
         }
         
@@ -107,11 +123,77 @@ final class CommonItemHandler {
             let sortedServices = services.sortedBySection.reduce(into: [ServiceData]()) { result, element in
                 result += element.value
             }
-            let value = commonServiceHandler.setServices(sortedServices)
+            let value = if let deletions {
+                commonServiceHandler.setServices(sortedServices, deletions: deletions)
+            } else {
+                commonServiceHandler.setServices(sortedServices)
+            }
             newDataWasSet = newDataWasSet || value
         }
         
         return newDataWasSet
+    }
+    
+    /// What the cloud knows about deletions – `nil` in the formats without the records of deletions. The records
+    /// that are older than what is remembered don't count any more and are removed from the cloud.
+    private func syncedDeletions(from items: [RecordType: [Any]]) -> SyncedDeletions? {
+        guard zoneManager.usesSealedRecords, let identifierKey = syncEncryptionHandler.identifierKey else {
+            return nil
+        }
+        var services: [Data: Date] = [:]
+        for deletion in (items[.deletedService] as? [SyncDeletion]) ?? [] {
+            if deletion.isExpired() {
+                deletionLogger.deletionExpired(deletion, kind: .deletedService)
+            } else {
+                services[deletion.identifier] = deletion.deletedAt
+            }
+        }
+        var sections: [String: Date] = [:]
+        for deletion in (items[.deletedSection] as? [SyncDeletion]) ?? [] {
+            guard let sectionID = deletion.sectionID else { continue }
+            if deletion.isExpired() {
+                deletionLogger.deletionExpired(deletion, kind: .deletedSection)
+            } else {
+                sections[sectionID] = deletion.deletedAt
+            }
+        }
+        #if os(watchOS)
+        // The watch only mirrors the cloud
+        let keepsLocalOnlyItems = false
+        #else
+        let keepsLocalOnlyItems = true
+        #endif
+        return SyncedDeletions(
+            services: services,
+            serviceIdentifier: { identifierKey.identifier(of: $0.uppercased(), kind: .deletedService) },
+            sections: sections,
+            keepsLocalOnlyItems: keepsLocalOnlyItems
+        )
+    }
+    
+    /// The deletions made on this device, as the items the cloud should have. `nil` in the formats without the
+    /// records of deletions.
+    private func localDeletions() -> (services: [SyncDeletion], sections: [SyncDeletion])? {
+        guard zoneManager.usesSealedRecords, let identifierKey = syncEncryptionHandler.identifierKey else {
+            return nil
+        }
+        let services: [SyncDeletion] = commonServiceHandler.getAllServiceDeletions().compactMap { deletion in
+            let identifier = deletion.syncID
+                ?? deletion.secret.map { identifierKey.identifier(of: $0.uppercased(), kind: .deletedService) }
+            guard let identifier else { return nil }
+            return SyncDeletion(identifier: identifier, deletedAt: deletion.deletedAt)
+        }
+        let sections: [SyncDeletion] = commonSectionHandler.getAllSectionDeletions().map { deletion in
+            SyncDeletion(
+                identifier: identifierKey.identifier(of: deletion.sectionID, kind: .deletedSection),
+                deletedAt: deletion.deletedAt,
+                sectionID: deletion.sectionID
+            )
+        }
+        return (
+            services.filter { !$0.isExpired() }.sorted { $0.recordName < $1.recordName },
+            sections.filter { !$0.isExpired() }.sorted { $0.recordName < $1.recordName }
+        )
     }
     
     func setItemsFromMigration(_ serviceDataToAppend: [ServiceData]) {
@@ -128,6 +210,10 @@ final class CommonItemHandler {
         let recordType: RecordType = zoneManager.inOldVault ? .service2 : .service3
         value[recordType] = services
         value[.info] = infoHandler.prepareForSendoff()
+        if let deletions = localDeletions() {
+            value[.deletedService] = deletions.services
+            value[.deletedSection] = deletions.sections
+        }
         return value
     }
 }

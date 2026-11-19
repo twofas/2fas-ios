@@ -61,12 +61,19 @@ public enum SyncInstanceWatch {
             zoneManager: zoneManager,
             syncEncryptionHandler: syncEncryptionHandler
         )
+        let deletionLogger = DeletionLogger(
+            logHandler: logHandler,
+            zoneManager: zoneManager,
+            syncEncryptionHandler: syncEncryptionHandler
+        )
         let commonItemHandler = CommonItemHandler(
             commonSectionHandler: commonSectionHandler,
             commonServiceHandler: commonServiceHandler,
             infoHandler: infoHandler,
             logHandler: logHandler,
-            zoneManager: zoneManager
+            zoneManager: zoneManager,
+            syncEncryptionHandler: syncEncryptionHandler,
+            deletionLogger: deletionLogger
         )
         
         let itemHandler = ItemHandler(
@@ -76,7 +83,8 @@ public enum SyncInstanceWatch {
             logHandler: logHandler,
             serviceRecordEncryptionHandler: serviceRecordEncryptionHandler,
             syncEncryptionHandler: syncEncryptionHandler,
-            zoneManager: zoneManager
+            zoneManager: zoneManager,
+            deletionHandler: DeletionCacheHandler(coreDataStack: coreDataStack)
         )
         let mergeHandler = MergeHandler(
             logHandler: logHandler,
@@ -86,7 +94,7 @@ public enum SyncInstanceWatch {
             zoneManager: zoneManager
         )
         let modificationQueue = ModificationQueue()
-        let migrationHandler = MigrationHandlerWatchPlaceholder()
+        let migrationHandler = WatchVaultSelector(zoneManager: zoneManager, cloudProbe: CloudProbe())
         let requirementCheckHandler = RequirementCheckWatchHandler(
             encryptionHandler: syncEncryptionHandler,
             infoHandler: infoHandler
@@ -112,9 +120,14 @@ public enum SyncInstanceWatch {
             localReset: localReset,
             // The watch never migrates – its stores are never opened in memory
             isSyncDeferred: false,
-            syncContext: coreDataStack.context
+            syncContext: coreDataStack.context,
+            infoHandler: infoHandler,
+            zoneManager: zoneManager,
+            syncEncryptionHandler: syncEncryptionHandler
         )
         syncEncryptionHandler.initialize()
+        // What the Info record carried when it was last fetched – the salt, the parameters and the identifier key
+        syncEncryptionHandler.cloudEncryptionInfoFetched(infoHandler.encryptionInfo)
         let cloudAvailability = CloudAvailability(container: syncHandler.container)
         cloudHandler = CloudHandler(
             cloudAvailability: cloudAvailability,
@@ -128,7 +141,7 @@ public enum SyncInstanceWatch {
             infoHandler: infoHandler
         )
         
-        logDataChangeImpl = LogDataChangeImpl(logHandler: logHandler)
+        logDataChangeImpl = LogDataChangeImpl(logHandler: logHandler, deletionLogger: deletionLogger)
     }
     public static func getCloudHandler() -> CloudHandlerType { cloudHandler }
     public static func getDeviceCode() -> DeviceCode { syncEncryptionHandler.deviceCode }

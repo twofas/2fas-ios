@@ -18,8 +18,9 @@
 //
 
 import CloudKit
+import CommonWatch
 
-final class MigrationHandlerWatchPlaceholder: MigrationHandling {
+final class WatchVaultSelector: MigrationHandling {
     var clearCloudState: Callback?
     var isMigratingToV3: Callback?
     var setFirstStart: Callback?
@@ -28,6 +29,50 @@ final class MigrationHandlerWatchPlaceholder: MigrationHandling {
     var isMigrating: Bool { false }
     var isMigratingInV1Zone: Bool { false }
     
-    func checkIfMigrationNeeded() async {}
+    private let zoneManager: ZoneManager
+    private let cloudProbe: CloudProbing
+    
+    init(zoneManager: ZoneManager, cloudProbe: CloudProbing) {
+        self.zoneManager = zoneManager
+        self.cloudProbe = cloudProbe
+    }
+    
+    /// The vault to read, by what was found in the cloud
+    static func zoneName(found: [VaultVersion]) -> String {
+        found.contains(.v4) ? Config.vaultV3 : Config.vaultV2
+    }
+    
+    func checkIfMigrationNeeded() async {
+        guard !ConstStorage.cloudMigratedToV4 else {
+            zoneManager.setCurrentZoneID(Config.vaultV3)
+            return
+        }
+        Log("WatchVaultSelector: probing cloud", module: .cloudSync)
+        do {
+            let found = try await withCheckedThrowingContinuation { continuation in
+                cloudProbe.checkForVaults { result in
+                    continuation.resume(with: result)
+                }
+            }
+            let zoneName = Self.zoneName(found: found)
+            guard zoneName == Config.vaultV3 else {
+                // The phone didn't migrate yet – probed again with the next sync
+                Log("WatchVaultSelector: the current vault isn't there yet", module: .cloudSync)
+                zoneManager.setCurrentZoneID(zoneName)
+                return
+            }
+            Log("WatchVaultSelector: switching to the current vault", module: .cloudSync)
+            zoneManager.setCurrentZoneID(zoneName)
+            ConstStorage.cloudMigratedToV4 = true
+            // What was cached belongs to the previous vault
+            await MainActor.run {
+                clearCloudState?()
+            }
+        } catch {
+            // The vault used so far – probed again with the next sync
+            Log("WatchVaultSelector - can't probe cloud", module: .cloudSync, severity: .error)
+        }
+    }
+    
     func migrateIfNeeded() -> Bool { false }
 }

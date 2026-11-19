@@ -40,6 +40,10 @@ public protocol SyncMigrationInteracting: AnyObject {
     func switchLocallyToUseSystemPassword()
     func migrateToSystemPassword()
     func setMissingUserPassword(_ password: String)
+    /// - Returns: `false` when the password isn't the one the iCloud backup is encrypted with.
+    func recoverMissingUserKey(_ password: String) -> Bool
+    /// Reports the problem the sync is stopped with now (if any) again – for a screen that appears after it happened
+    func reportCurrentSyncProblem()
     
     func verifyPassword(_ password: String) -> Bool
 }
@@ -147,6 +151,16 @@ extension SyncMigrationInteractor: SyncMigrationInteracting {
         mainRepository.cloudSetMissingUserPassword(password)
     }
     
+    func recoverMissingUserKey(_ password: String) -> Bool {
+        mainRepository.cloudRecoverMissingUserKey(password)
+    }
+    
+    func reportCurrentSyncProblem() {
+        guard case .disabledNotAvailable(.encryptionError(let encryptionError)) = mainRepository.cloudCurrentState
+        else { return }
+        report(encryptionError)
+    }
+    
     func verifyPassword(_ password: String) -> Bool {
         mainRepository.cloudVerifyUserPassword(password)
     }
@@ -154,8 +168,18 @@ extension SyncMigrationInteractor: SyncMigrationInteracting {
     @objc
     func syncStateChanged() {
         switch mainRepository.cloudCurrentState {
+        case .disabledNotAvailable(.encryptionError(let encryptionError)):
+            // Not an error of the migration – it has its own screen with what can be done about it
+            report(encryptionError)
         case .disabledNotAvailable(let reason): migrationError?(reason)
         default: break
+        }
+    }
+    
+    private func report(_ encryptionError: CloudState.NotAvailableReason.EncryptionError) {
+        switch encryptionError {
+        case .cantCreateEncryptionElements: showCantCreateEncryptionElements?()
+        case .missingSystemKey, .missingUserKey, .missingAllKeys: showMissingKey?(encryptionError)
         }
     }
 }

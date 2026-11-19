@@ -382,6 +382,7 @@
 		C24EECF6268787B400C6ABAA /* SectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECF5268787B400C6ABAA /* SectionHandler.swift */; };
 		C24EECF8268789DE00C6ABAA /* ItemHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECF7268789DE00C6ABAA /* ItemHandler.swift */; };
 		8E67AD79646F4A25924B36D4 /* DeletionCacheHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3CA7E7D1C3672EABE5B4BF /* DeletionCacheHandler.swift */; };
+		E1085D85B39D4191904532E1 /* DeletedCacheEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF31C46A878A40FCBE635857 /* DeletedCacheEntities.swift */; };
 		C24EECFA26878C5C00C6ABAA /* CommonItemHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECF926878C5C00C6ABAA /* CommonItemHandler.swift */; };
 		C24F81762FB90DFF00339C8B /* CancellableTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24F81752FB90DFF00339C8B /* CancellableTimer.swift */; };
 		C24F81782FB90FC600339C8B /* Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24F81772FB90FC300339C8B /* Shake.swift */; };
@@ -588,6 +589,7 @@
 		C274C9B42BAB89C7008E7212 /* ServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF4044255860FC0006735E /* ServiceHandler.swift */; };
 		C274C9B52BAB89C7008E7212 /* ItemHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECF7268789DE00C6ABAA /* ItemHandler.swift */; };
 		577B134CA1FCDBC439A2F54F /* DeletionCacheHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3CA7E7D1C3672EABE5B4BF /* DeletionCacheHandler.swift */; };
+		2AA611AF64A04A34BEFF4189 /* DeletedCacheEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF31C46A878A40FCBE635857 /* DeletedCacheEntities.swift */; };
 		C274C9B62BAB89C7008E7212 /* SyncHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23BAAF32545A1E9009B1EF8 /* SyncHandler.swift */; };
 		C274C9B72BAB89C7008E7212 /* SectionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECF32687837D00C6ABAA /* SectionRecord.swift */; };
 		C274C9B82BAB89C7008E7212 /* LogEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D61E2F25602F4100C5BE3A /* LogEntity+CoreDataClass.swift */; };
@@ -2339,6 +2341,7 @@
 		C24EECF5268787B400C6ABAA /* SectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SectionHandler.swift; path = Sync/Section/SectionHandler.swift; sourceTree = SOURCE_ROOT; };
 		C24EECF7268789DE00C6ABAA /* ItemHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemHandler.swift; sourceTree = "<group>"; };
 		2C3CA7E7D1C3672EABE5B4BF /* DeletionCacheHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletionCacheHandler.swift; sourceTree = "<group>"; };
+		AF31C46A878A40FCBE635857 /* DeletedCacheEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedCacheEntities.swift; sourceTree = "<group>"; };
 		C24EECF926878C5C00C6ABAA /* CommonItemHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonItemHandler.swift; sourceTree = "<group>"; };
 		C24F81752FB90DFF00339C8B /* CancellableTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTimer.swift; sourceTree = "<group>"; };
 		C24F81772FB90FC300339C8B /* Shake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shake.swift; sourceTree = "<group>"; };
@@ -5413,6 +5416,7 @@
 			children = (
 				C24EECF7268789DE00C6ABAA /* ItemHandler.swift */,
 				2C3CA7E7D1C3672EABE5B4BF /* DeletionCacheHandler.swift */,
+				AF31C46A878A40FCBE635857 /* DeletedCacheEntities.swift */,
 			);
 			path = Item;
 			sourceTree = "<group>";
@@ -7903,6 +7907,7 @@
 				C2EF4045255860FC0006735E /* ServiceHandler.swift in Sources */,
 				C24EECF8268789DE00C6ABAA /* ItemHandler.swift in Sources */,
 				8E67AD79646F4A25924B36D4 /* DeletionCacheHandler.swift in Sources */,
+				E1085D85B39D4191904532E1 /* DeletedCacheEntities.swift in Sources */,
 				C23BAAF42545A1E9009B1EF8 /* SyncHandler.swift in Sources */,
 				C24EECF42687837D00C6ABAA /* SectionRecord.swift in Sources */,
 				C2D61E4125602F5000C5BE3A /* LogEntity+CoreDataClass.swift in Sources */,
@@ -7970,6 +7975,7 @@
 				C2C0A9832DA321FA000A1772 /* SyncEncryptionHandling.swift in Sources */,
 				C274C9B52BAB89C7008E7212 /* ItemHandler.swift in Sources */,
 				577B134CA1FCDBC439A2F54F /* DeletionCacheHandler.swift in Sources */,
+				2AA611AF64A04A34BEFF4189 /* DeletedCacheEntities.swift in Sources */,
 				C274C9B62BAB89C7008E7212 /* SyncHandler.swift in Sources */,
 				C274C9B72BAB89C7008E7212 /* SectionRecord.swift in Sources */,
 				C25CB2412D8758700099FAFD /* ServiceRecordEncryptionHandler.swift in Sources */,

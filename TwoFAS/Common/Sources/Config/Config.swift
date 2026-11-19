@@ -49,6 +49,8 @@ public enum Config {
     
     public static let vaultV1 = "Vault1"
     public static let vaultV2 = "Vault2"
+    /// Sealed records (`ServiceRecord4`, `SectionRecord2`) and the records of deletions
+    public static let vaultV3 = "Vault3"
     public static var containerIdentifier: String {
         #if DEV
             "iCloud.com.twofas.org.dev.Vault"

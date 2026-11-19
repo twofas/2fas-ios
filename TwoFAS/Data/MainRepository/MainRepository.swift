@@ -186,6 +186,7 @@ protocol MainRepository: AnyObject {
     var cloudCurrentEncryption: CloudEncryptionType? { get }
     func cloudChangePassword(_ password: String)
     func cloudSetMissingUserPassword(_ password: String)
+    func cloudRecoverMissingUserKey(_ password: String) -> Bool
     func cloudMigrateToSystemPassword()
     func cloudSwitchLocallyToUseSystemPassword()
     func cloudVerifyUserPassword(_ password: String) -> Bool

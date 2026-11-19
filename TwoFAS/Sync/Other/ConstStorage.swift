@@ -29,6 +29,8 @@ enum ConstStorage {
     private static let KeyCloudEnabled = "KeyCloudEnabled"
     private static let KeyCloudMigratedToV3 = "KeyCloudMigratedToV3"
     private static let KeySyncResetRequired = "KeySyncResetRequired"
+    private static let KeyCloudMigratedToV4 = "KeyCloudMigratedToV4"
+    private static let KeyOldVaultsRetired = "KeyOldVaultsRetired"
     
     private static let userDefaults = UserDefaults.standard
     
@@ -121,6 +123,22 @@ enum ConstStorage {
         get { userDefaults.bool(forKey: KeyCloudMigratedToV3) }
         set {
             userDefaults.set(newValue, forKey: KeyCloudMigratedToV3)
+            userDefaults.synchronize()
+        }
+    }
+    
+    static var cloudMigratedToV4: Bool {
+        get { userDefaults.bool(forKey: KeyCloudMigratedToV4) }
+        set {
+            userDefaults.set(newValue, forKey: KeyCloudMigratedToV4)
+            userDefaults.synchronize()
+        }
+    }
+    
+    static var oldVaultsRetired: Bool {
+        get { userDefaults.bool(forKey: KeyOldVaultsRetired) }
+        set {
+            userDefaults.set(newValue, forKey: KeyOldVaultsRetired)
             userDefaults.synchronize()
         }
     }

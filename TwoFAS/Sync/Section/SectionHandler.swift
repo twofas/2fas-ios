@@ -128,6 +128,54 @@ final class SectionHandler {
         }
     }
     
+    /// A section from a sealed record (`RecordType.section2`)
+    func updateOrCreate(
+        content: SectionRecordContent,
+        metadata: Data,
+        creationDate: Date,
+        modificationDate: Date?,
+        save: Bool
+    ) {
+        if let section = findSection(by: content.sectionID) {
+            do {
+                try section.setTitle(content.title)
+            } catch {
+                Log(
+                    "SectionCacheEntity - can't update content: \(SealedEntity.describe(error))",
+                    module: .cloudSync,
+                    severity: .error
+                )
+                ConstStorage.syncResetRequired = true
+                return
+            }
+            section.order = Int32(content.order)
+            section.metadata = metadata
+            section.creationDate = creationDate
+            section.modificationDate = modificationDate
+        } else {
+            SectionCacheEntity.create(
+                on: coreDataStack.context,
+                sectionID: content.sectionID,
+                title: content.title,
+                creationDate: creationDate,
+                modificationDate: modificationDate,
+                metadata: metadata,
+                order: Int32(content.order)
+            )
+        }
+        if save {
+            coreDataStack.save()
+        }
+    }
+    
+    /// Removes the cached section whose sealed record has the name `recordName`
+    func delete(recordName: String, identifierKey: SyncIdentifierKey) {
+        let sectionIDs = listAll().map(\.sectionID).filter {
+            identifierKey.recordName(of: $0, kind: .section) == recordName
+        }
+        delete(identifiedBy: sectionIDs)
+    }
+    
     func saveAfterBatch() {
         coreDataStack.save()
     }

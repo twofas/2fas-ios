@@ -36,6 +36,8 @@ public protocol DebugToolsInteracting: AnyObject {
     var totalServicesCount: Int { get }
     var trashedServicesCount: Int { get }
     var sectionsCount: Int { get }
+    /// Records of deleted services and sections
+    var tombstonesCount: (services: Int, sections: Int) { get }
     var isCloudBackupEnabled: Bool { get }
     var cloudStateDescription: String { get }
     var localStorageKeyStateDescription: String { get }
@@ -63,6 +65,7 @@ public protocol DebugToolsInteracting: AnyObject {
     func trashAllServices()
     func restoreAllServices()
     func emptyTrash()
+    func removeAllTombstones()
     func clearAllUserDefaults()
     func removeAllBrowserPairings()
     func reloadPushToken()
@@ -120,6 +123,10 @@ extension DebugToolsInteractor: DebugToolsInteracting {
         mainRepository.listAllSections().count
     }
 
+    var tombstonesCount: (services: Int, sections: Int) {
+        mainRepository.deletionsCount
+    }
+
     var isCloudBackupEnabled: Bool {
         mainRepository.isCloudBackupConnected
     }
@@ -174,6 +181,8 @@ extension DebugToolsInteractor: DebugToolsInteracting {
         mainRepository.listTrashedServices().forEach { mainRepository.deleteService($0) }
         mainRepository.listAllSections().forEach { mainRepository.deleteSection($0) }
         mainRepository.removeAllAuthRequests()
+        // Trashed services and deleted sections leave tombstones – a wiped database has none
+        mainRepository.removeAllDeletions()
         mainRepository.saveStorage()
     }
 
@@ -190,6 +199,10 @@ extension DebugToolsInteractor: DebugToolsInteracting {
     func emptyTrash() {
         mainRepository.listTrashedServices().forEach { mainRepository.deleteService($0) }
         mainRepository.saveStorage()
+    }
+
+    func removeAllTombstones() {
+        mainRepository.removeAllDeletions()
     }
 
     func clearAllUserDefaults() {

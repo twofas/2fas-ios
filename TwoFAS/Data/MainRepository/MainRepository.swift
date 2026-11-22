@@ -278,6 +278,9 @@ protocol MainRepository: AnyObject {
         source: ServiceSource,
         sectionID: SectionID?
     )
+    /// Counts of the records of deleted services and sections (tombstones)
+    var deletionsCount: (services: Int, sections: Int) { get }
+    func removeAllDeletions()
     #endif
     func updateService(
         _ serviceData: ServiceData,

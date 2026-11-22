@@ -115,6 +115,7 @@ struct DebugView: View {
             .trashAllServices,
             .restoreAllServices,
             .emptyTrash,
+            .removeAllTombstones,
             .reloadPushToken,
             .unpairAllBrowsers,
             .wipeDatabase,

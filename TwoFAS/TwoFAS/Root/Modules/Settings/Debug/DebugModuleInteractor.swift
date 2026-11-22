@@ -31,6 +31,7 @@ protocol DebugModuleInteracting: AnyObject {
     func trashAllServices()
     func restoreAllServices()
     func emptyTrash()
+    func removeAllTombstones()
     func reloadPushToken()
     func unpairAllBrowsers()
     func runLocalStorageKeyAction(_ action: DebugAction)
@@ -53,7 +54,8 @@ final class DebugModuleInteractor {
 
 extension DebugModuleInteractor: DebugModuleInteracting {
     func buildStateSections() -> [DebugStateSection] {
-        [
+        let tombstones = debugTools.tombstonesCount
+        return [
             DebugStateSection(title: "App", rows: [
                 .init(name: "Version", value: appInfoInteractor.currentAppVersion),
                 .init(name: "First run", value: "\(appInfoInteractor.dateOfFirstRun)"),
@@ -68,7 +70,9 @@ extension DebugModuleInteractor: DebugModuleInteracting {
             DebugStateSection(title: "Storage", rows: [
                 .init(name: "Services (active)", value: "\(debugTools.totalServicesCount)"),
                 .init(name: "Services (trashed)", value: "\(debugTools.trashedServicesCount)"),
-                .init(name: "Sections", value: "\(debugTools.sectionsCount)")
+                .init(name: "Sections", value: "\(debugTools.sectionsCount)"),
+                .init(name: "Tombstones (services)", value: "\(tombstones.services)"),
+                .init(name: "Tombstones (sections)", value: "\(tombstones.sections)")
             ]),
             DebugStateSection(title: "Local storage key", rows: [
                 .init(name: "Key state", value: debugTools.localStorageKeyStateDescription),
@@ -122,6 +126,10 @@ extension DebugModuleInteractor: DebugModuleInteracting {
 
     func emptyTrash() {
         debugTools.emptyTrash()
+    }
+
+    func removeAllTombstones() {
+        debugTools.removeAllTombstones()
     }
 
     func reloadPushToken() {

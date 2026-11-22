@@ -28,6 +28,8 @@ import CommonWatch
 
 final class MergeHandler {
     private var timeOffset: Int = 0
+    /// See `SyncAccess`: only the services the cloud already has are sent, changed – nothing is created or deleted
+    var onlyUpdatesServices = SyncAccess.onlyUpdatesServices
 
     private let logHandler: LogHandler
     private let commonItemHandler: CommonItemHandler
@@ -48,6 +50,22 @@ final class MergeHandler {
 }
 
 extension MergeHandler {
+    func discardChangesNeverSent() {
+        guard onlyUpdatesServices else { return }
+        for (action, entries) in logHandler.listAllActions() {
+            for entry in entries where !(action == .modified && Self.isService(entry.kind)) {
+                logHandler.delete(identifiedBy: entry.entityID)
+            }
+        }
+    }
+    
+    private static func isService(_ kind: String) -> Bool {
+        switch RecordType(rawValue: kind) {
+        case .service1, .service2, .service3, .service4: true
+        default: false
+        }
+    }
+    
     var hasChanges: Bool {
         logHandler.countChanges() > 0
     }
@@ -57,6 +75,7 @@ extension MergeHandler {
         LogZoneStart()
         Log("MergeHandler: Starting sync", module: .cloudSync)
         
+        discardChangesNeverSent()
         let changes = logHandler.listAllActions()
         let current = commonItemHandler.getAllItems()
         
@@ -146,7 +165,8 @@ extension MergeHandler {
                             var list = listToSend[type] ?? []
                             if type.isDeletion {
                                 replaceDeletion(modifiedLogEntry.entityID, with: currentEntry.item, in: &list)
-                            } else if currentEntry.index == cloudEntry.index {
+                            } else if currentEntry.index == cloudEntry.index || onlyUpdatesServices {
+                                // A device that only updates services never moves them
                                 Log("MergeHandler: Modification: Item in place but overriding with local one", module: .cloudSync)
                                 list[cloudEntry.index] = currentEntry.item
                             } else {

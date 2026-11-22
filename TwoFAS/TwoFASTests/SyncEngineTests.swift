@@ -83,6 +83,64 @@ final class SyncEngineTests: XCTestCase {
         XCTAssertEqual(cloud.records(in: Config.vaultV3, ofType: .info).count, 1)
     }
 
+    /// The watch: a device that only updates the services of the vault. With no vault in the cloud (erased from the phone, another
+    /// account) it must not write its own data there as a new backup.
+    func testWatchNeverWritesToAnEmptyCloud() {
+        let watch = makeDevice("watch")
+        watch.syncHandler.onlyUpdatesServices = true
+        watch.addService("AAAA", name: "Alpha")
+        watch.syncHandler.firstStart()
+
+        synchronizeUntilSettled([watch], cloud: cloud)
+
+        XCTAssertTrue(cloud.operations.isEmpty)
+        XCTAssertEqual(services(inCloud: cloud), 0)
+        XCTAssertTrue(cloud.records(in: Config.vaultV3, ofType: .info).isEmpty)
+    }
+
+    func testWatchReadsTheVaultAndSendsNothingOfItsOwn() {
+        let phone = makeDevice("phone")
+        let watch = makeDevice("watch")
+        watch.syncHandler.onlyUpdatesServices = true
+        phone.addService("AAAA", name: "Alpha")
+        synchronizeUntilSettled([phone], cloud: cloud)
+        let operationsOfThePhone = cloud.operations.count
+
+        // Something the cloud doesn't have, as a stale mirror would
+        watch.addService("BBBB", name: "Stale")
+        watch.syncHandler.firstStart()
+        synchronizeUntilSettled([watch, phone], cloud: cloud)
+
+        XCTAssertTrue(watch.secrets.contains("AAAA"))
+        XCTAssertEqual(cloud.operations.count, operationsOfThePhone)
+        XCTAssertEqual(services(inCloud: cloud), 1)
+        XCTAssertEqual(phone.secrets, ["AAAA"])
+    }
+
+    /// The one change the watch makes: the counter of an HOTP token used on it. Sent as a change of the service
+    /// the vault already has; what the watch trashed or added on its own isn't.
+    func testWatchSendsOnlyAChangeOfAServiceTheVaultHas() {
+        let phone = makeDevice("phone")
+        let watch = makeDevice("watch")
+        watch.syncHandler.onlyUpdatesServices = true
+        phone.addService("AAAA", name: "Alpha")
+        phone.addService("BBBB", name: "Beta")
+        synchronizeUntilSettled([phone, watch], cloud: cloud)
+        XCTAssertEqual(watch.secrets, ["AAAA", "BBBB"])
+
+        pause()
+        watch.renameService("AAAA", to: "Changed on the watch")
+        watch.trashService("BBBB")
+        watch.addService("CCCC", name: "Only on the watch")
+        synchronizeUntilSettled([watch, phone], cloud: cloud)
+
+        XCTAssertEqual(phone.name(of: "AAAA"), "Changed on the watch")
+        XCTAssertEqual(phone.secrets, ["AAAA", "BBBB"])
+        XCTAssertEqual(services(inCloud: cloud), 2)
+        XCTAssertEqual(deletions(inCloud: cloud), 0)
+        XCTAssertEqual(cloud.records(in: Config.vaultV3, ofType: .info).count, 1)
+    }
+
     func testEditReachesTheOtherDevice() {
         let phone = makeDevice("phone")
         let tablet = makeDevice("tablet")

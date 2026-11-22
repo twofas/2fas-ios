@@ -26,6 +26,14 @@ import WatchKit
 #endif
 
 typealias Callback = () -> Void
+
+enum SyncAccess {
+    #if os(watchOS)
+    static let onlyUpdatesServices = true
+    #else
+    static let onlyUpdatesServices = false
+    #endif
+}
 typealias EntityOfKind = (entityID: String, type: RecordType)
 
 #if os(iOS)

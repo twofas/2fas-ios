@@ -408,7 +408,7 @@ final class CloudHandler: CloudHandlerType {
                 currentState = .disabledAvailable
             }
         case .error(let error):
-            otherError(error)
+            availabilityUnknown(error)
             
         case .notAvailable:
             clearAll()
@@ -507,6 +507,12 @@ final class CloudHandler: CloudHandlerType {
     private func otherError(_ error: NSError?) {
         Log("Cloud Handler - Other Error \(String(describing: error))", module: .cloudSync)
         clearAll()
+        currentState = .disabledNotAvailable(reason: .error(error: error))
+    }
+    
+    private func availabilityUnknown(_ error: NSError) {
+        Log("Cloud Handler - availability couldn't be checked: \(error.domain) \(error.code)", module: .cloudSync)
+        guard !isEnabled else { return }
         currentState = .disabledNotAvailable(reason: .error(error: error))
     }
     

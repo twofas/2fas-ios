@@ -137,6 +137,11 @@ final class CloudKit: CloudKitSyncing {
     
     private func creatingCustomZone(continueOperation: @escaping ContinueOperation) {
         Log("CloudKit - entering zone creation", module: .cloudSync)
+        guard !SyncAccess.onlyUpdatesServices else {
+            // A vault that isn't there is simply empty for this device – it's never created by it
+            continueOperation()
+            return
+        }
         guard !ConstStorage.zoneInitiated else { continueOperation(); return }
         Log("CloudKit - creating zone", module: .cloudSync)
         
@@ -377,6 +382,8 @@ final class CloudKit: CloudKitSyncing {
     
     /// On `stateQueue`
     private func startModifyingRecords(recordsToSave: [CKRecord]?, recordIDsToDelete: [CKRecord.ID]?) {
+        // The last line of defence: `MergeHandler` never asks for a deletion on such a device
+        let recordIDsToDelete = SyncAccess.onlyUpdatesServices ? nil : recordIDsToDelete
         Log(
             "CloudKit - modifyRecord \(recordsToSave?.count ?? 0), \(recordIDsToDelete?.count ?? 0)",
             module: .cloudSync

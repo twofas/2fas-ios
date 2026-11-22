@@ -49,6 +49,14 @@ final class SyncHandler {
     /// weren't retired yet
     var retireOldVaults: Callback?
     
+    /// See `SyncAccess`
+    var onlyUpdatesServices = SyncAccess.onlyUpdatesServices {
+        didSet {
+            mergeHandler.onlyUpdatesServices = onlyUpdatesServices
+            commonItemHandler.mirrorsTheVault = onlyUpdatesServices
+        }
+    }
+    
     private var isSyncing = false
     private var applyingChanges = false
     /// Checks of the vaults that failed in a row – the next one waits longer
@@ -146,12 +154,12 @@ final class SyncHandler {
         cloudKit.deleteAllEntries = { [weak self] in self?.itemHandler.purge() }
         migrationHandler.clearCloudState = { [weak self] in
             self?.resetStack()
-            self?.commonItemHandler.logFirstImport()
+            self?.logFirstImport()
         }
         migrationHandler.setFirstStart = { [weak self] in
             self?.resetStack()
             self?.isSyncing = true
-            self?.commonItemHandler.logFirstImport()
+            self?.logFirstImport()
         }
     }
     
@@ -184,7 +192,7 @@ final class SyncHandler {
             cloudKit.resetTokens()
             modificationQueue.clear()
             
-            commonItemHandler.logFirstImport()
+            logFirstImport()
         }
     }
     
@@ -307,7 +315,7 @@ final class SyncHandler {
             Log("SyncHandler - the vault being migrated was retired, starting over", module: .cloudSync)
             migrationHandler.restartAfterVaultWasRetired()
             resetStack()
-            commonItemHandler.logFirstImport()
+            logFirstImport()
             synchronize()
             return
         }
@@ -349,6 +357,7 @@ final class SyncHandler {
         }
         
         Log("SyncHandler -  method: fetch finished successfuly - continuing to sync with data", module: .cloudSync)
+        mergeHandler.discardChangesNeverSent()
         guard mergeHandler.hasChanges else {
             Log("SyncHandler - No logs with changes. Exiting", module: .cloudSync)
             migrateIfNeeded()
@@ -380,7 +389,7 @@ final class SyncHandler {
             resetStack()
             infoHandler.prepareForNewVault(carriedOver)
             willStartSealedVault?()
-            commonItemHandler.logFirstImport()
+            logFirstImport()
             synchronize()
         } else {
             syncCompleted()
@@ -392,6 +401,8 @@ final class SyncHandler {
     /// - Returns: `false` when there's no key and none could be created – nothing can be merged then.
     private func prepareIdentifierKey() -> Bool {
         guard zoneManager.usesSealedRecords else { return true }
+        // Created only by a device that may start a vault
+        guard !onlyUpdatesServices else { return true }
         if syncEncryptionHandler.identifierKey != nil { return true }
         guard syncEncryptionHandler.createIdentifierKeyIfNeeded() else {
             Log("SyncHandler - No identifier key for the sealed records", module: .cloudSync, severity: .error)
@@ -433,6 +444,7 @@ final class SyncHandler {
         }
         
         let didSetNewData = saveCloudDataToLocalDatabase()
+        mergeHandler.discardChangesNeverSent()
         
         if logHandler.countNotApplied() > 0 {
             applyingChanges = true
@@ -503,6 +515,12 @@ final class SyncHandler {
             RecordType(rawValue: record.recordType) == .info
                 && record[InfoEntryKey.version.rawValue] as? Int == Info.retiredVersion
         }
+    }
+    
+    /// The local data is announced to the cloud as new – never by a device that only reads the vault
+    private func logFirstImport() {
+        guard !onlyUpdatesServices else { return }
+        commonItemHandler.logFirstImport()
     }
     
     private func abortSync() {

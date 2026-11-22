@@ -104,7 +104,8 @@ public enum SyncInstanceWatch {
             clearCheckpoints: ConstStorage.clearZone,
             clearPendingTokens: cloudKit.clear,
             clearQueue: modificationQueue.clear,
-            logFirstImport: commonItemHandler.logFirstImport
+            // The watch only reads the vault – its data is never announced as new
+            logFirstImport: { true }
         )
         let syncHandler = SyncHandler(
             itemHandler: itemHandler,

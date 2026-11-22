@@ -35,6 +35,8 @@ final class CommonItemHandler {
     
     private var itemsToAppend: [ServiceData] = []
     
+    var mirrorsTheVault = SyncAccess.onlyUpdatesServices
+    
     init(
         commonSectionHandler: CommonSectionHandler,
         commonServiceHandler: CommonServiceHandler,
@@ -165,12 +167,7 @@ final class CommonItemHandler {
                 sections[sectionID] = deletion.deletedAt
             }
         }
-        #if os(watchOS)
-        // The watch only mirrors the cloud
-        let keepsLocalOnlyItems = false
-        #else
-        let keepsLocalOnlyItems = true
-        #endif
+        let keepsLocalOnlyItems = !mirrorsTheVault
         return SyncedDeletions(
             services: services,
             serviceIdentifier: { identifierKey.identifier(of: $0.uppercased(), kind: .deletedService) },

@@ -82,6 +82,26 @@ final class SyncVaultMigrationTests: XCTestCase {
         XCTAssertTrue(handler.isMigrating)
     }
 
+    /// The sync goes on right after the check: what it starts with has to be cleared by then, or its fetch uses
+    /// the tokens of the previous sync, brings nothing, and the vault looks empty
+    @MainActor
+    func testStateIsResetBeforeTheSyncGoesOn() async {
+        var events: [String] = []
+        handler.setFirstStart = { events.append("reset") }
+        handler.isMigratingToV3 = { events.append("migrating") }
+        handler.clearCloudState = { events.append("clear") }
+
+        probe.result = .success([.v3])
+        _ = await handler.checkIfMigrationNeeded()
+        XCTAssertEqual(events, ["reset", "migrating"])
+
+        handler.restartAfterVaultWasRetired()
+        events = []
+        probe.result = .success([.v4])
+        _ = await handler.checkIfMigrationNeeded()
+        XCTAssertEqual(events, ["clear"])
+    }
+
     func testEmptyCloudStartsTheCurrentVaultWithNothingToRetire() async {
         probe.result = .success([])
 
@@ -133,8 +153,17 @@ final class SyncVaultMigrationTests: XCTestCase {
         _ = await handler.checkIfMigrationNeeded()
         XCTAssertTrue(handler.isMigrating)
 
+        var abandoned = 0
+        handler.migrationAbandoned = { dataIsInCurrentVault in
+            XCTAssertTrue(dataIsInCurrentVault, "Another device migrated the data")
+            abandoned += 1
+        }
         handler.restartAfterVaultWasRetired()
         XCTAssertFalse(handler.isMigrating)
+        XCTAssertEqual(abandoned, 1)
+        // Only a migration that was in progress is abandoned
+        handler.restartAfterVaultWasRetired()
+        XCTAssertEqual(abandoned, 1)
 
         probe.result = .success([.v4])
         let canSync = await handler.checkIfMigrationNeeded()

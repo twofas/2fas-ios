@@ -85,6 +85,9 @@ final class SyncMigrationHandler {
     private var canChangePassword = false
     private var passwordChangePending: SyncMigrationChangeType?
     private var isMigrating = false
+    /// The vault that was being migrated was retired by another device, which moved the data to the current one:
+    /// the migration is reported as ended once this device is in sync with it
+    private var reportsMigrationEndedAfterSync = false
     private var isReencrypting = false
     /// The key of a new password is being derived – the change of the password has started, but isn't pending yet
     private var isDerivingUserKey = false
@@ -127,6 +130,12 @@ final class SyncMigrationHandler {
         migrationHandler.finishedMigratingToV3 = { [weak self] in
             self?.isMigrating = false
             self?.migrationEndedSuccessfuly?()
+        }
+        
+        migrationHandler.migrationAbandoned = { [weak self] dataIsInCurrentVault in
+            self?.isMigrating = false
+            // The screen of the migration is still waiting for its result
+            self?.reportsMigrationEndedAfterSync = dataIsInCurrentVault
         }
     }
 }
@@ -225,6 +234,8 @@ extension SyncMigrationHandler: SyncMigrationHandling {
         case .unknown:
             canChangePassword = false
         case .disabledNotAvailable(let reason):
+            // The failure is shown by whoever watches the state – nothing is left to report as a success
+            reportsMigrationEndedAfterSync = false
             switch reason {
             case .newerVersion:
                 canChangePassword = false
@@ -259,6 +270,7 @@ extension SyncMigrationHandler: SyncMigrationHandling {
                 showMigrationGeneralError?()
             }
         case .disabledAvailable:
+            reportsMigrationEndedAfterSync = false
             canChangePassword = false
         case .enabled(let sync):
             switch sync {
@@ -266,6 +278,10 @@ extension SyncMigrationHandler: SyncMigrationHandling {
                 canChangePassword = false
             case .synced:
                 canChangePassword = true
+                if reportsMigrationEndedAfterSync {
+                    reportsMigrationEndedAfterSync = false
+                    migrationEndedSuccessfuly?()
+                }
                 if passwordChangePending == nil && !isDerivingUserKey {
                     isReencrypting = false
                 }

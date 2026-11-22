@@ -56,6 +56,7 @@ final class MainFlowController: FlowController {
     private var importer: ImporterOpenFileHeadlessFlowController?
     
     private var syncMigrationHandler: ((MigrationResult) -> Void)?
+    private weak var migrationToNewestVersionScreen: UIViewController?
     
     static func showAsRoot(
         in viewController: UIViewController,
@@ -125,9 +126,18 @@ extension MainFlowController: MainFlowControlling {
     func toMigrationToNewestVersion() {
         guard viewController.presentedViewController == nil else { return }
         syncMigrationHandler = SyncMigrationToNewestVersionFlowController.showAsRoot(in: _viewController, parent: self)
+        migrationToNewestVersionScreen = _viewController.presentedViewController
     }
     
     func toiCloudIsEncryptedByUser() {
+        if let migrationScreen = migrationToNewestVersionScreen,
+           _viewController.presentedViewController === migrationScreen {
+            syncMigrationHandler = nil
+            _viewController.dismiss(animated: true) { [weak self] in
+                self?.toiCloudIsEncryptedByUser()
+            }
+            return
+        }
         guard viewController.presentedViewController == nil else { return }
         syncMigrationHandler = EncryptedByUserPasswordSyncFlowController.showAsRoot(in: viewController, parent: self)
     }

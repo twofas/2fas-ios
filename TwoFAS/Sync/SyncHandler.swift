@@ -181,7 +181,7 @@ final class SyncHandler {
         SyncStoreIntegrity.startFromScratch(on: syncContext(), isDeferred: isSyncDeferred) {
             logHandler.deleteAll()
             itemHandler.purge()
-            ConstStorage.clearZone()
+            cloudKit.resetTokens()
             modificationQueue.clear()
             
             commonItemHandler.logFirstImport()
@@ -234,6 +234,12 @@ final class SyncHandler {
             }
             failedVaultChecks = 0
             modificationQueue.clear()
+            if infoHandler.metadata == nil {
+                // Nothing is known about the vault: only a fetch of everything may say that it's empty. With
+                // tokens left from before, the fetch would bring "nothing new" and an empty cache would be taken
+                // for a clean cloud – everything would be sent as new, over what is there.
+                cloudKit.resetTokens()
+            }
             cloudKit.cloudSync()
         }
     }
@@ -270,7 +276,7 @@ final class SyncHandler {
         if !skipItemsPurge {
             itemHandler.purge()
         }
-        ConstStorage.clearZone()
+        cloudKit.resetTokens()
         cloudKit.clear()
     }
     
@@ -488,7 +494,7 @@ final class SyncHandler {
         modificationQueue.clear()
         logHandler.deleteAll()
         itemHandler.purge()
-        ConstStorage.clearZone()
+        cloudKit.resetTokens()
     }
     
     /// The Info record that was just fetched says its vault was retired

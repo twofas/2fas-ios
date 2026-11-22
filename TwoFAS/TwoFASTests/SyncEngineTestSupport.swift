@@ -248,6 +248,11 @@ final class FakeCloudKit: CloudKitSyncing {
     }
 
     func clear() {}
+
+    func resetTokens() {
+        token = 0
+        knownVersions = [:]
+    }
 }
 
 private final class FixedProbe: CloudProbing {

@@ -362,6 +362,8 @@ final class CloudHandler: CloudHandlerType {
                 case .success:
                     Log("Cloud Handler - did erase", module: .cloudSync)
 
+                    self?.syncHandler.clearCacheAndDisable()
+                    self?.migrationHandler.restartAfterVaultWasRetired()
                     self?.setSystemEncryption?()
                     // Every vault was erased – the next sync starts the current one clean
                     ConstStorage.cloudMigratedToV4 = true

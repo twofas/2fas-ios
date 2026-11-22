@@ -29,6 +29,7 @@ protocol MigrationHandling: AnyObject {
     var setFirstStart: Callback? { get set }
     var isMigratingToV3: Callback? { get set }
     var finishedMigratingToV3: Callback? { get set }
+    var migrationAbandoned: ((_ dataIsInCurrentVault: Bool) -> Void)? { get set }
     
     var isMigrating: Bool { get }
     var isMigratingInV1Zone: Bool { get }

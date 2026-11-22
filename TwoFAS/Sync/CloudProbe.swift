@@ -124,7 +124,7 @@ public final class CloudProbe: CloudProbing {
         if let operationError {
             let error = operationError as NSError
             Log(
-                "CloudProbe: Error - the query failed (\(error.domain) \(error.code))",
+                "CloudProbe: Error - the query failed (\(error.domain) \(error.code)): \(error.localizedDescription)",
                 module: .cloudSync,
                 severity: .error
             )

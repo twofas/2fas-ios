@@ -57,6 +57,7 @@ protocol CloudKitSyncing: AnyObject {
     /// One operation: all of it is applied or none
     func modifyRecord(recordsToSave: [CKRecord]?, recordIDsToDelete: [CKRecord.ID]?)
     func clear()
+    func resetTokens()
 }
 
 final class CloudKit: CloudKitSyncing {
@@ -449,6 +450,10 @@ final class CloudKit: CloudKitSyncing {
             collectedActions = []
             cancelOperation()
         }
+    }
+    
+    func resetTokens() {
+        syncTokenHandler.clearZone()
     }
     
     /// On `stateQueue`

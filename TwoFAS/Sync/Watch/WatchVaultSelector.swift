@@ -25,6 +25,7 @@ final class WatchVaultSelector: MigrationHandling {
     var isMigratingToV3: Callback?
     var setFirstStart: Callback?
     var finishedMigratingToV3: Callback?
+    var migrationAbandoned: ((Bool) -> Void)?
     
     var isMigrating: Bool { false }
     var isMigratingInV1Zone: Bool { false }

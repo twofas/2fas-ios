@@ -25,6 +25,7 @@ final class MigrationHandler {
     var isMigratingToV3: Callback?
     var setFirstStart: Callback?
     var finishedMigratingToV3: Callback?
+    var migrationAbandoned: ((Bool) -> Void)?
     var clearCloudState: Callback?
     
     private(set) var isMigrating = false
@@ -84,21 +85,18 @@ extension MigrationHandler: MigrationHandling {
                 Log("MigrationHandler: probed value - already migrated", module: .cloudSync)
                 zoneManager.setCurrentZoneID(Config.vaultV3)
                 ConstStorage.cloudMigratedToV4 = true
-                Task { @MainActor in
-                    clearCloudState?()
-                }
+                clearCloudState?()
             case .startClean:
                 Log("MigrationHandler: probed value - clean iCloud", module: .cloudSync)
                 zoneManager.setCurrentZoneID(Config.vaultV3)
                 ConstStorage.cloudMigratedToV4 = true
+                clearCloudState?()
             case .migrate(let zoneName):
                 Log("MigrationHandler: awaiting migration from \(zoneName)", module: .cloudSync)
                 zoneManager.setCurrentZoneID(zoneName)
                 isMigrating = true
-                Task { @MainActor in
-                    setFirstStart?()
-                    isMigratingToV3?()
-                }
+                setFirstStart?()
+                isMigratingToV3?()
             }
             return true
         } catch {
@@ -112,16 +110,22 @@ extension MigrationHandler: MigrationHandling {
     
     func restartAfterVaultWasRetired() {
         Log("MigrationHandler: the vault read for the migration was retired – checking the cloud again", module: .cloudSync)
-        isMigrating = false
+        abandonMigration(dataIsInCurrentVault: true)
     }
     
     func accountChanged() {
         Log("MigrationHandler: account changed – the vaults are checked again", module: .cloudSync)
-        isMigrating = false
+        abandonMigration(dataIsInCurrentVault: false)
         ConstStorage.cloudMigratedToV4 = false
         ConstStorage.oldVaultsRetirementPending = false
     }
         
+    private func abandonMigration(dataIsInCurrentVault: Bool) {
+        guard isMigrating else { return }
+        isMigrating = false
+        migrationAbandoned?(dataIsInCurrentVault)
+    }
+    
     func migrateIfNeeded() -> Bool {
         guard isMigrating else { return false }
         if !zoneManager.usesSealedRecords {

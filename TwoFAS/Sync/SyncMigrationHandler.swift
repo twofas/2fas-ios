@@ -46,9 +46,6 @@ public protocol SyncMigrationHandling: AnyObject {
     func recoverMissingUserKey(_ password: String, completion: @escaping (Bool) -> Void)
     
     func verifyUserPassword(_ password: String, completion: @escaping (Bool) -> Void)
-    
-    var showCantCreateEncryptionElements: (() -> Void)? { get set }
-    var showMissingKey: ((CloudCurrentState.NotAvailableReason.EncryptionError) -> Void)? { get set }
 }
 
 final class SyncMigrationHandler {
@@ -82,8 +79,6 @@ final class SyncMigrationHandler {
         }
     }
     
-    var showCantCreateEncryptionElements: (() -> Void)?
-    var showMissingKey: ((CloudCurrentState.NotAvailableReason.EncryptionError) -> Void)?
     /// The encryption reference of the Info record, as last fetched
     var cloudEncryptionReference: (() -> Data?)?
     
@@ -256,12 +251,9 @@ extension SyncMigrationHandler: SyncMigrationHandling {
             case .incorrectService(let serviceName):
                 canChangePassword = false
                 showiCloudIncorrectSerice?(serviceName)
-            case .encryptionError(let encryptionError):
+            case .encryptionError:
+                // Shown by `SyncMigrationInteractor`, which watches the state itself
                 canChangePassword = false
-                switch encryptionError {
-                case .cantCreateEncryptionElements: showCantCreateEncryptionElements?()
-                default: showMissingKey?(encryptionError)
-                }
             default:
                 canChangePassword = false
                 showMigrationGeneralError?()

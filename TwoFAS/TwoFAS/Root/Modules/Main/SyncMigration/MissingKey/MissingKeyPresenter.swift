@@ -32,7 +32,11 @@ final class MissingKeyPresenter: ObservableObject {
     @Published private(set) var isVerifyingPassword = false
     @Published private(set) var isPasswordWrong = false
 
-    var canCheckPassword: Bool { !password.isEmpty && !isVerifyingPassword }
+    /// A backup password always has a length within these limits (`BackupSetPasswordPresenter`) – the same rule
+    /// as on the other screen that asks for it (`EncryptedByUserPasswordSyncPresenter`)
+    var canCheckPassword: Bool {
+        (Config.minSyncPasswordLength...Config.maxSyncPasswordLength).contains(password.count) && !isVerifyingPassword
+    }
 
     private let flowController: MissingKeyFlowControlling
     private let interactor: MissingKeyModuleInteracting

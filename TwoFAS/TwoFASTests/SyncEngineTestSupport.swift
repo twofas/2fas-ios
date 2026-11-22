@@ -88,10 +88,6 @@ final class FakeCloud {
         }
     }
 
-    func version(of recordID: CKRecord.ID) -> Int? {
-        zones[recordID.zoneID.zoneName]?[recordID]?.version
-    }
-
     /// - Parameter knownVersions: The version of every record as the device saw it last.
     /// - Returns: The versions the saved records got, `nil` when the operation was refused (nothing changed).
     func modify(

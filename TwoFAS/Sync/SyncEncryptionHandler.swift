@@ -62,8 +62,8 @@ final class SyncEncryptionHandler {
     private var cloudInfo = SyncCloudEncryptionInfo.empty
     private var cachedIdentifierKey: SyncIdentifierKey?
     
-    private let localEncryptionKey: SymmetricKey
-    
+    /// - Parameter localEncryptionKeyData: Not used on the phone any more (the ticket for the watch is made with
+    ///   a key of its own) – kept so that the handlers of the phone and the watch are created the same way.
     init(
         reference: Data,
         localEncryptionKeyData: Data,
@@ -71,7 +71,6 @@ final class SyncEncryptionHandler {
         userDefaults: UserDefaults = .standard
     ) {
         self.reference = reference
-        self.localEncryptionKey = SymmetricKey(data: localEncryptionKeyData)
         self.keychain = Keychain(service: keychainService)
             .synchronizable(true)
             .accessibility(.afterFirstUnlock)
@@ -233,22 +232,34 @@ final class SyncEncryptionHandler {
     /// What the key of the cloud may have been derived with. What the cloud says comes first: the salt or the
     /// parameters kept on this device may be those of another key.
     private func recoveryCandidates() -> [RecoveryCandidate] {
-        let cloudParameters = cloudInfo.kdfParameters
-            .flatMap { SyncKDFParameters(encoded: $0) }
-            .flatMap { $0.isSupported ? $0 : nil }
         let salts = [cloudInfo.kdfSalt, cachedSalt.map { Data($0.prefix(Self.saltByteCount)) }]
             .compactMap { $0 }
             .filter { $0.count == Self.saltByteCount }
         var candidates: [RecoveryCandidate] = []
         for salt in salts {
-            for parameters in [cloudParameters, userKeyParameters, .legacy].compactMap({ $0 }) {
-                let candidate = RecoveryCandidate(salt: salt, parameters: parameters)
-                if !candidates.contains(candidate) {
-                    candidates.append(candidate)
-                }
+            for parameters in candidateKDFParameters {
+                candidates.append(RecoveryCandidate(salt: salt, parameters: parameters))
             }
         }
-        return candidates
+        return candidates.reduce(into: []) { unique, candidate in
+            if !unique.contains(candidate) {
+                unique.append(candidate)
+            }
+        }
+    }
+    
+    /// What a user's key that isn't on this device may have been derived with, the most likely first: what the
+    /// cloud says, what was saved here with the last key, what was used before the parameters were stored.
+    /// The same for recovering the key with the password and for importing it from a file.
+    private var candidateKDFParameters: [SyncKDFParameters] {
+        let cloudParameters = cloudInfo.kdfParameters
+            .flatMap { SyncKDFParameters(encoded: $0) }
+            .flatMap { $0.isSupported ? $0 : nil }
+        return [cloudParameters, userKeyParameters, .legacy].compactMap { $0 }.reduce(into: []) { unique, parameters in
+            if !unique.contains(parameters) {
+                unique.append(parameters)
+            }
+        }
     }
     
     /// The first candidate whose key opens the encryption reference of the cloud. Reads nothing of the handler
@@ -331,7 +342,7 @@ final class SyncEncryptionHandler {
             derived = Self.importedUserKey(
                 password: password,
                 salt: salt,
-                parameterSets: importParameterSets,
+                parameterSets: candidateKDFParameters,
                 cloudReference: cloudReference,
                 reference: reference
             )
@@ -370,7 +381,7 @@ final class SyncEncryptionHandler {
         }
         Log("SyncEncryptionHandler: importing keys, has password: true")
         // Read here – deriving touches nothing of the handler
-        let parameterSets = importParameterSets
+        let parameterSets = candidateKDFParameters
         let reference = reference
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             let derived = Self.importedUserKey(
@@ -399,14 +410,6 @@ final class SyncEncryptionHandler {
         case none
         case key(Data, SyncKDFParameters)
         case failure(CloudKeysImportResult)
-    }
-    
-    /// What the cloud says the user's key was derived with, then what was used before that was stored
-    private var importParameterSets: [SyncKDFParameters] {
-        let cloudParameters = cloudInfo.kdfParameters
-            .flatMap { SyncKDFParameters(encoded: $0) }
-            .flatMap { $0.isSupported ? $0 : nil }
-        return [cloudParameters, .legacy].compactMap { $0 }
     }
     
     /// The user's key of an imported file – checked against the cloud when its reference is known. Touches

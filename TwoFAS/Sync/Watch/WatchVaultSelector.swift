@@ -42,6 +42,7 @@ final class WatchVaultSelector: MigrationHandling {
         found.contains(.v4) ? Config.vaultV3 : Config.vaultV2
     }
     
+    @MainActor
     func checkIfMigrationNeeded() async -> Bool {
         guard !ConstStorage.cloudMigratedToV4 else {
             zoneManager.setCurrentZoneID(Config.vaultV3)

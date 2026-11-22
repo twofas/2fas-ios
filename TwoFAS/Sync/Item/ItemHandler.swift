@@ -443,23 +443,6 @@ extension ItemHandler {
 // MARK: - Sealed records (Config.vaultV3)
 
 extension ItemHandler {
-    /// The identifier a deleted section is found by
-    func sectionDeletionIdentifier(sectionID: String) -> Data? {
-        syncEncryptionHandler.identifierKey?.identifier(of: sectionID, kind: .deletedSection)
-    }
-    
-    /// The identifier a deleted service is found by
-    func serviceDeletionIdentifier(secret: String) -> Data? {
-        syncEncryptionHandler.identifierKey?.identifier(of: secret.uppercased(), kind: .deletedService)
-    }
-    
-    /// Whether the sealed records can be read and written now: the sync key and the identifier key are there
-    var canUseSealedRecords: Bool {
-        syncEncryptionHandler.recordKey != nil && syncEncryptionHandler.identifierKey != nil
-    }
-}
-
-extension ItemHandler {
     /// Every record of the vault except the Info one, sealed again with the current sync key – for a change of
     /// the key. The records keep their names: the identifier key doesn't change with the sync key.
     func allSealedRecordsRecreated() -> [CKRecord] {

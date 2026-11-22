@@ -36,6 +36,9 @@ protocol MigrationHandling: AnyObject {
     /// Finds out which vault to sync with.
     /// - Returns: `false` when what is in the cloud couldn't be checked: nothing was decided and nothing was
     ///   changed – this sync must not go on. The next one checks again.
+    ///
+    /// On the main queue, like everything else that reads what it decides (the vault in use, the migration).
+    @MainActor
     func checkIfMigrationNeeded() async -> Bool
     func migrateIfNeeded() -> Bool
     /// The vault that was being read for the migration was retired by another device (which migrated it):

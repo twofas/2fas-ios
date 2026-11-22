@@ -294,6 +294,28 @@ final class SyncUserKeyRecoveryTests: XCTestCase {
         XCTAssertEqual(device.exportKeys()?.systemKey, keys.systemKey)
     }
 
+    /// Before the cloud was read, an import derives the key the way the last key of this device was derived –
+    /// like recovering the key with the password does
+    func testImportBeforeTheCloudWasReadUsesTheParametersSavedOnTheDevice() throws {
+        let owner = makeDevice()
+        guard case .success = owner.create() else { throw XCTSkip("The keychain isn't available in this run") }
+        owner.setUserPassword("correct horse")
+        let cloudReference = try XCTUnwrap(owner.encryptionReference)
+        let keys = try XCTUnwrap(owner.exportKeys())
+
+        let device = makeDevice()
+        guard case .success = device.create() else { throw XCTSkip("The keychain isn't available in this run") }
+        device.setUserPassword("another password")
+
+        XCTAssertEqual(
+            device.importKeys(salt: keys.salt, systemKey: keys.systemKey, password: "correct horse"),
+            .imported
+        )
+
+        XCTAssertEqual(device.encryptionType, .user)
+        XCTAssertEqual(device.decrypt(cloudReference), reference)
+    }
+
     // MARK: - Importing keys
 
     func testImportedSystemKeyMustOpenACloudSealedWithIt() throws {

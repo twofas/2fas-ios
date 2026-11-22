@@ -226,12 +226,13 @@ final class SyncHandler {
         isSyncing = true
         startedSync?()
         
-        Task {
+        // The sync is started where it was asked for – on the main queue
+        Task { @MainActor in
             guard await migrationHandler.checkIfMigrationNeeded() else {
-                await MainActor.run { vaultCheckFailed() }
+                vaultCheckFailed()
                 return
             }
-            await MainActor.run { failedVaultChecks = 0 }
+            failedVaultChecks = 0
             modificationQueue.clear()
             cloudKit.cloudSync()
         }

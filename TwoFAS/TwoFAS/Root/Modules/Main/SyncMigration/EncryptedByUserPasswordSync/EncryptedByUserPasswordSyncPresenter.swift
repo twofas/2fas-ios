@@ -92,24 +92,11 @@ extension EncryptedByUserPasswordSyncPresenter {
     }
     
     func onCheckPassword() {
-        guard checkPasswordEnabled else { return }
+        guard checkPasswordEnabled, !isWorking else { return }
         if isVerifyingPassword {
-            if interactor.verifyPassword(password) {
-                wrongPassword = false
-                switch flowType {
-                case .enterPassword: break
-                case .verifyPassword(let next):
-                    switch next {
-                    case .changePassword:
-                        flowController.toChangePassword()
-                    case .removePassword:
-                        isWorking = true
-                        interactor.setApplayinChanges()
-                        interactor.removePassword()
-                    }
-                }
-            } else {
-                wrongPassword = true
+            isWorking = true
+            interactor.verifyPassword(password) { [weak self] isCorrect in
+                self?.passwordVerified(isCorrect)
             }
         } else {
             wrongPassword = false
@@ -121,6 +108,27 @@ extension EncryptedByUserPasswordSyncPresenter {
 }
 
 private extension EncryptedByUserPasswordSyncPresenter {
+    func passwordVerified(_ isCorrect: Bool) {
+        isWorking = false
+        guard isCorrect else {
+            wrongPassword = true
+            return
+        }
+        wrongPassword = false
+        switch flowType {
+        case .enterPassword: break
+        case .verifyPassword(let next):
+            switch next {
+            case .changePassword:
+                flowController.toChangePassword()
+            case .removePassword:
+                isWorking = true
+                interactor.setApplayinChanges()
+                interactor.removePassword()
+            }
+        }
+    }
+    
     func toSuccess() {
         migrationFailureReason = nil
         wrongPassword = false

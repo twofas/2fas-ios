@@ -503,3 +503,43 @@ private final class CountingCipher: LocalStorageCipher {
         guard !failsWriting else { throw LocalStorageCipherError.keyUnavailable }
     }
 }
+
+/// The key of the backup password – derived off the main thread, so it can't depend on the state of the handler
+final class SyncUserKeyDerivationTests: XCTestCase {
+    private let salt = Data((0..<32).map { UInt8($0) })
+    
+    func testKeyDependsOnlyOnPasswordAndSalt() {
+        let key = SyncEncryptionHandler.deriveKey(for: "password", salt: salt)
+        
+        XCTAssertEqual(key?.count, 32)
+        XCTAssertEqual(SyncEncryptionHandler.deriveKey(for: "password", salt: salt), key)
+        XCTAssertNotEqual(SyncEncryptionHandler.deriveKey(for: "Password", salt: salt), key)
+        XCTAssertNotEqual(SyncEncryptionHandler.deriveKey(for: "password", salt: Data(salt.reversed())), key)
+    }
+    
+    /// Only the first 16 bytes of the salt are used – also when the salt is a slice of other data
+    func testKeyUsesTheFirstBytesOfTheSalt() {
+        let key = SyncEncryptionHandler.deriveKey(for: "password", salt: salt)
+        let slice = (Data([0xFF, 0xFF]) + salt).dropFirst(2)
+        
+        XCTAssertEqual(SyncEncryptionHandler.deriveKey(for: "password", salt: Data(salt.prefix(16))), key)
+        XCTAssertEqual(SyncEncryptionHandler.deriveKey(for: "password", salt: slice), key)
+    }
+    
+    func testNoKeyWithoutSalt() {
+        XCTAssertNil(SyncEncryptionHandler.deriveKey(for: "password", salt: nil))
+        XCTAssertNil(SyncEncryptionHandler.deriveKey(for: "password", salt: Data(salt.prefix(15))))
+    }
+    
+    func testKeyDerivedOffTheMainThreadIsTheSame() {
+        let key = SyncEncryptionHandler.deriveKey(for: "password", salt: salt)
+        let derived = expectation(description: "derived")
+        let salt = salt
+        DispatchQueue.global(qos: .userInitiated).async {
+            XCTAssertFalse(Thread.isMainThread)
+            XCTAssertEqual(SyncEncryptionHandler.deriveKey(for: "password", salt: salt), key)
+            derived.fulfill()
+        }
+        wait(for: [derived], timeout: 10)
+    }
+}

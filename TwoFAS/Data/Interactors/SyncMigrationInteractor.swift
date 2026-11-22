@@ -38,7 +38,8 @@ public protocol SyncMigrationInteracting: AnyObject {
     func migrateToSystemPassword()
     func setMissingUserPassword(_ password: String)
     
-    func verifyPassword(_ password: String) -> Bool
+    /// The key of the password is derived off the main thread; `completion` is called on the main thread
+    func verifyPassword(_ password: String, completion: @escaping (Bool) -> Void)
 }
 
 final class SyncMigrationInteractor {
@@ -141,8 +142,8 @@ extension SyncMigrationInteractor: SyncMigrationInteracting {
         mainRepository.cloudSetMissingUserPassword(password)
     }
     
-    func verifyPassword(_ password: String) -> Bool {
-        mainRepository.cloudVerifyUserPassword(password)
+    func verifyPassword(_ password: String, completion: @escaping (Bool) -> Void) {
+        mainRepository.cloudVerifyUserPassword(password, completion: completion)
     }
     
     @objc

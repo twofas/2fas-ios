@@ -31,6 +31,7 @@ public enum CloudCurrentState: Equatable {
             case missingSystemKey
             case missingUserKey
             case missingAllKeys
+            case unreadableRecords
         }
         
         case overQuota
@@ -43,6 +44,18 @@ public enum CloudCurrentState: Equatable {
         case cloudEncryptedUser
         case cloudEncryptedSystem
         case encryptionError(encryptionError: EncryptionError)
+
+        /// The backup was stopped by something only the user can do something about (a missing key or password,
+        /// a newer version, a service that can't be saved) – unlike iCloud not being available. The reason stays
+        /// until the user turns the backup on (it's tried again) or off.
+        var isStopOfTheBackup: Bool {
+            switch self {
+            case .newerVersion, .incorrectService, .cloudEncryptedUser, .cloudEncryptedSystem, .encryptionError:
+                true
+            case .overQuota, .disabledByUser, .useriCloudProblem, .error, .other:
+                false
+            }
+        }
     }
     
     public enum Sync: Equatable {
@@ -87,6 +100,7 @@ public enum CloudCurrentState: Equatable {
                     case .missingSystemKey: .missingSystemKey
                     case .missingUserKey: .missingUserKey
                     case .missingAllKeys: .missingAllKeys
+                    case .unreadableRecords: .unreadableRecords
                     }
                 }()))
             }
@@ -133,6 +147,7 @@ public protocol CloudHandlerType: AnyObject {
     func setTimeOffset(_ offset: Int)
     func resetStateBeforeSync()
     func erase(completion: @escaping ResultCallback)
+    func syncCouldNotStart()
 }
 
 final class CloudHandler: CloudHandlerType {
@@ -200,6 +215,12 @@ final class CloudHandler: CloudHandlerType {
         syncHandler.startedSync = { [weak self] in self?.startedSync() }
         syncHandler.finishedSync = { [weak self] in self?.finishedSync() }
         syncHandler.otherError = { [weak self] error in self?.otherError(error) }
+        syncHandler.unreadableRecordsFound = { [weak self] in
+            self?.encryptionError(.unreadableRecords)
+        }
+        syncHandler.identifierKeyUnavailable = { [weak self] in
+            self?.encryptionError(.cantCreateEncryptionElements)
+        }
         syncHandler.quotaExceeded = { [weak self] in self?.quotaError() }
         syncHandler.userDisabledCloud = { [weak self] in self?.disabledByUser() }
         syncHandler.useriCloudProblem = { [weak self] in self?.useriCloudProblem() }
@@ -238,6 +259,10 @@ final class CloudHandler: CloudHandlerType {
             return
         }
         switch currentState {
+        case .disabledNotAvailable(let reason) where reason.isStopOfTheBackup:
+            // Checking whether iCloud is available says nothing about it – and would replace the reason with
+            // "turned off", as if the user had done it. It stays until the user turns the backup on or off.
+            Log("Cloud Handler -  the backup was stopped, not syncing", module: .cloudSync)
         case .unknown, .disabledNotAvailable:
             Log("Cloud Handler -  unknown state on synchronize", module: .cloudSync)
             checkState()
@@ -261,10 +286,11 @@ final class CloudHandler: CloudHandlerType {
             setEnabled()
             userToggledState?(true)
             sync()
-        case .disabledNotAvailable(reason: .encryptionError):
-            // The backup was stopped by a missing key, not turned off, and the user did something about the
-            // key: the sync checks the keys again – and stops on the same error if they are still missing
-            Log("Cloud Handler - enable after an encryption error - trying again", module: .cloudSync)
+        case .disabledNotAvailable(let reason) where reason.isStopOfTheBackup:
+            // The backup was stopped (a missing key or password, a newer version, a service that can't be
+            // saved), not turned off, and the user did something about it: the sync checks again – and stops
+            // on the same reason if nothing changed
+            Log("Cloud Handler - enable after the backup was stopped - trying again", module: .cloudSync)
             setEnabled()
             userToggledState?(true)
             sync()
@@ -287,6 +313,14 @@ final class CloudHandler: CloudHandlerType {
             currentState = .disabledAvailable
         case .disabledAvailable:
             Log("Cloud Handler - Can't disable again!", module: .cloudSync)
+        case .disabledNotAvailable(let reason) where reason.isStopOfTheBackup || reason == .overQuota:
+            // Also with a full iCloud – the backup is still on then, only waiting for space
+            Log("Cloud Handler - the backup was stopped - turning it off", module: .cloudSync)
+            clearAll()
+            if notify {
+                userToggledState?(false)
+            }
+            currentState = .disabledAvailable
         case .disabledNotAvailable:
             Log("Cloud Handler - Can't disable not available", module: .cloudSync)
         }
@@ -303,9 +337,12 @@ final class CloudHandler: CloudHandlerType {
 #if os(watchOS)
         case .disabledNotAvailable(reason: .cloudEncryptedUser), .disabledNotAvailable(reason: .cloudEncryptedSystem):
             synchronize()
+            completionHandler(.noData)
 #endif
         default:
             Log("Cloud Handler - we have a notification but we're in a state \(currentState)", module: .cloudSync)
+            // The system has to hear that the push was handled, or it delivers the next ones less often
+            completionHandler(.noData)
             return
         }
     }
@@ -349,12 +386,21 @@ final class CloudHandler: CloudHandlerType {
         mergeHandler.setTimeOffset(offset)
     }
 
+    func syncCouldNotStart() {
+        Log("Cloud Handler - the sync couldn't start", module: .cloudSync)
+        guard case .disabledNotAvailable = currentState else { return }
+        currentState = .disabledNotAvailable(reason: .error(error: nil))
+    }
+    
     // MARK: - Erasing
     
     func erase(completion: @escaping ResultCallback) {
         Log("Cloud Handler - erase", module: .cloudSync)
         isClearing = true
-        disable(notify: false)
+        // The sync stops while the cloud is erased. The backup itself is turned off only once that worked: an
+        // erase that failed leaves it as it was, with the key of the user's password.
+        let wasSyncing = isEnabled
+        syncHandler.clearCacheAndDisable()
         
         clearHandler.erase { [weak self] result in
             DispatchQueue.main.async {
@@ -362,6 +408,9 @@ final class CloudHandler: CloudHandlerType {
                 case .success:
                     Log("Cloud Handler - did erase", module: .cloudSync)
 
+                    self?.setDisabled()
+                    self?.cloudAvailability.clear()
+                    self?.currentState = .disabledAvailable
                     self?.syncHandler.clearCacheAndDisable()
                     self?.migrationHandler.restartAfterVaultWasRetired()
                     self?.setSystemEncryption?()
@@ -373,6 +422,11 @@ final class CloudHandler: CloudHandlerType {
                 case .failure(let error):
                     Log("Cloud Handler - error while erasing: \(error)", module: .cloudSync)
                     
+                    if wasSyncing {
+                        // Nothing was erased – the backup goes on, from a full fetch
+                        self?.syncHandler.firstStart()
+                        self?.sync()
+                    }
                     completion(.failure(error))
                 }
                 self?.isClearing = false
@@ -530,7 +584,10 @@ final class CloudHandler: CloudHandlerType {
     
     private func cloudIsEncrypted(_ encryptionType: Info.Encryption?) {
         Log("Cloud Handler - cloud is encrypted", module: .cloudSync)
-        setDisabled()
+        // A cloud that went back to the system key: this device still uses the password, and that is what
+        // tells "switch to the system key" from "the system key is missing". The key of the password is
+        // dropped when the user switches.
+        setDisabled(purgingUserKey: encryptionType == .user)
         cloudAvailability.clear()
         switch encryptionType {
         case .system, .none:
@@ -557,6 +614,9 @@ final class CloudHandler: CloudHandlerType {
         case .missingAllKeys:
             currentState =
                 .disabledNotAvailable(reason: .encryptionError(encryptionError: .missingAllKeys))
+        case .unreadableRecords:
+            currentState =
+                .disabledNotAvailable(reason: .encryptionError(encryptionError: .unreadableRecords))
         }
     }
 }

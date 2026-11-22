@@ -57,6 +57,11 @@ final class SyncHandler {
         }
     }
     
+    /// The identifier key of the sealed records can't be opened and none can be created – nothing can be merged
+    var identifierKeyUnavailable: Callback?
+    /// Records of the vault couldn't be opened with the keys of this device – the backup stopped
+    var unreadableRecordsFound: Callback?
+    
     private var isSyncing = false
     private var applyingChanges = false
     /// Checks of the vaults that failed in a row – the next one waits longer
@@ -121,7 +126,11 @@ final class SyncHandler {
         cloudKit.updatedEntries = { [weak self] entries in self?.updateEntries(entries) }
         cloudKit.fetchFinishedSuccessfuly = { [weak self] in self?.fetchFinishedSuccessfuly() }
         cloudKit.changesSavedSuccessfuly = { [weak self] in self?.changesSavedSuccessfuly() }
-        cloudKit.abortSync = { [weak self] in self?.abortSync() }
+        cloudKit.abortSync = { [weak self] in
+            self?.abortSync()
+            // A sync started by a push has to say that it ended, also when it ended with nothing
+            self?.completeNotification(with: .failed)
+        }
         
         cloudKit.resetStack = { [weak self] in
             Log("SyncHandler - resetStack", module: .cloudSync)
@@ -196,7 +205,10 @@ final class SyncHandler {
         }
     }
     
-    func synchronize() {
+    /// - Returns: `false` when the sync didn't start and won't on its own: the key of the local storage isn't
+    ///   available, or the cache couldn't be reset. A sync that is already in progress counts as started.
+    @discardableResult
+    func synchronize() -> Bool {
         let cipherState = SyncStoreIntegrity.cipherState(of: syncContext())
         // Before anything reads the cache – never while a sync is in progress, as that one still uses the cache
         let preflight = SyncPreflight.decide(
@@ -216,14 +228,14 @@ final class SyncHandler {
                 + "deferred for this launch: \(isSyncDeferred). Exiting",
                 module: .cloudSync
             )
-            return
+            return false
         case .inProgress:
             Log("SyncHandler - Can't start sync. Already in progress. Exiting", module: .cloudSync)
-            return
+            return true
         case .resetFirst:
             guard resetCache() else {
                 completeNotification(with: .failed)
-                return
+                return false
             }
         case .proceed:
             break
@@ -250,6 +262,7 @@ final class SyncHandler {
             }
             cloudKit.cloudSync()
         }
+        return true
     }
     
     /// The iCloud account changed – what was known about its vaults doesn't apply any more
@@ -332,6 +345,22 @@ final class SyncHandler {
         
         Log("SyncHandler - commiting iCloud state into item handler", module: .cloudSync)
         itemHandler.commit()
+        
+        guard itemHandler.unreadableRecords == 0 else {
+            // What was read isn't all the vault has (another device is changing the password, a record is
+            // damaged or isn't this user's): taken for the whole of it, the records that couldn't be read would
+            // look deleted, or be sent again over what is there. The backup stops, with nothing changed.
+            Log(
+                "SyncHandler - \(itemHandler.unreadableRecords) records of the vault can't be read. Stopping",
+                module: .cloudSync,
+                severity: .error
+            )
+            itemHandler.cleanUp()
+            handleNotificationCompletionHandlerError()
+            clearCacheAndDisable()
+            unreadableRecordsFound?()
+            return
+        }
 
         if !itemHandler.isCacheEmpty && !migrationHandler.isMigrating && reencryptionHandler.willReencrypt {
             Log("SyncHandler - reencryption needed", module: .cloudSync)
@@ -351,8 +380,11 @@ final class SyncHandler {
         itemHandler.cleanUp()
         
         guard prepareIdentifierKey() else {
-            abortSync()
+            // Stopped the way a missing key stops it: with a state the user sees, instead of a sync left as
+            // "in progress" that ends the same way every time
             handleNotificationCompletionHandlerError()
+            clearCacheAndDisable(skipItemsPurge: true)
+            identifierKeyUnavailable?()
             return
         }
         

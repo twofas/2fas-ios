@@ -18,6 +18,7 @@
 //
 
 import XCTest
+import CryptoKit
 import CloudKit
 @testable import Common
 @testable import Protection
@@ -117,28 +118,127 @@ final class SyncEngineTests: XCTestCase {
         XCTAssertEqual(phone.secrets, ["AAAA"])
     }
 
-    /// The one change the watch makes: the counter of an HOTP token used on it. Sent as a change of the service
-    /// the vault already has; what the watch trashed or added on its own isn't.
-    func testWatchSendsOnlyAChangeOfAServiceTheVaultHas() {
+    /// The one change the watch makes: the counter of an HOTP token used on it. Only the counter is sent, as a
+    /// change of the service the vault already has; nothing else the watch changed, trashed or added is.
+    func testWatchSendsOnlyTheCounterOfAnHOTPTokenTheVaultHas() {
         let phone = makeDevice("phone")
         let watch = makeDevice("watch")
         watch.syncHandler.onlyUpdatesServices = true
-        phone.addService("AAAA", name: "Alpha")
+        phone.addHOTPService("AAAA", name: "Alpha")
         phone.addService("BBBB", name: "Beta")
         synchronizeUntilSettled([phone, watch], cloud: cloud)
         XCTAssertEqual(watch.secrets, ["AAAA", "BBBB"])
+        let counterBefore = phone.counter(of: "AAAA") ?? 0
 
         pause()
+        watch.useHOTPService("AAAA")
         watch.renameService("AAAA", to: "Changed on the watch")
+        watch.renameService("BBBB", to: "Also changed on the watch")
         watch.trashService("BBBB")
         watch.addService("CCCC", name: "Only on the watch")
         synchronizeUntilSettled([watch, phone], cloud: cloud)
 
-        XCTAssertEqual(phone.name(of: "AAAA"), "Changed on the watch")
+        XCTAssertEqual(phone.counter(of: "AAAA"), counterBefore + 1)
+        XCTAssertEqual(phone.name(of: "AAAA"), "Alpha")
+        XCTAssertEqual(phone.name(of: "BBBB"), "Beta")
         XCTAssertEqual(phone.secrets, ["AAAA", "BBBB"])
         XCTAssertEqual(services(inCloud: cloud), 2)
         XCTAssertEqual(deletions(inCloud: cloud), 0)
         XCTAssertEqual(cloud.records(in: Config.vaultV3, ofType: .info).count, 1)
+    }
+
+    // MARK: - A change of the password
+
+    /// More records than one operation takes: the change of the key is sent in several, and the app may be
+    /// closed between them. The cloud is left with records of both keys and an Info record of the old one. The
+    /// device that started the change keeps the old key until it's through, reads everything, and finishes.
+    func testChangeOfPasswordInterruptedBetweenOperationsIsFinishedByTheNextSync() throws {
+        let phone = makeDevice("phone")
+        let count = ModificationQueue.batchElementLimit + 50
+        for index in 0..<count {
+            phone.addService(String(format: "AAAA%04d", index).replacingOccurrences(of: "0", with: "B")
+                .replacingOccurrences(of: "1", with: "C").replacingOccurrences(of: "8", with: "D")
+                .replacingOccurrences(of: "9", with: "E"))
+        }
+        synchronizeUntilSettled([phone], cloud: cloud)
+        XCTAssertEqual(services(inCloud: cloud), count)
+        let oldKey = try XCTUnwrap(phone.encryptionHandler.recordKey)
+
+        phone.changePassword(to: "another password")
+        phone.cloudKit.modificationsToLetThrough = 1
+        let lost = expectation(description: "the second operation is lost")
+        phone.cloudKit.modificationLost = { lost.fulfill() }
+        phone.synchronize { _ in }
+        wait(for: [lost], timeout: 30)
+
+        let newKey = try XCTUnwrap(phone.encryptionHandler.recordKey)
+        XCTAssertTrue(phone.encryptionHandler.isKeyChangeInProgress)
+        let sealedWithNew = servicesInCloud(openedWith: newKey)
+        XCTAssertGreaterThan(sealedWithNew, 0)
+        XCTAssertLessThan(sealedWithNew, count)
+        XCTAssertEqual(sealedWithNew + servicesInCloud(openedWith: oldKey), count)
+
+        // The app is started again: it remembers the change, fetches everything – records of both keys – and
+        // seals all of it with the new one
+        XCTAssertTrue(makeReencryptionHandler(for: phone).willReencrypt)
+        phone.cloudKit.resetTokens()
+        phone.itemHandler.purge()
+        synchronizeUntilSettled([phone], cloud: cloud)
+
+        XCTAssertFalse(phone.encryptionHandler.isKeyChangeInProgress)
+        XCTAssertEqual(servicesInCloud(openedWith: newKey), count)
+        XCTAssertEqual(phone.secrets.count, count)
+        XCTAssertFalse(makeReencryptionHandler(for: phone).willReencrypt)
+    }
+
+    /// Another device meets the cloud in the middle of that change: some records it can't read. It stops, with
+    /// nothing changed on it or in the cloud – what it could read isn't taken for everything there is.
+    func testDeviceThatCantReadSomeRecordsStopsWithNothingChanged() {
+        let phone = makeDevice("phone")
+        let tablet = makeDevice("tablet")
+        let count = ModificationQueue.batchElementLimit + 50
+        for index in 0..<count {
+            phone.addService(String(format: "AAAA%04d", index).replacingOccurrences(of: "0", with: "B")
+                .replacingOccurrences(of: "1", with: "C").replacingOccurrences(of: "8", with: "D")
+                .replacingOccurrences(of: "9", with: "E"))
+        }
+        synchronizeUntilSettled([phone, tablet], cloud: cloud)
+        XCTAssertEqual(tablet.secrets.count, count)
+
+        phone.changePassword(to: "another password")
+        phone.cloudKit.modificationsToLetThrough = 1
+        let lost = expectation(description: "the second operation is lost")
+        phone.cloudKit.modificationLost = { lost.fulfill() }
+        phone.synchronize { _ in }
+        wait(for: [lost], timeout: 30)
+        let operations = cloud.operations.count
+
+        pause()
+        tablet.trashService(tablet.secrets.sorted()[0])
+        let stopped = expectation(description: "the tablet stops")
+        var outcome: SyncTestDevice.Outcome?
+        tablet.synchronize {
+            outcome = $0
+            stopped.fulfill()
+        }
+        wait(for: [stopped], timeout: 30)
+
+        XCTAssertEqual(outcome, .stopped("unreadable records"))
+        XCTAssertEqual(cloud.operations.count, operations, "Nothing was sent")
+        XCTAssertEqual(services(inCloud: cloud), count)
+        XCTAssertEqual(deletions(inCloud: cloud), 0)
+        XCTAssertEqual(tablet.secrets.count, count - 1, "Only what the user did here")
+    }
+
+    private func servicesInCloud(openedWith key: SymmetricKey) -> Int {
+        cloud.records(in: Config.vaultV3, ofType: .service4).filter {
+            (try? SealedRecord.content(of: $0, as: ServiceRecordContent.self, syncKey: key)) != nil
+        }.count
+    }
+
+    /// What the app has after it was started again: a handler that knows nothing but what was saved
+    private func makeReencryptionHandler(for device: SyncTestDevice) -> ReencryptionHandler {
+        device.makeReencryptionHandler()
     }
 
     func testEditReachesTheOtherDevice() {

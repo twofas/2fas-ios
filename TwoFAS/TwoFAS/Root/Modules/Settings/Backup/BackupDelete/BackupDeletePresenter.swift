@@ -23,6 +23,7 @@ import Foundation
 final class BackupDeletePresenter {
     private let flowController: BackupDeleteFlowControlling
     private let interactor: BackupDeleteModuleInteracting
+    private var isDeleting = false
 
     init(flowController: BackupDeleteFlowControlling, interactor: BackupDeleteModuleInteracting) {
         self.flowController = flowController
@@ -34,7 +35,11 @@ final class BackupDeletePresenter {
     }
 
     func handleDeleteBackup() {
+        // A second tap would be refused as "in progress" and shown as an error of an erase that works
+        guard !isDeleting else { return }
+        isDeleting = true
         interactor.erase(completion: { [weak self] result in
+            self?.isDeleting = false
             switch result {
             case .success:
                 self?.flowController.toClose(didDelete: true)

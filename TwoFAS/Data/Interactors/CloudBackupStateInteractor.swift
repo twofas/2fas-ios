@@ -251,7 +251,10 @@ private extension CloudBackupStateInteractor {
     
     func isAvailableCheck() -> Bool {
         switch mainRepository.cloudCurrentState {
-        case .unknown, .disabledNotAvailable: return false
+        // A backup that was stopped can be turned on again (it's tried once more) or off by the user
+        // – and one that waits for space in iCloud can be turned off
+        case .disabledNotAvailable(let reason): return reason.isStopOfTheBackup || reason == .overQuota
+        case .unknown: return false
         default: return true
         }
     }

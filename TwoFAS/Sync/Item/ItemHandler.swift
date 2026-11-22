@@ -19,6 +19,7 @@
 
 import Foundation
 import CloudKit
+import CryptoKit
 #if os(iOS)
 import Common
 import Protection
@@ -45,6 +46,9 @@ final class ItemHandler {
     
     private var deletedEntries: [EntityOfKind] = []
     private(set) var updatedCreated: [CKRecord] = []
+    /// The sealed records of the last `commit()` that couldn't be opened with any key this device has. Even one
+    /// means that what is cached isn't all the vault has – nothing may be merged, sent or set from it.
+    private(set) var unreadableRecords = 0
     
     init(
         sectionHandler: SectionHandler,
@@ -80,6 +84,7 @@ extension ItemHandler {
     
     func commit() {
         queuedDeleteEntries(deletedEntries)
+        unreadableRecords = 0
         queuedUpdateOrCreate(with: updatedCreated)
     }
     
@@ -610,8 +615,30 @@ private extension ItemHandler {
         guard let syncKey = syncEncryptionHandler.recordKey,
               let identifierKey = syncEncryptionHandler.identifierKey else {
             Log("ItemHandler - no key for a sealed record of \(type)", module: .cloudSync, severity: .error)
+            unreadableRecords += 1
             return
         }
+        // While this device changes the key, the records it didn't seal again yet open with the previous one
+        let keys = [syncKey, syncEncryptionHandler.previousRecordKey].compactMap { $0 }
+        for (index, key) in keys.enumerated() {
+            do {
+                try store(sealed: record, type: type, syncKey: key, identifierKey: identifierKey)
+                return
+            } catch {
+                if index == keys.count - 1 {
+                    Log("ItemHandler - can't open a sealed record of \(type)", module: .cloudSync, severity: .error)
+                    unreadableRecords += 1
+                }
+            }
+        }
+    }
+    
+    private func store(
+        sealed record: CKRecord,
+        type: RecordType,
+        syncKey: SymmetricKey,
+        identifierKey: SyncIdentifierKey
+    ) throws {
         let recordName = record.recordID.recordName
         let metadata = record.encodeSystemFields()
         do {
@@ -673,8 +700,6 @@ private extension ItemHandler {
             default:
                 break
             }
-        } catch {
-            Log("ItemHandler - can't open a sealed record of \(type)", module: .cloudSync, severity: .error)
         }
     }
 }

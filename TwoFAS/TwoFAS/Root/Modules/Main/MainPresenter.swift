@@ -138,6 +138,7 @@ final class MainPresenter {
     
     func handleSyncCompletedSuccessfuly() {
         interactor.saveSuccessSync()
+        flowController.dropPendingSyncScreen()
     }
     
     func handleClearSyncCompletedSuccessfuly() {
@@ -197,6 +198,7 @@ private extension MainPresenter {
             handlingViewIsVisible = false
             // What the sync stopped on while the app was locked or something else was on the screen
             interactor.reportCurrentSyncProblem()
+            flowController.retryPendingSyncScreen()
         }
     }
 
@@ -205,6 +207,7 @@ private extension MainPresenter {
         let presented = switch error {
         case .cantCreateEncryptionElements: flowController.toCantCreateEncryptionElements()
         case .missingSystemKey, .missingUserKey, .missingAllKeys: flowController.toMissingKey(error)
+        case .unreadableRecords: flowController.toUnreadableRecords()
         }
         if presented {
             presentedEncryptionErrors.append(error)

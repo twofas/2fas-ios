@@ -157,6 +157,22 @@ extension MergeHandler {
                             Log("MergeHandler: Modification: Can't find modified entry in local database!", module: .cloudSync)
                             return
                         }
+                        if onlyUpdatesServices {
+                            guard let cloudService = cloudEntry.item as? ServiceData,
+                                  let localService = currentEntry.item as? ServiceData,
+                                  cloudService.tokenType == .hotp else { return }
+                            let counter = max(
+                                cloudService.counter ?? TokenType.hotpDefaultValue,
+                                localService.counter ?? TokenType.hotpDefaultValue
+                            )
+                            guard counter != cloudService.counter else { return }
+                            var updated = cloudService
+                            updated.updateCounter(counter)
+                            var list = listToSend[type] ?? []
+                            list[cloudEntry.index] = updated
+                            listToSend[type] = list
+                            return
+                        }
                         guard currentEntry != cloudEntry else {
                             Log("MergeHandler: Modification: Items already in place", module: .cloudSync)
                             return
@@ -165,8 +181,7 @@ extension MergeHandler {
                             var list = listToSend[type] ?? []
                             if type.isDeletion {
                                 replaceDeletion(modifiedLogEntry.entityID, with: currentEntry.item, in: &list)
-                            } else if currentEntry.index == cloudEntry.index || onlyUpdatesServices {
-                                // A device that only updates services never moves them
+                            } else if currentEntry.index == cloudEntry.index {
                                 Log("MergeHandler: Modification: Item in place but overriding with local one", module: .cloudSync)
                                 list[cloudEntry.index] = currentEntry.item
                             } else {
@@ -194,7 +209,8 @@ extension MergeHandler {
                     if hasMoved || !elementInCache.isEqual(to: item) {
                         Log("MergeHandler: Preparation: element has diffrent content or index. Creating from exisiting one", module: .cloudSync)
                         
-                        guard let record = itemHandler.record(for: type, item: item, modifiedData: current) else {
+                        let source = onlyUpdatesServices ? listToSend : current
+                        guard let record = itemHandler.record(for: type, item: item, modifiedData: source) else {
                             Log("MergeHandler: Preparation:MergeHandler: Preparation: element has diffrent content or index. Creating from exisiting one couldn't create record from exisiting service", module: .cloudSync)
                             continue
                         }

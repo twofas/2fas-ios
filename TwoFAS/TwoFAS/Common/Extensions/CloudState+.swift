@@ -47,6 +47,7 @@ extension CloudState.NotAvailableReason.EncryptionError {
         case .missingUserKey: T.Backup.errorMissingUserKey
         case .cantCreateEncryptionElements: T.Backup.errorCantCreateKeys
         case .missingAllKeys: T.Backup.errorMissingAllKeys
+        case .unreadableRecords: T.Backup.errorUnreadableRecords
         }
     }
 }

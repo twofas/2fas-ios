@@ -43,6 +43,7 @@ final class SyncEncryptionHandler {
     private let usedKeyKey = "io.twofas.usedKeyKey"
     private let saltKey = "io.twofas.saltKey"
     private let kdfParametersKey = "io.twofas.kdfParametersKey"
+    private let previousRecordKeyKey = "io.twofas.previousRecordKeyKey"
     private static let saltByteCount = 16
     
     private let reference: Data
@@ -61,6 +62,9 @@ final class SyncEncryptionHandler {
     /// What the Info record carried when it was last fetched
     private var cloudInfo = SyncCloudEncryptionInfo.empty
     private var cachedIdentifierKey: SyncIdentifierKey?
+    /// The key the records were sealed with before the change of the key that is in progress (see
+    /// `beginKeyChange()`)
+    private var cachedPreviousRecordKey: SymmetricKey?
     
     /// - Parameter localEncryptionKeyData: Not used on the phone any more (the ticket for the watch is made with
     ///   a key of its own) – kept so that the handlers of the phone and the watch are created the same way.
@@ -110,6 +114,32 @@ final class SyncEncryptionHandler {
         }
         
         cachedEncryptionReference = encrypt(reference)
+        cachedPreviousRecordKey = localKeychain[data: previousRecordKeyKey].map { SymmetricKey(data: $0) }
+    }
+    
+    // MARK: - A change of the key in progress
+    
+    /// The records of the cloud are sealed again with another key in several operations. Until the last one is
+    /// through, the cloud has records of both keys and an Info record that still names the old one. The old key
+    /// is kept on this device – in its keychain, so it survives the app being closed – for as long: the records
+    /// that weren't sealed again yet are read with it, and the change is finished by the next sync.
+    var isKeyChangeInProgress: Bool { cachedPreviousRecordKey != nil }
+    
+    var previousRecordKey: SymmetricKey? { cachedPreviousRecordKey }
+    
+    /// Called right before the key is replaced (`setUserKey(_:)`, `setSystemKey()`)
+    func beginKeyChange() {
+        // A change on top of one that wasn't finished: the oldest key stays – it's the one the cloud names
+        guard cachedPreviousRecordKey == nil, let currentKey else { return }
+        localKeychain[data: previousRecordKeyKey] = currentKey.withUnsafeBytes { Data($0) }
+        cachedPreviousRecordKey = currentKey
+    }
+    
+    /// Every record and the Info record are sealed with the current key – or the change was given up with the
+    /// backup (turned off, erased)
+    func finishKeyChange() {
+        localKeychain[data: previousRecordKeyKey] = nil
+        cachedPreviousRecordKey = nil
     }
     
     /// Makes sure there is a salt and a system key, and uses the system key. What exists is never replaced: both
@@ -734,14 +764,15 @@ extension SyncEncryptionHandler: SyncEncryptionHandling {
             return cachedIdentifierKey
         }
         guard let wrapped = cloudInfo.wrappedIdentifierKey, let currentKey else { return nil }
-        do {
-            let key = try SyncIdentifierKey.unwrap(wrapped, with: currentKey)
-            cachedIdentifierKey = key
-            return key
-        } catch {
-            Log("SyncEncryptionHandler: Can't open the identifier key", module: .cloudSync, severity: .error)
-            return nil
+        // While the key is changed the Info record still carries it sealed with the previous one
+        for key in [currentKey, cachedPreviousRecordKey].compactMap({ $0 }) {
+            if let identifierKey = try? SyncIdentifierKey.unwrap(wrapped, with: key) {
+                cachedIdentifierKey = identifierKey
+                return identifierKey
+            }
         }
+        Log("SyncEncryptionHandler: Can't open the identifier key", module: .cloudSync, severity: .error)
+        return nil
     }
     
     /// Creates the key of the record identifiers when the cloud has none – for a clean cloud or one that is
@@ -779,6 +810,8 @@ extension SyncEncryptionHandler: SyncEncryptionHandling {
     }
     
     func purge() {
+        // The backup is given up, and with it a change of the key that wasn't finished
+        finishKeyChange()
         saveUserKey(nil)
         if encryptionType == .user {
             setSystemKey()

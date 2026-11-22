@@ -26,6 +26,8 @@ public enum CloudState: Equatable {
             case missingSystemKey
             case missingUserKey
             case missingAllKeys
+            /// Records of the backup can't be opened with the keys of this device
+            case unreadableRecords
         }
         
         case overQuota
@@ -38,6 +40,18 @@ public enum CloudState: Equatable {
         case cloudEncryptedUser
         case cloudEncryptedSystem
         case encryptionError(encryptionError: EncryptionError)
+
+        /// The backup was stopped by something only the user can do something about (a missing key or password,
+        /// a newer version, a service that can't be saved) – unlike iCloud not being available. The reason stays
+        /// until the user turns the backup on (it's tried again) or off.
+        public var isStopOfTheBackup: Bool {
+            switch self {
+            case .newerVersion, .incorrectService, .cloudEncryptedUser, .cloudEncryptedSystem, .encryptionError:
+                true
+            case .overQuota, .disabledByUser, .useriCloudProblem, .error, .other:
+                false
+            }
+        }
     }
     
     public enum Sync: Equatable {
@@ -56,4 +70,5 @@ public enum EncryptionError: Error {
     case missingSystemKey
     case missingUserKey
     case missingAllKeys
+    case unreadableRecords
 }

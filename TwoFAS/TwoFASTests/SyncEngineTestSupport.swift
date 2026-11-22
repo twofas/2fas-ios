@@ -186,6 +186,10 @@ final class FakeCloudKit: CloudKitSyncing {
     /// Called once, right before the next operation of this device is applied – what another device does between
     /// this one's fetch and its save
     var beforeNextModification: Callback?
+    /// How many more operations of this device get through. The one after them is lost and the sync ends there –
+    /// the app was closed, or the connection was lost for good. `nil` – no limit.
+    var modificationsToLetThrough: Int?
+    var modificationLost: Callback?
     private var refusalsInARow = 0
 
     init(cloud: FakeCloud, zoneManager: ZoneManaging) {
@@ -221,6 +225,15 @@ final class FakeCloudKit: CloudKitSyncing {
             let interference = beforeNextModification
             beforeNextModification = nil
             interference?()
+            if let left = modificationsToLetThrough {
+                guard left > 0 else {
+                    modificationsToLetThrough = nil
+                    abortSync?()
+                    modificationLost?()
+                    return
+                }
+                modificationsToLetThrough = left - 1
+            }
             if let versions = cloud.modify(
                 saving: recordsToSave ?? [],
                 deleting: recordIDsToDelete ?? [],
@@ -278,6 +291,7 @@ final class SyncTestDevice {
     let logHandler: Sync.LogHandler
     let itemHandler: ItemHandler
     let encryptionHandler: SyncEncryptionHandler
+    let reencryptionHandler: ReencryptionHandler
     let zoneManager = ZoneManager()
 
     private let directory: URL
@@ -286,6 +300,7 @@ final class SyncTestDevice {
     private let log: LogDataChangeImpl
     private let requirementCheck: RequirementCheckHandler
     private var onOutcome: ((Outcome) -> Void)?
+    private var reencryptionHandlerFactory: (() -> ReencryptionHandler)?
 
     var repo: StorageRepository { storage.storageRepository }
 
@@ -358,7 +373,7 @@ final class SyncTestDevice {
         )
         let modificationQueue = ModificationQueue()
         requirementCheck = RequirementCheckHandler(encryptionHandler: encryptionHandler, infoHandler: infoHandler)
-        let reencryptionHandler = ReencryptionHandler(
+        reencryptionHandler = ReencryptionHandler(
             serviceHandler: serviceHandler,
             serviceRecordEncryptionHandler: serviceRecordEncryptionHandler,
             syncEncryptionHandler: encryptionHandler,
@@ -391,6 +406,15 @@ final class SyncTestDevice {
             zoneManager: zoneManager,
             syncEncryptionHandler: encryptionHandler
         )
+        let reencryptionHandler = reencryptionHandler
+        reencryptionHandlerFactory = { [encryptionHandler] in
+            ReencryptionHandler(
+                serviceHandler: serviceHandler,
+                serviceRecordEncryptionHandler: serviceRecordEncryptionHandler,
+                syncEncryptionHandler: encryptionHandler,
+                infoHandler: infoHandler
+            )
+        }
         reencryptionHandler.sealedRecordsForReencryption = { [weak itemHandler, weak zoneManager] in
             guard zoneManager?.usesSealedRecords == true else { return nil }
             return itemHandler?.allSealedRecordsRecreated()
@@ -401,6 +425,7 @@ final class SyncTestDevice {
 
         syncHandler.finishedSync = { [weak self] in self?.report(.finished) }
         syncHandler.otherError = { [weak self] in self?.report(.stopped("error \($0.code)")) }
+        syncHandler.unreadableRecordsFound = { [weak self] in self?.report(.stopped("unreadable records")) }
         syncHandler.quotaExceeded = { [weak self] in self?.report(.stopped("quota")) }
         syncHandler.userDisabledCloud = { [weak self] in self?.report(.stopped("disabled")) }
         syncHandler.useriCloudProblem = { [weak self] in self?.report(.stopped("iCloud problem")) }
@@ -463,6 +488,67 @@ final class SyncTestDevice {
         )
         log.logNewServiceAdded(with: added)
         return added
+    }
+
+    /// A handler that knows nothing but what was saved – what the app has after it was started again
+    func makeReencryptionHandler() -> ReencryptionHandler {
+        // swiftlint:disable:next force_unwrapping
+        reencryptionHandlerFactory!()
+    }
+
+    /// The user set another password for the backup: the key is replaced by the next sync, which seals every
+    /// record again – as `SyncMigrationHandler` does it
+    func changePassword(to password: String) {
+        let salt = encryptionHandler.exportKeys()?.salt
+        guard let key = SyncEncryptionHandler.deriveKey(for: password, parameters: .current, salt: salt) else {
+            return XCTFail("\(name): no key for the password")
+        }
+        var isPending = true
+        reencryptionHandler.isReencryptionPending = { [encryptionHandler] in
+            guard isPending else { return false }
+            isPending = false
+            encryptionHandler.beginKeyChange()
+            encryptionHandler.setUserKey(key)
+            return true
+        }
+    }
+
+    @discardableResult
+    func addHOTPService(_ secret: String, name: String? = nil) -> String {
+        let added = repo.addService(
+            name: name ?? "Service \(secret)",
+            secret: secret,
+            serviceTypeID: nil,
+            additionalInfo: "info \(secret)",
+            rawIssuer: nil,
+            otpAuth: nil,
+            tokenPeriod: nil,
+            tokenLength: .digits6,
+            badgeColor: nil,
+            iconType: .label,
+            iconTypeID: .default,
+            labelColor: .default,
+            labelTitle: "SE",
+            algorithm: .SHA1,
+            counter: 1,
+            tokenType: .hotp,
+            sectionID: nil,
+            source: .manual
+        )
+        log.logNewServiceAdded(with: added)
+        return added
+    }
+
+    /// The HOTP token was used: its counter goes up
+    func useHOTPService(_ secret: String) {
+        guard let changed = repo.incrementCounter(for: secret) else {
+            return XCTFail("\(self.name): no service \(secret)")
+        }
+        log.logServicesModified(with: [changed])
+    }
+
+    func counter(of secret: String) -> Int? {
+        repo.findService(for: secret)?.counter
     }
 
     func renameService(_ secret: String, to name: String) {

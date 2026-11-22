@@ -38,6 +38,11 @@ struct SyncMigrationToNewestVersionView: View {
                     .scaleEffect(1.5)
                     .tint(.accentsBrand)
                     .padding(.vertical, .XL)
+                if presenter.canLeaveWhileMigrating {
+                    TFButton(T.Commons.close, variant: .bordered, size: .large) {
+                        presenter.close()
+                    }
+                }
             } else {
                 VStack {
                     if let migrationFailureReason = presenter.migrationFailureReason {

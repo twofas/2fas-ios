@@ -151,6 +151,7 @@ private extension CloudState.NotAvailableReason.EncryptionError {
         case .missingSystemKey: "Missing system key"
         case .missingUserKey: "Missing user key"
         case .missingAllKeys: "Missing all keys"
+        case .unreadableRecords: "Records that can't be read"
         }
     }
 }

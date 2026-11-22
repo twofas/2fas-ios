@@ -29,12 +29,6 @@ public protocol SyncMigrationHandling: AnyObject {
     var showiCloudIsEncryptedBySystem: (() -> Void)? { get set }
     var showNeverVersionOfiCloud: (() -> Void)? { get set }
     var currentEncryption: CloudEncryptionType? { get }
-    var showiCloudOverQuota: (() -> Void)? { get set }
-    var showMigrationGeneralError: (() -> Void)? { get set }
-    var showiCloudDisabledByUser: (() -> Void)? { get set }
-    var showiCloudUserProblem: (() -> Void)? { get set }
-    var showiCloudError: ((NSError?) -> Void)? { get set }
-    var showiCloudIncorrectSerice: ((String) -> Void)? { get set }
     
     func changePassword(_ password: String)
     func migrateToSystemPassword()
@@ -63,13 +57,11 @@ final class SyncMigrationHandler {
     var showiCloudIsEncryptedByUser: (() -> Void)?
     var showiCloudIsEncryptedBySystem: (() -> Void)?
     var showNeverVersionOfiCloud: (() -> Void)?
-    var showiCloudOverQuota: (() -> Void)?
-    var showMigrationGeneralError: (() -> Void)?
-    var showiCloudDisabledByUser: (() -> Void)?
-    var showiCloudUserProblem: (() -> Void)?
-    var showiCloudError: ((NSError?) -> Void)?
-    var showiCloudIncorrectSerice: ((String) -> Void)?
     var synchronize: (() -> Void)?
+    /// Syncs again after the backup was stopped on a key or a password: from a full fetch, with the local data
+    /// logged as a first import. The stop cleared the log of changes – without it nothing local would be merged,
+    /// and what only this device has would be taken for deleted.
+    var restart: (() -> Void)?
     var enable: (() -> Void)?
     
     var currentEncryption: CloudEncryptionType? {
@@ -109,6 +101,8 @@ final class SyncMigrationHandler {
         
         reencryptionHandler.isReencryptionPending = { [weak self] () -> Bool in
             guard let self, let passwordChangePending else { return false }
+            // The key that is replaced is kept until every record is sealed with the new one
+            self.syncEncryptionHandler.beginKeyChange()
             switch passwordChangePending {
             case .system:
                 self.syncEncryptionHandler.setSystemKey()
@@ -152,6 +146,8 @@ extension SyncMigrationHandler: SyncMigrationHandling {
         syncEncryptionHandler.deriveUserKey(for: password, parameters: .current) { [weak self] key in
             guard let self else { return }
             isDerivingUserKey = false
+            // The backup stopped or was turned off while the key was derived – the change was dropped
+            guard isReencrypting else { return }
             guard let key else {
                 Log("SyncMigrationHandler: Can't create user key!", module: .cloudSync, severity: .error)
                 isReencrypting = false
@@ -181,7 +177,7 @@ extension SyncMigrationHandler: SyncMigrationHandling {
             isDerivingUserKey = false
             isiCloudEncryptedByDifferentUserPass = false
             enableIfSuccess = true
-            synchronize?()
+            restart?()
         }
         // The key the cloud is encrypted with: derived with the salt and the parameters of the cloud. Without
         // them (an Info record from before they were stored) the key is derived the way it always was.
@@ -213,7 +209,7 @@ extension SyncMigrationHandler: SyncMigrationHandling {
             if recovered, let self {
                 isiCloudEncryptedByDifferentUserPass = false
                 enableIfSuccess = true
-                synchronize?()
+                restart?()
             }
             completion(recovered)
         }
@@ -226,7 +222,7 @@ extension SyncMigrationHandler: SyncMigrationHandling {
         }
         syncEncryptionHandler.setSystemKey()
         enableIfSuccess = true
-        synchronize?()
+        restart?()
     }
     
     func cloudStateChange(_ state: CloudCurrentState) {
@@ -236,6 +232,16 @@ extension SyncMigrationHandler: SyncMigrationHandling {
         case .disabledNotAvailable(let reason):
             // The failure is shown by whoever watches the state – nothing is left to report as a success
             reportsMigrationEndedAfterSync = false
+            if enableIfSuccess {
+                // The sync that was started with a password or a key ended on something else: the backup isn't
+                // turned on by a later sync, and the password can be given again
+                enableIfSuccess = false
+                isiCloudEncryptedByDifferentUserPass = true
+            }
+            if reason != .overQuota {
+                // A change of the password that was waiting for a sync doesn't wait for a backup that stopped
+                dropPendingPasswordChange()
+            }
             switch reason {
             case .newerVersion:
                 canChangePassword = false
@@ -247,30 +253,15 @@ extension SyncMigrationHandler: SyncMigrationHandling {
             case .cloudEncryptedSystem:
                 canChangePassword = true
                 showiCloudIsEncryptedBySystem?()
-            case .overQuota:
+            case .overQuota, .disabledByUser, .useriCloudProblem, .error, .incorrectService, .encryptionError,
+                    .other:
+                // Shown by whoever watches the state itself (`SyncMigrationInteractor`, the Backup settings)
                 canChangePassword = false
-                showiCloudOverQuota?()
-            case .disabledByUser:
-                canChangePassword = false
-                showiCloudDisabledByUser?()
-            case .useriCloudProblem:
-                canChangePassword = false
-                showiCloudUserProblem?()
-            case .error(let error):
-                canChangePassword = false
-                showiCloudError?(error)
-            case .incorrectService(let serviceName):
-                canChangePassword = false
-                showiCloudIncorrectSerice?(serviceName)
-            case .encryptionError:
-                // Shown by `SyncMigrationInteractor`, which watches the state itself
-                canChangePassword = false
-            default:
-                canChangePassword = false
-                showMigrationGeneralError?()
             }
         case .disabledAvailable:
             reportsMigrationEndedAfterSync = false
+            enableIfSuccess = false
+            dropPendingPasswordChange()
             canChangePassword = false
         case .enabled(let sync):
             switch sync {
@@ -301,6 +292,11 @@ extension SyncMigrationHandler: SyncMigrationHandling {
 }
 
 private extension SyncMigrationHandler {
+    func dropPendingPasswordChange() {
+        passwordChangePending = nil
+        isReencrypting = false
+    }
+    
     @discardableResult
     func changePasswordOrQueue() -> Bool {
         guard canChangePassword, passwordChangePending != nil else {

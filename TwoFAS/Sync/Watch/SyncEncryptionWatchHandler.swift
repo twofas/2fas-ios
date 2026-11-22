@@ -158,6 +158,8 @@ extension SyncEncryptionWatchHandler: SyncEncryptionHandling {
     }
     
     var recordKey: SymmetricKey? { currentKey }
+    /// The watch never changes the key
+    var previousRecordKey: SymmetricKey? { nil }
     
     var identifierKey: SyncIdentifierKey? {
         if let cachedIdentifierKey {

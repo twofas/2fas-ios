@@ -26,8 +26,12 @@ final class MainPresenter {
     var favoriteList: [Service] = []
     var showPairQRCode = false
     var showSystemKeyError = false
+    /// What stopped the backup, when it has to be told – shown once
+    var syncProblem: String?
+    var showSyncProblem = false
     
     private let interactor: MainInteracting
+    private var syncObserver: NSObjectProtocol?
     
     init(interactor: MainInteracting) {
         self.interactor = interactor
@@ -36,6 +40,24 @@ final class MainPresenter {
         }
         interactor.showSystemKeyError = { [weak self] in
             self?.showSystemKeyError = $0
+        }
+        interactor.showSyncProblem = { [weak self] problem in
+            self?.syncProblem = problem
+            self?.showSyncProblem = problem != nil
+        }
+        // What was added to or removed from the favorites elsewhere shows without leaving the screen
+        syncObserver = NotificationCenter.default.addObserver(
+            forName: .syncCompletedSuccessfuly,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.refresh()
+        }
+    }
+    
+    deinit {
+        if let syncObserver {
+            NotificationCenter.default.removeObserver(syncObserver)
         }
     }
     

@@ -53,17 +53,24 @@ final class ReencryptionHandler {
 extension ReencryptionHandler: ReencryptionHandling {
     var willReencrypt: Bool {
         guard !shouldReencrypt else { return true }
-        shouldReencrypt = isReencryptionPending?() == true
+        // Asked for now – or started earlier and not finished (the app was closed between the operations): the
+        // cloud has records of both keys then, and everything is sealed and sent again
+        shouldReencrypt = isReencryptionPending?() == true || syncEncryptionHandler.isKeyChangeInProgress
         Log("ReencryptionHandler: will reencrypt: \(shouldReencrypt)", module: .cloudSync)
         return shouldReencrypt
     }
     
     func listForReencryption() -> (recordIDsToDeleteOnServer: [CKRecord.ID]?, recordsToModifyOnServer: [CKRecord]?) {
-        guard shouldReencrypt, !isReencrypting else { return (nil, nil) }
-        isReencrypting = true
+        guard shouldReencrypt else { return (nil, nil) }
         Log("ReencryptionHandler: encrypting", module: .cloudSync)
-        Task { @MainActor in
-            didStartReencryption?()
+        // A try that didn't get through (an operation failed, the sync started over) is simply made again, with
+        // everything – answered with nothing, the sync would end as if the key had been changed, with the Info
+        // record never sent
+        if !isReencrypting {
+            isReencrypting = true
+            Task { @MainActor in
+                didStartReencryption?()
+            }
         }
         
         var listForCreationModification = sealedRecordsForReencryption?() ?? listV3ForModification() ?? []
@@ -83,6 +90,8 @@ extension ReencryptionHandler: ReencryptionHandling {
     func changesApplied() {
         Log("ReencryptionHandler: changes applied", module: .cloudSync)
         shouldReencrypt = false
+        // Every record and the Info record are in the cloud with the new key
+        syncEncryptionHandler.finishKeyChange()
     }
     
     func syncSucceded() {

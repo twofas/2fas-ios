@@ -48,13 +48,14 @@ final class MissingKeyPresenter: ObservableObject {
         case .missingUserKey: T.Backup.missingKeyTitleUser
         case .missingAllKeys: T.Backup.missingKeyTitleAll
         case .cantCreateEncryptionElements: T.Backup.errorCantCreateKeys
+        case .unreadableRecords: T.Backup.errorUnreadableRecords
         }
     }
 
     var canEnterPassword: Bool {
         switch encryptionError {
         case .missingUserKey, .missingAllKeys: true
-        case .missingSystemKey, .cantCreateEncryptionElements: false
+        case .missingSystemKey, .cantCreateEncryptionElements, .unreadableRecords: false
         }
     }
 

@@ -89,7 +89,13 @@ final class CloudKit: CloudKitSyncing {
     private var database: CKDatabase!
     private(set) var container: CKContainer!
     
+    /// Identifies the retry that is waiting. `nil` – none, or it was called off.
+    private var scheduledRetry: UUID?
     private var zoneUpdated = false
+    /// The fetch of the zone's changes ended with an error (see `recordZoneFetchResultBlock`)
+    private var zoneFetchFailed = false
+    /// An error nothing is known about is tried again after this long (doubled with every retry in a row)
+    private static let unknownErrorRetry: TimeInterval = 30
     private var changedRecords: [CKRecord] = []
     private var deletedRecords: [DeletedItem] = []
     
@@ -122,6 +128,7 @@ final class CloudKit: CloudKitSyncing {
     
     /// On `stateQueue`
     private func startSync() {
+        scheduledRetry = nil
         collectedActions = []
         zoneUpdated = false
         syncTokenHandler.prepare()
@@ -295,6 +302,7 @@ final class CloudKit: CloudKitSyncing {
         
         Log("CloudKit - clearing record changes", module: .cloudSync)
         clearRecordChanges()
+        zoneFetchFailed = false
         
         // swiftlint:disable line_length
         Log(
@@ -344,14 +352,17 @@ final class CloudKit: CloudKitSyncing {
             self?.stateQueue.async { [weak self] in
                 Log("CloudKit - recordZoneFetchResultBlock", module: .cloudSync)
                 switch result {
+                // The result of the zone is only noted here. What to do about an error is decided once, when
+                // the whole operation ends (`fetchRecordZoneChangesResultBlock`) – decided here as well, an
+                // error was handled twice: two purges, two retries running side by side, or a fetch that went
+                // on over a cache that had just been purged.
                 case .success((let serverChangeToken, _, _)):
                     Log("CloudKit - recordZoneFetchResultBlock - success", module: .cloudSync)
-                    self?.handleOperationResult(error: nil) { [weak self] in
-                        self?.recordZoneTokenUpdated(serverChangeToken)
-                    }
+                    self?.recordZoneTokenUpdated(serverChangeToken)
                 case .failure(let error):
                     Log("CloudKit - recordZoneFetchResultBlock - error: \(error)", module: .cloudSync)
-                    self?.handleOperationResult(error: error)
+                    self?.zoneFetchFailed = true
+                    self?.savePartialOperationError(error)
                 }
             }
         }
@@ -361,6 +372,11 @@ final class CloudKit: CloudKitSyncing {
                 switch result {
                 case .success:
                     Log("CloudKit - fetchRecordZoneChangesResultBlock - success", module: .cloudSync)
+                    if let self, zoneFetchFailed, collectedActions.isEmpty {
+                        // The zone wasn't read and nothing says what to do about it: never taken for a fetch
+                        // that brought nothing
+                        collectedActions.append(.retry(after: Self.unknownErrorRetry))
+                    }
                     self?.handleOperationResult(error: nil) { [weak self] in
                         self?.finishedFetchingZoneChange()
                     }
@@ -455,6 +471,7 @@ final class CloudKit: CloudKitSyncing {
             guard let self else { return }
             clearRecordChanges()
             collectedActions = []
+            scheduledRetry = nil
             cancelOperation()
         }
     }
@@ -515,6 +532,12 @@ final class CloudKit: CloudKitSyncing {
         }
     }
     
+    /// An operation this class cancelled itself (`clear()`, a fetch that ended in the background)
+    private static func isCancellation(_ error: Error) -> Bool {
+        let error = error as NSError
+        return error.domain == CKErrorDomain && error.code == CKError.Code.operationCancelled.rawValue
+    }
+    
     private func handleOperationResult(error: Error?, next: Callback? = nil) {
         Log("CloudKit - handleOperationResult: \(String(describing: error))", module: .cloudSync)
         if error == nil && collectedActions.isEmpty {
@@ -527,6 +550,12 @@ final class CloudKit: CloudKitSyncing {
         }
         guard let mostImportant = collectedActions.sortedByImportance.last else {
             collectedActions = []
+            if let error, !Self.isCancellation(error) {
+                // An error with nothing to do about it would end the chain here, with the sync left as "in
+                // progress" – no other could start until the backup is turned off or the app started again
+                retryAction(backedOff(Self.unknownErrorRetry))
+                return
+            }
             next?()
             return
         }
@@ -674,7 +703,15 @@ final class CloudKit: CloudKitSyncing {
     
     private func retryAction(_ retryIn: TimeInterval = 2.0) {
         Log("CloudKit - Preparing to retry sync in \(retryIn)", module: .cloudSync)
+        let retry = UUID()
+        scheduledRetry = retry
         stateQueue.asyncAfter(deadline: .now() + retryIn) {
+            // Called off by `clear()` (the backup was turned off) or replaced by a sync that started since –
+            // it would run a second chain of operations next to that one
+            guard self.scheduledRetry == retry else {
+                Log("CloudKit - Scheduled sync was called off", module: .cloudSync)
+                return
+            }
             Log("CloudKit - Scheduled sync -> syncing", module: .cloudSync)
             self.startSync()
         }

@@ -75,6 +75,7 @@ final class CloudKitErrorParser {
     private let minSecondsToRetry: TimeInterval = 2
     private let maxSecondsToRetry: TimeInterval = 1800
     private let midSecondsToRetry: TimeInterval = 600
+    private let shortSecondsToRetry: TimeInterval = 30
     
     fileprivate func parseErrorCode(_ errorCode: CKError.Code, retryIn: TimeInterval?) -> CloudKitAction? {
         switch errorCode {
@@ -87,13 +88,11 @@ final class CloudKitErrorParser {
                 .requestRateLimited,
                 .limitExceeded,
                 .zoneBusy:
-            let seconds = {
-                if let retryIn {
-                    return retryIn
-                }
-                return TimeInterval.random(in: minSecondsToRetry...maxSecondsToRetry)
-            }()
-            return .purgeAndRetry(after: seconds)
+            // Nothing is wrong with what is cached – it's only tried again. Without a time given by the
+            // server: soon, a little apart from the other devices; a failure that keeps coming back is waited
+            // out longer and longer by the back-off of the caller.
+            let seconds = retryIn ?? TimeInterval.random(in: minSecondsToRetry...shortSecondsToRetry)
+            return .retry(after: seconds)
             
         case .operationCancelled:
             Log("Operation cancelled!", module: .cloudSync)

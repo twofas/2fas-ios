@@ -23,6 +23,10 @@ import Data
 
 final class SyncMigrationToNewestVersionPresenter: ObservableObject {
     @Published var isMigrating = true
+    /// The migration takes longer than it should (no network, iCloud not answering): the screen can be left.
+    /// The migration goes on with the next syncs.
+    @Published var canLeaveWhileMigrating = false
+    private static let timeBeforeLeavingIsOffered: TimeInterval = 15
     @Published var migrationFailureReason: CloudState.NotAvailableReason?
     
     lazy var callback: (MigrationResult) -> Void = { [weak self] result in
@@ -35,6 +39,9 @@ final class SyncMigrationToNewestVersionPresenter: ObservableObject {
     
     init(flowController: SyncMigrationToNewestVersionFlowControlling) {
         self.flowController = flowController
+        DispatchQueue.main.asyncAfter(deadline: .now() + Self.timeBeforeLeavingIsOffered) { [weak self] in
+            self?.canLeaveWhileMigrating = true
+        }
     }
 }
 

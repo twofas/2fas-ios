@@ -96,6 +96,11 @@ struct MainView: View {
             } message: {
                 Text(verbatim: T.Backup.cloudErrorMissingSystemKeyContent)
             }
+            .alert(T.Backup.cloudErrorTitle, isPresented: $presenter.showSyncProblem) {
+                Button(action: {}, label: { Text(T.Commons.ok) })
+            } message: {
+                Text(verbatim: presenter.syncProblem ?? "")
+            }
             .fullScreenCover(
                 isPresented: $presenter.showPairQRCode,
                 onDismiss: {

@@ -181,7 +181,9 @@ extension SyncMigrationInteractor: SyncMigrationInteracting {
     private func report(_ encryptionError: CloudState.NotAvailableReason.EncryptionError) {
         switch encryptionError {
         case .cantCreateEncryptionElements: showCantCreateEncryptionElements?()
-        case .missingSystemKey, .missingUserKey, .missingAllKeys: showMissingKey?(encryptionError)
+        // Which screen or alert it is, is decided where it's shown
+        case .missingSystemKey, .missingUserKey, .missingAllKeys, .unreadableRecords:
+            showMissingKey?(encryptionError)
         }
     }
 }

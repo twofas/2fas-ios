@@ -23,6 +23,7 @@ import CommonWatch
 protocol MainInteracting: AnyObject {
     var showPairQRCode: ((Bool) -> Void)? { get set }
     var showSystemKeyError: ((Bool) -> Void)? { get set }
+    var showSyncProblem: ((String?) -> Void)? { get set }
     func listFavoriteServices() -> [ServiceData]
     func sync()
 }
@@ -33,6 +34,8 @@ final class MainInteractor {
     
     var showPairQRCode: ((Bool) -> Void)?
     var showSystemKeyError: ((Bool) -> Void)?
+    var showSyncProblem: ((String?) -> Void)?
+    private var shownSyncProblem: String?
     
     init(mainRepository: MainRepository) {
         self.mainRepository = mainRepository
@@ -61,6 +64,12 @@ extension MainInteractor: MainInteracting {
 }
 
 private extension MainInteractor {
+    func reportSyncProblem(_ description: String) {
+        guard shownSyncProblem != description else { return }
+        shownSyncProblem = description
+        showSyncProblem?(description)
+    }
+    
     @objc
     func syncStateChanged() {
         switch mainRepository.currentCloudState {
@@ -70,13 +79,31 @@ private extension MainInteractor {
                 showPairQRCode?(true)
             case .cloudEncryptedSystem:
                 showSystemKeyError?(true)
-            default: break
+            case .newerVersion:
+                reportSyncProblem(T.Error.cloudBackupNewerVersion)
+            case .useriCloudProblem:
+                reportSyncProblem(T.Backup.icloudProblem)
+            case .other:
+                reportSyncProblem(T.Backup.icloudNotAvailable)
+            case .error(let error):
+                reportSyncProblem(error?.localizedDescription ?? T.Commons.unknownError)
+            case .encryptionError(let encryptionError):
+                switch encryptionError {
+                case .missingSystemKey: reportSyncProblem(T.Backup.errorMissingSystemKey)
+                case .missingUserKey: reportSyncProblem(T.Backup.errorMissingUserKey)
+                case .cantCreateEncryptionElements: reportSyncProblem(T.Backup.errorCantCreateKeys)
+                case .missingAllKeys: reportSyncProblem(T.Backup.errorMissingAllKeys)
+                case .unreadableRecords: reportSyncProblem(T.Backup.errorUnreadableRecords)
+                }
+            case .disabledByUser, .overQuota, .incorrectService: break
             }
         case .enabled(let sync):
             switch sync {
             case .synced:
                 showPairQRCode?(false)
                 showSystemKeyError?(false)
+                shownSyncProblem = nil
+                showSyncProblem?(nil)
             default: break
             }
         default: break

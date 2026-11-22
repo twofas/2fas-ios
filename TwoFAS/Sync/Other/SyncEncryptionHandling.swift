@@ -37,6 +37,9 @@ protocol SyncEncryptionHandling: AnyObject {
     var encryptionReference: Data? { get }
     /// The current sync key (the system key or the user's key) – what the sealed records are sealed with
     var recordKey: SymmetricKey? { get }
+    /// The key the records were sealed with before a change of the key that this device started and didn't
+    /// finish yet – the records not sealed again are still read with it. `nil` otherwise.
+    var previousRecordKey: SymmetricKey? { get }
     /// The key the record names are derived with. `nil` when the cloud has none yet or it can't be opened with
     /// the current sync key.
     var identifierKey: SyncIdentifierKey? { get }

@@ -185,11 +185,18 @@ public enum SyncInstance {
             syncMigrationHandlerInstance.cloudStateChange(cloudState)
         }, with: "syncMigrationHandler")
         syncMigrationHandlerInstance.synchronize = { syncHandler.synchronize() }
+        syncMigrationHandlerInstance.restart = {
+            syncHandler.firstStart()
+            if !syncHandler.synchronize() {
+                cloudHandler.syncCouldNotStart()
+            }
+        }
         syncMigrationHandlerInstance.enable = { cloudHandler.enable() }
         cloudHandler.purgeUserEncryptionKey = { syncEncryptionHandler.purge() }
         cloudHandler.setSystemEncryption = {
             syncEncryptionHandler.setSystemKey()
             syncEncryptionHandler.cloudEncryptionInfoFetched(.empty)
+            syncEncryptionHandler.finishKeyChange()
         }
         syncEncryptionHandler.initialize()
         // What the Info record carried when it was last fetched – the salt, the parameters and the identifier key

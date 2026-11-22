@@ -37,11 +37,18 @@ protocol MainFlowControlling: AnyObject {
     func toiCloudIsEncryptedBySystemError()
     func toiCloudIsEncryptedBySystemSwitch(switchKey: @escaping () -> Void)
     func toNeverVersionOfiCloud()
+    /// Shows what the sync wanted to show while something else was on the screen
+    func retryPendingSyncScreen()
+    /// The sync works again – what it couldn't show earlier doesn't apply any more
+    func dropPendingSyncScreen()
     func toMigrationEndedSuccessfuly()
     func toMigrationError(_ error: CloudState.NotAvailableReason)
     /// - Returns: `false` when it couldn't be shown now – something else is presented.
     @discardableResult
     func toCantCreateEncryptionElements() -> Bool
+    /// - Returns: `false` when it couldn't be shown now – something else is presented.
+    @discardableResult
+    func toUnreadableRecords() -> Bool
     /// - Returns: `false` when it couldn't be shown now – something else is presented.
     @discardableResult
     func toMissingKey(_ error: CloudState.NotAvailableReason.EncryptionError) -> Bool
@@ -57,6 +64,9 @@ final class MainFlowController: FlowController {
     
     private var syncMigrationHandler: ((MigrationResult) -> Void)?
     private weak var migrationToNewestVersionScreen: UIViewController?
+    /// A screen or an alert of the sync that couldn't be shown – something else was presented. Tried again when
+    /// the main screen is visible (`retryPendingSyncScreen`); only the last one counts.
+    private var pendingSyncScreen: (() -> Void)?
     
     static func showAsRoot(
         in viewController: UIViewController,
@@ -138,7 +148,7 @@ extension MainFlowController: MainFlowControlling {
             }
             return
         }
-        guard viewController.presentedViewController == nil else { return }
+        guard canPresentSyncScreen(orRetry: { [weak self] in self?.toiCloudIsEncryptedByUser() }) else { return }
         syncMigrationHandler = EncryptedByUserPasswordSyncFlowController.showAsRoot(in: viewController, parent: self)
     }
     
@@ -150,7 +160,8 @@ extension MainFlowController: MainFlowControlling {
         let okButton = UIAlertAction(title: T.Commons.ok, style: .default)
         
         alertController.addAction(okButton)
-        guard viewController.presentedViewController == nil else { return }
+        guard canPresentSyncScreen(orRetry: { [weak self] in self?.toiCloudIsEncryptedBySystemError() })
+        else { return }
         
         viewController.present(alertController, animated: true, completion: nil)
     }
@@ -167,7 +178,9 @@ extension MainFlowController: MainFlowControlling {
         
         alertController.addAction(switchButton)
         alertController.addAction(offButton)
-        guard viewController.presentedViewController == nil else { return }
+        guard canPresentSyncScreen(orRetry: { [weak self] in
+            self?.toiCloudIsEncryptedBySystemSwitch(switchKey: switchKey)
+        }) else { return }
         
         viewController.present(alertController, animated: true, completion: nil)
     }
@@ -180,9 +193,29 @@ extension MainFlowController: MainFlowControlling {
         let okButton = UIAlertAction(title: T.Commons.ok, style: .default)
         
         alertController.addAction(okButton)
-        guard viewController.presentedViewController == nil else { return }
+        guard canPresentSyncScreen(orRetry: { [weak self] in self?.toNeverVersionOfiCloud() }) else { return }
         
         viewController.present(alertController, animated: true, completion: nil)
+    }
+    
+    func retryPendingSyncScreen() {
+        guard let pending = pendingSyncScreen, viewController.presentedViewController == nil else { return }
+        pendingSyncScreen = nil
+        pending()
+    }
+    
+    func dropPendingSyncScreen() {
+        pendingSyncScreen = nil
+    }
+    
+    /// `false` when something else is presented – `retry` is kept for when the main screen is visible again
+    private func canPresentSyncScreen(orRetry retry: @escaping () -> Void) -> Bool {
+        guard viewController.presentedViewController == nil else {
+            pendingSyncScreen = retry
+            return false
+        }
+        pendingSyncScreen = nil
+        return true
     }
     
     func toMigrationEndedSuccessfuly() {
@@ -202,6 +235,20 @@ extension MainFlowController: MainFlowControlling {
         let okButton = UIAlertAction(title: T.Commons.ok, style: .default)
         
         alertController.addAction(okButton)
+        guard viewController.presentedViewController == nil else { return false }
+        
+        viewController.present(alertController, animated: true, completion: nil)
+        return true
+    }
+
+    @discardableResult
+    func toUnreadableRecords() -> Bool {
+        let alertController = UIAlertController(
+            title: T.Backup.cloudErrorTitle,
+            message: T.Backup.unreadableRecordsMsg,
+            preferredStyle: .alert
+        )
+        alertController.addAction(UIAlertAction(title: T.Commons.ok, style: .default))
         guard viewController.presentedViewController == nil else { return false }
         
         viewController.present(alertController, animated: true, completion: nil)

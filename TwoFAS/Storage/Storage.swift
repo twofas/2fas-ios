@@ -252,11 +252,29 @@ public final class Storage {
         storageRepositoryImpl.removeAllPairings()
         storageRepositoryImpl.removeAllAuthRequests()
         // Nothing is left to be deleted elsewhere
-        DeletedServiceEntity.removeAll(on: coreDataStack.context)
-        DeletedSectionEntity.removeAll(on: coreDataStack.context)
+        removeDeletions()
         coreDataStack.save()
     }
-    
+
+    /// Counts of the records of deleted services and sections
+    public var deletionsCount: (services: Int, sections: Int) {
+        let context = coreDataStack.context
+        return (DeletedServiceEntity.listAll(on: context).count, DeletedSectionEntity.listAll(on: context).count)
+    }
+
+    /// Removes the records of all deleted services and sections – a deleted item that still exists elsewhere (e.g.
+    /// on another device) is no longer deleted there by sync
+    public func removeAllDeletions() {
+        Log("Storage - remove all deletions", module: .storage)
+        removeDeletions()
+        coreDataStack.save()
+    }
+
+    private func removeDeletions() {
+        DeletedServiceEntity.removeAll(on: coreDataStack.context)
+        DeletedSectionEntity.removeAll(on: coreDataStack.context)
+    }
+
     /// Keeps the records of deletions in order: one record per deleted service or section (a duplicate is merged
     /// into the latest deletion) and none older than a year, so that they don't pile up
     public func removeExpiredDeletions() {

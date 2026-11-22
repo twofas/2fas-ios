@@ -39,6 +39,7 @@ enum DebugAction: Hashable {
     case trashAllServices
     case restoreAllServices
     case emptyTrash
+    case removeAllTombstones
     case reloadPushToken
     case unpairAllBrowsers
     // Local storage key – the app closes itself afterwards, the effect shows in the next launch

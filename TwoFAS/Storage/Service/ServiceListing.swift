@@ -30,8 +30,6 @@ protocol ServiceListable {
     var serviceTypeID: ServiceTypeID? { get }
 }
 
-extension ServiceData: ServiceListable {}
-
 /// In-memory equivalent of the SQL predicate and sort descriptors used by `ServiceOptions.filterByPhrase`.
 enum ServiceListing {
     static func filter<T: ServiceListable>(_ items: [T], phrase: String?, ids: [ServiceTypeID]) -> [T] {

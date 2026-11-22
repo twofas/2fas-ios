@@ -362,6 +362,18 @@ final class StorageEncryptionTests: XCTestCase {
         XCTAssertEqual(cipher.state, .available)
     }
 
+    /// A deletion can be the first thing written – e.g. received from the cloud before any service
+    func testDeletionAsFirstWriteCreatesKeyInMainApp() {
+        let cipher = makeMainAppCipher()
+        XCTAssertEqual(cipher.state, .noKey)
+        reopenStorage(cipher: cipher)
+
+        DeletedServiceEntity.record(on: context, secret: "FIRSTSECRET", deletedAt: Date())
+
+        XCTAssertEqual(cipher.state, .available)
+        XCTAssertEqual(DeletedServiceEntity.find(on: context, secret: "FIRSTSECRET")?.secret, "FIRSTSECRET")
+    }
+
     // MARK: - Files
 
     func testNoPlaintextInStoreFiles() {

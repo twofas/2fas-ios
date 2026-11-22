@@ -64,6 +64,7 @@ final class DeletedServiceEntity: NSManagedObject {
         let sealed: Data
         do {
             guard let cipher = context.localStorageCipher else { throw SealedEntity.Failure.missingCipher }
+            try cipher.prepareForWriting()
             secretHash = try ServiceEntity.secretHash(for: secret, cipher: cipher)
             sealed = try contentCodec.seal(
                 DeletedServiceSensitiveContent(secret: secret.uppercased()),
@@ -126,11 +127,6 @@ final class DeletedServiceEntity: NSManagedObject {
     /// The service exists again (restored from the trash or added anew)
     @nonobjc static func remove(on context: NSManagedObjectContext, secretHash: Data) {
         list(on: context, secretHash: secretHash).forEach { context.delete($0) }
-    }
-
-    @nonobjc static func remove(on context: NSManagedObjectContext, secret: String) {
-        guard let secretHash = ServiceEntity.secretHash(for: secret, on: context) else { return }
-        remove(on: context, secretHash: secretHash)
     }
 
     @nonobjc static func find(on context: NSManagedObjectContext, secret: String) -> DeletedServiceEntity? {

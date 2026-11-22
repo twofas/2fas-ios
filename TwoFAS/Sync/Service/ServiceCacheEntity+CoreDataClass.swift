@@ -144,15 +144,6 @@ final class ServiceCacheEntity: NSManagedObject {
         }
     }
     
-    @nonobjc static func delete(on context: NSManagedObjectContext, identifiedBy entryID: UUID) {
-        guard let service = findService(on: context, entryID: entryID) else { return }
-        delete(on: context, serviceEntity: service)
-    }
-    
-    @nonobjc static func findService(on context: NSManagedObjectContext, entryID: UUID) -> ServiceCacheEntity? {
-        findService(on: context, predicate: NSPredicate(format: "entryID == %@", entryID as CVarArg))
-    }
-    
     /// `secret` in plain text, in any case. `nil` also when the hash can't be computed.
     @nonobjc static func findService(on context: NSManagedObjectContext, secret: Secret) -> ServiceCacheEntity? {
         guard let secretHash = Self.secretHash(for: secret, on: context) else { return nil }

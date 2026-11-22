@@ -64,6 +64,8 @@ final class SyncHandler {
     
     private var isSyncing = false
     private var applyingChanges = false
+    /// Identifies the sync that `synchronize()` started last and that wasn't called off since
+    private var currentRun: UUID?
     /// Checks of the vaults that failed in a row – the next one waits longer
     private var failedVaultChecks = 0
     /// Identifies the retry that is scheduled after a failed check. `nil` – none, or it was called off (the
@@ -251,9 +253,20 @@ final class SyncHandler {
         startedSync?()
         
         // The sync is started where it was asked for – on the main queue
+        let run = UUID()
+        currentRun = run
         Task { @MainActor in
+            guard currentRun == run, isSyncing else {
+                Log("SyncHandler - the sync was called off before it started", module: .cloudSync)
+                return
+            }
             guard await migrationHandler.checkIfMigrationNeeded() else {
+                guard currentRun == run else { return }
                 vaultCheckFailed()
+                return
+            }
+            guard currentRun == run, isSyncing else {
+                Log("SyncHandler - the sync was called off while the vaults were checked", module: .cloudSync)
                 return
             }
             failedVaultChecks = 0
@@ -298,6 +311,7 @@ final class SyncHandler {
     
     func clearCacheAndDisable(skipItemsPurge: Bool = false) {
         Log("SyncHandler - Sync Handler: clearCacheAndDisable", module: .cloudSync)
+        currentRun = nil
         vaultCheckRetry = nil
         isSyncing = false
         applyingChanges = false

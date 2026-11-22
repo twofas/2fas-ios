@@ -201,7 +201,11 @@ final class FakeCloudKit: CloudKitSyncing {
 
     func initialize() {}
 
+    /// How many times this device asked the cloud for changes
+    private(set) var fetches = 0
+
     func cloudSync() {
+        fetches += 1
         DispatchQueue.main.async { [self] in
             let fetched = cloud.changes(in: zoneManager.currentZoneID.zoneName, after: token)
             token = cloud.sequence
@@ -300,7 +304,7 @@ final class SyncTestDevice {
     private let defaultsName: String
     private let syncStack: CoreDataStack
     private let log: LogDataChangeImpl
-    private let requirementCheck: RequirementCheckHandler
+    let requirementCheck: RequirementCheckHandler
     private var onOutcome: ((Outcome) -> Void)?
     private var reencryptionHandlerFactory: (() -> ReencryptionHandler)?
 

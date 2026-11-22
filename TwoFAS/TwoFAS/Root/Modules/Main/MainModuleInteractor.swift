@@ -36,6 +36,8 @@ protocol MainModuleInteracting: AnyObject {
     func switchCloudEncryptionToSystemKey()
     /// Reports the encryption problem the backup is stopped with now (if any) again
     func reportCurrentSyncProblem()
+    /// The backup is stopped now on something only the user can do something about (a password, a key, …)
+    var isBackupStopped: Bool { get }
     func enableBackup()
 
     var secretSyncError: ((String) -> Void)? { get set }
@@ -194,6 +196,11 @@ extension MainModuleInteractor: MainModuleInteracting {
 
     func reportCurrentSyncProblem() {
         syncMigrationInteractor.reportCurrentSyncProblem()
+    }
+    
+    var isBackupStopped: Bool {
+        guard case .disabledNotAvailable(let reason) = syncMigrationInteractor.currentCloudState else { return false }
+        return reason.isStopOfTheBackup
     }
 
     func enableBackup() {

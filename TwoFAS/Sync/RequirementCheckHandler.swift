@@ -93,9 +93,13 @@ extension RequirementCheckHandler: RequirementCheckHandling {
                     }
                 }
             }
-        } else if infoHandler.metadata == nil {
+        } else if infoHandler.metadata == nil, !migrationPending {
             // No Info record in what was fetched and none known from before: a clean cloud. A fetch without the
             // Info record is otherwise the usual case – it's there, only unchanged – and must never touch the keys.
+            //
+            // Not while a vault is migrated: the new vault is empty then too, but the keys are the ones the old
+            // vault was read with. Starting it as a clean cloud would switch this device to the system key –
+            // the password of the backup would be dropped without a word.
             if !firstEncryptionRun() {
                 encryptionError?(.cantCreateEncryptionElements)
                 return true

@@ -170,6 +170,46 @@ final class SyncEngineTests: XCTestCase {
         XCTAssertEqual(tablet.secrets, ["AAAA"])
     }
 
+    /// The second half of a migration: the new vault is empty, as a clean cloud is – but the backup keeps the
+    /// password the old vault was read with. Only a really clean cloud is started with the system key.
+    func testEmptyVaultOfAMigrationKeepsThePasswordOfTheBackup() {
+        let phone = makeDevice("phone")
+        XCTAssertFalse(stopsOnAnEmptyFetch(phone, migrating: false))
+        phone.encryptionHandler.setUserPassword("the password of the backup")
+        XCTAssertEqual(phone.encryptionHandler.encryptionType, .user)
+
+        XCTAssertFalse(stopsOnAnEmptyFetch(phone, migrating: true))
+        XCTAssertEqual(phone.encryptionHandler.encryptionType, .user)
+
+        XCTAssertFalse(stopsOnAnEmptyFetch(phone, migrating: false))
+        XCTAssertEqual(phone.encryptionHandler.encryptionType, .system, "A clean cloud starts with the system key")
+    }
+
+    private func stopsOnAnEmptyFetch(_ device: SyncTestDevice, migrating: Bool) -> Bool {
+        device.requirementCheck.checkIfStopSync(using: [], migrationPending: migrating, encryptionPending: false)
+    }
+
+    /// Turning the backup off drops the key of the password, which asks for a sync – while the backup is still
+    /// on. It's turned off a moment later: that sync must not reach the cloud, or it would stop on the password
+    /// that was just dropped and ask the user for it.
+    func testSyncAskedForRightBeforeTheBackupIsTurnedOffNeverRuns() {
+        let phone = makeDevice("phone")
+        phone.addService("AAAA")
+        synchronizeUntilSettled([phone], cloud: cloud)
+        let fetches = phone.cloudKit.fetches
+
+        var outcomes = 0
+        phone.synchronize { _ in outcomes += 1 }
+        phone.syncHandler.clearCacheAndDisable()
+
+        let settled = expectation(description: "the main queue ran what was scheduled")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { settled.fulfill() }
+        wait(for: [settled], timeout: 5)
+
+        XCTAssertEqual(phone.cloudKit.fetches, fetches)
+        XCTAssertEqual(outcomes, 0)
+    }
+
     // MARK: - A change of the password
 
     /// More records than one operation takes: the change of the key is sent in several, and the app may be

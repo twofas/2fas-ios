@@ -198,7 +198,12 @@ private extension MainPresenter {
             handlingViewIsVisible = false
             // What the sync stopped on while the app was locked or something else was on the screen
             interactor.reportCurrentSyncProblem()
-            flowController.retryPendingSyncScreen()
+            if interactor.isBackupStopped {
+                flowController.retryPendingSyncScreen()
+            } else {
+                // The backup works again or was turned off since – what it wanted to show doesn't apply
+                flowController.dropPendingSyncScreen()
+            }
         }
     }
 

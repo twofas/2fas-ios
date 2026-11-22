@@ -64,6 +64,8 @@ final class MainFlowController: FlowController {
     
     private var syncMigrationHandler: ((MigrationResult) -> Void)?
     private weak var migrationToNewestVersionScreen: UIViewController?
+    /// The screen that asks for the password of the backup, while it's shown
+    private weak var passwordScreen: UIViewController?
     /// A screen or an alert of the sync that couldn't be shown – something else was presented. Tried again when
     /// the main screen is visible (`retryPendingSyncScreen`); only the last one counts.
     private var pendingSyncScreen: (() -> Void)?
@@ -148,8 +150,13 @@ extension MainFlowController: MainFlowControlling {
             }
             return
         }
+        if let passwordScreen, _viewController.presentedViewController === passwordScreen {
+            // Asked for again while it's on the screen (a wrong password) – nothing to show later
+            return
+        }
         guard canPresentSyncScreen(orRetry: { [weak self] in self?.toiCloudIsEncryptedByUser() }) else { return }
         syncMigrationHandler = EncryptedByUserPasswordSyncFlowController.showAsRoot(in: viewController, parent: self)
+        passwordScreen = _viewController.presentedViewController
     }
     
     func toiCloudIsEncryptedBySystemError() {

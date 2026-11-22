@@ -31,6 +31,12 @@ final class SyncUserKeyRecoveryTests: XCTestCase {
     private var suites: [String] = []
     private var devices: [SyncEncryptionHandler] = []
 
+    override func setUp() {
+        super.setUp()
+        suites = []
+        devices = []
+    }
+
     override func tearDown() {
         suites.forEach { UserDefaults.standard.removePersistentDomain(forName: $0) }
         devices.forEach { $0.removeSystemEncryptionElements() }

@@ -159,6 +159,8 @@ struct SyncIdentifierKey: Equatable {
             name.append(digits[Int(byte >> 4)])
             name.append(digits[Int(byte & 0x0f)])
         }
+        // Hex digits only – always valid, nothing to fail on
+        // swiftlint:disable:next optional_data_string_conversion
         return String(decoding: name, as: UTF8.self)
     }
 

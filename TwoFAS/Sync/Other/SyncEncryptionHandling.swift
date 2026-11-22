@@ -35,6 +35,8 @@ struct SyncCloudEncryptionInfo: Equatable {
 
 protocol SyncEncryptionHandling: AnyObject {
     var encryptionReference: Data? { get }
+    /// The key this device seals with now
+    var encryptionType: Info.Encryption { get }
     /// The current sync key (the system key or the user's key) – what the sealed records are sealed with
     var recordKey: SymmetricKey? { get }
     /// The key the records were sealed with before a change of the key that this device started and didn't

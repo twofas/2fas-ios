@@ -30,7 +30,8 @@ final class ImportKeysFlowController: FlowController {
     private weak var parent: ImportKeysFlowControllerParent?
     private var interactor: ImportKeysModuleInteracting!
     private var showWarning = true
-    private var pickerDelegate: ImportKeysDocumentPickerDelegate?
+    /// Kept here on purpose – the document picker holds its delegate weakly
+    private var pickerDelegate: ImportKeysDocumentPickerDelegate? // swiftlint:disable:this weak_delegate
 
     static func make(
         presentingOn viewController: UIViewController,

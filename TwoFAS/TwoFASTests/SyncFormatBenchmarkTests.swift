@@ -149,8 +149,12 @@ final class SyncFormatBenchmarkTests: XCTestCase {
             format: "SYNC-BENCHMARK records=%d | fields: encode %.0f ms, decode %.0f ms, %d B/record"
                 + " | sealed: encode %.0f ms, decode %.0f ms, %d B/record",
             count,
-            fieldEncode, fieldDecode, try archivedSize(fieldRecords) / count,
-            sealedEncode, sealedDecode, try archivedSize(sealedRecords) / count
+            fieldEncode,
+            fieldDecode,
+            try archivedSize(fieldRecords) / count,
+            sealedEncode,
+            sealedDecode,
+            try archivedSize(sealedRecords) / count
         ))
     }
 
@@ -165,7 +169,12 @@ final class SyncFormatBenchmarkTests: XCTestCase {
         let parameters = SyncKDFParameters.current
         print(String(
             format: "SYNC-BENCHMARK argon2id t=%d m=%d KiB p=%d | %.0f / %.0f / %.0f ms",
-            parameters.iterations, parameters.memoryKiB, parameters.parallelism, times[0], times[1], times[2]
+            parameters.iterations,
+            parameters.memoryKiB,
+            parameters.parallelism,
+            times[0],
+            times[1],
+            times[2]
         ))
     }
 }

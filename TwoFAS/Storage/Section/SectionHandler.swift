@@ -143,14 +143,14 @@ public extension SectionHandler {
         return true
     }
     
-    public func getAllSectionDeletions() -> [CommonSectionDeletion] {
+    func getAllSectionDeletions() -> [CommonSectionDeletion] {
         DeletedSectionEntity.listAll(on: coreDataStack.context).map {
             CommonSectionDeletion(sectionID: $0.sectionID.uuidString, deletedAt: $0.deletedAt)
         }
     }
     
     @discardableResult
-    public func setSections(_ cloudSections: [CommonSectionData], deletions: SyncedDeletions) -> Bool {
+    func setSections(_ cloudSections: [CommonSectionData], deletions: SyncedDeletions) -> Bool {
         let context = coreDataStack.context
         let currentSections = getAllSections()
         

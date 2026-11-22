@@ -109,7 +109,8 @@ final class FakeCloud {
         }
         for recordID in recordIDs where zones[recordID.zoneID.zoneName]?[recordID] == nil {
             refusedOperations += 1
-            refusals.append("delete a record that isn't there (device knows \(String(describing: knownVersions[recordID])))")
+            let known = String(describing: knownVersions[recordID])
+            refusals.append("delete a record that isn't there (device knows \(known))")
             return nil
         }
         var versions: [CKRecord.ID: Int] = [:]
@@ -117,7 +118,8 @@ final class FakeCloud {
             sequence += 1
             let zoneName = record.recordID.zoneID.zoneName
             // swiftlint:disable:next force_cast
-            zones[zoneName, default: [:]][record.recordID] = StoredRecord(record: record.copy() as! CKRecord, version: sequence)
+            let copy = record.copy() as! CKRecord
+            zones[zoneName, default: [:]][record.recordID] = StoredRecord(record: copy, version: sequence)
             changes.append(Change(
                 sequence: sequence,
                 zoneName: zoneName,

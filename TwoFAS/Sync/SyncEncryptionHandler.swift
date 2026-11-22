@@ -367,7 +367,7 @@ final class SyncEncryptionHandler {
             Log("SyncEncryptionHandler: imported keys have unexpected sizes", module: .cloudSync, severity: .error)
             return .invalidKeys
         }
-        var derived = ImportedUserKey.none
+        var derived = ImportedUserKey.noPassword
         if let password {
             derived = Self.importedUserKey(
                 password: password,
@@ -437,7 +437,7 @@ final class SyncEncryptionHandler {
     
     private enum ImportedUserKey {
         /// No password – no user's key
-        case none
+        case noPassword
         case key(Data, SyncKDFParameters)
         case failure(CloudKeysImportResult)
     }
@@ -461,7 +461,7 @@ final class SyncEncryptionHandler {
             return .failure(.doesNotOpenBackup)
         }
         // Nothing to check against yet – the first sync does
-        guard let parameters = parameterSets.first else { return .none }
+        guard let parameters = parameterSets.first else { return .noPassword }
         guard let key = deriveKey(for: password, parameters: parameters, salt: importedSalt) else {
             return .failure(.invalidKeys)
         }
@@ -492,7 +492,7 @@ final class SyncEncryptionHandler {
         case .key(let key, let parameters):
             userKey = key
             userKeyParameters = parameters
-        case .none:
+        case .noPassword:
             if password == nil, let cloudReference, cloudEncryption == .system {
                 guard decrypt(cloudReference, using: importedSystemKey) == reference else {
                     return .doesNotOpenBackup

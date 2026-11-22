@@ -102,6 +102,27 @@ final class SyncVaultMigrationTests: XCTestCase {
         XCTAssertEqual(events, ["clear"])
     }
 
+    /// The device remembers that the data is in the current vault, but has nothing of it cached – and in the
+    /// cloud that vault is gone while an older one has the data. It's migrated, not started clean.
+    func testNothingCachedAsksTheCloudAgainDespiteWhatWasRemembered() async {
+        ConstStorage.cloudMigratedToV4 = true
+        var isKnown = true
+        handler.isVaultKnown = { isKnown }
+
+        probe.result = .success([.v3])
+        _ = await handler.checkIfMigrationNeeded()
+        XCTAssertEqual(probe.checks, 0, "Something of the vault is cached – what was remembered holds")
+        XCTAssertTrue(zoneManager.usesSealedRecords)
+
+        isKnown = false
+        let canSync = await handler.checkIfMigrationNeeded()
+        XCTAssertTrue(canSync)
+        XCTAssertEqual(probe.checks, 1)
+        XCTAssertTrue(handler.isMigrating)
+        XCTAssertEqual(zoneManager.currentZoneID.zoneName, Config.vaultV2)
+        XCTAssertFalse(ConstStorage.cloudMigratedToV4)
+    }
+
     func testEmptyCloudStartsTheCurrentVaultWithNothingToRetire() async {
         probe.result = .success([])
 

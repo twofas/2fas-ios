@@ -399,7 +399,9 @@ private extension ItemHandler {
                 guard let identifier = SyncDeletion.identifier(recordName: entryID) else { return }
                 deletionHandler.deleteService(identifier: identifier)
             case .deletedSection:
-                cachedSectionDeletions().filter({ $0.recordName == entryID }).compactMap(\.sectionID)
+                cachedSectionDeletions()
+                    .filter({ $0.recordName == entryID })
+                    .compactMap(\.sectionID)
                     .forEach { deletionHandler.deleteSection(sectionID: $0) }
             default: break
             }
@@ -491,7 +493,12 @@ private extension ItemHandler {
     }
     
     /// The record of an item that is in the cloud already, with its new content
-    func sealedRecord(for type: RecordType, entityID: String, item: Any, modifiedData from: [RecordType: [Any]]) -> CKRecord? {
+    func sealedRecord(
+        for type: RecordType,
+        entityID: String,
+        item: Any,
+        modifiedData from: [RecordType: [Any]]
+    ) -> CKRecord? {
         guard let syncKey = syncEncryptionHandler.recordKey else { return nil }
         do {
             switch type {
@@ -553,7 +560,13 @@ private extension ItemHandler {
     }
     
     /// The record of an item that isn't in the cloud yet
-    func newSealedRecord(for type: RecordType, item: Any, index: Int, zoneID: CKRecordZone.ID, allItems: [Any]) -> CKRecord? {
+    func newSealedRecord(
+        for type: RecordType,
+        item: Any,
+        index: Int,
+        zoneID: CKRecordZone.ID,
+        allItems: [Any]
+    ) -> CKRecord? {
         guard let syncKey = syncEncryptionHandler.recordKey else { return nil }
         do {
             switch type {

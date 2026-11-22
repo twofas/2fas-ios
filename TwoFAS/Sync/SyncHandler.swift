@@ -163,8 +163,12 @@ final class SyncHandler {
         cloudKit.deleteAllEntries = { [weak self] in self?.itemHandler.purge() }
         migrationHandler.clearCloudState = { [weak self] in
             self?.resetStack()
+            // Called from inside the sync that goes on right after: a reset marks it as not running, and the
+            // result of its fetch would be dropped without a word – with the state left at "syncing"
+            self?.isSyncing = true
             self?.logFirstImport()
         }
+        migrationHandler.isVaultKnown = { [weak self] in self?.infoHandler.metadata != nil }
         migrationHandler.setFirstStart = { [weak self] in
             self?.resetStack()
             self?.isSyncing = true
@@ -278,7 +282,11 @@ final class SyncHandler {
         completeNotification(with: .failed)
         let delay = CloudKitRetryBackoff.delay(for: 2, consecutiveRetries: failedVaultChecks)
         failedVaultChecks += 1
-        Log("SyncHandler - the vaults couldn't be checked. Trying again in \(delay)", module: .cloudSync, severity: .error)
+        Log(
+            "SyncHandler - the vaults couldn't be checked. Trying again in \(delay)",
+            module: .cloudSync,
+            severity: .error
+        )
         let retry = UUID()
         vaultCheckRetry = retry
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
@@ -319,7 +327,10 @@ final class SyncHandler {
     
     // swiftlint:disable line_length
     private func fetchFinishedSuccessfuly() {
-        guard isSyncing else { return }
+        guard isSyncing else {
+            Log("SyncHandler - fetch finished, but no sync is in progress. Ignoring", module: .cloudSync, severity: .error)
+            return
+        }
         Log("SyncHandler - method: fetch finished successfuly", module: .cloudSync)
         
         if migrationHandler.isMigrating, isFetchedVaultRetired {
@@ -333,10 +344,28 @@ final class SyncHandler {
             return
         }
         
+        if migrationHandler.isMigrating, !zoneManager.usesSealedRecords, !isInfoRecordFetched {
+            // The vault that is migrated is read from a full fetch, and its Info record – the one the check of
+            // the vaults found – is a part of it. Without it the fetch wasn't the whole vault: nothing says
+            // which key it's sealed with, and what was read would be migrated as if it were everything.
+            Log(
+                "SyncHandler - the vault to migrate was fetched without its Info record. Fetching it again",
+                module: .cloudSync,
+                severity: .error
+            )
+            itemHandler.cleanUp()
+            itemHandler.purge()
+            cloudKit.resetTokens()
+            vaultCheckFailed()
+            return
+        }
+        
         guard !requirementCheck.checkIfStopSync(
             using: itemHandler.updatedCreated,
             migrationPending: migrationHandler.isMigrating,
-            encryptionPending: reencryptionHandler.willReencrypt
+            // A change of the key waits for the migration to end: asked about now, it would replace the key
+            // and make the check of the keys of the vault that is migrated be skipped
+            encryptionPending: !migrationHandler.isMigrating && reencryptionHandler.willReencrypt
         ) else {
             itemHandler.commitInfo()
             clearCacheAndDisable(skipItemsPurge: true)
@@ -414,6 +443,16 @@ final class SyncHandler {
     
     private func migrateIfNeeded() {
         applyingChanges = false
+        if migrationHandler.isMigrating, !zoneManager.usesSealedRecords, !canCarryEncryptionOver {
+            // The old vault was read, but not with the key its Info record names: the new vault would be
+            // started saying one key and sealed with another. Stopped as any vault sealed with a key this
+            // device doesn't have.
+            Log("SyncHandler - the keys don't match the vault to migrate. Stopping", module: .cloudSync, severity: .error)
+            let encryption = infoHandler.encryptionType
+            clearCacheAndDisable(skipItemsPurge: true)
+            requirementCheck.cloudEncrypted?(encryption)
+            return
+        }
         if migrationHandler.migrateIfNeeded() {
             // The old vault was read – everything it had is set here and then sent to the new one as new items.
             saveCloudDataToLocalDatabase()
@@ -449,7 +488,14 @@ final class SyncHandler {
     }
     
     private func changesSavedSuccessfuly() {
-        guard isSyncing, applyingChanges else { return }
+        guard isSyncing, applyingChanges else {
+            Log(
+                "SyncHandler - changes saved, but no sync is sending any (syncing: \(isSyncing)). Ignoring",
+                module: .cloudSync,
+                severity: .error
+            )
+            return
+        }
         modificationQueue.prevBatchProcessed()
         
         if modificationQueue.finished {
@@ -539,6 +585,21 @@ final class SyncHandler {
         logHandler.deleteAll()
         itemHandler.purge()
         cloudKit.resetTokens()
+    }
+    
+    private var isInfoRecordFetched: Bool {
+        itemHandler.updatedCreated.contains { RecordType(rawValue: $0.recordType) == .info }
+    }
+    
+    /// The Info record of the vault that was read names the key this device uses, and its reference opens with
+    /// it. The oldest vaults named no key – there is nothing to carry over then.
+    private var canCarryEncryptionOver: Bool {
+        guard let cloudType = infoHandler.encryptionType else { return true }
+        guard cloudType == syncEncryptionHandler.encryptionType else { return false }
+        guard let cloudReference = infoHandler.encryptionReference,
+              let ownReference = syncEncryptionHandler.encryptionReference,
+              let opened = syncEncryptionHandler.decrypt(cloudReference) else { return false }
+        return opened == syncEncryptionHandler.decrypt(ownReference)
     }
     
     /// The Info record that was just fetched says its vault was retired

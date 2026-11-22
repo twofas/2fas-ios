@@ -29,6 +29,9 @@ protocol MigrationHandling: AnyObject {
     var setFirstStart: Callback? { get set }
     var isMigratingToV3: Callback? { get set }
     var finishedMigratingToV3: Callback? { get set }
+    /// Whether this device has anything cached of the vault it syncs with (its Info record). `false` – nothing
+    /// is known, and which vault has the data is asked from the cloud again, whatever was remembered.
+    var isVaultKnown: (() -> Bool)? { get set }
     var migrationAbandoned: ((_ dataIsInCurrentVault: Bool) -> Void)? { get set }
     
     var isMigrating: Bool { get }

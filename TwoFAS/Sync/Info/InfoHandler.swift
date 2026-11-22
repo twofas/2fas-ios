@@ -75,7 +75,10 @@ final class InfoHandler {
         return InfoRecord.create(
             zoneID: zoneManager.currentZoneID,
             version: Info.version,
-            encryption: (encryptionType ?? .system).rawValue,
+            // What the record says about the key is what its reference is sealed with – the key this device
+            // uses now, never what another record said. Named after one key and sealed with the other, the
+            // vault couldn't be opened by anything.
+            encryption: syncEncryptionHandler.encryptionType.rawValue,
             allowedDevices: devicesList.isEmpty ? allowedDevices : devicesList,
             enableWatch: enableWatch,
             encryptionReference: encryptionReference,

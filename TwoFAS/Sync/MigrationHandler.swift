@@ -25,6 +25,7 @@ final class MigrationHandler {
     var isMigratingToV3: Callback?
     var setFirstStart: Callback?
     var finishedMigratingToV3: Callback?
+    var isVaultKnown: (() -> Bool)?
     var migrationAbandoned: ((Bool) -> Void)?
     var clearCloudState: Callback?
     
@@ -67,12 +68,16 @@ extension MigrationHandler: MigrationHandling {
     
     @MainActor
     func checkIfMigrationNeeded() async -> Bool {
-        guard !ConstStorage.cloudMigratedToV4 else {
+        if isMigrating { return true }
+        // What was remembered is trusted only while something of that vault is cached. With nothing cached
+        // (the backup was just turned on, the cache was reset, the vault was removed) the cloud is asked again:
+        // the current vault may be gone while an older one still has the data – started clean on what was
+        // remembered, that data would never be migrated.
+        if ConstStorage.cloudMigratedToV4, isVaultKnown?() != false {
             Log("MigrationHandler: cached value - already migrated", module: .cloudSync)
             zoneManager.setCurrentZoneID(Config.vaultV3)
             return true
         }
-        if isMigrating { return true }
         Log("MigrationHandler: probing cloud", module: .cloudSync)
         do {
             let result = try await withCheckedThrowingContinuation { continuation in
@@ -94,6 +99,8 @@ extension MigrationHandler: MigrationHandling {
             case .migrate(let zoneName):
                 Log("MigrationHandler: awaiting migration from \(zoneName)", module: .cloudSync)
                 zoneManager.setCurrentZoneID(zoneName)
+                // Whatever was remembered: the data is in the older vault
+                ConstStorage.cloudMigratedToV4 = false
                 isMigrating = true
                 setFirstStart?()
                 isMigratingToV3?()
@@ -109,7 +116,10 @@ extension MigrationHandler: MigrationHandling {
     }
     
     func restartAfterVaultWasRetired() {
-        Log("MigrationHandler: the vault read for the migration was retired – checking the cloud again", module: .cloudSync)
+        Log(
+            "MigrationHandler: the vault read for the migration was retired – checking the cloud again",
+            module: .cloudSync
+        )
         abandonMigration(dataIsInCurrentVault: true)
     }
     

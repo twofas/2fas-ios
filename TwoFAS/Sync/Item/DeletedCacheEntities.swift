@@ -31,7 +31,7 @@ final class DeletedServiceCacheEntity: NSManagedObject {
     @nonobjc static let entityName = "DeletedServiceCacheEntity"
     @nonobjc private static let metadataDomain = Data("2fas.DeletedServiceCacheEntity.metadata.v1".utf8)
 
-    @nonobjc class func request() -> NSFetchRequest<DeletedServiceCacheEntity> {
+    @nonobjc static func request() -> NSFetchRequest<DeletedServiceCacheEntity> {
         NSFetchRequest<DeletedServiceCacheEntity>(entityName: entityName)
     }
 
@@ -96,7 +96,7 @@ final class DeletedServiceCacheEntity: NSManagedObject {
 final class DeletedSectionCacheEntity: NSManagedObject {
     @nonobjc static let entityName = "DeletedSectionCacheEntity"
 
-    @nonobjc class func request() -> NSFetchRequest<DeletedSectionCacheEntity> {
+    @nonobjc static func request() -> NSFetchRequest<DeletedSectionCacheEntity> {
         NSFetchRequest<DeletedSectionCacheEntity>(entityName: entityName)
     }
 

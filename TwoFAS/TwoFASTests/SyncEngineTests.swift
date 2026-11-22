@@ -147,6 +147,29 @@ final class SyncEngineTests: XCTestCase {
         XCTAssertEqual(cloud.records(in: Config.vaultV3, ofType: .info).count, 1)
     }
 
+    /// The first sync of a device that didn't know which vault is the current one: the check resets the state
+    /// from inside the sync. The sync has to go on – its fetch must not be dropped as "no sync in progress".
+    func testFirstSyncThatFindsTheCurrentVaultCompletes() {
+        let wasMigrated = ConstStorage.cloudMigratedToV4
+        defer { ConstStorage.cloudMigratedToV4 = wasMigrated }
+        let phone = makeDevice("phone")
+        phone.addService("AAAA", name: "Alpha")
+        synchronizeUntilSettled([phone], cloud: cloud)
+
+        let tablet = makeDevice("tablet")
+        ConstStorage.cloudMigratedToV4 = false
+        let finished = expectation(description: "the first sync of the tablet ends")
+        var outcome: SyncTestDevice.Outcome?
+        tablet.synchronize {
+            outcome = $0
+            finished.fulfill()
+        }
+        wait(for: [finished], timeout: 30)
+
+        XCTAssertEqual(outcome, .finished)
+        XCTAssertEqual(tablet.secrets, ["AAAA"])
+    }
+
     // MARK: - A change of the password
 
     /// More records than one operation takes: the change of the key is sent in several, and the app may be
@@ -156,9 +179,7 @@ final class SyncEngineTests: XCTestCase {
         let phone = makeDevice("phone")
         let count = ModificationQueue.batchElementLimit + 50
         for index in 0..<count {
-            phone.addService(String(format: "AAAA%04d", index).replacingOccurrences(of: "0", with: "B")
-                .replacingOccurrences(of: "1", with: "C").replacingOccurrences(of: "8", with: "D")
-                .replacingOccurrences(of: "9", with: "E"))
+            phone.addService(Self.secret(number: index))
         }
         synchronizeUntilSettled([phone], cloud: cloud)
         XCTAssertEqual(services(inCloud: cloud), count)
@@ -198,9 +219,7 @@ final class SyncEngineTests: XCTestCase {
         let tablet = makeDevice("tablet")
         let count = ModificationQueue.batchElementLimit + 50
         for index in 0..<count {
-            phone.addService(String(format: "AAAA%04d", index).replacingOccurrences(of: "0", with: "B")
-                .replacingOccurrences(of: "1", with: "C").replacingOccurrences(of: "8", with: "D")
-                .replacingOccurrences(of: "9", with: "E"))
+            phone.addService(Self.secret(number: index))
         }
         synchronizeUntilSettled([phone, tablet], cloud: cloud)
         XCTAssertEqual(tablet.secrets.count, count)
@@ -228,6 +247,12 @@ final class SyncEngineTests: XCTestCase {
         XCTAssertEqual(services(inCloud: cloud), count)
         XCTAssertEqual(deletions(inCloud: cloud), 0)
         XCTAssertEqual(tablet.secrets.count, count - 1, "Only what the user did here")
+    }
+
+    /// A secret of its own for every number – of the characters a secret may have (no 0, 1, 8, 9)
+    private static func secret(number: Int) -> String {
+        let digits: [Character: Character] = ["0": "B", "1": "C", "8": "D", "9": "E"]
+        return "AAAA" + String(String(format: "%04d", number).map { digits[$0] ?? $0 })
     }
 
     private func servicesInCloud(openedWith key: SymmetricKey) -> Int {

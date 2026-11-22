@@ -26,6 +26,8 @@ struct Info: Hashable {
     /// The version left in the Info record of a vault that was retired: no app version syncs with such a vault –
     /// the ones that still use it ask for an update
     static let retiredVersion: Int = 1000
+    /// What `allowedDevices` holds when no device is allowed – CloudKit doesn't keep an empty list
+    static let noAllowedDevices = "none"
     
     enum Encryption: String {
         case system

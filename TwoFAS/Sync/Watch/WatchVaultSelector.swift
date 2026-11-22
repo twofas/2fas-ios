@@ -42,10 +42,10 @@ final class WatchVaultSelector: MigrationHandling {
         found.contains(.v4) ? Config.vaultV3 : Config.vaultV2
     }
     
-    func checkIfMigrationNeeded() async {
+    func checkIfMigrationNeeded() async -> Bool {
         guard !ConstStorage.cloudMigratedToV4 else {
             zoneManager.setCurrentZoneID(Config.vaultV3)
-            return
+            return true
         }
         Log("WatchVaultSelector: probing cloud", module: .cloudSync)
         do {
@@ -59,7 +59,7 @@ final class WatchVaultSelector: MigrationHandling {
                 // The phone didn't migrate yet – probed again with the next sync
                 Log("WatchVaultSelector: the current vault isn't there yet", module: .cloudSync)
                 zoneManager.setCurrentZoneID(zoneName)
-                return
+                return true
             }
             Log("WatchVaultSelector: switching to the current vault", module: .cloudSync)
             zoneManager.setCurrentZoneID(zoneName)
@@ -68,11 +68,19 @@ final class WatchVaultSelector: MigrationHandling {
             await MainActor.run {
                 clearCloudState?()
             }
+            return true
         } catch {
-            // The vault used so far – probed again with the next sync
+            // Which vault has the data isn't known – the sync doesn't go on, probed again with the next one
             Log("WatchVaultSelector - can't probe cloud", module: .cloudSync, severity: .error)
+            return false
         }
     }
     
     func migrateIfNeeded() -> Bool { false }
+    
+    func restartAfterVaultWasRetired() {}
+    
+    func accountChanged() {
+        ConstStorage.cloudMigratedToV4 = false
+    }
 }

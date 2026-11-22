@@ -90,7 +90,6 @@ public enum SyncInstanceWatch {
             logHandler: logHandler,
             commonItemHandler: commonItemHandler,
             itemHandler: itemHandler,
-            cloudKit: cloudKit,
             zoneManager: zoneManager
         )
         let modificationQueue = ModificationQueue()

@@ -451,7 +451,7 @@
 		C25CB2412D8758700099FAFD /* ServiceRecordEncryptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB2402D87586A0099FAFD /* ServiceRecordEncryptionHandler.swift */; };
 		C25CB2422D8758700099FAFD /* ServiceRecordEncryptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB2402D87586A0099FAFD /* ServiceRecordEncryptionHandler.swift */; };
 		C25CB3BE2D877A390099FAFD /* RequirementCheckHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB3BC2D877A2C0099FAFD /* RequirementCheckHandler.swift */; };
-		C25CB3C12D8785020099FAFD /* MigrationHandlerWatchPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB3BF2D8784EF0099FAFD /* MigrationHandlerWatchPlaceholder.swift */; };
+		C25CB3C12D8785020099FAFD /* WatchVaultSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB3BF2D8784EF0099FAFD /* WatchVaultSelector.swift */; };
 		C25CB3C32D878BCD0099FAFD /* SyncEncryptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB3C22D878BC80099FAFD /* SyncEncryptionHandler.swift */; };
 		C25D5E782A64908200CA359B /* CameraLastPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25D5E772A64908200CA359B /* CameraLastPass.swift */; };
 		C25DCB2E2B8030B200871035 /* AccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25DCB2D2B8030B200871035 /* AccessManager.swift */; };
@@ -502,7 +502,9 @@
 		C264B6512E8C810700CA8648 /* ZoneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C264B6502E8C80FE00CA8648 /* ZoneManager.swift */; };
 		C264B6522E8C810700CA8648 /* ZoneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C264B6502E8C80FE00CA8648 /* ZoneManager.swift */; };
 		C264B6542E8C84D200CA8648 /* VaultVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C264B6532E8C84CE00CA8648 /* VaultVersion.swift */; };
+		8E7EA61B42C54EA6AD8D2A26 /* CloudKeysImportResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554C02C26D54458A884EE68 /* CloudKeysImportResult.swift */; };
 		C264B6552E8C84D200CA8648 /* VaultVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C264B6532E8C84CE00CA8648 /* VaultVersion.swift */; };
+		B583B02D707C4DF8B84E4537 /* CloudKeysImportResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554C02C26D54458A884EE68 /* CloudKeysImportResult.swift */; };
 		C266542B2725EF7B00DC3A3C /* ExportFileRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = C266542A2725EF7B00DC3A3C /* ExportFileRules.swift */; };
 		C2673BE223D46F5D00A2CBA8 /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C257FD0E1FDC3B0F00CF6898 /* TokenStorage.swift */; };
 		C2673BE523D4765200A2CBA8 /* TokenStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2673BE423D4765200A2CBA8 /* TokenStorageType.swift */; };
@@ -532,6 +534,12 @@
 		0FCD54168EB349945BE2254C /* LocalStorageBootstrapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE0888DAC7E4AF5ABFD3A88 /* LocalStorageBootstrapTests.swift */; platformFilter = ios; };
 		462E071C4CEF95B7E9F02E31 /* SyncResetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA49A27D15412BC1B58CE5D8 /* SyncResetTests.swift */; platformFilter = ios; };
 		E1A99A974673372DB096DF5A /* SyncCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0F697F43331D9A5E260EA7 /* SyncCryptoTests.swift */; };
+		ECCB9BB9B5F242389FE632DB /* SyncEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B431C0C66AAC4594B5221C32 /* SyncEngineTests.swift */; };
+		7460317450274924B834804E /* SyncEngineTestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C3FC12AD8645A2AA23E25A /* SyncEngineTestSupport.swift */; };
+		6F93F486295F480EBB326240 /* SyncModificationQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AB0D46A8914DA78405EEC5 /* SyncModificationQueueTests.swift */; };
+		1289AFFB4AEB435D8F1A19E0 /* SyncVaultMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08AB757E3294F4FAA07B706 /* SyncVaultMigrationTests.swift */; };
+		855CE336178843D491611CBA /* SyncFormatBenchmarkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA89AFE92B644E0B5C0A58D /* SyncFormatBenchmarkTests.swift */; };
+		DC4B713C1D214FD1A4EEA32A /* SyncUserKeyRecoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEAAD8577CE41DD86C581F3 /* SyncUserKeyRecoveryTests.swift */; };
 		0A8E4FA446B6F93F6FBA34F7 /* SyncMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE3E5A1239FEBCDC2AE718EA /* SyncMigrationTests.swift */; platformFilter = ios; };
 		4A75DF8688BC150472EE6411 /* SyncCacheEncryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FE0DC6C30F81A6D50C8875 /* SyncCacheEncryptionTests.swift */; platformFilter = ios; };
 		2C258C331A4B775989C1B766 /* StorageMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6844BEBC3EB86C2556EDCDFB /* StorageMigrationTests.swift */; platformFilter = ios; };
@@ -2412,7 +2420,7 @@
 		C25CB23A2D87442E0099FAFD /* MigrationHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationHandling.swift; sourceTree = "<group>"; };
 		C25CB2402D87586A0099FAFD /* ServiceRecordEncryptionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRecordEncryptionHandler.swift; sourceTree = "<group>"; };
 		C25CB3BC2D877A2C0099FAFD /* RequirementCheckHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequirementCheckHandler.swift; sourceTree = "<group>"; };
-		C25CB3BF2D8784EF0099FAFD /* MigrationHandlerWatchPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationHandlerWatchPlaceholder.swift; sourceTree = "<group>"; };
+		C25CB3BF2D8784EF0099FAFD /* WatchVaultSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchVaultSelector.swift; sourceTree = "<group>"; };
 		C25CB3C22D878BC80099FAFD /* SyncEncryptionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncEncryptionHandler.swift; sourceTree = "<group>"; };
 		C25D5E752A64863000CA359B /* Code+LastPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Code+LastPass.swift"; sourceTree = "<group>"; };
 		C25D5E772A64908200CA359B /* CameraLastPass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraLastPass.swift; sourceTree = "<group>"; };
@@ -2457,6 +2465,7 @@
 		C264B64D2E8C7A5900CA8648 /* CloudProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudProbe.swift; sourceTree = "<group>"; };
 		C264B6502E8C80FE00CA8648 /* ZoneManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoneManager.swift; sourceTree = "<group>"; };
 		C264B6532E8C84CE00CA8648 /* VaultVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultVersion.swift; sourceTree = "<group>"; };
+		5554C02C26D54458A884EE68 /* CloudKeysImportResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKeysImportResult.swift; sourceTree = "<group>"; };
 		C266542A2725EF7B00DC3A3C /* ExportFileRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFileRules.swift; sourceTree = "<group>"; };
 		C2671C892A51C5A60002C4BB /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/TwoFASWidget.strings"; sourceTree = "<group>"; };
 		C2671C8A2A51C5A60002C4BB /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -2495,6 +2504,12 @@
 		DEE0888DAC7E4AF5ABFD3A88 /* LocalStorageBootstrapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageBootstrapTests.swift; sourceTree = "<group>"; };
 		DA49A27D15412BC1B58CE5D8 /* SyncResetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncResetTests.swift; sourceTree = "<group>"; };
 		1E0F697F43331D9A5E260EA7 /* SyncCryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCryptoTests.swift; sourceTree = "<group>"; };
+		B431C0C66AAC4594B5221C32 /* SyncEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncEngineTests.swift; sourceTree = "<group>"; };
+		76C3FC12AD8645A2AA23E25A /* SyncEngineTestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncEngineTestSupport.swift; sourceTree = "<group>"; };
+		D3AB0D46A8914DA78405EEC5 /* SyncModificationQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncModificationQueueTests.swift; sourceTree = "<group>"; };
+		B08AB757E3294F4FAA07B706 /* SyncVaultMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncVaultMigrationTests.swift; sourceTree = "<group>"; };
+		CBA89AFE92B644E0B5C0A58D /* SyncFormatBenchmarkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncFormatBenchmarkTests.swift; sourceTree = "<group>"; };
+		3DEAAD8577CE41DD86C581F3 /* SyncUserKeyRecoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncUserKeyRecoveryTests.swift; sourceTree = "<group>"; };
 		AE3E5A1239FEBCDC2AE718EA /* SyncMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMigrationTests.swift; sourceTree = "<group>"; };
 		86FE0DC6C30F81A6D50C8875 /* SyncCacheEncryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCacheEncryptionTests.swift; sourceTree = "<group>"; };
 		6844BEBC3EB86C2556EDCDFB /* StorageMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageMigrationTests.swift; sourceTree = "<group>"; };
@@ -3751,7 +3766,7 @@
 				C2FA266D2E91B38B0003BCF0 /* ReencryptionHandlerWatchPlaceholder.swift */,
 				C2C0A7FD2DA2E8C9000A1772 /* SyncEncryptionWatchHandler.swift */,
 				C2C0A8022DA2F00A000A1772 /* RequirementCheckWatchHandler.swift */,
-				C25CB3BF2D8784EF0099FAFD /* MigrationHandlerWatchPlaceholder.swift */,
+				C25CB3BF2D8784EF0099FAFD /* WatchVaultSelector.swift */,
 			);
 			path = Watch;
 			sourceTree = "<group>";
@@ -5109,6 +5124,12 @@
 				DEE0888DAC7E4AF5ABFD3A88 /* LocalStorageBootstrapTests.swift */,
 				DA49A27D15412BC1B58CE5D8 /* SyncResetTests.swift */,
 				1E0F697F43331D9A5E260EA7 /* SyncCryptoTests.swift */,
+				B431C0C66AAC4594B5221C32 /* SyncEngineTests.swift */,
+				76C3FC12AD8645A2AA23E25A /* SyncEngineTestSupport.swift */,
+				D3AB0D46A8914DA78405EEC5 /* SyncModificationQueueTests.swift */,
+				B08AB757E3294F4FAA07B706 /* SyncVaultMigrationTests.swift */,
+				CBA89AFE92B644E0B5C0A58D /* SyncFormatBenchmarkTests.swift */,
+				3DEAAD8577CE41DD86C581F3 /* SyncUserKeyRecoveryTests.swift */,
 				AE3E5A1239FEBCDC2AE718EA /* SyncMigrationTests.swift */,
 				86FE0DC6C30F81A6D50C8875 /* SyncCacheEncryptionTests.swift */,
 				6844BEBC3EB86C2556EDCDFB /* StorageMigrationTests.swift */,
@@ -5838,6 +5859,7 @@
 			children = (
 				C2E5248A2FD3347400C5E875 /* IconDetails.swift */,
 				C264B6532E8C84CE00CA8648 /* VaultVersion.swift */,
+				5554C02C26D54458A884EE68 /* CloudKeysImportResult.swift */,
 				C2EF7B1D2DA99D1000BAA559 /* PairedWatch.swift */,
 				C2C0A97E2DA31AD5000A1772 /* DeviceCode.swift */,
 				C2E53AE52B62DDAF008E1E70 /* WidgetServiceHandlerType.swift */,
@@ -7932,7 +7954,7 @@
 				C2C0A8042DA2F027000A1772 /* RequirementCheckWatchHandler.swift in Sources */,
 				8F5C0C6F2BFFACA900D73ADE /* Sync.xcdatamodeld in Sources */,
 				C274C9962BAB89C7008E7212 /* CloudKit.swift in Sources */,
-				C25CB3C12D8785020099FAFD /* MigrationHandlerWatchPlaceholder.swift in Sources */,
+				C25CB3C12D8785020099FAFD /* WatchVaultSelector.swift in Sources */,
 				42BD4CCAC373233EAA64E72D /* CloudProbe.swift in Sources */,
 				C274C9992BAB89C7008E7212 /* SectionCacheEntity+CoreDataClass.swift in Sources */,
 				C274C99A2BAB89C7008E7212 /* LogDataChange.swift in Sources */,
@@ -8075,6 +8097,7 @@
 				C274C9F72BAB8B92008E7212 /* ServiceRules.swift in Sources */,
 				C2E5248C2FD3348A00C5E875 /* IconDetails.swift in Sources */,
 				C264B6542E8C84D200CA8648 /* VaultVersion.swift in Sources */,
+				8E7EA61B42C54EA6AD8D2A26 /* CloudKeysImportResult.swift in Sources */,
 				C274C9F82BAB8B92008E7212 /* ServiceData+.swift in Sources */,
 				C2C357E82FFD782B00287B49 /* ArrowIcon.swift in Sources */,
 				C274C9F92BAB8B92008E7212 /* Notifications+.swift in Sources */,
@@ -8244,6 +8267,12 @@
 				0FCD54168EB349945BE2254C /* LocalStorageBootstrapTests.swift in Sources */,
 				462E071C4CEF95B7E9F02E31 /* SyncResetTests.swift in Sources */,
 				E1A99A974673372DB096DF5A /* SyncCryptoTests.swift in Sources */,
+				ECCB9BB9B5F242389FE632DB /* SyncEngineTests.swift in Sources */,
+				7460317450274924B834804E /* SyncEngineTestSupport.swift in Sources */,
+				6F93F486295F480EBB326240 /* SyncModificationQueueTests.swift in Sources */,
+				1289AFFB4AEB435D8F1A19E0 /* SyncVaultMigrationTests.swift in Sources */,
+				855CE336178843D491611CBA /* SyncFormatBenchmarkTests.swift in Sources */,
+				DC4B713C1D214FD1A4EEA32A /* SyncUserKeyRecoveryTests.swift in Sources */,
 				0A8E4FA446B6F93F6FBA34F7 /* SyncMigrationTests.swift in Sources */,
 				4A75DF8688BC150472EE6411 /* SyncCacheEncryptionTests.swift in Sources */,
 				2C258C331A4B775989C1B766 /* StorageMigrationTests.swift in Sources */,
@@ -8416,6 +8445,7 @@
 				C2E53B3E2B62DDAF008E1E70 /* Date+Extensions.swift in Sources */,
 				C2CBE27E3044A1D3009A65EC /* TFDoubleIconArrow.swift in Sources */,
 				C264B6552E8C84D200CA8648 /* VaultVersion.swift in Sources */,
+				B583B02D707C4DF8B84E4537 /* CloudKeysImportResult.swift in Sources */,
 				C2E53B3C2B62DDAF008E1E70 /* AttributedText+Formatting.swift in Sources */,
 				C2E53B1F2B62DDAF008E1E70 /* WidgetServiceHandlerType.swift in Sources */,
 				C2E53B2B2B62DDAF008E1E70 /* PairedWebExtension.swift in Sources */,

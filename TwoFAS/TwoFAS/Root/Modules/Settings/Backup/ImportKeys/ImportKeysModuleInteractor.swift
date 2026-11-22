@@ -29,6 +29,10 @@ enum ImportKeysEncryptionType {
 enum ImportKeysError: Error {
     case cannotOpenFile
     case cannotParseFile
+    /// The file doesn't hold keys of the expected sizes
+    case invalidKeys
+    /// The keys (or the password) don't open the backup in the cloud – nothing was changed
+    case doesNotOpenBackup
 }
 
 protocol ImportKeysModuleInteracting: AnyObject {
@@ -64,8 +68,11 @@ extension ImportKeysModuleInteractor: ImportKeysModuleInteracting {
             completion(.failure(.cannotParseFile))
             return
         }
-        cloudBackup.importKeys(salt: keys.salt, systemKey: keys.systemKey, password: password)
-        completion(.success(()))
+        switch cloudBackup.importKeys(salt: keys.salt, systemKey: keys.systemKey, password: password) {
+        case .imported: completion(.success(()))
+        case .invalidKeys: completion(.failure(.invalidKeys))
+        case .doesNotOpenBackup: completion(.failure(.doesNotOpenBackup))
+        }
     }
 }
 

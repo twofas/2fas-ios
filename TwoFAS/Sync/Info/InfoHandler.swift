@@ -25,7 +25,7 @@ final class InfoHandler {
     var allowedList: (() -> [String])?
     var allowedDevicesChanged: (() -> Bool)?
     
-    private let allowedDevicesNone = "none"
+    private let allowedDevicesNone = Info.noAllowedDevices
     
     private enum Keys: String, CaseIterable {
         case metadata
@@ -39,11 +39,17 @@ final class InfoHandler {
         case kdfParameters
         case identifierKey
     }
-    private let userDefault = UserDefaults()
+    private let userDefault: UserDefaults
     private let syncEncryptionHandler: SyncEncryptionHandling
     private let zoneManager: ZoneManaging
     
-    init(zoneManager: ZoneManaging, syncEncryptionHandler: SyncEncryptionHandling) {
+    /// - Parameter userDefaults: Where what the Info record said is kept between launches.
+    init(
+        zoneManager: ZoneManaging,
+        syncEncryptionHandler: SyncEncryptionHandling,
+        userDefaults: UserDefaults = UserDefaults()
+    ) {
+        self.userDefault = userDefaults
         self.zoneManager = zoneManager
         self.syncEncryptionHandler = syncEncryptionHandler
     }

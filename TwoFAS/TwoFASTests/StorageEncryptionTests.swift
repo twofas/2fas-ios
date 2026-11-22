@@ -214,6 +214,27 @@ final class StorageEncryptionTests: XCTestCase {
         XCTAssertFalse(context.hasChanges)
     }
 
+    /// A service that only moved wasn't changed: a deletion made elsewhere in the meantime still wins
+    func testReorderingKeepsModificationDates() {
+        addService(secret: "AAAA")
+        addService(secret: "BBBB")
+        addService(secret: "CCCC")
+        storage.save()
+        let before = Dictionary(uniqueKeysWithValues: repo.listAllNotTrashed().map { ($0.secret, $0.modifiedAt) })
+        XCTAssertEqual(before.count, 3)
+
+        storage.service.move(from: 0, currentSectionID: nil, to: 2, newSectionID: nil)
+        storage.save()
+
+        let after = Dictionary(uniqueKeysWithValues: repo.listAllNotTrashed().map { ($0.secret, $0.modifiedAt) })
+        XCTAssertEqual(after, before)
+        XCTAssertNotEqual(
+            repo.listAllNotTrashed().sorted { ($0.order ?? 0) < ($1.order ?? 0) }.map(\.secret),
+            ["AAAA", "BBBB", "CCCC"],
+            "The order did change"
+        )
+    }
+
     func testMoveReturnsOnlyReorderedSecrets() {
         addService(name: "Alpha", secret: "AAAA")
         addService(name: "Beta", secret: "BBBB")

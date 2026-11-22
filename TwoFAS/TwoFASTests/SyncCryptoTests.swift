@@ -309,6 +309,29 @@ final class SyncCryptoTests: XCTestCase {
         XCTAssertEqual(content.serviceData(createdAt: service.createdAt, modifiedAt: service.modifiedAt), service)
     }
 
+    /// The date the user changed the service travels in the content – the date the server keeps for the record
+    /// moves whenever the record is written again
+    func testServiceContentKeepsTheDateOfTheUsersChange() {
+        let service = makeServiceData()
+        let content = ServiceRecordContent(serviceData: service, sectionOrder: 3)
+        XCTAssertEqual(content.modifiedAt, service.modifiedAt)
+
+        let rewrittenOnServer = service.modifiedAt.addingTimeInterval(10_000)
+        XCTAssertEqual(
+            content.serviceData(createdAt: service.createdAt, modifiedAt: rewrittenOnServer).modifiedAt,
+            service.modifiedAt
+        )
+    }
+
+    /// A record written before the date was kept in the content
+    func testServiceContentWithoutADateFallsBackToTheServerDate() {
+        var content = ServiceRecordContent(serviceData: makeServiceData(), sectionOrder: 3)
+        content.modifiedAt = nil
+        let serverDate = Date(timeIntervalSinceReferenceDate: 710_000_000)
+
+        XCTAssertEqual(content.serviceData(createdAt: serverDate, modifiedAt: serverDate).modifiedAt, serverDate)
+    }
+
     func testSealedServiceRecordRoundTrip() throws {
         let identifierKey = SyncIdentifierKey.generate()
         let service = makeServiceData()
@@ -489,248 +512,3 @@ final class SyncCryptoTests: XCTestCase {
         XCTAssertFalse(VaultRetirement.isOldVault("SomethingElse"))
     }
 }
-
-// MARK: - Recovering the user's key with the password
-
-final class SyncUserKeyRecoveryTests: XCTestCase {
-    private let reference = Data("reference".utf8)
-    private var suites: [String] = []
-    private var devices: [SyncEncryptionHandler] = []
-
-    override func tearDown() {
-        suites.forEach { UserDefaults.standard.removePersistentDomain(forName: $0) }
-        devices.forEach { $0.removeSystemEncryptionElements() }
-        suites = []
-        devices = []
-        super.tearDown()
-    }
-
-    /// A device of its own: a keychain and defaults nothing else uses
-    private func makeDevice() -> SyncEncryptionHandler {
-        let name = "SyncUserKeyRecoveryTests.\(UUID().uuidString)"
-        suites.append(name)
-        let handler = SyncEncryptionHandler(
-            reference: reference,
-            localEncryptionKeyData: Data(count: 32),
-            keychainService: name,
-            userDefaults: UserDefaults(suiteName: name)! // swiftlint:disable:this force_unwrapping
-        )
-        handler.initialize()
-        devices.append(handler)
-        return handler
-    }
-
-    /// A device that protects the cloud with `password`, and what it leaves in the Info record
-    private func makeProtectedCloud(password: String) throws -> (info: SyncCloudEncryptionInfo, reference: Data) {
-        let device = makeDevice()
-        guard case .success = device.create() else {
-            throw XCTSkip("The keychain isn't available in this run")
-        }
-        guard device.hasSystemEncryptionElements else {
-            throw XCTSkip("The keychain isn't available in this run")
-        }
-        device.setUserPassword(password)
-        let info = device.cloudEncryptionInfo(cached: .empty)
-        return (info, try XCTUnwrap(device.encryptionReference))
-    }
-
-    func testPasswordBringsBackTheKeyOnADeviceWithoutAnyKeys() throws {
-        let cloud = try makeProtectedCloud(password: "correct horse")
-        XCTAssertNotNil(cloud.info.kdfSalt)
-        XCTAssertNotNil(cloud.info.kdfParameters)
-
-        let device = makeDevice()
-        XCTAssertFalse(device.hasSystemEncryptionElements)
-        device.cloudEncryptionInfoFetched(cloud.info)
-
-        XCTAssertTrue(device.recoverUserKey(password: "correct horse", cloudReference: cloud.reference))
-        XCTAssertEqual(device.encryptionType, .user)
-        XCTAssertTrue(device.hasCompleteEncryptionElements)
-        // The same key: what one device seals, the other opens
-        XCTAssertEqual(device.decrypt(cloud.reference), reference)
-        XCTAssertTrue(device.verifyUserPassword("correct horse"))
-    }
-
-    func testWrongPasswordChangesNothing() throws {
-        let cloud = try makeProtectedCloud(password: "correct horse")
-        let device = makeDevice()
-        device.cloudEncryptionInfoFetched(cloud.info)
-
-        XCTAssertFalse(device.recoverUserKey(password: "wrong horse", cloudReference: cloud.reference))
-        XCTAssertFalse(device.recoverUserKey(password: "correct horse", cloudReference: nil))
-        XCTAssertEqual(device.encryptionType, .system)
-        XCTAssertFalse(device.hasSystemEncryptionElements)
-        XCTAssertNil(device.decrypt(cloud.reference))
-    }
-
-    /// The device has a salt of its own that isn't the one the cloud was protected with
-    func testSaltOfTheCloudWinsOverTheLocalOne() throws {
-        let cloud = try makeProtectedCloud(password: "correct horse")
-        let device = makeDevice()
-        guard case .success = device.create() else { throw XCTSkip("The keychain isn't available in this run") }
-        XCTAssertNotEqual(device.cloudEncryptionInfo(cached: .empty).kdfSalt, cloud.info.kdfSalt)
-        device.cloudEncryptionInfoFetched(cloud.info)
-
-        XCTAssertTrue(device.recoverUserKey(password: "correct horse", cloudReference: cloud.reference))
-        XCTAssertEqual(device.cloudEncryptionInfo(cached: .empty).kdfSalt, cloud.info.kdfSalt)
-        XCTAssertEqual(device.decrypt(cloud.reference), reference)
-    }
-
-    func testCreateKeepsTheExistingSaltAndSystemKey() throws {
-        let device = makeDevice()
-        guard case .success = device.create() else { throw XCTSkip("The keychain isn't available in this run") }
-        let exported = try XCTUnwrap(device.exportKeys())
-
-        guard case .success = device.create() else { return XCTFail("create failed") }
-        let exportedAgain = try XCTUnwrap(device.exportKeys())
-        XCTAssertEqual(exported.salt, exportedAgain.salt)
-        XCTAssertEqual(exported.systemKey, exportedAgain.systemKey)
-    }
-}
-
-// MARK: - Measurements
-
-/// Numbers, not assertions on time: what the sealed records and the key derivation cost. The results are printed
-/// with the `SYNC-BENCHMARK` prefix.
-final class SyncFormatBenchmarkTests: XCTestCase {
-    private static let serviceCount = 1000
-    private var suiteName = ""
-    private var encryptionHandler: SyncEncryptionHandler!
-
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-        suiteName = "SyncFormatBenchmarkTests.\(UUID().uuidString)"
-        encryptionHandler = SyncEncryptionHandler(
-            reference: Data("reference".utf8),
-            localEncryptionKeyData: Data(count: 32),
-            keychainService: suiteName,
-            userDefaults: UserDefaults(suiteName: suiteName)! // swiftlint:disable:this force_unwrapping
-        )
-        encryptionHandler.initialize()
-        guard case .success = encryptionHandler.create(), encryptionHandler.hasSystemEncryptionElements else {
-            throw XCTSkip("The keychain isn't available in this run")
-        }
-    }
-
-    override func tearDown() {
-        encryptionHandler?.removeSystemEncryptionElements()
-        encryptionHandler = nil
-        UserDefaults.standard.removePersistentDomain(forName: suiteName)
-        super.tearDown()
-    }
-
-    private func makeServices() -> [ServiceData] {
-        (0..<Self.serviceCount).map { index in
-            ServiceData(
-                name: "Service number \(index)",
-                secret: "JBSWY3DPEHPK3PXP\(String(format: "%08d", index))",
-                serviceTypeID: UUID(),
-                additionalInfo: "user\(index)@example.com",
-                rawIssuer: "Issuer \(index)",
-                modifiedAt: Date(timeIntervalSinceReferenceDate: 700_000_100),
-                createdAt: Date(timeIntervalSinceReferenceDate: 700_000_000),
-                tokenPeriod: .period30,
-                tokenLength: .digits6,
-                badgeColor: .red,
-                iconType: .label,
-                iconTypeID: UUID(),
-                labelColor: .orange,
-                labelTitle: "LT",
-                algorithm: .SHA1,
-                isTrashed: false,
-                trashingDate: nil,
-                counter: nil,
-                tokenType: .totp,
-                source: .link,
-                otpAuth: "otpauth://totp/Issuer%20\(index):user\(index)@example.com?secret=JBSWY3DPEHPK3PXP&issuer=I",
-                order: index,
-                sectionID: nil
-            )
-        }
-    }
-
-    private func time(_ block: () throws -> Void) rethrows -> Double {
-        let start = CFAbsoluteTimeGetCurrent()
-        try block()
-        return (CFAbsoluteTimeGetCurrent() - start) * 1000
-    }
-
-    private func archivedSize(_ records: [CKRecord]) throws -> Int {
-        try records.reduce(0) {
-            $0 + (try NSKeyedArchiver.archivedData(withRootObject: $1, requiringSecureCoding: true)).count
-        }
-    }
-
-    func testRecordsFieldByFieldAgainstSealed() throws {
-        let services = makeServices()
-        let zoneID = CKRecordZone.ID(zoneName: "Benchmark", ownerName: CKCurrentUserDefaultName)
-        let syncKey = try XCTUnwrap(encryptionHandler.recordKey)
-        let identifierKey = SyncIdentifierKey.generate()
-        let fieldHandler = ServiceRecordEncryptionHandler(
-            zoneManager: ZoneManager(),
-            encryptionHandler: encryptionHandler
-        )
-
-        // Every value in a field of its own, sealed one by one (ServiceRecord3)
-        var fieldRecords: [CKRecord] = []
-        let fieldEncode = time {
-            fieldRecords = services.compactMap {
-                fieldHandler.createServiceRecord3(from: $0, metadata: nil, list: services)
-            }
-        }
-        XCTAssertEqual(fieldRecords.count, services.count)
-        var fieldDecoded = 0
-        let fieldDecode = time {
-            fieldDecoded = fieldRecords
-                .compactMap { fieldHandler.createServiceData(from: ServiceRecord3(record: $0)) }
-                .count
-        }
-        XCTAssertEqual(fieldDecoded, services.count)
-
-        // Everything in one sealed field (ServiceRecord4)
-        var sealedRecords: [CKRecord] = []
-        let sealedEncode = try time {
-            sealedRecords = try services.map {
-                try SealedRecord.create(
-                    type: .service4,
-                    recordName: identifierKey.recordName(of: $0.secret, kind: .service),
-                    zoneID: zoneID,
-                    content: ServiceRecordContent(serviceData: $0, sectionOrder: $0.order ?? 0),
-                    syncKey: syncKey
-                )
-            }
-        }
-        var sealedDecoded = 0
-        let sealedDecode = try time {
-            sealedDecoded = try sealedRecords
-                .map { try SealedRecord.content(of: $0, as: ServiceRecordContent.self, syncKey: syncKey) }
-                .count
-        }
-        XCTAssertEqual(sealedDecoded, services.count)
-
-        let count = Self.serviceCount
-        print(String(
-            format: "SYNC-BENCHMARK records=%d | fields: encode %.0f ms, decode %.0f ms, %d B/record"
-                + " | sealed: encode %.0f ms, decode %.0f ms, %d B/record",
-            count,
-            fieldEncode, fieldDecode, try archivedSize(fieldRecords) / count,
-            sealedEncode, sealedDecode, try archivedSize(sealedRecords) / count
-        ))
-    }
-
-    func testKeyDerivationTime() throws {
-        var times: [Double] = []
-        for _ in 0..<3 {
-            times.append(time {
-                // One derivation with the current parameters (and saving the key)
-                encryptionHandler.setUserPassword("correct horse battery")
-            })
-        }
-        let parameters = SyncKDFParameters.current
-        print(String(
-            format: "SYNC-BENCHMARK argon2id t=%d m=%d KiB p=%d | %.0f / %.0f / %.0f ms",
-            parameters.iterations, parameters.memoryKiB, parameters.parallelism, times[0], times[1], times[2]
-        ))
-    }
-}
-

@@ -32,6 +32,8 @@ public enum SyncInstance {
     private static var syncMigrationHandler: SyncMigrationHandling!
     private static var watchPairHandler: WatchPairHandling!
     private static var syncEncryptionHandler: SyncEncryptionHandler!
+    /// The encryption reference and the kind of key of the cloud, as the Info record that was read last says
+    private static var cloudEncryption: (() -> (reference: Data?, type: Info.Encryption?))?
     
     /// - Parameter storageMigrationDeferred: The Storage stack was opened in memory because its migration was deferred
     ///   (`Storage.isMigrationDeferred`) – Sync doesn't run in this launch then.
@@ -97,7 +99,6 @@ public enum SyncInstance {
             logHandler: logHandler,
             commonItemHandler: commonItemHandler,
             itemHandler: itemHandler,
-            cloudKit: cloudKit,
             zoneManager: zoneManager
         )
         let modificationQueue = ModificationQueue()
@@ -198,6 +199,9 @@ public enum SyncInstance {
         logDataChangeImpl = LogDataChangeImpl(logHandler: logHandler, deletionLogger: deletionLogger)
         watchPairHandler = watchPairHandlerInstance
         Self.syncEncryptionHandler = syncEncryptionHandler
+        Self.cloudEncryption = { [weak infoHandler] in
+            (infoHandler?.encryptionReference, infoHandler?.encryptionType)
+        }
         
         if isStateResetPending {
             isStateResetPending = false
@@ -224,8 +228,24 @@ public enum SyncInstance {
         syncEncryptionHandler.exportKeys()
     }
     
-    public static func importKeys(salt: Data, systemKey: Data, password: String?) {
-        syncEncryptionHandler.importKeys(salt: salt, systemKey: systemKey, password: password)
+    /// The keys are checked against what the Info record of the cloud says, when it was read already
+    /// The key of the password is derived off the main thread. Has to be called on the main thread; `completion`
+    /// is called there too.
+    public static func importKeys(
+        salt: Data,
+        systemKey: Data,
+        password: String?,
+        completion: @escaping (CloudKeysImportResult) -> Void
+    ) {
+        let cloud = cloudEncryption?()
+        syncEncryptionHandler.importKeys(
+            salt: salt,
+            systemKey: systemKey,
+            password: password,
+            cloudReference: cloud?.reference,
+            cloudEncryption: cloud?.type,
+            completion: completion
+        )
     }
     
     public static func didReceiveRemoteNotification(

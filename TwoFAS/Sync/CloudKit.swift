@@ -27,7 +27,39 @@ import CommonWatch
 import WatchKit
 #endif
 
-final class CloudKit {
+/// What the sync needs from the cloud: the changes of the current zone since the last time, and a way to save
+/// and delete records in it. `CloudKit` talks to iCloud; the tests of the sync use a stand-in.
+///
+/// Every callback is called on the main thread.
+protocol CloudKitSyncing: AnyObject {
+    /// The records that were deleted in the cloud – before `fetchFinishedSuccessfuly`
+    var deletedEntries: CloudKit.DeletedEntries? { get set }
+    /// The records that were created or changed in the cloud – before `fetchFinishedSuccessfuly`
+    var updatedEntries: CloudKit.UpdatedEntries? { get set }
+    /// What is cached can't be trusted any more – everything is fetched again
+    var deleteAllEntries: Callback? { get set }
+    
+    var quotaExceeded: Callback? { get set }
+    var userDisablediCloud: Callback? { get set }
+    var useriCloudProblem: Callback? { get set }
+    var userLoggedOut: Callback? { get set }
+    var resetStack: Callback? { get set }
+    var abortSync: Callback? { get set }
+    
+    var fetchFinishedSuccessfuly: Callback? { get set }
+    var changesSavedSuccessfuly: Callback? { get set }
+    
+    var container: CKContainer! { get }
+    
+    func initialize()
+    /// Fetches what changed in the current zone
+    func cloudSync()
+    /// One operation: all of it is applied or none
+    func modifyRecord(recordsToSave: [CKRecord]?, recordIDsToDelete: [CKRecord.ID]?)
+    func clear()
+}
+
+final class CloudKit: CloudKitSyncing {
     typealias DeletedEntries = ([(name: String, type: String)]) -> Void
     typealias UpdatedEntries = ([CKRecord]) -> Void
     typealias OtherError = (Error) -> Void

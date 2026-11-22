@@ -35,13 +35,17 @@ final class DeletedServiceCacheEntity: NSManagedObject {
         NSFetchRequest<DeletedServiceCacheEntity>(entityName: entityName)
     }
 
+    /// By the name of the entity, not by `init(context:)`: that one looks the entity up by the class, and the
+    /// class belongs to more than one model while a migration has the older versions of the model loaded.
+    @nonobjc static func insert(into context: NSManagedObjectContext) -> DeletedServiceCacheEntity {
+        // swiftlint:disable:next force_cast
+        NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as! DeletedServiceCacheEntity
+    }
+
     /// The identifier of the deletion: the hash of the secret of the deleted service derived with
-    /// `SyncIdentifierKey` – also the name of the record. (Not the hash the local store finds the service by:
-    /// that one is derived with the local storage key.)
-    @NSManaged var secretHash: Data
+    /// `SyncIdentifierKey` – also the name of the record
+    @NSManaged var identifier: Data
     @NSManaged var deletedAt: Date
-    /// Not used by the cache – what the record says is in `deletedAt` and in its name
-    @NSManaged var encryptedContent: Data?
     /// The system fields of the record, sealed with the local storage key
     @NSManaged var encryptedMetadata: Data?
 
@@ -49,7 +53,7 @@ final class DeletedServiceCacheEntity: NSManagedObject {
         let request = request()
         request.predicate = NSPredicate(
             format: "%K == %@",
-            #keyPath(DeletedServiceCacheEntity.secretHash),
+            #keyPath(DeletedServiceCacheEntity.identifier),
             identifier as NSData
         )
         request.includesPendingChanges = true
@@ -65,13 +69,13 @@ final class DeletedServiceCacheEntity: NSManagedObject {
     /// The system fields of the record. `nil` when they can't be opened.
     @nonobjc var metadata: Data? {
         guard let encryptedMetadata, let cipher = managedObjectContext?.localStorageCipher else { return nil }
-        return try? cipher.open(encryptedMetadata, associatedData: Self.metadataDomain + secretHash)
+        return try? cipher.open(encryptedMetadata, associatedData: Self.metadataDomain + identifier)
     }
 
     /// - Throws: When the system fields can't be sealed. Nothing is changed then.
     @nonobjc func setMetadata(_ metadata: Data) throws {
         guard let cipher = managedObjectContext?.localStorageCipher else { throw SealedEntity.Failure.missingCipher }
-        encryptedMetadata = try cipher.seal(metadata, associatedData: Self.metadataDomain + secretHash)
+        encryptedMetadata = try cipher.seal(metadata, associatedData: Self.metadataDomain + identifier)
     }
 
     @nonobjc private static func fetch(
@@ -94,6 +98,13 @@ final class DeletedSectionCacheEntity: NSManagedObject {
 
     @nonobjc class func request() -> NSFetchRequest<DeletedSectionCacheEntity> {
         NSFetchRequest<DeletedSectionCacheEntity>(entityName: entityName)
+    }
+
+    /// By the name of the entity, not by `init(context:)`: that one looks the entity up by the class, and the
+    /// class belongs to more than one model while a migration has the older versions of the model loaded.
+    @nonobjc static func insert(into context: NSManagedObjectContext) -> DeletedSectionCacheEntity {
+        // swiftlint:disable:next force_cast
+        NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as! DeletedSectionCacheEntity
     }
 
     @NSManaged var sectionID: String

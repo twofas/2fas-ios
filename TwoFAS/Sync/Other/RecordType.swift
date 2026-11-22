@@ -46,6 +46,12 @@ extension RecordType {
 }
 
 extension RecordType {
+    /// The record of a deletion. Deletions have no order: they are found by the name of their record, never by
+    /// a position in their list.
+    var isDeletion: Bool {
+        self == .deletedService || self == .deletedSection
+    }
+    
     /// A record whose content is one sealed field and whose name is a derived identifier
     var isSealed: Bool {
         switch self {

@@ -22,9 +22,10 @@ import Data
 import Common
 
 protocol MissingKeyModuleInteracting: AnyObject {
-    func eraseBackupAndCreateNewKeys(completion: @escaping () -> Void)
-    /// - Returns: `false` when the password isn't the one the iCloud backup is protected with.
-    func recoverWithPassword(_ password: String) -> Bool
+    /// - Parameter completion: `false` when the backup couldn't be erased – nothing was changed then.
+    func eraseBackupAndCreateNewKeys(completion: @escaping (Bool) -> Void)
+    /// - Parameter completion: `false` when the password isn't the one the iCloud backup is protected with.
+    func recoverWithPassword(_ password: String, completion: @escaping (Bool) -> Void)
 }
 
 final class MissingKeyModuleInteractor {
@@ -38,14 +39,19 @@ final class MissingKeyModuleInteractor {
 }
 
 extension MissingKeyModuleInteractor: MissingKeyModuleInteracting {
-    func eraseBackupAndCreateNewKeys(completion: @escaping () -> Void) {
-        cloudBackup.erase { [weak self] _ in
+    func eraseBackupAndCreateNewKeys(completion: @escaping (Bool) -> Void) {
+        cloudBackup.erase { [weak self] result in
+            guard case .success = result else {
+                // The backup is still there, sealed with the keys that are missing – new keys wouldn't open it
+                completion(false)
+                return
+            }
             self?.cloudBackup.createEncryptionElements()
-            completion()
+            completion(true)
         }
     }
 
-    func recoverWithPassword(_ password: String) -> Bool {
-        syncMigrationInteractor.recoverMissingUserKey(password)
+    func recoverWithPassword(_ password: String, completion: @escaping (Bool) -> Void) {
+        syncMigrationInteractor.recoverMissingUserKey(password, completion: completion)
     }
 }

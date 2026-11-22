@@ -22,6 +22,17 @@ import Common
 
 final class MissingKeyPresenter: ObservableObject {
     @Published var isWorking = false
+    /// The step where the backup password is entered
+    @Published var isEnteringPassword = false
+    @Published var password = "" {
+        didSet {
+            if password != oldValue { isPasswordWrong = false }
+        }
+    }
+    @Published private(set) var isVerifyingPassword = false
+    @Published private(set) var isPasswordWrong = false
+
+    var canCheckPassword: Bool { !password.isEmpty && !isVerifyingPassword }
 
     private let flowController: MissingKeyFlowControlling
     private let interactor: MissingKeyModuleInteracting
@@ -60,7 +71,25 @@ extension MissingKeyPresenter {
     }
 
     func onEnterPassword() {
-        askForPassword(wrongPassword: false)
+        password = ""
+        isPasswordWrong = false
+        isEnteringPassword = true
+    }
+
+    func onCheckPassword() {
+        guard canCheckPassword else { return }
+        isVerifyingPassword = true
+        // The key is derived off the main thread – the progress stays live
+        interactor.recoverWithPassword(password) { [weak self] recovered in
+            guard let self else { return }
+            isVerifyingPassword = false
+            if recovered {
+                password = ""
+                flowController.resolve()
+            } else {
+                isPasswordWrong = true
+            }
+        }
     }
 
     func onClearBackup() {
@@ -70,34 +99,23 @@ extension MissingKeyPresenter {
     }
 
     func close() {
+        // Not in the middle of erasing the backup or checking the password – the result has to be shown
+        guard !isWorking, !isVerifyingPassword else { return }
         flowController.close()
     }
 }
 
 private extension MissingKeyPresenter {
-    func askForPassword(wrongPassword: Bool) {
-        flowController.toEnterPassword(wrongPassword: wrongPassword) { [weak self] password in
-            self?.recover(with: password)
-        }
-    }
-
-    func recover(with password: String) {
-        isWorking = true
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            if interactor.recoverWithPassword(password) {
-                flowController.resolve()
-            } else {
-                isWorking = false
-                askForPassword(wrongPassword: true)
-            }
-        }
-    }
-
     func confirmClearBackup() {
         isWorking = true
-        interactor.eraseBackupAndCreateNewKeys { [weak self] in
-            self?.flowController.resolve()
+        interactor.eraseBackupAndCreateNewKeys { [weak self] erased in
+            guard let self else { return }
+            isWorking = false
+            if erased {
+                flowController.resolve()
+            } else {
+                flowController.toClearBackupFailed()
+            }
         }
     }
 }

@@ -25,46 +25,67 @@ import Common
 import CommonWatch
 #endif
 
+/// Splits what has to be sent to the cloud into operations.
+///
+/// - An operation never has more items than CloudKit takes (400, saves and deletions together).
+/// - Saves go before deletions. The record of a deletion is saved no later than the record of its item is
+///   removed: another device never sees an item that is simply gone – it would keep it and send it back – only
+///   one that is deleted.
+/// - The Info record goes in the first operation: the records are named with the identifier key it carries, and
+///   without it nobody could match them.
 final class ModificationQueue {
-    private let batchElementLimit = 399
+    typealias Batch = (modify: [CKRecord]?, delete: [CKRecord.ID]?)
     
-    private var batchModify: [[CKRecord]] = []
-    private var batchDelete: [[CKRecord.ID]] = []
+    static let batchElementLimit = 350
     
-    private var batchCount: Int = 0
+    private var batches: [(modify: [CKRecord], delete: [CKRecord.ID])] = []
+    private var currentIndex = 0
     
     var finished: Bool {
-        batchCount < 0
+        currentIndex >= batches.count
     }
     
     func setRecordsToModifyOnServer(_ modify: [CKRecord]?, deleteIDs: [CKRecord.ID]?) {
-        if let modify {
-            batchModify = modify.grouped(by: batchElementLimit)
-        }
-        
-        if let deleteIDs {
-            batchDelete = deleteIDs.grouped(by: batchElementLimit)
-        }
-        
-        let maxBatchCount = max(batchModify.count, batchDelete.count)
-        batchCount = maxBatchCount - 1
-        
-        Log("ModificationQueue - spliting into \(maxBatchCount) batches", module: .cloudSync)
+        batches = Self.makeBatches(modify: modify ?? [], delete: deleteIDs ?? [], limit: Self.batchElementLimit)
+        currentIndex = 0
+        Log("ModificationQueue - spliting into \(batches.count) batches", module: .cloudSync)
     }
     
-    func currentBatch() -> (modify: [CKRecord]?, delete: [CKRecord.ID]?) {
-        let modify = batchModify[safe: batchCount]
-        let delete = batchDelete[safe: batchCount]
-        return (modify: modify, delete: delete)
+    static func makeBatches(
+        modify: [CKRecord],
+        delete: [CKRecord.ID],
+        limit: Int
+    ) -> [(modify: [CKRecord], delete: [CKRecord.ID])] {
+        let infoFirst = modify.filter { $0.recordType == RecordType.info.rawValue }
+            + modify.filter { $0.recordType != RecordType.info.rawValue }
+        var batches: [(modify: [CKRecord], delete: [CKRecord.ID])] = []
+        var saves = ArraySlice(infoFirst)
+        var deletions = ArraySlice(delete)
+        while !saves.isEmpty || !deletions.isEmpty {
+            let batchSaves = Array(saves.prefix(limit))
+            saves = saves.dropFirst(batchSaves.count)
+            // Deletions only once every save was taken
+            let batchDeletions = saves.isEmpty ? Array(deletions.prefix(limit - batchSaves.count)) : []
+            deletions = deletions.dropFirst(batchDeletions.count)
+            batches.append((batchSaves, batchDeletions))
+        }
+        return batches
+    }
+    
+    func currentBatch() -> Batch {
+        guard let batch = batches[safe: currentIndex] else { return (nil, nil) }
+        return (
+            modify: batch.modify.isEmpty ? nil : batch.modify,
+            delete: batch.delete.isEmpty ? nil : batch.delete
+        )
     }
     
     func prevBatchProcessed() {
-        batchCount -= 1
+        currentIndex += 1
     }
     
     func clear() {
-        batchCount = 0
-        batchModify = []
-        batchDelete = []
+        batches = []
+        currentIndex = 0
     }
 }

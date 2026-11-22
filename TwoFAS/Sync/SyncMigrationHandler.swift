@@ -41,10 +41,11 @@ public protocol SyncMigrationHandling: AnyObject {
     func switchLocallyToUseSystemPassword()
     func setMissingUserPassword(_ password: String)
     /// Brings back the user's key from the password on a device that lost it (or never had it).
-    /// - Returns: `false` when the password isn't the one the cloud is encrypted with.
-    func recoverMissingUserKey(_ password: String) -> Bool
+    /// - Parameter completion: Called on the main thread; `false` when the password isn't the one the cloud is
+    ///   encrypted with.
+    func recoverMissingUserKey(_ password: String, completion: @escaping (Bool) -> Void)
     
-    func verifyUserPassword(_ password: String) -> Bool
+    func verifyUserPassword(_ password: String, completion: @escaping (Bool) -> Void)
     
     var showCantCreateEncryptionElements: (() -> Void)? { get set }
     var showMissingKey: ((CloudCurrentState.NotAvailableReason.EncryptionError) -> Void)? { get set }
@@ -53,7 +54,8 @@ public protocol SyncMigrationHandling: AnyObject {
 final class SyncMigrationHandler {
     private enum SyncMigrationChangeType {
         case system
-        case password(String)
+        /// The key of the new password, already derived
+        case userKey(Data)
     }
     
     var showMigrationToNewestVersion: (() -> Void)?
@@ -89,6 +91,8 @@ final class SyncMigrationHandler {
     private var passwordChangePending: SyncMigrationChangeType?
     private var isMigrating = false
     private var isReencrypting = false
+    /// The key of a new password is being derived – the change of the password has started, but isn't pending yet
+    private var isDerivingUserKey = false
     private var isiCloudEncryptedByDifferentUserPass = false
     private var enableIfSuccess = false
     
@@ -110,8 +114,8 @@ final class SyncMigrationHandler {
             switch passwordChangePending {
             case .system:
                 self.syncEncryptionHandler.setSystemKey()
-            case .password(let password):
-                self.syncEncryptionHandler.setUserPassword(password)
+            case .userKey(let key):
+                self.syncEncryptionHandler.setUserKey(key)
             }
             self.passwordChangePending = nil
             return true
@@ -138,8 +142,20 @@ extension SyncMigrationHandler: SyncMigrationHandling {
             return
         }
         isReencrypting = true
-        passwordChangePending = .password(password)
-        changePasswordOrQueue()
+        isDerivingUserKey = true
+        // Derived before the change is queued, off the main thread – the sync that applies it only swaps the keys.
+        // A new key never gets weaker parameters than the current ones.
+        syncEncryptionHandler.deriveUserKey(for: password, parameters: .current) { [weak self] key in
+            guard let self else { return }
+            isDerivingUserKey = false
+            guard let key else {
+                Log("SyncMigrationHandler: Can't create user key!", module: .cloudSync, severity: .error)
+                isReencrypting = false
+                return
+            }
+            passwordChangePending = .userKey(key)
+            changePasswordOrQueue()
+        }
     }
     
     func migrateToSystemPassword() {
@@ -152,28 +168,51 @@ extension SyncMigrationHandler: SyncMigrationHandling {
     }
     
     func setMissingUserPassword(_ password: String) {
-        guard isiCloudEncryptedByDifferentUserPass else {
+        guard isiCloudEncryptedByDifferentUserPass, !isDerivingUserKey else {
             return
+        }
+        isDerivingUserKey = true
+        let finish = { [weak self] in
+            guard let self else { return }
+            isDerivingUserKey = false
+            isiCloudEncryptedByDifferentUserPass = false
+            enableIfSuccess = true
+            synchronize?()
         }
         // The key the cloud is encrypted with: derived with the salt and the parameters of the cloud. Without
         // them (an Info record from before they were stored) the key is derived the way it always was.
-        if !syncEncryptionHandler.recoverUserKey(password: password, cloudReference: cloudEncryptionReference?()) {
-            syncEncryptionHandler.setUserPassword(password)
-        }
-        isiCloudEncryptedByDifferentUserPass = false
-        enableIfSuccess = true
-        synchronize?()
-    }
-    
-    func recoverMissingUserKey(_ password: String) -> Bool {
-        guard syncEncryptionHandler.recoverUserKey(
+        // Everything is derived off the main thread.
+        syncEncryptionHandler.recoverUserKey(
             password: password,
             cloudReference: cloudEncryptionReference?()
-        ) else { return false }
-        isiCloudEncryptedByDifferentUserPass = false
-        enableIfSuccess = true
-        synchronize?()
-        return true
+        ) { [weak self] recovered in
+            guard let self, !recovered else {
+                finish()
+                return
+            }
+            syncEncryptionHandler.deriveUserKey(for: password, parameters: .current) { [weak self] key in
+                if let key {
+                    self?.syncEncryptionHandler.setUserKey(key)
+                } else {
+                    Log("SyncMigrationHandler: Can't create user key!", module: .cloudSync, severity: .error)
+                }
+                finish()
+            }
+        }
+    }
+    
+    func recoverMissingUserKey(_ password: String, completion: @escaping (Bool) -> Void) {
+        syncEncryptionHandler.recoverUserKey(
+            password: password,
+            cloudReference: cloudEncryptionReference?()
+        ) { [weak self] recovered in
+            if recovered, let self {
+                isiCloudEncryptedByDifferentUserPass = false
+                enableIfSuccess = true
+                synchronize?()
+            }
+            completion(recovered)
+        }
     }
     
     // locally user, but iCloud is using system
@@ -235,7 +274,7 @@ extension SyncMigrationHandler: SyncMigrationHandling {
                 canChangePassword = false
             case .synced:
                 canChangePassword = true
-                if passwordChangePending == nil {
+                if passwordChangePending == nil && !isDerivingUserKey {
                     isReencrypting = false
                 }
                 if !changePasswordOrQueue() {
@@ -248,8 +287,8 @@ extension SyncMigrationHandler: SyncMigrationHandling {
         }
     }
     
-    func verifyUserPassword(_ password: String) -> Bool {
-        syncEncryptionHandler.verifyUserPassword(password)
+    func verifyUserPassword(_ password: String, completion: @escaping (Bool) -> Void) {
+        syncEncryptionHandler.verifyUserPassword(password, completion: completion)
     }
 }
 

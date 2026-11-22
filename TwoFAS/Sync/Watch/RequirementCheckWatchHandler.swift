@@ -61,7 +61,8 @@ extension RequirementCheckWatchHandler: RequirementCheckHandling {
                     return true
                 }
                 
-                encryptionHandler.setEncryptedUserKey(encryptedUserKey, isLegacyTicket: info.version < Info.version)
+                let isLegacyTicket = infoRecord.recordID.zoneID.zoneName != Config.vaultV3
+                encryptionHandler.setEncryptedUserKey(encryptedUserKey, isLegacyTicket: isLegacyTicket)
                 
                 if !areEncryptionReferenceSame(info) { // password changed - pair again!
                     Log("RequirementCheckHandler - STOP: Different encryption reference!", module: .cloudSync)

@@ -30,7 +30,7 @@ enum ConstStorage {
     private static let KeyCloudMigratedToV3 = "KeyCloudMigratedToV3"
     private static let KeySyncResetRequired = "KeySyncResetRequired"
     private static let KeyCloudMigratedToV4 = "KeyCloudMigratedToV4"
-    private static let KeyOldVaultsRetired = "KeyOldVaultsRetired"
+    private static let KeyOldVaultsRetirementPending = "KeyOldVaultsRetirementPending"
     
     private static let userDefaults = UserDefaults.standard
     
@@ -135,10 +135,12 @@ enum ConstStorage {
         }
     }
     
-    static var oldVaultsRetired: Bool {
-        get { userDefaults.bool(forKey: KeyOldVaultsRetired) }
+    /// This device migrated the data to the current vault and didn't finish retiring the older ones yet. Only
+    /// the device that did the migration retires them: it's the one that knows the data is in the current vault.
+    static var oldVaultsRetirementPending: Bool {
+        get { userDefaults.bool(forKey: KeyOldVaultsRetirementPending) }
         set {
-            userDefaults.set(newValue, forKey: KeyOldVaultsRetired)
+            userDefaults.set(newValue, forKey: KeyOldVaultsRetirementPending)
             userDefaults.synchronize()
         }
     }

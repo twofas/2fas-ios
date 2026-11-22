@@ -117,6 +117,10 @@ struct ServiceRecordContent: Codable, Equatable {
     var counter: Int?
     var tokenType: String
     var source: String
+    /// When the user last changed the service on the device that wrote the record. Unlike the modification date
+    /// the server keeps for the record, it doesn't move when the record is only written again – after a change
+    /// of its order, of the password, or a migration – so a deletion made in between isn't undone by it.
+    var modifiedAt: Date?
 
     init(serviceData: ServiceData, sectionOrder: Int) {
         secret = serviceData.secret
@@ -138,11 +142,13 @@ struct ServiceRecordContent: Codable, Equatable {
         counter = serviceData.counter
         tokenType = serviceData.tokenType.rawValue
         source = serviceData.source.rawValue
+        modifiedAt = serviceData.modifiedAt
     }
 
     /// - Parameters:
     ///   - createdAt: When the record was created on the server.
-    ///   - modifiedAt: When the record was last modified on the server.
+    ///   - modifiedAt: When the record was last modified on the server – used only for a record that doesn't
+    ///     say when the user changed the service.
     func serviceData(createdAt: Date, modifiedAt: Date) -> ServiceData {
         ServiceData(
             name: name,
@@ -150,7 +156,7 @@ struct ServiceRecordContent: Codable, Equatable {
             serviceTypeID: serviceTypeID.flatMap { UUID(uuidString: $0) },
             additionalInfo: additionalInfo,
             rawIssuer: rawIssuer,
-            modifiedAt: modifiedAt,
+            modifiedAt: self.modifiedAt ?? modifiedAt,
             createdAt: createdAt,
             tokenPeriod: Period.create(tokenPeriod),
             tokenLength: Digits.create(tokenLength),
@@ -177,6 +183,7 @@ struct SectionRecordContent: Codable, Equatable {
     var sectionID: String
     var title: String
     var order: Int
+    var modifiedAt: Date?
 }
 
 /// A `RecordType.deletedService` record: the service whose identifier is the name of the record was deleted. It
@@ -202,7 +209,7 @@ struct SyncDeletion: Hashable {
     /// Only for a section
     let sectionID: String?
 
-    var recordName: String { SyncIdentifierKey.recordName(identifier: identifier) }
+    let recordName: String
 
     /// The deletion is older than what is remembered – it's removed everywhere
     func isExpired(now: Date = Date()) -> Bool {
@@ -215,6 +222,7 @@ struct SyncDeletion: Hashable {
         self.identifier = identifier
         self.deletedAt = deletedAt
         self.sectionID = sectionID
+        recordName = SyncIdentifierKey.recordName(identifier: identifier)
     }
 
     /// `nil` for a name that isn't an identifier

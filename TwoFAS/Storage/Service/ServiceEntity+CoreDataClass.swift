@@ -179,10 +179,9 @@ final class ServiceEntity: NSManagedObject {
         guard let serviceForDeletition = listAllExisting(on: context, secret: secret).first
         else { Log("Can't find service for deletition on local storage", module: .storage); return }
         var sectionList = listAll(on: context, sectionID: serviceForDeletition.sectionID)
-        let modificationDate = Date()
         if let index = sectionList.firstIndex(of: serviceForDeletition) {
             sectionList.remove(at: index)
-            updateOrder(of: sectionList, modificationDate: modificationDate)
+            updateOrder(of: sectionList)
         }
         delete(on: context, serviceEntity: serviceForDeletition)
     }
@@ -250,28 +249,29 @@ final class ServiceEntity: NSManagedObject {
         to newIndex: Int,
         newSectionID: SectionID?
     ) -> [ServiceEntity] {
-        let modificationDate = Date()
         guard currentSectionID != newSectionID else {
             let servicesFromCurrent = listItemsInSection(on: context, sectionID: currentSectionID)
             let serviceToMove = servicesFromCurrent[currentIndex]
-            updateOrder(of: servicesFromCurrent, modificationDate: modificationDate)
+            updateOrder(of: servicesFromCurrent)
             var sortedServicesFromCurrent = servicesFromCurrent.sorted { $0.sectionOrder < $1.sectionOrder }
             sortedServicesFromCurrent.move(serviceToMove, to: newIndex)
-            updateOrder(of: sortedServicesFromCurrent, modificationDate: modificationDate)
+            updateOrder(of: sortedServicesFromCurrent)
             return listUpdated(on: context)
         }
         
         var servicesFromCurrent = listItemsInSection(on: context, sectionID: currentSectionID)
         guard servicesFromCurrent[safe: currentIndex] != nil else { return [] }
         let serviceToMove = servicesFromCurrent.remove(at: currentIndex)
-        updateOrder(of: servicesFromCurrent, modificationDate: modificationDate)
+        updateOrder(of: servicesFromCurrent)
         
         let servicesFromNew = listItemsInSection(on: context, sectionID: newSectionID)
-        updateOrder(of: servicesFromNew, modificationDate: modificationDate)
+        updateOrder(of: servicesFromNew)
         var sortedServicesFromNew = servicesFromNew.sorted { $0.sectionOrder < $1.sectionOrder }
         sortedServicesFromNew.insert(serviceToMove, at: newIndex)
-        updateOrder(of: sortedServicesFromNew, modificationDate: modificationDate)
+        updateOrder(of: sortedServicesFromNew)
         serviceToMove.sectionID = newSectionID
+        // Put into another section by the user – a change of the service itself, unlike its position
+        serviceToMove.modificationDate = Date()
         return listUpdated(on: context)
     }
     
@@ -391,12 +391,12 @@ final class ServiceEntity: NSManagedObject {
             .filter { $0.isUpdated }
     }
     
-    @nonobjc private static func updateOrder(of services: [ServiceEntity], modificationDate: Date) {
-        for (index, s) in services.enumerated() {
-            if s.sectionOrder != index {
-                s.sectionOrder = index
-                s.modificationDate = modificationDate
-            }
+    /// The modification date stays: a service that only moved (or was only pushed by another one moving)
+    /// wasn't changed. A deletion made on another device in the meantime must still win – a new date would make
+    /// the service look changed after it was deleted, and bring it back.
+    @nonobjc private static func updateOrder(of services: [ServiceEntity]) {
+        for (index, s) in services.enumerated() where s.sectionOrder != index {
+            s.sectionOrder = index
         }
     }
     

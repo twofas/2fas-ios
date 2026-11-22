@@ -152,7 +152,14 @@ struct SyncIdentifierKey: Equatable {
     }
 
     static func recordName(identifier: Data) -> String {
-        identifier.map { String(format: "%02x", $0) }.joined()
+        let digits = Array("0123456789abcdef".utf8)
+        var name = [UInt8]()
+        name.reserveCapacity(identifier.count * 2)
+        for byte in identifier {
+            name.append(digits[Int(byte >> 4)])
+            name.append(digits[Int(byte & 0x0f)])
+        }
+        return String(decoding: name, as: UTF8.self)
     }
 
     /// The key sealed with the sync key – what the Info record keeps

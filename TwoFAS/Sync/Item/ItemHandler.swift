@@ -515,7 +515,12 @@ private extension ItemHandler {
                 return try SealedRecord.recreate(
                     with: current.metadata,
                     type: .section2,
-                    content: SectionRecordContent(sectionID: modified.sectionID, title: modified.name, order: index),
+                    content: SectionRecordContent(
+                        sectionID: modified.sectionID,
+                        title: modified.name,
+                        order: index,
+                        modifiedAt: modified.modificationDate
+                    ),
                     syncKey: syncKey
                 )
             case .service2, .service3:
@@ -571,7 +576,12 @@ private extension ItemHandler {
                     type: .section2,
                     recordName: recordName,
                     zoneID: zoneID,
-                    content: SectionRecordContent(sectionID: new.sectionID, title: new.name, order: index),
+                    content: SectionRecordContent(
+                        sectionID: new.sectionID,
+                        title: new.name,
+                        order: index,
+                        modifiedAt: new.modificationDate
+                    ),
                     syncKey: syncKey
                 )
             case .service2, .service3:
@@ -648,7 +658,7 @@ private extension ItemHandler {
                     content: content,
                     metadata: metadata,
                     creationDate: record.creationDate ?? Date(),
-                    modificationDate: record.modificationDate,
+                    modificationDate: content.modifiedAt ?? record.modificationDate,
                     save: false
                 )
             case .deletedService:

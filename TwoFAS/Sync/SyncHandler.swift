@@ -30,7 +30,7 @@ final class SyncHandler {
     private let logHandler: LogHandler
     private let itemHandler: ItemHandler
     private let commonItemHandler: CommonItemHandler
-    private let cloudKit: CloudKit
+    private let cloudKit: CloudKitSyncing
     private let modificationQueue: ModificationQueue
     private let mergeHandler: MergeHandler
     private let migrationHandler: MigrationHandling
@@ -45,11 +45,17 @@ final class SyncHandler {
     
     /// Called when this device starts writing a vault of sealed records it migrated the data to
     var willStartSealedVault: Callback?
-    /// Called after a completed sync with the current vault while the older vaults weren't retired yet
+    /// Called after a completed sync with the current vault while the older vaults, migrated by this device,
+    /// weren't retired yet
     var retireOldVaults: Callback?
     
     private var isSyncing = false
     private var applyingChanges = false
+    /// Checks of the vaults that failed in a row – the next one waits longer
+    private var failedVaultChecks = 0
+    /// Identifies the retry that is scheduled after a failed check. `nil` – none, or it was called off (the
+    /// backup was turned off in the meantime).
+    private var vaultCheckRetry: UUID?
         
     private var fromNotificationCompletionHandler: ((BackgroundFetchResult) -> Void)?
     
@@ -72,7 +78,7 @@ final class SyncHandler {
         itemHandler: ItemHandler,
         commonItemHandler: CommonItemHandler,
         logHandler: LogHandler,
-        cloudKit: CloudKit,
+        cloudKit: CloudKitSyncing,
         modificationQueue: ModificationQueue,
         mergeHandler: MergeHandler,
         migrationHandler: MigrationHandling,
@@ -215,18 +221,48 @@ final class SyncHandler {
             break
         }
         Log("SyncHandler - Sync Handler: synchronizing", module: .cloudSync)
+        // This sync checks the vaults itself
+        vaultCheckRetry = nil
         isSyncing = true
         startedSync?()
         
-        Task { @MainActor in
-            await migrationHandler.checkIfMigrationNeeded()
+        Task {
+            guard await migrationHandler.checkIfMigrationNeeded() else {
+                await MainActor.run { vaultCheckFailed() }
+                return
+            }
+            await MainActor.run { failedVaultChecks = 0 }
             modificationQueue.clear()
             cloudKit.cloudSync()
         }
     }
     
+    /// The iCloud account changed – what was known about its vaults doesn't apply any more
+    func accountChanged() {
+        migrationHandler.accountChanged()
+    }
+    
+    /// Which vault has the data couldn't be checked (no network, the service unavailable): this sync ends here,
+    /// with nothing read and nothing written, and is tried again later – like any other error that passes on
+    /// its own. The backup isn't turned off and nothing is cleared.
+    private func vaultCheckFailed() {
+        abortSync()
+        completeNotification(with: .failed)
+        let delay = CloudKitRetryBackoff.delay(for: 2, consecutiveRetries: failedVaultChecks)
+        failedVaultChecks += 1
+        Log("SyncHandler - the vaults couldn't be checked. Trying again in \(delay)", module: .cloudSync, severity: .error)
+        let retry = UUID()
+        vaultCheckRetry = retry
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+            guard let self, vaultCheckRetry == retry else { return }
+            vaultCheckRetry = nil
+            synchronize()
+        }
+    }
+    
     func clearCacheAndDisable(skipItemsPurge: Bool = false) {
         Log("SyncHandler - Sync Handler: clearCacheAndDisable", module: .cloudSync)
+        vaultCheckRetry = nil
         isSyncing = false
         applyingChanges = false
         logHandler.deleteAll()
@@ -257,6 +293,17 @@ final class SyncHandler {
     private func fetchFinishedSuccessfuly() {
         guard isSyncing else { return }
         Log("SyncHandler - method: fetch finished successfuly", module: .cloudSync)
+        
+        if migrationHandler.isMigrating, isFetchedVaultRetired {
+            // Another device migrated this vault and retired it while this one was about to do the same. Not a
+            // newer version of the app: the data is in the current vault, which the next check finds.
+            Log("SyncHandler - the vault being migrated was retired, starting over", module: .cloudSync)
+            migrationHandler.restartAfterVaultWasRetired()
+            resetStack()
+            commonItemHandler.logFirstImport()
+            synchronize()
+            return
+        }
         
         guard !requirementCheck.checkIfStopSync(
             using: itemHandler.updatedCreated,
@@ -400,7 +447,7 @@ final class SyncHandler {
         finishedSync?()
         
         // The data is in the current vault and this device is in sync with it – the older vaults can go
-        if zoneManager.usesSealedRecords, !ConstStorage.oldVaultsRetired {
+        if zoneManager.usesSealedRecords, ConstStorage.oldVaultsRetirementPending {
             retireOldVaults?()
         }
     }
@@ -441,6 +488,14 @@ final class SyncHandler {
         logHandler.deleteAll()
         itemHandler.purge()
         ConstStorage.clearZone()
+    }
+    
+    /// The Info record that was just fetched says its vault was retired
+    private var isFetchedVaultRetired: Bool {
+        itemHandler.updatedCreated.contains { record in
+            RecordType(rawValue: record.recordType) == .info
+                && record[InfoEntryKey.version.rawValue] as? Int == Info.retiredVersion
+        }
     }
     
     private func abortSync() {

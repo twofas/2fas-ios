@@ -33,7 +33,14 @@ protocol MigrationHandling: AnyObject {
     var isMigrating: Bool { get }
     var isMigratingInV1Zone: Bool { get }
     
-    @MainActor
-    func checkIfMigrationNeeded() async
+    /// Finds out which vault to sync with.
+    /// - Returns: `false` when what is in the cloud couldn't be checked: nothing was decided and nothing was
+    ///   changed – this sync must not go on. The next one checks again.
+    func checkIfMigrationNeeded() async -> Bool
     func migrateIfNeeded() -> Bool
+    /// The vault that was being read for the migration was retired by another device (which migrated it):
+    /// forgets the migration, so the cloud is checked again
+    func restartAfterVaultWasRetired()
+    /// The iCloud account changed: what this device knew about the vaults belongs to the other account
+    func accountChanged()
 }

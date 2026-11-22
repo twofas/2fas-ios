@@ -183,6 +183,117 @@ final class SyncUserKeyRecoveryTests: XCTestCase {
         XCTAssertEqual(relaunched.decrypt(cloudReference), reference)
     }
 
+    // MARK: - Deriving off the main thread
+
+    func testPasswordIsVerifiedOffTheMainThread() throws {
+        let device = makeDevice()
+        guard case .success = device.create() else { throw XCTSkip("The keychain isn't available in this run") }
+        device.setUserPassword("correct horse")
+
+        for (password, expected) in [("correct horse", true), ("wrong horse", false)] {
+            let verified = expectation(description: password)
+            device.verifyUserPassword(password) { isCorrect in
+                XCTAssertTrue(Thread.isMainThread)
+                XCTAssertEqual(isCorrect, expected, password)
+                XCTAssertEqual(isCorrect, device.verifyUserPassword(password))
+                verified.fulfill()
+            }
+            wait(for: [verified], timeout: 10)
+        }
+    }
+
+    func testPasswordCanNotBeVerifiedWithoutAUsersKey() throws {
+        let device = makeDevice()
+        guard case .success = device.create() else { throw XCTSkip("The keychain isn't available in this run") }
+
+        let verified = expectation(description: "verified")
+        device.verifyUserPassword("correct horse") { isCorrect in
+            XCTAssertFalse(isCorrect)
+            verified.fulfill()
+        }
+        wait(for: [verified], timeout: 10)
+    }
+
+    /// The key derived in the background and set afterwards is the key `setUserPassword` sets
+    func testKeyDerivedOffTheMainThreadIsTheKeyOfThePassword() throws {
+        let direct = makeDevice()
+        guard case .success = direct.create() else { throw XCTSkip("The keychain isn't available in this run") }
+        let keys = try XCTUnwrap(direct.exportKeys())
+        direct.setUserPassword("correct horse")
+        let cloudReference = try XCTUnwrap(direct.encryptionReference)
+
+        let device = makeDevice()
+        XCTAssertEqual(device.importKeys(salt: keys.salt, systemKey: keys.systemKey, password: nil), .imported)
+        let derived = expectation(description: "derived")
+        device.deriveUserKey(for: "correct horse", parameters: .current) { key in
+            XCTAssertTrue(Thread.isMainThread)
+            if let key {
+                device.setUserKey(key)
+            } else {
+                XCTFail("No key")
+            }
+            derived.fulfill()
+        }
+        wait(for: [derived], timeout: 10)
+
+        XCTAssertEqual(device.encryptionType, .user)
+        XCTAssertEqual(device.decrypt(cloudReference), reference)
+        XCTAssertTrue(device.verifyUserPassword("correct horse"))
+    }
+
+    func testKeysImportedOffTheMainThreadAreCheckedTheSameWay() throws {
+        let owner = makeDevice()
+        guard case .success = owner.create() else { throw XCTSkip("The keychain isn't available in this run") }
+        owner.setUserPassword("correct horse")
+        let info = owner.cloudEncryptionInfo(cached: .empty)
+        let cloudReference = try XCTUnwrap(owner.encryptionReference)
+        let keys = try XCTUnwrap(owner.exportKeys())
+
+        func importKeys(
+            on device: SyncEncryptionHandler,
+            salt: Data,
+            systemKey: Data,
+            password: String?
+        ) -> CloudKeysImportResult? {
+            var result: CloudKeysImportResult?
+            let imported = expectation(description: "imported")
+            device.importKeys(
+                salt: salt,
+                systemKey: systemKey,
+                password: password,
+                cloudReference: cloudReference,
+                cloudEncryption: .user
+            ) {
+                XCTAssertTrue(Thread.isMainThread)
+                result = $0
+                imported.fulfill()
+            }
+            wait(for: [imported], timeout: 20)
+            return result
+        }
+
+        let device = makeDevice()
+        device.cloudEncryptionInfoFetched(info)
+        XCTAssertEqual(
+            importKeys(on: device, salt: keys.salt, systemKey: keys.systemKey, password: "wrong horse"),
+            .doesNotOpenBackup
+        )
+        XCTAssertNil(device.exportKeys())
+        XCTAssertEqual(
+            importKeys(on: device, salt: keys.salt, systemKey: Data(count: 16), password: "correct horse"),
+            .invalidKeys
+        )
+        XCTAssertNil(device.exportKeys())
+
+        XCTAssertEqual(
+            importKeys(on: device, salt: keys.salt, systemKey: keys.systemKey, password: "correct horse"),
+            .imported
+        )
+        XCTAssertEqual(device.encryptionType, .user)
+        XCTAssertEqual(device.decrypt(cloudReference), reference)
+        XCTAssertEqual(device.exportKeys()?.systemKey, keys.systemKey)
+    }
+
     // MARK: - Importing keys
 
     func testImportedSystemKeyMustOpenACloudSealedWithIt() throws {

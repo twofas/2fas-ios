@@ -43,6 +43,9 @@ struct MissingKeyView: View {
             }
             .background(.backgroundsPrimary)
             .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(isPresented: $presenter.isEnteringPassword) {
+                MissingKeyPasswordView(presenter: presenter)
+            }
             .closeToolbar {
                 presenter.close()
             }
@@ -101,6 +104,72 @@ struct MissingKeyView: View {
                     }
                 )
             }
+        }
+    }
+}
+
+/// The step of `MissingKeyView` where the backup password is entered
+private struct MissingKeyPasswordView: View {
+    @ObservedObject
+    var presenter: MissingKeyPresenter
+
+    @FocusState
+    private var isFocused: Bool?
+
+    var body: some View {
+        AdaptiveReadableContainer {
+            if presenter.isVerifyingPassword {
+                TFLoadingView(title: T.Backup.veryfingPassword)
+            } else {
+                form
+            }
+        }
+        .dismissKeyboardOnTapOutside()
+        .minimumBottomSpacing()
+        .background(.backgroundsPrimaryElevated)
+        .navigationTitle(T.Backup.missingKeyPasswordTitle)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(presenter.isVerifyingPassword)
+        .onAppear {
+            isFocused = true
+        }
+    }
+
+    private var form: some View {
+        VStack(alignment: .center, spacing: .XL) {
+            Text(T.Backup.missingKeyPasswordMsg)
+                .textStyle(.body)
+                .foregroundStyle(.labelsPrimary)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+
+            TFFloatingTextField(
+                placeHolder: T.Backup.password,
+                text: $presenter.password,
+                inputType: .password,
+                focused: $isFocused,
+                focusValue: true,
+                submit: .init(buttonType: presenter.canCheckPassword ? .send : .return) {
+                    presenter.onCheckPassword()
+                }
+            )
+            .groupedSectionBackground(isElevated: true)
+
+            if presenter.isPasswordWrong {
+                Label(T.Backup.missingKeyPasswordWrong, icon: .xmarkCircleFill)
+                    .textStyle(.callout, .emphasized)
+                    .foregroundStyle(.accentsBrand)
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            Spacer()
+                .frame(maxHeight: .infinity)
+
+            TFButton(T.Backup.checkPassword, variant: .borderedProminent, size: .large) {
+                presenter.onCheckPassword()
+            }
+            .disabled(!presenter.canCheckPassword)
         }
     }
 }

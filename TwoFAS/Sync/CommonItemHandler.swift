@@ -136,6 +136,14 @@ final class CommonItemHandler {
     
     /// What the cloud knows about deletions – `nil` in the formats without the records of deletions. The records
     /// that are older than what is remembered don't count any more and are removed from the cloud.
+    /// A deletion that is older than what is remembered doesn't count any more. The phone also removes its
+    /// record from the cloud; the watch only mirrors the cloud and removes nothing from it.
+    private func expired(_ deletion: SyncDeletion, kind: RecordType) {
+        #if os(iOS)
+        deletionLogger.deletionExpired(deletion, kind: kind)
+        #endif
+    }
+    
     private func syncedDeletions(from items: [RecordType: [Any]]) -> SyncedDeletions? {
         guard zoneManager.usesSealedRecords, let identifierKey = syncEncryptionHandler.identifierKey else {
             return nil
@@ -143,7 +151,7 @@ final class CommonItemHandler {
         var services: [Data: Date] = [:]
         for deletion in (items[.deletedService] as? [SyncDeletion]) ?? [] {
             if deletion.isExpired() {
-                deletionLogger.deletionExpired(deletion, kind: .deletedService)
+                expired(deletion, kind: .deletedService)
             } else {
                 services[deletion.identifier] = deletion.deletedAt
             }
@@ -152,7 +160,7 @@ final class CommonItemHandler {
         for deletion in (items[.deletedSection] as? [SyncDeletion]) ?? [] {
             guard let sectionID = deletion.sectionID else { continue }
             if deletion.isExpired() {
-                deletionLogger.deletionExpired(deletion, kind: .deletedSection)
+                expired(deletion, kind: .deletedSection)
             } else {
                 sections[sectionID] = deletion.deletedAt
             }

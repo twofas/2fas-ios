@@ -261,6 +261,13 @@ final class CloudHandler: CloudHandlerType {
             setEnabled()
             userToggledState?(true)
             sync()
+        case .disabledNotAvailable(reason: .encryptionError):
+            // The backup was stopped by a missing key, not turned off, and the user did something about the
+            // key: the sync checks the keys again – and stops on the same error if they are still missing
+            Log("Cloud Handler - enable after an encryption error - trying again", module: .cloudSync)
+            setEnabled()
+            userToggledState?(true)
+            sync()
         case .disabledNotAvailable:
             Log("Cloud Handler - Can't enable if cloud is not available", module: .cloudSync)
         case .unknown:
@@ -359,7 +366,7 @@ final class CloudHandler: CloudHandlerType {
                     ConstStorage.cloudMigratedToV3 = true
                     // Every vault was erased – the next sync starts the current one clean
                     ConstStorage.cloudMigratedToV4 = true
-                    ConstStorage.oldVaultsRetired = true
+                    ConstStorage.oldVaultsRetirementPending = false
                     
                     completion(.success(()))
                 case .failure(let error):
@@ -389,6 +396,8 @@ final class CloudHandler: CloudHandlerType {
                 currentState = .disabledAvailable
             }
         case .accountChanged:
+            // Also while the backup is off – it may be turned on with this account later
+            syncHandler.accountChanged()
             if isEnabled {
                 Log("Cloud Handler - account changed - clearing all, first start", module: .cloudSync)
                 clearCache()
@@ -431,10 +440,14 @@ final class CloudHandler: CloudHandlerType {
         syncHandler.firstStart()
     }
     
-    private func setDisabled() {
+    /// - Parameter purgingUserKey: `false` when the backup stops only until a missing key is brought back – the
+    ///   keys this device still has (and the list of paired watches) are what the user gets back to then.
+    private func setDisabled(purgingUserKey: Bool = true) {
         Log("Cloud Handler - Set Disabled", module: .cloudSync)
         ConstStorage.cloudEnabled = false
-        purgeUserEncryptionKey?()
+        if purgingUserKey {
+            purgeUserEncryptionKey?()
+        }
         notificationCenter.post(name: .clearSyncCompletedSuccessfuly, object: nil)
     }
     
@@ -522,7 +535,7 @@ final class CloudHandler: CloudHandlerType {
     
     private func encryptionError(_ error: EncryptionError) {
         Log("Cloud Handler - encryption error", module: .cloudSync)
-        setDisabled()
+        setDisabled(purgingUserKey: false)
         cloudAvailability.clear()
         switch error {
         case .cantCreateEncryptionElements:

@@ -39,7 +39,7 @@ final class DeletionCacheHandler {
 
     func listServices() -> [SyncDeletion] {
         DeletedServiceCacheEntity.listAll(on: context)
-            .map { SyncDeletion(identifier: $0.secretHash, deletedAt: $0.deletedAt) }
+            .map { SyncDeletion(identifier: $0.identifier, deletedAt: $0.deletedAt) }
             .sorted { $0.recordName < $1.recordName }
     }
 
@@ -50,8 +50,8 @@ final class DeletionCacheHandler {
 
     func updateOrCreateService(_ deletion: SyncDeletion, metadata: Data) {
         let existing = DeletedServiceCacheEntity.find(on: context, identifier: deletion.identifier).first
-        let entity = existing ?? DeletedServiceCacheEntity(context: context)
-        entity.secretHash = deletion.identifier
+        let entity = existing ?? DeletedServiceCacheEntity.insert(into: context)
+        entity.identifier = deletion.identifier
         entity.deletedAt = deletion.deletedAt
         do {
             try entity.setMetadata(metadata)
@@ -86,7 +86,7 @@ final class DeletionCacheHandler {
 
     func updateOrCreateSection(sectionID: String, deletedAt: Date, metadata: Data) {
         let entity = DeletedSectionCacheEntity.find(on: context, sectionID: sectionID).first
-            ?? DeletedSectionCacheEntity(context: context)
+            ?? DeletedSectionCacheEntity.insert(into: context)
         entity.sectionID = sectionID
         entity.deletedAt = deletedAt
         entity.metadata = metadata

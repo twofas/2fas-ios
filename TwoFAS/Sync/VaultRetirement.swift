@@ -21,15 +21,19 @@ import Foundation
 import CloudKit
 import Common
 
-/// Retires the vaults used before `Config.vaultV3`, once the data is in the current one: their records are
-/// removed and their Info record is left with `Info.retiredVersion`.
+/// Retires the vaults used before `Config.vaultV3`, once this device moved their data to the current one: their
+/// Info record is set to `Info.retiredVersion` and then their records are removed.
+///
+/// The Info record goes first, in an operation of its own: whoever still syncs with the vault sees that it was
+/// retired before (or together with) any of its records disappearing – never records that are simply gone,
+/// which an app version that decides deletions by absence would take for deleted services.
 ///
 /// The zones themselves stay. An app version that still syncs with one of them would create a deleted zone again
 /// and fill it with its own data; the Info record with a newer version makes it stop and ask for an update
 /// instead.
 ///
-/// Retiring is repeatable – a vault that is retired already is left as it is – and is tried again after the next
-/// sync when it fails.
+/// Retiring is repeatable and is tried again after the next sync until it's done
+/// (`ConstStorage.oldVaultsRetirementPending`).
 final class VaultRetirement {
     /// Records per modify operation – CloudKit refuses more than 400 items
     private static let batchSize = 300
@@ -42,7 +46,7 @@ final class VaultRetirement {
     }
 
     func retireOldVaults() {
-        guard !isRunning, !ConstStorage.oldVaultsRetired else { return }
+        guard !isRunning, ConstStorage.oldVaultsRetirementPending else { return }
         isRunning = true
         Log("VaultRetirement: looking for old vaults", module: .cloudSync)
 
@@ -78,7 +82,7 @@ final class VaultRetirement {
             record,
             version: Info.retiredVersion,
             encryption: Info.Encryption.system.rawValue,
-            allowedDevices: ["none"],
+            allowedDevices: [Info.noAllowedDevices],
             enableWatch: false,
             encryptionReference: Data(),
             encryptionInfo: .empty,
@@ -97,6 +101,44 @@ final class VaultRetirement {
         let remaining = Array(zoneIDs.dropFirst())
         Log("VaultRetirement: retiring \(zoneID.zoneName)", module: .cloudSync)
 
+        markRetired(zoneID) { [weak self] error in
+            if let error {
+                self?.finish(error: error)
+                return
+            }
+            self?.removeRecords(of: zoneID) { [weak self] error in
+                if let error {
+                    self?.finish(error: error)
+                } else {
+                    self?.retire(remaining)
+                }
+            }
+        }
+    }
+
+    /// Saves the Info record of a retired vault – alone and before anything is removed
+    private func markRetired(_ zoneID: CKRecordZone.ID, completion: @escaping (Error?) -> Void) {
+        let operation = CKModifyRecordsOperation(
+            recordsToSave: [Self.retiredInfoRecord(zoneID: zoneID)],
+            recordIDsToDelete: nil
+        )
+        // Whatever the Info record says now
+        operation.savePolicy = .allKeys
+        operation.isAtomic = true
+        var saveError: Error?
+        operation.perRecordSaveBlock = { _, result in
+            if case .failure(let error) = result { saveError = error }
+        }
+        operation.modifyRecordsResultBlock = { result in
+            switch result {
+            case .success: completion(saveError)
+            case .failure(let error): completion(error)
+            }
+        }
+        database.add(operation)
+    }
+
+    private func removeRecords(of zoneID: CKRecordZone.ID, completion: @escaping (Error?) -> Void) {
         // Everything in the zone, without its content
         var recordIDs: [CKRecord.ID] = []
         let lock = NSLock()
@@ -114,40 +156,36 @@ final class VaultRetirement {
         fetch.fetchRecordZoneChangesResultBlock = { [weak self] result in
             switch result {
             case .success:
-                self?.remove(recordIDs, from: zoneID) { [weak self] error in
-                    if let error {
-                        self?.finish(error: error)
-                    } else {
-                        self?.retire(remaining)
-                    }
-                }
+                self?.remove(recordIDs, completion: completion)
             case .failure(let error):
-                self?.finish(error: error)
+                completion(error)
             }
         }
         database.add(fetch)
     }
 
-    /// Removes the records in batches. The Info record is marked with the last batch, so a vault that was only
-    /// partly emptied isn't taken for a retired one.
-    private func remove(_ recordIDs: [CKRecord.ID], from zoneID: CKRecordZone.ID, completion: @escaping (Error?) -> Void) {
+    /// Removes the records in batches. A batch is all or nothing, and a record that couldn't be removed fails
+    /// the retirement – it's tried again.
+    private func remove(_ recordIDs: [CKRecord.ID], completion: @escaping (Error?) -> Void) {
+        guard !recordIDs.isEmpty else {
+            completion(nil)
+            return
+        }
         let batch = Array(recordIDs.prefix(Self.batchSize))
         let remaining = Array(recordIDs.dropFirst(Self.batchSize))
-        let isLast = remaining.isEmpty
-        let operation = CKModifyRecordsOperation(
-            recordsToSave: isLast ? [Self.retiredInfoRecord(zoneID: zoneID)] : nil,
-            recordIDsToDelete: batch
-        )
-        // Whatever the Info record says now
-        operation.savePolicy = .allKeys
-        operation.isAtomic = false
+        let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: batch)
+        operation.isAtomic = true
+        var deleteError: Error?
+        operation.perRecordDeleteBlock = { _, result in
+            if case .failure(let error) = result { deleteError = error }
+        }
         operation.modifyRecordsResultBlock = { [weak self] result in
             switch result {
             case .success:
-                if isLast {
-                    completion(nil)
+                if let deleteError {
+                    completion(deleteError)
                 } else {
-                    self?.remove(remaining, from: zoneID, completion: completion)
+                    self?.remove(remaining, completion: completion)
                 }
             case .failure(let error):
                 completion(error)
@@ -168,7 +206,7 @@ final class VaultRetirement {
                 )
             } else {
                 Log("VaultRetirement: old vaults are retired", module: .cloudSync)
-                ConstStorage.oldVaultsRetired = true
+                ConstStorage.oldVaultsRetirementPending = false
             }
         }
     }

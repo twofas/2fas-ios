@@ -506,38 +506,43 @@ private final class CountingCipher: LocalStorageCipher {
 
 /// The key of the backup password – derived off the main thread, so it can't depend on the state of the handler
 final class SyncUserKeyDerivationTests: XCTestCase {
-    private let salt = Data((0..<32).map { UInt8($0) })
+    private let salt = Data((0..<16).map { UInt8($0) })
     
-    func testKeyDependsOnlyOnPasswordAndSalt() {
-        let key = SyncEncryptionHandler.deriveKey(for: "password", salt: salt)
-        
-        XCTAssertEqual(key?.count, 32)
-        XCTAssertEqual(SyncEncryptionHandler.deriveKey(for: "password", salt: salt), key)
-        XCTAssertNotEqual(SyncEncryptionHandler.deriveKey(for: "Password", salt: salt), key)
-        XCTAssertNotEqual(SyncEncryptionHandler.deriveKey(for: "password", salt: Data(salt.reversed())), key)
+    private func deriveKey(_ password: String, salt: Data?, parameters: SyncKDFParameters = .legacy) -> Data? {
+        SyncEncryptionHandler.deriveKey(for: password, parameters: parameters, salt: salt)
     }
     
-    /// Only the first 16 bytes of the salt are used – also when the salt is a slice of other data
-    func testKeyUsesTheFirstBytesOfTheSalt() {
-        let key = SyncEncryptionHandler.deriveKey(for: "password", salt: salt)
+    func testKeyDependsOnlyOnPasswordSaltAndParameters() {
+        let key = deriveKey("password", salt: salt)
+        
+        XCTAssertEqual(key?.count, SyncKDFParameters.legacy.keyLength)
+        XCTAssertEqual(deriveKey("password", salt: salt), key)
+        XCTAssertNotEqual(deriveKey("Password", salt: salt), key)
+        XCTAssertNotEqual(deriveKey("password", salt: Data(salt.reversed())), key)
+    }
+    
+    /// The salt can be a slice of other data
+    func testKeyOfASliceOfTheSaltIsTheSame() {
+        let key = deriveKey("password", salt: salt)
         let slice = (Data([0xFF, 0xFF]) + salt).dropFirst(2)
         
-        XCTAssertEqual(SyncEncryptionHandler.deriveKey(for: "password", salt: Data(salt.prefix(16))), key)
-        XCTAssertEqual(SyncEncryptionHandler.deriveKey(for: "password", salt: slice), key)
+        XCTAssertEqual(deriveKey("password", salt: slice), key)
     }
     
     func testNoKeyWithoutSalt() {
-        XCTAssertNil(SyncEncryptionHandler.deriveKey(for: "password", salt: nil))
-        XCTAssertNil(SyncEncryptionHandler.deriveKey(for: "password", salt: Data(salt.prefix(15))))
+        XCTAssertNil(deriveKey("password", salt: nil))
     }
     
     func testKeyDerivedOffTheMainThreadIsTheSame() {
-        let key = SyncEncryptionHandler.deriveKey(for: "password", salt: salt)
+        let key = deriveKey("password", salt: salt)
         let derived = expectation(description: "derived")
         let salt = salt
         DispatchQueue.global(qos: .userInitiated).async {
             XCTAssertFalse(Thread.isMainThread)
-            XCTAssertEqual(SyncEncryptionHandler.deriveKey(for: "password", salt: salt), key)
+            XCTAssertEqual(
+                SyncEncryptionHandler.deriveKey(for: "password", parameters: .legacy, salt: salt),
+                key
+            )
             derived.fulfill()
         }
         wait(for: [derived], timeout: 10)

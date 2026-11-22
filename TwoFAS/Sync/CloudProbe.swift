@@ -30,6 +30,7 @@ public protocol CloudProbing: AnyObject {
 }
 
 public enum CloudProbeError: Error {
+    /// What is in the cloud isn't known – the query, or reading one of the records, failed
     case operationFailed
 }
 
@@ -41,6 +42,8 @@ public final class CloudProbe: CloudProbing {
     private var foundVaults: [VaultVersion] = []
     
     private var hasError = false
+    /// The query itself failed (no network, the service unavailable, …) – not the same as finding nothing
+    private var operationError: Error?
     
     public init() {
         container = CKContainer(identifier: Config.containerIdentifier)
@@ -63,7 +66,14 @@ public final class CloudProbe: CloudProbing {
         queryOperation.resultsLimit = 10
         
         queryOperation.recordMatchedBlock = recordMatchedBlock
-        queryOperation.completionBlock = completionBlock
+        // `completionBlock` of `Operation` doesn't say whether the query worked: a failed query would look like
+        // a cloud with no vaults
+        queryOperation.queryResultBlock = { [weak self] result in
+            if case .failure(let error) = result, !Self.meansNothingStored(error) {
+                self?.operationError = error
+            }
+            self?.completionBlock()
+        }
         
         database.add(queryOperation)
     }
@@ -105,8 +115,21 @@ public final class CloudProbe: CloudProbing {
         }
     }
     
+    /// The record type of the Info record isn't known to the container: no vault was ever saved
+    static func meansNothingStored(_ error: Error) -> Bool {
+        (error as? CKError)?.code == .unknownItem
+    }
+    
     func completionBlock() {
-        if self.hasError {
+        if let operationError {
+            let error = operationError as NSError
+            Log(
+                "CloudProbe: Error - the query failed (\(error.domain) \(error.code))",
+                module: .cloudSync,
+                severity: .error
+            )
+            completion?(.failure(CloudProbeError.operationFailed))
+        } else if self.hasError {
             completion?(.failure(CloudProbeError.operationFailed))
         } else {
             Log("CloudProbe: Query completed!, Vaults found: \(foundVaults.count)", module: .cloudSync)
@@ -114,6 +137,7 @@ public final class CloudProbe: CloudProbing {
         }
         completion = nil
         hasError = false
+        operationError = nil
         foundVaults = []
     }
 }

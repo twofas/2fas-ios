@@ -51,7 +51,13 @@ public protocol CloudBackupStateInteracting: AnyObject {
     func clearSaveSuccessSync()
     
     func exportKeys() -> (salt: Data, systemKey: Data)?
-    func importKeys(salt: Data, systemKey: Data, password: String?)
+    /// The key of the password is derived off the main thread; `completion` is called on the main thread
+    func importKeys(
+        salt: Data,
+        systemKey: Data,
+        password: String?,
+        completion: @escaping (CloudKeysImportResult) -> Void
+    )
     func packKeys(salt: Data, systemKey: Data) -> Data?
     func unpackKeys(from jsonData: Data) -> (salt: Data, systemKey: Data)?
     func reloadKeys()
@@ -180,8 +186,13 @@ extension CloudBackupStateInteractor: CloudBackupStateInteracting {
         mainRepository.cloudExportKeys()
     }
     
-    func importKeys(salt: Data, systemKey: Data, password: String?) {
-        mainRepository.cloudImportKeys(salt: salt, systemKey: systemKey, password: password)
+    func importKeys(
+        salt: Data,
+        systemKey: Data,
+        password: String?,
+        completion: @escaping (CloudKeysImportResult) -> Void
+    ) {
+        mainRepository.cloudImportKeys(salt: salt, systemKey: systemKey, password: password, completion: completion)
     }
     
     func packKeys(salt: Data, systemKey: Data) -> Data? {

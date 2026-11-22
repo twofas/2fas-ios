@@ -186,13 +186,18 @@ protocol MainRepository: AnyObject {
     var cloudCurrentEncryption: CloudEncryptionType? { get }
     func cloudChangePassword(_ password: String)
     func cloudSetMissingUserPassword(_ password: String)
-    func cloudRecoverMissingUserKey(_ password: String) -> Bool
+    func cloudRecoverMissingUserKey(_ password: String, completion: @escaping (Bool) -> Void)
     func cloudMigrateToSystemPassword()
     func cloudSwitchLocallyToUseSystemPassword()
     func cloudVerifyUserPassword(_ password: String, completion: @escaping (Bool) -> Void)
     // MARK: Encryption
     func cloudExportKeys() -> (salt: Data, systemKey: Data)?
-    func cloudImportKeys(salt: Data, systemKey: Data, password: String?)
+    func cloudImportKeys(
+        salt: Data,
+        systemKey: Data,
+        password: String?,
+        completion: @escaping (CloudKeysImportResult) -> Void
+    )
     func cloudPackKeys(salt: Data, systemKey: Data) -> Data?
     func cloudUnpackKeys(from jsonData: Data) -> (salt: Data, systemKey: Data)?
     func cloudReloadKeys()

@@ -68,10 +68,12 @@ extension ImportKeysModuleInteractor: ImportKeysModuleInteracting {
             completion(.failure(.cannotParseFile))
             return
         }
-        switch cloudBackup.importKeys(salt: keys.salt, systemKey: keys.systemKey, password: password) {
-        case .imported: completion(.success(()))
-        case .invalidKeys: completion(.failure(.invalidKeys))
-        case .doesNotOpenBackup: completion(.failure(.doesNotOpenBackup))
+        cloudBackup.importKeys(salt: keys.salt, systemKey: keys.systemKey, password: password) { result in
+            switch result {
+            case .imported: completion(.success(()))
+            case .invalidKeys: completion(.failure(.invalidKeys))
+            case .doesNotOpenBackup: completion(.failure(.doesNotOpenBackup))
+            }
         }
     }
 }

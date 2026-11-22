@@ -40,8 +40,9 @@ public protocol SyncMigrationInteracting: AnyObject {
     func switchLocallyToUseSystemPassword()
     func migrateToSystemPassword()
     func setMissingUserPassword(_ password: String)
-    /// - Returns: `false` when the password isn't the one the iCloud backup is encrypted with.
-    func recoverMissingUserKey(_ password: String) -> Bool
+    /// - Parameter completion: Called on the main thread; `false` when the password isn't the one the iCloud
+    ///   backup is encrypted with.
+    func recoverMissingUserKey(_ password: String, completion: @escaping (Bool) -> Void)
     /// Reports the problem the sync is stopped with now (if any) again – for a screen that appears after it happened
     func reportCurrentSyncProblem()
     
@@ -152,8 +153,8 @@ extension SyncMigrationInteractor: SyncMigrationInteracting {
         mainRepository.cloudSetMissingUserPassword(password)
     }
     
-    func recoverMissingUserKey(_ password: String) -> Bool {
-        mainRepository.cloudRecoverMissingUserKey(password)
+    func recoverMissingUserKey(_ password: String, completion: @escaping (Bool) -> Void) {
+        mainRepository.cloudRecoverMissingUserKey(password, completion: completion)
     }
     
     func reportCurrentSyncProblem() {

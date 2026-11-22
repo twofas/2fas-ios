@@ -217,8 +217,8 @@ extension MainRepositoryImpl {
         syncMigration.setMissingUserPassword(password)
     }
     
-    func cloudRecoverMissingUserKey(_ password: String) -> Bool {
-        syncMigration.recoverMissingUserKey(password)
+    func cloudRecoverMissingUserKey(_ password: String, completion: @escaping (Bool) -> Void) {
+        syncMigration.recoverMissingUserKey(password, completion: completion)
     }
     
     var cloudCurrentEncryption: CloudEncryptionType? {
@@ -235,8 +235,13 @@ extension MainRepositoryImpl {
         SyncInstance.exportKeys()
     }
     
-    func cloudImportKeys(salt: Data, systemKey: Data, password: String?) {
-        SyncInstance.importKeys(salt: salt, systemKey: systemKey, password: password)
+    func cloudImportKeys(
+        salt: Data,
+        systemKey: Data,
+        password: String?,
+        completion: @escaping (CloudKeysImportResult) -> Void
+    ) {
+        SyncInstance.importKeys(salt: salt, systemKey: systemKey, password: password, completion: completion)
     }
     
     func cloudPackKeys(salt: Data, systemKey: Data) -> Data? {

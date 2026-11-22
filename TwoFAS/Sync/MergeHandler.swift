@@ -32,20 +32,17 @@ final class MergeHandler {
     private let logHandler: LogHandler
     private let commonItemHandler: CommonItemHandler
     private let itemHandler: ItemHandler
-    private let cloudKit: CloudKit
     private let zoneManager: ZoneManaging
     
     init(
         logHandler: LogHandler,
         commonItemHandler: CommonItemHandler,
         itemHandler: ItemHandler,
-        cloudKit: CloudKit,
         zoneManager: ZoneManaging
     ) {
         self.logHandler = logHandler
         self.commonItemHandler = commonItemHandler
         self.itemHandler = itemHandler
-        self.cloudKit = cloudKit
         self.zoneManager = zoneManager
     }
 }
@@ -72,12 +69,12 @@ extension MergeHandler {
         if let deleted = changes[.deleted] {
             let deletedEntities: [EntityOfKind] = deleted.compactMap { item in
                 guard let type = RecordType(rawValue: item.kind) else { return nil }
-                // The record of a deletion is removed whenever its item exists again, in case there is one –
-                // asking the cloud to delete a record it doesn't have would fail the whole operation
-                if type == .deletedService || type == .deletedSection {
-                    guard itemHandler.findItemForEntryID(item.entityID, type: type, in: currentCache) != nil
-                    else { return nil }
-                }
+                // Only what the cloud has is removed from it. The record may be gone already – another device
+                // deleted the same item, or the record of a deletion is removed "in case there is one" whenever
+                // its item exists again – and asking the cloud to delete a record it doesn't have may fail the
+                // whole operation, again and again.
+                guard itemHandler.findItemForEntryID(item.entityID, type: type, in: currentCache) != nil
+                else { return nil }
                 return (entityID: item.entityID, type: type)
             }
             deleteRecordsIDs += itemHandler.findItemsRecordIDs(for: deletedEntities, zoneID: zoneManager.currentZoneID)
@@ -101,7 +98,9 @@ extension MergeHandler {
                         if dateOffsetet(for: newLogEntry) > cloudEntry.comparisionDate {
                             Log("MergeHandler: Creation: New entry newer than the cloud one", module: .cloudSync)
                             var list = listToSend[type] ?? []
-                            if currentEntry.index == cloudEntry.index {
+                            if type.isDeletion {
+                                replaceDeletion(newLogEntry.entityID, with: currentEntry.item, in: &list)
+                            } else if currentEntry.index == cloudEntry.index {
                                 Log("MergeHandler: Creation: Inserting in the same order", module: .cloudSync)
                                 list[cloudEntry.index] = currentEntry.item
                             } else {
@@ -145,7 +144,9 @@ extension MergeHandler {
                         }
                         if dateOffsetet(for: modifiedLogEntry) > cloudEntry.comparisionDate {
                             var list = listToSend[type] ?? []
-                            if currentEntry.index == cloudEntry.index {
+                            if type.isDeletion {
+                                replaceDeletion(modifiedLogEntry.entityID, with: currentEntry.item, in: &list)
+                            } else if currentEntry.index == cloudEntry.index {
                                 Log("MergeHandler: Modification: Item in place but overriding with local one", module: .cloudSync)
                                 list[cloudEntry.index] = currentEntry.item
                             } else {
@@ -168,7 +169,9 @@ extension MergeHandler {
             for (index, item) in items.enumerated() {
                 if let elementInCache = itemHandler.findItem(for: item, type: type, in: currentCache) {
                     Log("MergeHandler: Preparation: element in cache", module: .cloudSync)
-                    if index != elementInCache.index || !elementInCache.isEqual(to: item) {
+                    // The position of a deletion in its list says nothing – only what it holds counts
+                    let hasMoved = !type.isDeletion && index != elementInCache.index
+                    if hasMoved || !elementInCache.isEqual(to: item) {
                         Log("MergeHandler: Preparation: element has diffrent content or index. Creating from exisiting one", module: .cloudSync)
                         
                         guard let record = itemHandler.record(for: type, item: item, modifiedData: current) else {
@@ -208,6 +211,16 @@ extension MergeHandler {
         return (recordIDsToDeleteOnServer: recordIDsToDeleteOnServer, recordsToModifyOnServer: recordsToModifyOnServer)
     }
     // swiftlint:enable line_length
+    
+    /// Puts `item` in the place of the deletion whose record is named `recordName`. Deletions aren't found by an
+    /// index – every one of them reports 0.
+    private func replaceDeletion(_ recordName: String, with item: Any, in list: inout [Any]) {
+        if let index = list.firstIndex(where: { ($0 as? SyncDeletion)?.recordName == recordName }) {
+            list[index] = item
+        } else {
+            list.append(item)
+        }
+    }
     
     func setTimeOffset(_ offset: Int) {
         timeOffset = offset

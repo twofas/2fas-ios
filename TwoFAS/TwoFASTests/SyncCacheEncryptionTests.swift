@@ -92,6 +92,63 @@ final class SyncCacheEncryptionTests: XCTestCase {
         XCTAssertEqual(logHandler.countNotApplied(), 0)
     }
 
+    func testModificationsLoggedTogetherMatchOneByOne() {
+        func prepare() {
+            logHandler.deleteAll()
+            logHandler.log(entityID: "CREATED", actionType: .created, kind: .service3)
+            logHandler.log(entityID: "MODIFIED", actionType: .modified, kind: .service3)
+            logHandler.log(entityID: "DELETED", actionType: .deleted, kind: .service3)
+            logHandler.markAsApplied(for: "MODIFIED")
+        }
+        func state() -> [String] {
+            logHandler.listAll().map { "\($0.entityID) \($0.action) \($0.kind) \($0.isApplied)" }.sorted()
+        }
+        let modified = ["NEW1", "CREATED", "MODIFIED", "DELETED", "NEW2", "NEW1"]
+        
+        prepare()
+        modified.forEach { logHandler.log(entityID: $0, actionType: .modified, kind: .service3) }
+        let oneByOne = state()
+        prepare()
+        logHandler.logModified(entityIDs: modified, kind: .service3)
+        
+        XCTAssertEqual(state(), oneByOne)
+        XCTAssertEqual(state(), [
+            "CREATED created \(RecordType.service3.rawValue) false",
+            "DELETED deleted \(RecordType.service3.rawValue) false",
+            "MODIFIED modified \(RecordType.service3.rawValue) true",
+            "NEW1 modified \(RecordType.service3.rawValue) false",
+            "NEW2 modified \(RecordType.service3.rawValue) false"
+        ])
+    }
+    
+    func testModificationLoggedAgainIsNewer() {
+        func dates() -> [String: Date] {
+            Dictionary(uniqueKeysWithValues: logHandler.listAll().map { ($0.entityID, $0.date) })
+        }
+        logHandler.logModified(entityIDs: ["AAAA", "BBBB"], kind: .service3)
+        let before = dates()
+        Thread.sleep(forTimeInterval: 0.02)
+        
+        logHandler.logModified(entityIDs: ["BBBB", "CCCC"], kind: .service3)
+        
+        let after = dates()
+        XCTAssertEqual(after.count, 3)
+        XCTAssertEqual(after["AAAA"], before["AAAA"])
+        XCTAssertGreaterThan(after["BBBB"] ?? .distantPast, before["BBBB"] ?? .distantFuture)
+    }
+    
+    /// Deleting or moving an item on a long list modifies every item behind it
+    func testLoggingManyModificationsIsFast() {
+        let entityIDs = (0..<450).map { "SECRET\($0)" }
+        logHandler.logModified(entityIDs: entityIDs, kind: .service3)
+        
+        let start = Date()
+        logHandler.logModified(entityIDs: entityIDs, kind: .service3)
+        
+        XCTAssertLessThan(Date().timeIntervalSince(start), 0.1)
+        XCTAssertEqual(logHandler.countChanges(), 450)
+    }
+    
     func testFirstImportLogsEveryEntity() {
         logHandler.logFirstImport(entityIDs: ["SECTION-1", "SECTION-2"], kind: .section)
         context.reset()

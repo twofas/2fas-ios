@@ -146,6 +146,40 @@ final class LogEntity: NSManagedObject {
         return item
     }
     
+    /// The entries of many entities with a single fetch, by `entityID` in plain text. An entity without an entry –
+    /// or one whose hash can't be computed – is missing in the result.
+    @nonobjc static func findLogs(on context: NSManagedObjectContext, entityIDs: [String]) -> [String: LogEntity] {
+        var entityIDsByHash: [Data: String] = [:]
+        for entityID in entityIDs {
+            guard let hash = Self.entityIDHash(for: entityID, on: context) else { continue }
+            entityIDsByHash[hash] = entityID
+        }
+        guard !entityIDsByHash.isEmpty else { return [:] }
+        let fetchRequest = LogEntity.request()
+        fetchRequest.predicate = NSPredicate(format: "entityIDHash IN %@", entityIDsByHash.keys.map { $0 as NSData })
+        
+        var list: [LogEntity] = []
+        do {
+            list = try context.fetch(fetchRequest)
+        } catch {
+            let err = error as NSError
+            Log("LogEntity: \(err.localizedDescription)", module: .cloudSync)
+            return [:]
+        }
+        
+        var result: [String: LogEntity] = [:]
+        for item in list {
+            guard let entityID = entityIDsByHash[item.entityIDHash] else { continue }
+            // only one entry per log
+            if result[entityID] == nil {
+                result[entityID] = item
+            } else {
+                delete(on: context, logEntity: item)
+            }
+        }
+        return result
+    }
+    
     // MARK: - Private
     
     @nonobjc private static func listItems(on context: NSManagedObjectContext, isApplied: Bool?) -> [LogEntity] {

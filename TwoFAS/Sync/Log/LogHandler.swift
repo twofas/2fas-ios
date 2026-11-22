@@ -84,12 +84,42 @@ final class LogHandler {
                 delete(identifiedBy: entityID)
                 createLogEntry(with: entityID, actionType: .modified, kind: kind)
             } else if currentLogAction == .modified || currentLogAction == .created {
-                updateDate(for: entityID)
+                entity.date = Date()
                 coreDataStack.save()
             }
         } else {
             createLogEntry(with: entityID, actionType: actionType, kind: kind)
         }
+    }
+    
+    /// The same outcome as logging the modification of every entity one by one, but with a single fetch and a single
+    /// save – deleting or moving an item on a long list modifies every item behind it.
+    func logModified(entityIDs: [String], kind: RecordType) {
+        guard entityIDs.count > 1 else {
+            entityIDs.forEach { log(entityID: $0, actionType: .modified, kind: kind) }
+            return
+        }
+        Log("LogHandler - log. actionType: modified, kind: \(kind), count: \(entityIDs.count)", module: .cloudSync)
+        let context = coreDataStack.context
+        let existing = LogEntity.findLogs(on: context, entityIDs: entityIDs)
+        var logged = Set<String>()
+        for entityID in entityIDs where logged.insert(entityID).inserted {
+            if let entity = existing[entityID] {
+                // An entity logged as deleted stays deleted
+                if let action = LogActionType(rawValue: entity.action), action != .deleted {
+                    entity.date = Date()
+                }
+            } else {
+                LogEntity.create(
+                    on: context,
+                    entityID: entityID,
+                    action: LogActionType.modified.rawValue,
+                    date: Date(),
+                    kind: kind.rawValue
+                )
+            }
+        }
+        coreDataStack.save()
     }
     
     func listAll() -> [LogEntity] { LogEntity.listAll(on: coreDataStack.context) }

@@ -204,7 +204,7 @@ final class SyncHandler {
         isSyncing = true
         startedSync?()
         
-        Task {
+        Task { @MainActor in
             await migrationHandler.checkIfMigrationNeeded()
             modificationQueue.clear()
             cloudKit.cloudSync()

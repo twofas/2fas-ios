@@ -7,10 +7,51 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01AB8851998BD8799E697BB4 /* EncryptSyncContentMigrationPolicies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856DB80690736E7FE1DDECDE /* EncryptSyncContentMigrationPolicies.swift */; };
+		02168D0F138856939112918C /* LocalDataUnavailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37582F94EDDBE8ACF5A8794C /* LocalDataUnavailableView.swift */; };
+		05678C06C34DCA53099BC3AA /* LocalStorageCipherCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C08FFA31FCB9AEFE0E02253 /* LocalStorageCipherCore.swift */; };
+		0660D4E3240EFD696B77570F /* LocalStorageCipher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD987650A7102C671CCB477 /* LocalStorageCipher.swift */; };
+		079769D634222BD07BEDDA99 /* LocalStorageKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C07CA403CE35043B81B2DE /* LocalStorageKeyStore.swift */; };
+		0810FCFE8F6CF15C5F563E45 /* SyncStoreIntegrity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E4CF9C96E8FD0E601E3506 /* SyncStoreIntegrity.swift */; };
+		0A8E4FA446B6F93F6FBA34F7 /* SyncMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE3E5A1239FEBCDC2AE718EA /* SyncMigrationTests.swift */; platformFilter = ios; };
+		0FCD54168EB349945BE2254C /* LocalStorageBootstrapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE0888DAC7E4AF5ABFD3A88 /* LocalStorageBootstrapTests.swift */; platformFilter = ios; };
+		1406189D4218B785A52A61A6 /* LocalStorageCipherImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7452995D8561BF3FCE11FAB2 /* LocalStorageCipherImplTests.swift */; };
+		172C228E2FC093F84A3DDACE /* ServiceListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C9DF6807C5F2759F2987F0 /* ServiceListing.swift */; };
+		1AB3BE2E37FF6AF1E9881D97 /* ServiceCacheEntity+SealedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03948C2220CF4F8E6EB3343C /* ServiceCacheEntity+SealedContent.swift */; };
+		21C52924C62A35B0F0DACE69 /* SyncStoreIntegrity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E4CF9C96E8FD0E601E3506 /* SyncStoreIntegrity.swift */; };
+		23492661A71F502265396DCB /* AuthRequestEntity+SealedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CD160CFF78F2D1C20938BC /* AuthRequestEntity+SealedContent.swift */; };
+		2837F22596AC71F84CCF0726 /* TestabilitySmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2516B3E9C3A495C689AB44 /* TestabilitySmokeTests.swift */; platformFilter = ios; };
+		28E1D24E38103273C06A98A9 /* LocalStorageCipher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD987650A7102C671CCB477 /* LocalStorageCipher.swift */; };
+		2BA4D7A8AB97732F383AD50B /* LocalStorageBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABA4EC77373FDF93DE3D4FF /* LocalStorageBootstrap.swift */; };
+		2C258C331A4B775989C1B766 /* StorageMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6844BEBC3EB86C2556EDCDFB /* StorageMigrationTests.swift */; platformFilter = ios; };
+		304144A9E5C90B105C5E7E4B /* SealedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC0B886896AFB6E8DCA7B84 /* SealedContent.swift */; };
+		357547B1DE2C05A0CF308FF7 /* AuthRequestEntity+SealedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CD160CFF78F2D1C20938BC /* AuthRequestEntity+SealedContent.swift */; };
 		37D4E0A4779DA4A4A8EE9456 /* BackupAdvancedPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611EC89669C2A22EFC379597 /* BackupAdvancedPresenter+Menu.swift */; };
+		3CA48CA83E0FBA873AF4F3C5 /* EncryptSyncContentMigrationPolicies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856DB80690736E7FE1DDECDE /* EncryptSyncContentMigrationPolicies.swift */; };
+		3D7004567C9C4527319144C5 /* EncryptServiceContentMigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD8BB63B313134442416834 /* EncryptServiceContentMigrationPolicy.swift */; };
+		3F9693DBB2DAEAF23083E9BD /* ServiceSensitiveContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1694754651949220672511F5 /* ServiceSensitiveContent.swift */; };
+		44FDE56AA24C6473F1D4A3CE /* LocalStorageCipherCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51354A1A0C87ED7A5D876CB /* LocalStorageCipherCoreTests.swift */; };
+		4533BDFA3399C7860C9AAF07 /* LocalStoragePreflight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11871632C2AF648D8647E0C0 /* LocalStoragePreflight.swift */; };
+		462E071C4CEF95B7E9F02E31 /* SyncResetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA49A27D15412BC1B58CE5D8 /* SyncResetTests.swift */; platformFilter = ios; };
+		4A75DF8688BC150472EE6411 /* SyncCacheEncryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FE0DC6C30F81A6D50C8875 /* SyncCacheEncryptionTests.swift */; platformFilter = ios; };
+		51C39CF6245A69346EDA9E1B /* LocalStorageCipherImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEE1D1494D10CF2EFD69CCD /* LocalStorageCipherImpl.swift */; };
+		609DF0AA07EAC89B2C9E2C16 /* SealedContentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B69ECF2E59C69B0DE507D17 /* SealedContentTests.swift */; platformFilter = ios; };
+		61D9BD5434C384599F4F6668 /* LocalStorageCipherImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEE1D1494D10CF2EFD69CCD /* LocalStorageCipherImpl.swift */; };
 		640506B23BFADE99A62F57C6 /* BackupAdvancedFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C201B53DF56E466612F9BA2 /* BackupAdvancedFlowController.swift */; };
+		64097332AA1C890EC9D857D2 /* AccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25DCB2D2B8030B200871035 /* AccessManager.swift */; };
 		6806E49D6D5E4129B7F5EC5F /* BackupAdvancedModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036C032DDB742CE60E5E5CED /* BackupAdvancedModuleInteractor.swift */; };
 		689BFDC04760BA4D88CC5754 /* BackupAdvancedPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457CB80D24D195EAE61078D1 /* BackupAdvancedPresenter.swift */; };
+		70356B01D3DB23B78CB210E4 /* CoreDataStackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0CBEFBB247FDA992016B8FD /* CoreDataStackTests.swift */; platformFilter = ios; };
+		70AB9756CB7883CB91E77656 /* DeletedEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A45569B91888F9A8D2782C /* DeletedEntities.swift */; };
+		716AD771D7B7172A7B7FF780 /* StorageEncryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7940927086196563C2DBCEBE /* StorageEncryptionTests.swift */; platformFilter = ios; };
+		7192A5D3340C2B2888D516C0 /* ServiceListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C9DF6807C5F2759F2987F0 /* ServiceListing.swift */; };
+		737BE1C50950136C08BCAF6A /* ServiceSensitiveContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1694754651949220672511F5 /* ServiceSensitiveContent.swift */; };
+		73C1BF1F46162846BAA704EA /* LocalStorageTestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F28C257EF1CFE7F834CC5 /* LocalStorageTestSupport.swift */; platformFilter = ios; };
+		78423E75A730BBD304F131D1 /* LocalStorageBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABA4EC77373FDF93DE3D4FF /* LocalStorageBootstrap.swift */; };
+		80C133EF74933081EB81913C /* LocalStorageCipherCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C08FFA31FCB9AEFE0E02253 /* LocalStorageCipherCore.swift */; };
+		80F2924BCB2F5A75D03A5D4B /* CoreDataMigratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA1014B44C037CC7F4887A /* CoreDataMigratorTests.swift */; platformFilter = ios; };
+		8272A70BD04C3464111447C0 /* ServiceEntity+SealedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FE2393DC0162F208CCB7CF /* ServiceEntity+SealedContent.swift */; };
+		827C58C7F813186D2128B4DD /* SystemKeychainItemStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F1C0706B64EC2AF6EBCE23 /* SystemKeychainItemStoreTests.swift */; platformFilter = ios; };
 		8F00E46A2C23953B001F15AD /* SortTokensView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F00E4692C23953B001F15AD /* SortTokensView.swift */; };
 		8F0FFF002D04D73E0064B0D3 /* RevealTokenImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0FFEFF2D04D73D0064B0D3 /* RevealTokenImage.swift */; };
 		8F0FFF022D04D74E0064B0D3 /* CountdownTimerText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0FFF012D04D74D0064B0D3 /* CountdownTimerText.swift */; };
@@ -24,8 +65,15 @@
 		8F7952532C01D1940053F776 /* KeyboardButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7952522C01D1940053F776 /* KeyboardButtonStyle.swift */; };
 		8F872DE92C24EE2600160D14 /* SortTokensPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F872DE82C24EE2600160D14 /* SortTokensPresenter.swift */; };
 		8F872DEB2C24EE5500160D14 /* SortTokensInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F872DEA2C24EE5500160D14 /* SortTokensInteractor.swift */; };
+		90D18782157694EC58804D15 /* ServiceListingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EA423B095A89E04C4C07E2 /* ServiceListingTests.swift */; platformFilter = ios; };
+		9695B405FF4252A88FA7FBAF /* SealedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE49577517C0CF6538C32CB1 /* SealedEntity.swift */; };
+		A1D0EB17ACF89B02853748DF /* ServiceCacheEntity+SealedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03948C2220CF4F8E6EB3343C /* ServiceCacheEntity+SealedContent.swift */; };
 		AA0100000000000000000001 /* ProtonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0100000000000000000002 /* ProtonData.swift */; };
 		AA0100000000000000000003 /* BitwardenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0100000000000000000004 /* BitwardenData.swift */; };
+		B310C39F55264940F1A371BE /* StorageListingBenchmarkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2975FF1D1ACBE67F96604EB2 /* StorageListingBenchmarkTests.swift */; platformFilter = ios; };
+		B324C6F10D54ED236F1B5796 /* ServiceEntity+SealedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FE2393DC0162F208CCB7CF /* ServiceEntity+SealedContent.swift */; };
+		B4EDCEDF09BAA7B78B67BBA4 /* EncryptAuthRequestContentMigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F91FFB9BCB039C27E5E2FA /* EncryptAuthRequestContentMigrationPolicy.swift */; };
+		BD2FE20B9638C070CD769719 /* LocalStorageKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C07CA403CE35043B81B2DE /* LocalStorageKeyStore.swift */; };
 		C200E49E1FB3911B00D7C748 /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = C200E49C1FB3911B00D7C748 /* Storage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C200E4A11FB3911B00D7C748 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C200E4A21FB3911B00D7C748 /* Storage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1369,7 +1417,13 @@
 		C2FF03042FAB6DD800362B88 /* BorderShield.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF03032FAB6DD500362B88 /* BorderShield.swift */; };
 		C2FF03062FAB975A00362B88 /* PINKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF03052FAB973E00362B88 /* PINKeyboard.swift */; };
 		C2FF3EEC27B1CF0100642FA4 /* IconSelectorModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF3EEB27B1CF0100642FA4 /* IconSelectorModels.swift */; };
+		D89C70D54F8291DEF6F585C6 /* SealedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE49577517C0CF6538C32CB1 /* SealedEntity.swift */; };
+		E6C313AE516C2A676A2AB52F /* LogEntity+SealedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43879E47C0EEB917075E3DFF /* LogEntity+SealedContent.swift */; };
+		F2DA93A6617C98439AA71282 /* LogEntity+SealedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43879E47C0EEB917075E3DFF /* LogEntity+SealedContent.swift */; };
 		F359D064687935A24E141C3F /* BackupAdvancedModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E918664AADE7F5DD559327 /* BackupAdvancedModels.swift */; };
+		F364392AD486B31B304AA842 /* SealedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC0B886896AFB6E8DCA7B84 /* SealedContent.swift */; };
+		F5BD810467272C4753640B87 /* DeletedEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A45569B91888F9A8D2782C /* DeletedEntities.swift */; };
+		FB0BB905BFF39E55DD0B3506 /* LocalStorageKeyStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C8AD5D246051626CD0F26 /* LocalStorageKeyStoreTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1886,11 +1940,35 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		00CD160CFF78F2D1C20938BC /* AuthRequestEntity+SealedContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthRequestEntity+SealedContent.swift"; sourceTree = "<group>"; };
 		036C032DDB742CE60E5E5CED /* BackupAdvancedModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupAdvancedModuleInteractor.swift; sourceTree = "<group>"; };
+		03948C2220CF4F8E6EB3343C /* ServiceCacheEntity+SealedContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceCacheEntity+SealedContent.swift"; sourceTree = "<group>"; };
+		11871632C2AF648D8647E0C0 /* LocalStoragePreflight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoragePreflight.swift; sourceTree = "<group>"; };
+		1694754651949220672511F5 /* ServiceSensitiveContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceSensitiveContent.swift; sourceTree = "<group>"; };
+		19C9DF6807C5F2759F2987F0 /* ServiceListing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceListing.swift; sourceTree = "<group>"; };
+		24FE2393DC0162F208CCB7CF /* ServiceEntity+SealedContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceEntity+SealedContent.swift"; sourceTree = "<group>"; };
 		27E918664AADE7F5DD559327 /* BackupAdvancedModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupAdvancedModels.swift; sourceTree = "<group>"; };
+		2975FF1D1ACBE67F96604EB2 /* StorageListingBenchmarkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageListingBenchmarkTests.swift; sourceTree = "<group>"; };
+		37582F94EDDBE8ACF5A8794C /* LocalDataUnavailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataUnavailableView.swift; sourceTree = "<group>"; };
+		3D9C8AD5D246051626CD0F26 /* LocalStorageKeyStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageKeyStoreTests.swift; sourceTree = "<group>"; };
+		43879E47C0EEB917075E3DFF /* LogEntity+SealedContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogEntity+SealedContent.swift"; sourceTree = "<group>"; };
 		457CB80D24D195EAE61078D1 /* BackupAdvancedPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupAdvancedPresenter.swift; sourceTree = "<group>"; };
+		45BA1014B44C037CC7F4887A /* CoreDataMigratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataMigratorTests.swift; sourceTree = "<group>"; };
+		484F28C257EF1CFE7F834CC5 /* LocalStorageTestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageTestSupport.swift; sourceTree = "<group>"; };
+		4D2516B3E9C3A495C689AB44 /* TestabilitySmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestabilitySmokeTests.swift; sourceTree = "<group>"; };
+		53A45569B91888F9A8D2782C /* DeletedEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedEntities.swift; sourceTree = "<group>"; };
 		5C201B53DF56E466612F9BA2 /* BackupAdvancedFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupAdvancedFlowController.swift; sourceTree = "<group>"; };
 		611EC89669C2A22EFC379597 /* BackupAdvancedPresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackupAdvancedPresenter+Menu.swift"; sourceTree = "<group>"; };
+		6844BEBC3EB86C2556EDCDFB /* StorageMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageMigrationTests.swift; sourceTree = "<group>"; };
+		71EA423B095A89E04C4C07E2 /* ServiceListingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceListingTests.swift; sourceTree = "<group>"; };
+		7452995D8561BF3FCE11FAB2 /* LocalStorageCipherImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageCipherImplTests.swift; sourceTree = "<group>"; };
+		7940927086196563C2DBCEBE /* StorageEncryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageEncryptionTests.swift; sourceTree = "<group>"; };
+		7B69ECF2E59C69B0DE507D17 /* SealedContentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SealedContentTests.swift; sourceTree = "<group>"; };
+		7C08FFA31FCB9AEFE0E02253 /* LocalStorageCipherCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageCipherCore.swift; sourceTree = "<group>"; };
+		7DD8BB63B313134442416834 /* EncryptServiceContentMigrationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptServiceContentMigrationPolicy.swift; sourceTree = "<group>"; };
+		856DB80690736E7FE1DDECDE /* EncryptSyncContentMigrationPolicies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncryptSyncContentMigrationPolicies.swift; sourceTree = "<group>"; };
+		86FE0DC6C30F81A6D50C8875 /* SyncCacheEncryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCacheEncryptionTests.swift; sourceTree = "<group>"; };
+		8EEE1D1494D10CF2EFD69CCD /* LocalStorageCipherImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageCipherImpl.swift; sourceTree = "<group>"; };
 		8F00E4692C23953B001F15AD /* SortTokensView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTokensView.swift; sourceTree = "<group>"; };
 		8F0FFEFF2D04D73D0064B0D3 /* RevealTokenImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealTokenImage.swift; sourceTree = "<group>"; };
 		8F0FFF012D04D74D0064B0D3 /* CountdownTimerText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerText.swift; sourceTree = "<group>"; };
@@ -1912,8 +1990,12 @@
 		8FD3F0872C37324B0042092E /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8FD3F0882C37324B0042092E /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8FD3F0892C3732A80042092E /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = ../TwoFAS/Other/el.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9BD987650A7102C671CCB477 /* LocalStorageCipher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalStorageCipher.swift; sourceTree = "<group>"; };
 		AA0100000000000000000002 /* ProtonData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtonData.swift; sourceTree = "<group>"; };
 		AA0100000000000000000004 /* BitwardenData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitwardenData.swift; sourceTree = "<group>"; };
+		AE3E5A1239FEBCDC2AE718EA /* SyncMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMigrationTests.swift; sourceTree = "<group>"; };
+		B3F91FFB9BCB039C27E5E2FA /* EncryptAuthRequestContentMigrationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptAuthRequestContentMigrationPolicy.swift; sourceTree = "<group>"; };
+		BE183EFB90C26F13BD016CB1 /* TwoFAS8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS8.xcdatamodel; sourceTree = "<group>"; };
 		C200E49A1FB3911B00D7C748 /* Storage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Storage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C200E49C1FB3911B00D7C748 /* Storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
 		C200E49D1FB3911B00D7C748 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -3059,6 +3141,17 @@
 		C2FF03032FAB6DD500362B88 /* BorderShield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderShield.swift; sourceTree = "<group>"; };
 		C2FF03052FAB973E00362B88 /* PINKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINKeyboard.swift; sourceTree = "<group>"; };
 		C2FF3EEB27B1CF0100642FA4 /* IconSelectorModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorModels.swift; sourceTree = "<group>"; };
+		CE49577517C0CF6538C32CB1 /* SealedEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SealedEntity.swift; sourceTree = "<group>"; };
+		D32997BD5507C079A98975D1 /* Sync6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Sync6.xcdatamodel; sourceTree = "<group>"; };
+		D4F1C0706B64EC2AF6EBCE23 /* SystemKeychainItemStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemKeychainItemStoreTests.swift; sourceTree = "<group>"; };
+		DA49A27D15412BC1B58CE5D8 /* SyncResetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncResetTests.swift; sourceTree = "<group>"; };
+		DEE0888DAC7E4AF5ABFD3A88 /* LocalStorageBootstrapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageBootstrapTests.swift; sourceTree = "<group>"; };
+		E0CBEFBB247FDA992016B8FD /* CoreDataStackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackTests.swift; sourceTree = "<group>"; };
+		E4C07CA403CE35043B81B2DE /* LocalStorageKeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageKeyStore.swift; sourceTree = "<group>"; };
+		E51354A1A0C87ED7A5D876CB /* LocalStorageCipherCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageCipherCoreTests.swift; sourceTree = "<group>"; };
+		EABA4EC77373FDF93DE3D4FF /* LocalStorageBootstrap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalStorageBootstrap.swift; sourceTree = "<group>"; };
+		EAC0B886896AFB6E8DCA7B84 /* SealedContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SealedContent.swift; sourceTree = "<group>"; };
+		F9E4CF9C96E8FD0E601E3506 /* SyncStoreIntegrity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncStoreIntegrity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3367,6 +3460,9 @@
 				C200E49D1FB3911B00D7C748 /* Info.plist */,
 				C200E4C11FB392AE00D7C748 /* Other */,
 				C20F00AF256946930026FBB2 /* EncryptSecretEntityMigrationPolicy.swift */,
+				B3F91FFB9BCB039C27E5E2FA /* EncryptAuthRequestContentMigrationPolicy.swift */,
+				7DD8BB63B313134442416834 /* EncryptServiceContentMigrationPolicy.swift */,
+				53A45569B91888F9A8D2782C /* DeletedEntities.swift */,
 				C2AB25D928E0BF7B001CF6B3 /* DynamicTypesEntityMigrationPolicy.swift */,
 				C2B3D1A7267E6BEC009E6DE0 /* Extensions.swift */,
 			);
@@ -3617,6 +3713,9 @@
 				C2147CC3205D78790001D011 /* CodeStorage.swift */,
 				C2147CC4205D78790001D011 /* Extensions.swift */,
 				C20F00DD25698F0A0026FBB2 /* LocalKeyEncryption.swift */,
+				8EEE1D1494D10CF2EFD69CCD /* LocalStorageCipherImpl.swift */,
+				E4C07CA403CE35043B81B2DE /* LocalStorageKeyStore.swift */,
+				7C08FFA31FCB9AEFE0E02253 /* LocalStorageCipherCore.swift */,
 				C22E418725DF07B300105195 /* KeyEncryption.swift */,
 				C22E417825DF076300105195 /* LocalEncryptedStorage.swift */,
 				C23443DD26B08EAA00C9F645 /* ExtensionsStorage.swift */,
@@ -4208,6 +4307,7 @@
 			isa = PBXGroup;
 			children = (
 				C2058E08277D24940015F17E /* LogDataChange.swift */,
+				43879E47C0EEB917075E3DFF /* LogEntity+SealedContent.swift */,
 				C2D61E512560393000C5BE3A /* LogHandler.swift */,
 				C2D61E2F25602F4100C5BE3A /* LogEntity+CoreDataClass.swift */,
 				C2D61E3025602F4100C5BE3A /* LogEntity+CoreDataProperties.swift */,
@@ -4300,6 +4400,7 @@
 				C258594A28035205002DC749 /* AuthRequestEntity+CoreDataClass.swift */,
 				C258594B28035205002DC749 /* AuthRequestEntity+CoreDataProperties.swift */,
 				C2FA3E7A280AD60D0097ED71 /* AuthRequestFilterOptions.swift */,
+				00CD160CFF78F2D1C20938BC /* AuthRequestEntity+SealedContent.swift */,
 				C2FA3E7E280ADDB40097ED71 /* AuthRequestEntityToPairedAuthRequest.swift */,
 			);
 			path = AuthRequest;
@@ -4609,7 +4710,9 @@
 				C27FBA4B1FBA23DD00D424D8 /* ServiceEntity+CoreDataProperties.swift */,
 				C2BDC65C1FBB87C200967D0E /* ServiceData+Extensions.swift */,
 				C2872DDD27A6DF48000F5AE9 /* ServiceEntity+Extensions.swift */,
+				24FE2393DC0162F208CCB7CF /* ServiceEntity+SealedContent.swift */,
 				C2872DDF27A6EFB0000F5AE9 /* ServiceOptions.swift */,
+				19C9DF6807C5F2759F2987F0 /* ServiceListing.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -4951,6 +5054,20 @@
 				C2035D3D2938129000B94834 /* Generated */,
 				C2ACF9E620A8A918003E0987 /* TwoFASTests.swift */,
 				C2726DAC214D731B00F17977 /* DateTests.swift */,
+				DEE0888DAC7E4AF5ABFD3A88 /* LocalStorageBootstrapTests.swift */,
+				DA49A27D15412BC1B58CE5D8 /* SyncResetTests.swift */,
+				AE3E5A1239FEBCDC2AE718EA /* SyncMigrationTests.swift */,
+				86FE0DC6C30F81A6D50C8875 /* SyncCacheEncryptionTests.swift */,
+				6844BEBC3EB86C2556EDCDFB /* StorageMigrationTests.swift */,
+				7940927086196563C2DBCEBE /* StorageEncryptionTests.swift */,
+				2975FF1D1ACBE67F96604EB2 /* StorageListingBenchmarkTests.swift */,
+				71EA423B095A89E04C4C07E2 /* ServiceListingTests.swift */,
+				45BA1014B44C037CC7F4887A /* CoreDataMigratorTests.swift */,
+				E0CBEFBB247FDA992016B8FD /* CoreDataStackTests.swift */,
+				7B69ECF2E59C69B0DE507D17 /* SealedContentTests.swift */,
+				484F28C257EF1CFE7F834CC5 /* LocalStorageTestSupport.swift */,
+				D4F1C0706B64EC2AF6EBCE23 /* SystemKeychainItemStoreTests.swift */,
+				4D2516B3E9C3A495C689AB44 /* TestabilitySmokeTests.swift */,
 				C2726DAE214D8DCD00F17977 /* RatingControllerTests.swift */,
 				C2A2CB633127AEDE7B95A64F /* NetworkRequestSignerTests.swift */,
 				C2ACF9E820A8A918003E0987 /* Info.plist */,
@@ -5153,6 +5270,7 @@
 				C2CFA6A52AEEF0CB00E574FC /* RootModuleInteractor.swift */,
 				C2BDC6C11FC1AC0A00967D0E /* RootPresenter.swift */,
 				C2BDC6C01FC1AC0A00967D0E /* RootViewController.swift */,
+				37582F94EDDBE8ACF5A8794C /* LocalDataUnavailableView.swift */,
 				C2C66F8C1FE0683000AD5A1C /* Modules */,
 			);
 			path = Root;
@@ -5395,6 +5513,7 @@
 				C2404854276529FF0076376E /* MainRepositoryImpl+Export.swift */,
 				C2069C8E28C2866900321E44 /* MainRepositoryImpl+Import.swift */,
 				C2058E06277D21FB0015F17E /* MainRepositoryImpl+Storage.swift */,
+				11871632C2AF648D8647E0C0 /* LocalStoragePreflight.swift */,
 				C249AF7F278A537F005F9D80 /* MainRepositoryImpl+AppInfo.swift */,
 				C27CCE9B279DF8DC00C3D88F /* MainRepositoryImpl+Code.swift */,
 				C2B39C7927A5921900D3B579 /* MainRepositoryImpl+Vision.swift */,
@@ -5630,6 +5749,9 @@
 			isa = PBXGroup;
 			children = (
 				C2E53AE02B62DDAF008E1E70 /* CoreDataMigrationStep.swift */,
+				EABA4EC77373FDF93DE3D4FF /* LocalStorageBootstrap.swift */,
+				CE49577517C0CF6538C32CB1 /* SealedEntity.swift */,
+				EAC0B886896AFB6E8DCA7B84 /* SealedContent.swift */,
 				C2E53AE12B62DDAF008E1E70 /* CoreDataStack.swift */,
 				C2E53AE22B62DDAF008E1E70 /* CoreDataMigrationVersion.swift */,
 				C2E53AE32B62DDAF008E1E70 /* CoreDataMigrator.swift */,
@@ -5660,6 +5782,7 @@
 				C2E53AF02B62DDAF008E1E70 /* ListStyle.swift */,
 				C2E53AF12B62DDAF008E1E70 /* PairedWebExtension.swift */,
 				C2E53AF22B62DDAF008E1E70 /* PairedAuthRequest.swift */,
+				1694754651949220672511F5 /* ServiceSensitiveContent.swift */,
 				C2E53AF32B62DDAF008E1E70 /* LastNotification.swift */,
 				C2E53AF42B62DDAF008E1E70 /* TypeAliases.swift */,
 				C2E53AF52B62DDAF008E1E70 /* ServiceDefinition.swift */,
@@ -5698,6 +5821,7 @@
 				C2E53B0A2B62DDAF008E1E70 /* CommonSectionHandler.swift */,
 				C2E53B0B2B62DDAF008E1E70 /* CommonServiceHandler.swift */,
 				C2E53B0C2B62DDAF008E1E70 /* CommonLocalKeyEncryption.swift */,
+				9BD987650A7102C671CCB477 /* LocalStorageCipher.swift */,
 				C2727D522781FE3F00B8FA03 /* ServiceIconDefinition.swift */,
 			);
 			path = SharedProtocols;
@@ -5892,6 +6016,7 @@
 				C2EF402425582AFB0006735E /* ServiceCacheEntity+CoreDataClass.swift */,
 				C2EF402525582AFB0006735E /* ServiceCacheEntity+CoreDataProperties.swift */,
 				C27E6FB728FC995100AC9FD1 /* ServiceCacheEntity+toServiceData.swift */,
+				03948C2220CF4F8E6EB3343C /* ServiceCacheEntity+SealedContent.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -5909,12 +6034,14 @@
 				C244EF13268685BC0040A58F /* Sync2-Sync3.xcmappingmodel */,
 				C2EF401325582A7C0006735E /* Sync.xcdatamodeld */,
 				C27E6FAE28FC57FD00AC9FD1 /* DynamicTypesEntityMigrationPolicySync.swift */,
+				856DB80690736E7FE1DDECDE /* EncryptSyncContentMigrationPolicies.swift */,
 				C244EF10268674650040A58F /* Extensions.swift */,
 				C24EECEB268772B600C6ABAA /* RecordType.swift */,
 				C2C4F64828FE002F00285B81 /* RecordIDGenerator.swift */,
 				C2D75D36297D51B60002531E /* iCloudIdentifier.swift */,
 				C23BAB132545AEF5009B1EF8 /* ConstStorage.swift */,
 				C2CCEB5C2D822AF30067FDCB /* ModificationQueue.swift */,
+				F9E4CF9C96E8FD0E601E3506 /* SyncStoreIntegrity.swift */,
 				C2A7ABF1286328E60085CFEF /* SyncTokenHandler.swift */,
 				C25CB23A2D87442E0099FAFD /* MigrationHandling.swift */,
 				C2C0A7FF2DA2EF82000A1772 /* RequirementCheckHandling.swift */,
@@ -6002,6 +6129,9 @@
 			isa = PBXGroup;
 			children = (
 				C20F012925699C000026FBB2 /* LocalKeyEncryptionTests.swift */,
+				7452995D8561BF3FCE11FAB2 /* LocalStorageCipherImplTests.swift */,
+				3D9C8AD5D246051626CD0F26 /* LocalStorageKeyStoreTests.swift */,
+				E51354A1A0C87ED7A5D876CB /* LocalStorageCipherCoreTests.swift */,
 				C247AE539BABB490D31A3DAE /* RequestSigningKeyTests.swift */,
 				C2FA857D2426BB7300AACFC9 /* Info.plist */,
 			);
@@ -7025,6 +7155,9 @@
 				C200E4B71FB3913B00D7C748 /* ServiceHandler.swift in Sources */,
 				C200E4C01FB3926500D7C748 /* TwoFAS.xcdatamodeld in Sources */,
 				C20F00B0256946930026FBB2 /* EncryptSecretEntityMigrationPolicy.swift in Sources */,
+				B4EDCEDF09BAA7B78B67BBA4 /* EncryptAuthRequestContentMigrationPolicy.swift in Sources */,
+				3D7004567C9C4527319144C5 /* EncryptServiceContentMigrationPolicy.swift in Sources */,
+				F5BD810467272C4753640B87 /* DeletedEntities.swift in Sources */,
 				C258594F280374F4002DC749 /* StorageRepositoryImpl+Pairing.swift in Sources */,
 				C2D39DE32823302200E864E9 /* StorageRepositoryImpl+News.swift in Sources */,
 				C22CF3E327414073004F6A03 /* LogEntryEntity+CoreDataClass.swift in Sources */,
@@ -7034,7 +7167,9 @@
 				C22C139B267684DC001AA5F1 /* CategoryHandler.swift in Sources */,
 				C25E8995266402AD00A60CE5 /* SectionEntity+CoreDataProperties.swift in Sources */,
 				C2872DE027A6EFB0000F5AE9 /* ServiceOptions.swift in Sources */,
+				7192A5D3340C2B2888D516C0 /* ServiceListing.swift in Sources */,
 				C2FA3E7B280AD60D0097ED71 /* AuthRequestFilterOptions.swift in Sources */,
+				357547B1DE2C05A0CF308FF7 /* AuthRequestEntity+SealedContent.swift in Sources */,
 				C2D39DDD28232A4E00E864E9 /* NewsEntity+CoreDataClass.swift in Sources */,
 				C27FBA4C1FBA23DD00D424D8 /* ServiceEntity+CoreDataProperties.swift in Sources */,
 				C22CF3E827416271004F6A03 /* LogHandler.swift in Sources */,
@@ -7049,6 +7184,7 @@
 				C258594D28035205002DC749 /* AuthRequestEntity+CoreDataProperties.swift in Sources */,
 				C25E8994266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift in Sources */,
 				C2872DDE27A6DF48000F5AE9 /* ServiceEntity+Extensions.swift in Sources */,
+				8272A70BD04C3464111447C0 /* ServiceEntity+SealedContent.swift in Sources */,
 				C25E89902663F11900A60CE5 /* SectionData.swift in Sources */,
 				C22CF3E427414073004F6A03 /* LogEntryEntity+CoreDataProperties.swift in Sources */,
 				C258594728034E85002DC749 /* PairingEntity+CoreDataProperties.swift in Sources */,
@@ -7075,8 +7211,11 @@
 				C213BC332BAC3C82000794C9 /* CategoryHandler.swift in Sources */,
 				C213BC342BAC3C82000794C9 /* SectionEntity+CoreDataProperties.swift in Sources */,
 				C213BC352BAC3C82000794C9 /* ServiceOptions.swift in Sources */,
+				172C228E2FC093F84A3DDACE /* ServiceListing.swift in Sources */,
+				70AB9756CB7883CB91E77656 /* DeletedEntities.swift in Sources */,
 				C213BC602BAC3FE3000794C9 /* ServiceMigrationController.swift in Sources */,
 				C213BC362BAC3C82000794C9 /* AuthRequestFilterOptions.swift in Sources */,
+				23492661A71F502265396DCB /* AuthRequestEntity+SealedContent.swift in Sources */,
 				C213BC372BAC3C82000794C9 /* NewsEntity+CoreDataClass.swift in Sources */,
 				C213BC382BAC3C82000794C9 /* ServiceEntity+CoreDataProperties.swift in Sources */,
 				C213BC392BAC3C82000794C9 /* LogHandler.swift in Sources */,
@@ -7089,6 +7228,7 @@
 				C213BC422BAC3C82000794C9 /* AuthRequestEntity+CoreDataProperties.swift in Sources */,
 				C213BC432BAC3C82000794C9 /* SectionEntity+CoreDataClass.swift in Sources */,
 				C213BC442BAC3C82000794C9 /* ServiceEntity+Extensions.swift in Sources */,
+				B324C6F10D54ED236F1B5796 /* ServiceEntity+SealedContent.swift in Sources */,
 				C213BC452BAC3C82000794C9 /* SectionData.swift in Sources */,
 				C213BC462BAC3C82000794C9 /* LogEntryEntity+CoreDataProperties.swift in Sources */,
 				C213BC472BAC3C82000794C9 /* PairingEntity+CoreDataProperties.swift in Sources */,
@@ -7109,6 +7249,9 @@
 				C2673BE223D46F5D00A2CBA8 /* TokenStorage.swift in Sources */,
 				C2C15140294E831300F8B511 /* Keys.swift in Sources */,
 				C20F00DE25698F0A0026FBB2 /* LocalKeyEncryption.swift in Sources */,
+				61D9BD5434C384599F4F6668 /* LocalStorageCipherImpl.swift in Sources */,
+				BD2FE20B9638C070CD769719 /* LocalStorageKeyStore.swift in Sources */,
+				05678C06C34DCA53099BC3AA /* LocalStorageCipherCore.swift in Sources */,
 				C273ADF125E05D02007C5711 /* MigrationHandler.swift in Sources */,
 				C2147CC6205D787A0001D011 /* BiometricAuth.swift in Sources */,
 				C278121C27F9F3E600F31453 /* ExportPublicKey.swift in Sources */,
@@ -7170,6 +7313,7 @@
 				C284AF7927601BCF00FEE810 /* BackupDeleteFlowController.swift in Sources */,
 				C2E7C34B2ADB021500478D89 /* CameraOutputQRScanner.swift in Sources */,
 				C2BDC6C31FC1AC0A00967D0E /* RootViewController.swift in Sources */,
+				02168D0F138856939112918C /* LocalDataUnavailableView.swift in Sources */,
 				C2F9D60A2A1FEC700085B65A /* TokensRevealButton.swift in Sources */,
 				C27A54A827F0F3C700321D2B /* BrowserExtensionPairingPlainFlowController.swift in Sources */,
 				C2D2F7022FF0250F0008FE4D /* UserIconInfoView.swift in Sources */,
@@ -7636,8 +7780,10 @@
 				C2F5443525685C2100611716 /* SyncInstance.swift in Sources */,
 				C24EECF12687772800C6ABAA /* SectionCacheEntity+CoreDataClass.swift in Sources */,
 				C2058E09277D24940015F17E /* LogDataChange.swift in Sources */,
+				F2DA93A6617C98439AA71282 /* LogEntity+SealedContent.swift in Sources */,
 				C2C0A8002DA2EF8A000A1772 /* RequirementCheckHandling.swift in Sources */,
 				C27E6FB828FC995100AC9FD1 /* ServiceCacheEntity+toServiceData.swift in Sources */,
+				A1D0EB17ACF89B02853748DF /* ServiceCacheEntity+SealedContent.swift in Sources */,
 				C23BAB142545AEF5009B1EF8 /* ConstStorage.swift in Sources */,
 				C207C11F2559F1CB0053975E /* CloudKitErrorParser.swift in Sources */,
 				C24EECF6268787B400C6ABAA /* SectionHandler.swift in Sources */,
@@ -7654,6 +7800,7 @@
 				C24EECEC268772B600C6ABAA /* RecordType.swift in Sources */,
 				C2EFCE0725D05E320031293F /* ClearHandler.swift in Sources */,
 				C2CCEB5E2D822AF70067FDCB /* ModificationQueue.swift in Sources */,
+				21C52924C62A35B0F0DACE69 /* SyncStoreIntegrity.swift in Sources */,
 				C2A7ABF2286328E60085CFEF /* SyncTokenHandler.swift in Sources */,
 				C2C0A9822DA321FA000A1772 /* SyncEncryptionHandling.swift in Sources */,
 				C27E6FB128FC7E3800AC9FD1 /* ServiceRecord2.swift in Sources */,
@@ -7661,6 +7808,7 @@
 				C2EF21D725630C9D0075743D /* CloudAvailability.swift in Sources */,
 				C2EF402625582AFB0006735E /* ServiceCacheEntity+CoreDataClass.swift in Sources */,
 				C27E6FAF28FC57FD00AC9FD1 /* DynamicTypesEntityMigrationPolicySync.swift in Sources */,
+				01AB8851998BD8799E697BB4 /* EncryptSyncContentMigrationPolicies.swift in Sources */,
 				C2EF401525582A7D0006735E /* Sync.xcdatamodeld in Sources */,
 				C24EECFA26878C5C00C6ABAA /* CommonItemHandler.swift in Sources */,
 				C25CB3C32D878BCD0099FAFD /* SyncEncryptionHandler.swift in Sources */,
@@ -7699,7 +7847,9 @@
 				C25CB3C12D8785020099FAFD /* MigrationHandlerWatchPlaceholder.swift in Sources */,
 				C274C9992BAB89C7008E7212 /* SectionCacheEntity+CoreDataClass.swift in Sources */,
 				C274C99A2BAB89C7008E7212 /* LogDataChange.swift in Sources */,
+				E6C313AE516C2A676A2AB52F /* LogEntity+SealedContent.swift in Sources */,
 				C274C99C2BAB89C7008E7212 /* ServiceCacheEntity+toServiceData.swift in Sources */,
+				1AB3BE2E37FF6AF1E9881D97 /* ServiceCacheEntity+SealedContent.swift in Sources */,
 				C274C99D2BAB89C7008E7212 /* ConstStorage.swift in Sources */,
 				C274C99E2BAB89C7008E7212 /* CloudKitErrorParser.swift in Sources */,
 				C213BC192BAC3BD5000794C9 /* CommonItemHandler.swift in Sources */,
@@ -7717,12 +7867,14 @@
 				C274C9A82BAB89C7008E7212 /* SyncTokenHandler.swift in Sources */,
 				C274C9A92BAB89C7008E7212 /* ServiceRecord2.swift in Sources */,
 				C2CCEB5D2D822AF70067FDCB /* ModificationQueue.swift in Sources */,
+				0810FCFE8F6CF15C5F563E45 /* SyncStoreIntegrity.swift in Sources */,
 				C25CB23C2D8744310099FAFD /* MigrationHandling.swift in Sources */,
 				C274C9AA2BAB89C7008E7212 /* LogEntity+CoreDataProperties.swift in Sources */,
 				C274C9AB2BAB89C7008E7212 /* CloudAvailability.swift in Sources */,
 				C2CCEB602D8237AD0067FDCB /* MergeHandler.swift in Sources */,
 				C274C9AC2BAB89C7008E7212 /* ServiceCacheEntity+CoreDataClass.swift in Sources */,
 				C274C9AD2BAB89C7008E7212 /* DynamicTypesEntityMigrationPolicySync.swift in Sources */,
+				3CA48CA83E0FBA873AF4F3C5 /* EncryptSyncContentMigrationPolicies.swift in Sources */,
 				C274C9B12BAB89C7008E7212 /* ServiceRecord.swift in Sources */,
 				C257DD752D80E15F004FB575 /* ServiceRecord3.swift in Sources */,
 				C274C9B22BAB89C7008E7212 /* iCloudIdentifier.swift in Sources */,
@@ -7814,10 +7966,12 @@
 				C274C9EF2BAB8B92008E7212 /* Log.swift in Sources */,
 				C263E9C62D8791D100E98298 /* Data+.swift in Sources */,
 				C274C9F12BAB8B92008E7212 /* CommonLocalKeyEncryption.swift in Sources */,
+				28E1D24E38103273C06A98A9 /* LocalStorageCipher.swift in Sources */,
 				C22435F23096729E00E815F0 /* TFSearchField.swift in Sources */,
 				C2418F6B3006DCA6008B674A /* TFRowHeight.swift in Sources */,
 				C2A1B3B62BB6084100D6B923 /* PINType.swift in Sources */,
 				C274C9F22BAB8B92008E7212 /* PairedAuthRequest.swift in Sources */,
+				737BE1C50950136C08BCAF6A /* ServiceSensitiveContent.swift in Sources */,
 				C274C9F32BAB8B92008E7212 /* IconDescriptionGroup.swift in Sources */,
 				C274C9F42BAB8B92008E7212 /* ListNewsEntry.swift in Sources */,
 				C21508213002FDF7008B66E2 /* GradientIconTile.swift in Sources */,
@@ -7883,6 +8037,9 @@
 				C274CA092BAB8B92008E7212 /* ListStyle.swift in Sources */,
 				C274CA0A2BAB8B92008E7212 /* RefreshTimer.swift in Sources */,
 				C274CA0B2BAB8B92008E7212 /* CoreDataMigrationStep.swift in Sources */,
+				78423E75A730BBD304F131D1 /* LocalStorageBootstrap.swift in Sources */,
+				9695B405FF4252A88FA7FBAF /* SealedEntity.swift in Sources */,
+				304144A9E5C90B105C5E7E4B /* SealedContent.swift in Sources */,
 				C274CA0C2BAB8B92008E7212 /* ThemeMetrics.swift in Sources */,
 				C274CA0D2BAB8B92008E7212 /* Config.swift in Sources */,
 				C274CA0E2BAB8B92008E7212 /* LegacyExchangeDatabase.swift in Sources */,
@@ -7943,6 +8100,9 @@
 				C274CA972BAB8FD8008E7212 /* Protection.swift in Sources */,
 				C274CA692BAB8C3F008E7212 /* Keys.swift in Sources */,
 				C274CA6A2BAB8C3F008E7212 /* LocalKeyEncryption.swift in Sources */,
+				51C39CF6245A69346EDA9E1B /* LocalStorageCipherImpl.swift in Sources */,
+				079769D634222BD07BEDDA99 /* LocalStorageKeyStore.swift in Sources */,
+				80C133EF74933081EB81913C /* LocalStorageCipherCore.swift in Sources */,
 				C274CA962BAB8F97008E7212 /* Protection+.swift in Sources */,
 				C274CA6D2BAB8C3F008E7212 /* ExportPublicKey.swift in Sources */,
 				C274CA6E2BAB8C3F008E7212 /* Extensions.swift in Sources */,
@@ -7988,6 +8148,20 @@
 			files = (
 				C2ACF9E720A8A918003E0987 /* TwoFASTests.swift in Sources */,
 				C2726DAD214D731B00F17977 /* DateTests.swift in Sources */,
+				0FCD54168EB349945BE2254C /* LocalStorageBootstrapTests.swift in Sources */,
+				462E071C4CEF95B7E9F02E31 /* SyncResetTests.swift in Sources */,
+				0A8E4FA446B6F93F6FBA34F7 /* SyncMigrationTests.swift in Sources */,
+				4A75DF8688BC150472EE6411 /* SyncCacheEncryptionTests.swift in Sources */,
+				2C258C331A4B775989C1B766 /* StorageMigrationTests.swift in Sources */,
+				716AD771D7B7172A7B7FF780 /* StorageEncryptionTests.swift in Sources */,
+				B310C39F55264940F1A371BE /* StorageListingBenchmarkTests.swift in Sources */,
+				90D18782157694EC58804D15 /* ServiceListingTests.swift in Sources */,
+				80F2924BCB2F5A75D03A5D4B /* CoreDataMigratorTests.swift in Sources */,
+				70356B01D3DB23B78CB210E4 /* CoreDataStackTests.swift in Sources */,
+				609DF0AA07EAC89B2C9E2C16 /* SealedContentTests.swift in Sources */,
+				73C1BF1F46162846BAA704EA /* LocalStorageTestSupport.swift in Sources */,
+				827C58C7F813186D2128B4DD /* SystemKeychainItemStoreTests.swift in Sources */,
+				2837F22596AC71F84CCF0726 /* TestabilitySmokeTests.swift in Sources */,
 				C2726DAF214D8DCD00F17977 /* RatingControllerTests.swift in Sources */,
 				C2AEDE7B95A64F4B3B840A6D /* NetworkRequestSignerTests.swift in Sources */,
 				C2035D412938129000B94834 /* Mock.generated.swift in Sources */,
@@ -8033,6 +8207,7 @@
 			files = (
 				C2A7B99026B706B000055738 /* TwoFASWidget.intentdefinition in Sources */,
 				C2C3AE2A269E274700506ACF /* IntentHandler.swift in Sources */,
+				64097332AA1C890EC9D857D2 /* AccessManager.swift in Sources */,
 			);
 		};
 		C2DF71072B5DD31200D85D87 /* Sources */ = {
@@ -8059,9 +8234,11 @@
 				C22435EF3096729500E815F0 /* TFSegmentedControl.swift in Sources */,
 				C217CDC73032260F007D88C0 /* TFCancelButton.swift in Sources */,
 				C2E53B432B62DDAF008E1E70 /* CommonLocalKeyEncryption.swift in Sources */,
+				0660D4E3240EFD696B77570F /* LocalStorageCipher.swift in Sources */,
 				C2DFDBDE302C977100EFA0B5 /* TFEmptyScreen.swift in Sources */,
 				C2C0A97F2DA31ADD000A1772 /* DeviceCode.swift in Sources */,
 				C2E53B2C2B62DDAF008E1E70 /* PairedAuthRequest.swift in Sources */,
+				3F9693DBB2DAEAF23083E9BD /* ServiceSensitiveContent.swift in Sources */,
 				C2E53B222B62DDAF008E1E70 /* IconDescriptionGroup.swift in Sources */,
 				C2E53B352B62DDAF008E1E70 /* ListNewsEntry.swift in Sources */,
 				C2E53B282B62DDAF008E1E70 /* ServiceData.swift in Sources */,
@@ -8132,6 +8309,9 @@
 				C2E53B2A2B62DDAF008E1E70 /* ListStyle.swift in Sources */,
 				C2E53B172B62DDAF008E1E70 /* RefreshTimer.swift in Sources */,
 				C2E53B1B2B62DDAF008E1E70 /* CoreDataMigrationStep.swift in Sources */,
+				2BA4D7A8AB97732F383AD50B /* LocalStorageBootstrap.swift in Sources */,
+				D89C70D54F8291DEF6F585C6 /* SealedEntity.swift in Sources */,
+				F364392AD486B31B304AA842 /* SealedContent.swift in Sources */,
 				C2E53B122B62DDAF008E1E70 /* ThemeMetrics.swift in Sources */,
 				C2E53B112B62DDAF008E1E70 /* Config.swift in Sources */,
 				C2A1B3B52BB6084100D6B923 /* PINType.swift in Sources */,
@@ -8261,6 +8441,7 @@
 				C2E7C4062ADB2BB400478D89 /* PairingWebExtensionInteractor.swift in Sources */,
 				C2E7C4012ADB2BB400478D89 /* TrashingServiceInteractor.swift in Sources */,
 				C2E7C3D82ADB2B9C00478D89 /* MainRepositoryImpl+Storage.swift in Sources */,
+				4533BDFA3399C7860C9AAF07 /* LocalStoragePreflight.swift in Sources */,
 				C2AE5F7E2ADC8B0D00AED670 /* Extensions.swift in Sources */,
 				C22CD3922B913E94005FE348 /* MDMRepository.swift in Sources */,
 				C2E7C3F72ADB2BB400478D89 /* IconInteractor.swift in Sources */,
@@ -8339,6 +8520,9 @@
 			isa = PBXSourcesBuildPhase;
 			files = (
 				C20F012A25699C000026FBB2 /* LocalKeyEncryptionTests.swift in Sources */,
+				1406189D4218B785A52A61A6 /* LocalStorageCipherImplTests.swift in Sources */,
+				FB0BB905BFF39E55DD0B3506 /* LocalStorageKeyStoreTests.swift in Sources */,
+				44FDE56AA24C6473F1D4A3CE /* LocalStorageCipherCoreTests.swift in Sources */,
 				C2B490D31A3DAEDE83C377BA /* RequestSigningKeyTests.swift in Sources */,
 			);
 		};
@@ -8979,7 +9163,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
-				MARKETING_VERSION = 6.0.3;
+				MARKETING_VERSION = 6.0.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
@@ -10372,7 +10556,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
-				MARKETING_VERSION = 6.0.3;
+				MARKETING_VERSION = 6.0.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
@@ -10437,7 +10621,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
-				MARKETING_VERSION = 6.0.3;
+				MARKETING_VERSION = 6.0.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
@@ -12593,6 +12777,7 @@
 		C236667D1FB2644900989ACA /* TwoFAS.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				BE183EFB90C26F13BD016CB1 /* TwoFAS8.xcdatamodel */,
 				C2AB25D628E0BC97001CF6B3 /* TwoFAS7.xcdatamodel */,
 				C258594328034D7B002DC749 /* TwoFAS6.xcdatamodel */,
 				C2D958CF276FABE500B5A6BD /* TwoFAS5.xcdatamodel */,
@@ -12601,7 +12786,7 @@
 				C20F0080256938240026FBB2 /* TwoFAS2.xcdatamodel */,
 				C236667E1FB2644900989ACA /* TwoFAS.xcdatamodel */,
 			);
-			currentVersion = C2AB25D628E0BC97001CF6B3 /* TwoFAS7.xcdatamodel */;
+			currentVersion = BE183EFB90C26F13BD016CB1 /* TwoFAS8.xcdatamodel */;
 			path = TwoFAS.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
@@ -12609,13 +12794,14 @@
 		C2EF401325582A7C0006735E /* Sync.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				D32997BD5507C079A98975D1 /* Sync6.xcdatamodel */,
 				C27E6FAB28FC463600AC9FD1 /* Sync5.xcdatamodel */,
 				C2794BAC2774EB7000301F1A /* Sync4.xcdatamodel */,
 				C244EF12268680F70040A58F /* Sync3.xcdatamodel */,
 				C205A8B7261B761500E00286 /* Sync2.xcdatamodel */,
 				C2EF401425582A7C0006735E /* Sync.xcdatamodel */,
 			);
-			currentVersion = C27E6FAB28FC463600AC9FD1 /* Sync5.xcdatamodel */;
+			currentVersion = D32997BD5507C079A98975D1 /* Sync6.xcdatamodel */;
 			path = Sync.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

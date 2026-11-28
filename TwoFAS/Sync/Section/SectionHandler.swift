@@ -97,7 +97,17 @@ final class SectionHandler {
     
     func updateOrCreate(with record: SectionRecord, save: Bool) {
         if let section = findSection(by: record.sectionID) {
-            section.title = record.title
+            do {
+                try section.setTitle(record.title)
+            } catch {
+                Log(
+                    "SectionCacheEntity - can't update content: \(SealedEntity.describe(error))",
+                    module: .cloudSync,
+                    severity: .error
+                )
+                ConstStorage.syncResetRequired = true
+                return
+            }
             section.order = Int32(record.order)
             section.metadata = record.encodeSystemFields()
             section.creationDate = record.creationDate ?? Date()

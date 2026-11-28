@@ -140,10 +140,7 @@ extension WebExtensionAuthInteractor: WebExtensionAuthInteracting {
     }
     
     func saveAuthPairing(for domain: String, extensionID: ExtensionID, secret: String) {
-        Log(
-            "WebExtensionAuthInteractor - saveAuthPairing. Domain: \(domain), extensionID: \(extensionID)",
-            module: .interactor
-        )
+        Log("WebExtensionAuthInteractor - saveAuthPairing. extensionID: \(extensionID)", module: .interactor)
         mainRepository.createAuthRequest(for: secret, extensionID: extensionID, domain: domain)
     }
     

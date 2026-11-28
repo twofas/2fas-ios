@@ -188,7 +188,7 @@ protocol MainRepository: AnyObject {
     func cloudSetMissingUserPassword(_ password: String)
     func cloudMigrateToSystemPassword()
     func cloudSwitchLocallyToUseSystemPassword()
-    func cloudVerifyUserPassword(_ password: String) -> Bool
+    func cloudVerifyUserPassword(_ password: String, completion: @escaping (Bool) -> Void)
     // MARK: Encryption
     func cloudExportKeys() -> (salt: Data, systemKey: Data)?
     func cloudImportKeys(salt: Data, systemKey: Data, password: String?)
@@ -278,6 +278,9 @@ protocol MainRepository: AnyObject {
         source: ServiceSource,
         sectionID: SectionID?
     )
+    /// Counts of the records of deleted services and sections (tombstones)
+    var deletionsCount: (services: Int, sections: Int) { get }
+    func removeAllDeletions()
     #endif
     func updateService(
         _ serviceData: ServiceData,

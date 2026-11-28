@@ -42,9 +42,7 @@ final class LogDataChangeImpl: LogDataChange {
     }
     
     func logServicesModified(with secrets: [String]) {
-        secrets.forEach {
-            logHandler.log(entityID: $0, actionType: .modified, kind: .service3)
-        }
+        logHandler.logModified(entityIDs: secrets, kind: .service3)
     }
     
     func logServiceDeleted(with secret: String) {
@@ -61,9 +59,7 @@ final class LogDataChangeImpl: LogDataChange {
     }
     
     func logSectionsModified(with sectionIDs: [String]) {
-        sectionIDs.forEach({
-            logHandler.log(entityID: $0, actionType: .modified, kind: .section)
-        })
+        logHandler.logModified(entityIDs: sectionIDs, kind: .section)
     }
     
     func logSectionDeleted(with sectionID: String) {

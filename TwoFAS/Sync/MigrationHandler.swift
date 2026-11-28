@@ -46,6 +46,7 @@ extension MigrationHandler: MigrationHandling {
         zoneManager.currentZoneID.zoneName == Config.vaultV1 && isMigrating
     }
     
+    @MainActor
     func checkIfMigrationNeeded() async {
         guard !ConstStorage.cloudMigratedToV3 else {
             Log("MigrationHandler: cached value - already migrated", module: .cloudSync)

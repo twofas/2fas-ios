@@ -36,7 +36,7 @@ public final class ServiceIcon {
         ) {
             return img
         } else {
-            Log("Can't find icon for iconTypeID \(iconTypeID.uuidString)")
+            Log("Can't find icon for iconTypeID")
             log?(iconTypeID.uuidString)
             // assert(false, "Can't find icon for service \(iconTypeID.uuidString)")
             return UIImage(

@@ -63,7 +63,6 @@ public func AppEventLog(_ event: AppEvent) {
 }
 
 private enum AppEventController {
-    fileprivate static let KeyType = "type"
     fileprivate static let KeyId = "id"
     fileprivate static let KeyValue = "value"
     
@@ -119,10 +118,7 @@ private extension AppEvent {
     var value: [String: String]? {
         switch self {
         case .appUpdate(let string): return [AppEventController.KeyValue: string]
-        case .missingIcon(let string): return [AppEventController.KeyType: string]
-        case .missingIssuer(let string): return [AppEventController.KeyType: string]
         case .articleRead(let string): return [AppEventController.KeyId: string]
-        case .supportedCodeAdded(let string): return [AppEventController.KeyType: string]
         case .codeDetailsTypeAdded(let string): return [AppEventController.KeyValue: string]
         case .codeDetailsAlgorithmChosen(let string): return [AppEventController.KeyValue: string]
         case .codeDetailsRefreshTimeChosen(let string): return [AppEventController.KeyValue: string]

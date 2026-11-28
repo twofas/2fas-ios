@@ -74,6 +74,10 @@ final class MainRepositoryImpl: MainRepository {
     
     static var shared: MainRepository {
         if _shared == nil {
+            // Every entry point of the app checks the preflight first – nothing may use the data before it's ready
+            guard LocalStoragePreflight.run(userVisible: false) == .ready else {
+                fatalError("MainRepository used while the local storage isn't ready")
+            }
             MainRepositoryImpl.create(
                 serviceNameTranslation: DataExternalTranslations.serviceNameTranslation
             )
@@ -107,16 +111,23 @@ final class MainRepositoryImpl: MainRepository {
     var cachedSortTypeInitialized = false
     var _notificationState: PushNotificationState = .unknown
     
+    /// The local storage has to be ready (`LocalStoragePreflight`): the stores are migrated and the key can be used
     static func create(serviceNameTranslation: String) {
         ServiceIcon.log = { AppEventLog(.missingIcon($0)) }
-        let protection = Protection()
+        let protection = LocalStoragePreflight.protection
         
         EncryptionHolder.initialize(with: protection.localKeyEncryption)
         
-        let storage = Storage(readOnly: false) { error in
+        let storage = Storage(
+            readOnly: false,
+            cipher: protection.localStorageCipher,
+            allowsMigration: true
+        ) { error in
             DebugLog(error)
         }
-        
+        storage.loadStore()
+        storage.removeExpiredDeletions()
+
         LogStorage.setStorage(storage.log)
         
         let serviceMigration = ServiceMigrationController(storageRepository: storage.storageRepository)
@@ -125,7 +136,10 @@ final class MainRepositoryImpl: MainRepository {
             commonSectionHandler: storage.section,
             commonServiceHandler: storage.service,
             reference: protection.reference,
-            localEncryptionKeyData: protection.localEncryptionKeyData
+            localEncryptionKeyData: protection.localEncryptionKeyData,
+            cipher: protection.localStorageCipher,
+            allowsMigration: true,
+            storageMigrationDeferred: false
         ) {
             DebugLog("Sync: \($0)")
         }
@@ -149,8 +163,12 @@ final class MainRepositoryImpl: MainRepository {
             syncMigration: SyncInstance.getSyncMigrationHandler(),
             watchPairing: SyncInstance.getWatchPairHandler()
         )
+        // Until then the widget showed that the data is unavailable
+        if LocalStoragePreflight.didChangeStores {
+            _shared.reloadWidgets()
+        }
     }
-    
+
     init(
         pushNotifications: PushNotifications,
         cameraPermissions: CameraPermissions,

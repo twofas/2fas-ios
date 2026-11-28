@@ -58,8 +58,13 @@ final class DebugPresenter {
             case .trashAllServices: interactor.trashAllServices()
             case .restoreAllServices: interactor.restoreAllServices()
             case .emptyTrash: interactor.emptyTrash()
+            case .removeAllTombstones: interactor.removeAllTombstones()
             case .reloadPushToken: interactor.reloadPushToken()
             case .unpairAllBrowsers: interactor.unpairAllBrowsers()
+            case .removeLocalStorageKey, .replaceLocalStorageKey, .forgetLocalStorageKeyID,
+                 .setLostKeyCounterBeforeWipe, .resetLostKeyCounter,
+                 .keychainUnavailableOnce, .keychainUnavailableFiveTimes:
+                interactor.runLocalStorageKeyAction(action)
             }
         }
     }
@@ -125,10 +130,17 @@ extension DebugAction {
             "Restoring services from trash…"
         case .emptyTrash:
             "Emptying trash…"
+        case .removeAllTombstones:
+            "Removing tombstones…"
         case .reloadPushToken:
             "Reloading push token…"
         case .unpairAllBrowsers:
             "Unpairing browsers…"
+        case .removeLocalStorageKey, .replaceLocalStorageKey, .forgetLocalStorageKeyID,
+             .keychainUnavailableOnce, .keychainUnavailableFiveTimes:
+            "Closing the app…"
+        case .setLostKeyCounterBeforeWipe, .resetLostKeyCounter:
+            "Setting the counter…"
         }
     }
 
@@ -146,17 +158,34 @@ extension DebugAction {
             "Restore all services from trash"
         case .emptyTrash:
             "Empty trash"
+        case .removeAllTombstones:
+            "Remove all tombstones"
         case .reloadPushToken:
             "Reload push token"
         case .unpairAllBrowsers: 
             "Unpair all browsers"
+        case .removeLocalStorageKey:
+            "Remove the key from Keychain"
+        case .replaceLocalStorageKey:
+            "Replace the key with a new one"
+        case .forgetLocalStorageKeyID:
+            "Forget the key ID"
+        case .setLostKeyCounterBeforeWipe:
+            "Set lost-key counter to 2"
+        case .resetLostKeyCounter:
+            "Reset lost-key counter"
+        case .keychainUnavailableOnce:
+            "Keychain unavailable: next launch"
+        case .keychainUnavailableFiveTimes:
+            "Keychain unavailable: next 5 launches"
         }
     }
 
     var confirmationMessage: String {
         switch self {
         case .wipeDatabase:
-            "Cloud sync will be disabled and ALL services, sections and trash will be permanently removed."
+            "Cloud sync will be disabled and ALL services, sections, trash and tombstones will be permanently "
+            + "removed."
         case .resetApp: 
             "All UserDefaults will be cleared. Restart recommended."
         case .wipeAndReset:
@@ -166,19 +195,49 @@ extension DebugAction {
         case .restoreAllServices:
             "All trashed services will be restored."
         case .emptyTrash:
-            "All trashed services will be permanently removed."
+            "All trashed services will be permanently removed. Their tombstones stay."
+        case .removeAllTombstones:
+            "The records of deleted services and sections will be removed. Services and sections deleted here "
+            + "and still present on other devices won't be deleted there by sync."
         case .reloadPushToken: 
             "The device will re-register for remote notifications."
         case .unpairAllBrowsers: 
             "All paired browsers and pending auth requests will be removed."
+        case .removeLocalStorageKey:
+            "The local storage key is removed from Keychain, its ID stays. The app closes now. Expected: the "
+            + "\"key lost\" screen; the local data is removed in the 3rd launch opened by the user, never in the "
+            + "background."
+        case .replaceLocalStorageKey:
+            "Keychain gets another key under the same ID – it doesn't open the stored data. The app closes now. "
+            + "Expected: handled like a lost key (the \"key lost\" screen, removed in the 3rd launch opened by "
+            + "the user) – needs at least one service stored."
+        case .forgetLocalStorageKeyID:
+            "The key stays in Keychain, its ID is forgotten. The app closes now. Expected: handled like a lost "
+            + "key when there is stored data."
+        case .setLostKeyCounterBeforeWipe:
+            "The counter of launches with a lost key is set to 2. With the key lost, the next launch opened by "
+            + "the user removes the local data."
+        case .resetLostKeyCounter:
+            "The counter of launches with a lost key is set to 0."
+        case .keychainUnavailableOnce:
+            "Keychain pretends it can't be used in the next launch. The app closes now. Expected: the \"local "
+            + "data unavailable\" screen, nothing counted, nothing removed; the launch after it works again."
+        case .keychainUnavailableFiveTimes:
+            "Keychain pretends it can't be used in the next 5 launches. The app closes now. Expected: the "
+            + "\"local data unavailable\" screen every time, nothing counted, nothing removed."
         }
     }
 
     var isDestructive: Bool {
         switch self {
-        case .wipeDatabase, .resetApp, .wipeAndReset, .emptyTrash, .unpairAllBrowsers, .trashAllServices:
+        case .wipeDatabase, .resetApp, .wipeAndReset, .emptyTrash, .removeAllTombstones, .unpairAllBrowsers,
+             .trashAllServices,
+             .removeLocalStorageKey, .replaceLocalStorageKey, .forgetLocalStorageKeyID,
+             .setLostKeyCounterBeforeWipe:
             return true
-        case .restoreAllServices, .reloadPushToken: return false
+        case .restoreAllServices, .reloadPushToken, .resetLostKeyCounter,
+             .keychainUnavailableOnce, .keychainUnavailableFiveTimes:
+            return false
         }
     }
 }

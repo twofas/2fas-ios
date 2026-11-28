@@ -29,6 +29,16 @@ import CommonWatch
 final class SectionCacheEntity: NSManagedObject {
     @nonobjc private static let entityName = "SectionCacheEntity"
     
+    /// Valid only for the current bytes of `encryptedContent`
+    let contentCache = SealedContentCache<SectionSensitiveContent>()
+    
+    override func didTurnIntoFault() {
+        super.didTurnIntoFault()
+        contentCache.clear()
+    }
+    
+    /// Nothing is inserted when the title can't be sealed – a reset of the cache is scheduled then, as the cache
+    /// would miss the record.
     @nonobjc static func create(
         on context: NSManagedObjectContext,
         sectionID: String,
@@ -38,6 +48,22 @@ final class SectionCacheEntity: NSManagedObject {
         metadata: Data,
         order: Int32
     ) {
+        let content = SectionSensitiveContent(title: title)
+        let sealed: Data
+        do {
+            guard let cipher = context.localStorageCipher else { throw SealedEntity.Failure.missingCipher }
+            try cipher.prepareForWriting()
+            sealed = try contentCodec.seal(content, hashes: [identityData(of: sectionID)], cipher: cipher)
+        } catch {
+            Log(
+                "\(entityName) - can't seal new entity: \(SealedEntity.describe(error))",
+                module: .cloudSync,
+                severity: .error
+            )
+            ConstStorage.syncResetRequired = true
+            return
+        }
+        
         let section = NSEntityDescription.insertNewObject(
             forEntityName: entityName,
             into: context
@@ -45,7 +71,8 @@ final class SectionCacheEntity: NSManagedObject {
         
         section.metadata = metadata
         section.sectionID = sectionID
-        section.title = title
+        section.encryptedContent = sealed
+        section.contentCache.store(content, sealed: sealed)
         section.creationDate = creationDate
         section.modificationDate = modificationDate
         section.order = order
@@ -109,5 +136,43 @@ final class SectionCacheEntity: NSManagedObject {
     
     @nonobjc private static func delete(on context: NSManagedObjectContext, sectionEntity: SectionCacheEntity) {
         context.delete(sectionEntity)
+    }
+}
+
+// The title is a plain Swift property (not `@objc`), like the encrypted fields of `ServiceCacheEntity`
+extension SectionCacheEntity {
+    @nonobjc static let contentCodec = SealedContentCodec<SectionSensitiveContent>(entityName: "SectionCacheEntity")
+    
+    /// What binds the sealed title to its section
+    @nonobjc static func identityData(of sectionID: String) -> Data {
+        Data(sectionID.utf8)
+    }
+    
+    /// Throws when the title can't be decrypted – the cache can't be trusted then
+    @nonobjc func decryptedContent() throws -> SectionSensitiveContent {
+        try SealedEntity.openContent(
+            of: self,
+            sealed: { encryptedContent },
+            hashes: { [Self.identityData(of: sectionID)] },
+            codec: Self.contentCodec,
+            cache: contentCache
+        )
+    }
+    
+    /// Replaces the title. A failure changes nothing.
+    @nonobjc func setTitle(_ title: String) throws {
+        guard let cipher = managedObjectContext?.localStorageCipher else { throw SealedEntity.Failure.missingCipher }
+        let content = SectionSensitiveContent(title: title)
+        if let current = try? decryptedContent(), current == content { return }
+        let sealed = try Self.contentCodec.seal(content, hashes: [Self.identityData(of: sectionID)], cipher: cipher)
+        encryptedContent = sealed
+        contentCache.store(content, sealed: sealed)
+    }
+    
+    /// Empty when the title can't be decrypted – a reset of the cache is scheduled then
+    @nonobjc var title: String {
+        SyncStoreIntegrity.valueOrScheduleReset(entityName: "SectionCacheEntity", field: "content") {
+            try decryptedContent()
+        }?.title ?? ""
     }
 }

@@ -215,6 +215,10 @@ final class CloudHandler: CloudHandlerType {
             shouldResetState = false
             resetBeforeMigration()
         }
+        guard !isWaitingAfterQuotaError else {
+            Log("Cloud Handler -  over quota, not trying again yet", module: .cloudSync)
+            return
+        }
         switch currentState {
         case .unknown, .disabledNotAvailable:
             Log("Cloud Handler -  unknown state on synchronize", module: .cloudSync)
@@ -433,10 +437,24 @@ final class CloudHandler: CloudHandlerType {
         }
     }
     
+    /// The iCloud storage is full. Nothing is disabled or removed – Sync stays enabled, the user's encryption key and
+    /// the changes waiting to be sent are kept. Syncing is tried again (see `synchronize()`) and works as soon as
+    /// there's space.
     private func quotaError() {
         Log("Cloud Handler - Quota Error", module: .cloudSync)
-        clearAll()
+        cloudAvailability.clear()
+        lastQuotaError = Date()
         currentState = .disabledNotAvailable(reason: .overQuota)
+    }
+    
+    /// While the storage is full, syncing isn't tried more often than this – every try ends with the same error
+    /// shown to the user
+    private static let quotaRetryInterval: TimeInterval = 60 * 60
+    private var lastQuotaError: Date?
+    
+    private var isWaitingAfterQuotaError: Bool {
+        guard case .disabledNotAvailable(reason: .overQuota) = currentState, let lastQuotaError else { return false }
+        return Date().timeIntervalSince(lastQuotaError) < Self.quotaRetryInterval
     }
     
     private func disabledByUser() {

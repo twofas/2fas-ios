@@ -29,6 +29,14 @@ import CommonWatch
 final class SectionEntity: NSManagedObject {
     @nonobjc private static let entityName = "SectionEntity"
     
+    /// Valid only for the current bytes of `encryptedContent`
+    let contentCache = SealedContentCache<SectionSensitiveContent>()
+    
+    override func didTurnIntoFault() {
+        super.didTurnIntoFault()
+        contentCache.clear()
+    }
+    
     @nonobjc static func create(on context: NSManagedObjectContext, title: String) -> UUID {
         create(
             on: context,
@@ -50,9 +58,27 @@ final class SectionEntity: NSManagedObject {
         order: Int,
         isCollapsed: Bool = false
     ) -> UUID {
+        let content = SectionSensitiveContent(title: title)
+        let sealed: Data
+        do {
+            guard let cipher = context.localStorageCipher else { throw SealedEntity.Failure.missingCipher }
+            sealed = try contentCodec.seal(content, hashes: [sectionID.bytesData], cipher: cipher)
+        } catch {
+            Log(
+                "\(entityName) - can't seal new entity: \(SealedEntity.describe(error))",
+                module: .storage,
+                severity: .error
+            )
+            assertionFailure("\(entityName) - can't seal new entity")
+            return sectionID
+        }
+        // A section that exists isn't a deleted one
+        DeletedSectionEntity.remove(on: context, sectionID: sectionID)
+        
         let section = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as! SectionEntity
         
-        section.title = title
+        section.encryptedContent = sealed
+        section.contentCache.store(content, sealed: sealed)
         section.sectionID = sectionID
         section.order = Int32(order)
         section.isCollapsed = isCollapsed
@@ -86,7 +112,17 @@ final class SectionEntity: NSManagedObject {
             return
         }
         
-        sectionForUpdate.title = title
+        do {
+            try sectionForUpdate.updateContent { $0.title = title }
+        } catch {
+            Log(
+                "\(entityName) - can't update content: \(SealedEntity.describe(error))",
+                module: .storage,
+                severity: .error
+            )
+            assertionFailure("\(entityName) - can't update content")
+            return
+        }
         sectionForUpdate.modificationDate = Date()
     }
     
@@ -204,4 +240,39 @@ final class SectionEntity: NSManagedObject {
             s.order = Int32(index)
         }
     }
+}
+
+// The title is a plain Swift property (not `@objc`) – the legacy migration policies set the old model's attribute of
+// the same name through KVC on instances of this class.
+extension SectionEntity {
+    @nonobjc static let contentCodec = SealedContentCodec<SectionSensitiveContent>(entityName: "SectionEntity")
+    
+    /// `nil` when the content can't be decrypted
+    @nonobjc var content: SectionSensitiveContent? {
+        SealedEntity.content(
+            of: self,
+            entityName: "SectionEntity",
+            module: .storage,
+            sealed: { encryptedContent },
+            hashes: { [sectionID.bytesData] },
+            codec: Self.contentCodec,
+            cache: contentCache
+        )
+    }
+    
+    /// Changes the content with a single seal
+    @nonobjc func updateContent(_ change: (inout SectionSensitiveContent) -> Void) throws {
+        guard let cipher = managedObjectContext?.localStorageCipher else { throw SealedEntity.Failure.missingCipher }
+        // A section whose title can't be read can still be given a new one
+        let current = content
+        var updated = current ?? SectionSensitiveContent(title: "")
+        change(&updated)
+        guard updated != current else { return }
+        let sealed = try Self.contentCodec.seal(updated, hashes: [sectionID.bytesData], cipher: cipher)
+        encryptedContent = sealed
+        contentCache.store(updated, sealed: sealed)
+    }
+    
+    /// Empty when the content can't be decrypted
+    @nonobjc var title: String { content?.title ?? "" }
 }

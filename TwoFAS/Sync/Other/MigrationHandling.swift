@@ -33,6 +33,7 @@ protocol MigrationHandling: AnyObject {
     var isMigrating: Bool { get }
     var isMigratingInV1Zone: Bool { get }
     
+    @MainActor
     func checkIfMigrationNeeded() async
     func migrateIfNeeded() -> Bool
 }

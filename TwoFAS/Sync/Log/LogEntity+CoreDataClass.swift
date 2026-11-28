@@ -29,6 +29,19 @@ import CommonWatch
 final class LogEntity: NSManagedObject {
     @nonobjc private static let entityName = "LogEntity"
     
+    /// Valid only for the current bytes of `encryptedEntityID`. Not a transient attribute, so filling it never marks
+    /// the object as updated.
+    let contentCache = SealedContentCache<LogEntityContent>()
+    
+    override func didTurnIntoFault() {
+        super.didTurnIntoFault()
+        contentCache.clear()
+    }
+    
+    /// `entityID` in plain text. Nothing is inserted when it can't be sealed – a reset of the cache is scheduled then,
+    /// as the change would be lost.
+    /// - Returns: Whether the entry was inserted.
+    @discardableResult
     @nonobjc static func create(
         on context: NSManagedObjectContext,
         entityID: String,
@@ -36,14 +49,36 @@ final class LogEntity: NSManagedObject {
         date: Date,
         kind: String,
         isApplied: Bool = false
-    ) {
+    ) -> Bool {
+        let content = LogEntityContent(entityID: entityID)
+        let entityIDHash: Data
+        let sealed: Data
+        do {
+            guard let cipher = context.localStorageCipher else { throw SealedEntity.Failure.missingCipher }
+            // The hash is part of the associated data, so the key has to exist before hashing
+            try cipher.prepareForWriting()
+            entityIDHash = try Self.entityIDHash(for: content.entityID, cipher: cipher)
+            sealed = try contentCodec.seal(content, hashes: [entityIDHash], cipher: cipher)
+        } catch {
+            Log(
+                "\(entityName) - can't seal new entity: \(SealedEntity.describe(error))",
+                module: .cloudSync,
+                severity: .error
+            )
+            ConstStorage.syncResetRequired = true
+            return false
+        }
+        
         let logEntity = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as! LogEntity
     
-        logEntity.entityID = entityID
+        logEntity.entityIDHash = entityIDHash
+        logEntity.encryptedEntityID = sealed
+        logEntity.contentCache.store(content, sealed: sealed)
         logEntity.action = action
         logEntity.date = date
         logEntity.kind = kind
         logEntity.isApplied = isApplied
+        return true
     }
     
     @nonobjc static func listAll(on context: NSManagedObjectContext) -> [LogEntity] {
@@ -83,9 +118,11 @@ final class LogEntity: NSManagedObject {
         listItems(on: context, isApplied: false).count
     }
         
+    /// `entityID` in plain text. `nil` also when the hash can't be computed.
     @nonobjc static func findLog(on context: NSManagedObjectContext, entityID: String) -> LogEntity? {
+        guard let entityIDHash = Self.entityIDHash(for: entityID, on: context) else { return nil }
         let fetchRequest = LogEntity.request()
-        fetchRequest.predicate = NSPredicate(format: "entityID == %@", entityID)
+        fetchRequest.predicate = NSPredicate(format: "entityIDHash == %@", entityIDHash as NSData)
         
         var list: [LogEntity] = []
         do {
@@ -107,6 +144,40 @@ final class LogEntity: NSManagedObject {
         let item = list.first
         
         return item
+    }
+    
+    /// The entries of many entities with a single fetch, by `entityID` in plain text. An entity without an entry –
+    /// or one whose hash can't be computed – is missing in the result.
+    @nonobjc static func findLogs(on context: NSManagedObjectContext, entityIDs: [String]) -> [String: LogEntity] {
+        var entityIDsByHash: [Data: String] = [:]
+        for entityID in entityIDs {
+            guard let hash = Self.entityIDHash(for: entityID, on: context) else { continue }
+            entityIDsByHash[hash] = entityID
+        }
+        guard !entityIDsByHash.isEmpty else { return [:] }
+        let fetchRequest = LogEntity.request()
+        fetchRequest.predicate = NSPredicate(format: "entityIDHash IN %@", entityIDsByHash.keys.map { $0 as NSData })
+        
+        var list: [LogEntity] = []
+        do {
+            list = try context.fetch(fetchRequest)
+        } catch {
+            let err = error as NSError
+            Log("LogEntity: \(err.localizedDescription)", module: .cloudSync)
+            return [:]
+        }
+        
+        var result: [String: LogEntity] = [:]
+        for item in list {
+            guard let entityID = entityIDsByHash[item.entityIDHash] else { continue }
+            // only one entry per log
+            if result[entityID] == nil {
+                result[entityID] = item
+            } else {
+                delete(on: context, logEntity: item)
+            }
+        }
+        return result
     }
     
     // MARK: - Private

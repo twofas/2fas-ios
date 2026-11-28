@@ -23,11 +23,38 @@ import Protection
 import Common
 
 enum AccessManager {
-    static var serviceHandler: WidgetServiceHandlerType = {
-        EncryptionHolder.initialize(with: protection.localKeyEncryption)
-        return Storage(readOnly: true, initializeLogStorage: false, logError: nil).widgetService
-    }()
     static var protection: Protection = {
         Protection()
     }()
+
+    private static let lock = NSLock()
+    private static var cachedStorage: Storage?
+
+    /// Checked on every call, as this process may outlive what the main app does with the stores:
+    /// - a store opened in memory (its migration waits for the main app) isn't kept, so the widget shows the
+    ///   services once the main app has migrated the store,
+    /// - when the main app replaced the key (it reset the local data), the stores were replaced with it – the
+    ///   current key is loaded and the store is opened again.
+    static var storage: Storage {
+        lock.withLock {
+            let isKeyReplaced = protection.reloadLocalStorageKeyIfChanged()
+            if let cachedStorage, !cachedStorage.isMigrationDeferred, !isKeyReplaced {
+                return cachedStorage
+            }
+            EncryptionHolder.initialize(with: protection.localKeyEncryption)
+            let storage = Storage(
+                readOnly: true,
+                initializeLogStorage: false,
+                cipher: protection.localStorageCipher,
+                allowsMigration: false,
+                logError: nil
+            )
+            cachedStorage = storage
+            return storage
+        }
+    }
+
+    static var serviceHandler: WidgetServiceHandlerType {
+        storage.widgetService
+    }
 }

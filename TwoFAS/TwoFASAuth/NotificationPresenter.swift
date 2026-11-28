@@ -49,6 +49,7 @@ final class NotificationPresenter {
                 }
             case .failure(let error):
                 switch error {
+                case .localDataUnavailable: self?.view?.displayError(.localDataUnavailable)
                 case .notPairedWithDomain: self?.view?.displayNotPaired()
                 case .noServicesExists: self?.view?.displayNoServices()
                 default: self?.view?.displayError(.generalProblem)

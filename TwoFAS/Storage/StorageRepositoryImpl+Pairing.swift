@@ -47,14 +47,16 @@ extension StorageRepositoryImpl {
     }
     
     func listAllPairings() -> [PairedWebExtension] {
-        PairingEntity.listAll(on: context).map({
-            PairedWebExtension(
-                extensionID: $0.extensionID,
-                name: $0.name,
-                createdAt: $0.creationDate,
-                modifiedAt: $0.modifcationDate,
-                publicKey: $0.publicKey,
-                objectID: $0.objectID
+        // A pairing whose content can't be decrypted is skipped
+        PairingEntity.listAll(on: context).compactMap({ pairing in
+            guard let content = pairing.content else { return nil }
+            return PairedWebExtension(
+                extensionID: content.extensionID,
+                name: content.name,
+                createdAt: pairing.creationDate,
+                modifiedAt: pairing.modifcationDate,
+                publicKey: content.publicKey,
+                objectID: pairing.objectID
             )
         })
     }

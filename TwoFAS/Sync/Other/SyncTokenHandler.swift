@@ -26,6 +26,7 @@ import CommonWatch
 #endif
 
 final class SyncTokenHandler {
+    private let lock = NSLock()
     private var databaseChangeToken: CKServerChangeToken?
     private var zoneChangeToken: CKServerChangeToken?
     private var notificationsInitiated: Bool?
@@ -33,26 +34,28 @@ final class SyncTokenHandler {
     
     func setDatabaseChangeToken(_ databaseChangeToken: CKServerChangeToken) {
         Log("SyncTokenHandler: - setDatabaseChangeToken", module: .cloudSync)
-        self.databaseChangeToken = databaseChangeToken
+        lock.withLock { self.databaseChangeToken = databaseChangeToken }
     }
     
     func setZoneChangeToken(_ zoneChangeToken: CKServerChangeToken) {
         Log("SyncTokenHandler: - setZoneChangeToken", module: .cloudSync)
-        self.zoneChangeToken = zoneChangeToken
+        lock.withLock { self.zoneChangeToken = zoneChangeToken }
     }
     
     func setNotificationsInitiated() {
         Log("SyncTokenHandler: - setNotificationsInitiated", module: .cloudSync)
-        self.notificationsInitiated = true
+        lock.withLock { self.notificationsInitiated = true }
     }
     
     func setZoneInitiated() {
         Log("SyncTokenHandler: - zoneInitiated", module: .cloudSync)
-        self.zoneInitiated = true
+        lock.withLock { self.zoneInitiated = true }
     }
     
     func commitChanges() {
         Log("SyncTokenHandler: - commitChanges", module: .cloudSync)
+        lock.lock()
+        defer { lock.unlock() }
         
         if let databaseChangeToken {
             ConstStorage.databaseChangeToken = databaseChangeToken
@@ -72,15 +75,18 @@ final class SyncTokenHandler {
     
     func clearZone() {
         Log("SyncTokenHandler: - clear zone", module: .cloudSync)
-        clearAll()
-        ConstStorage.clearZone()
+        lock.withLock {
+            clearAll()
+            ConstStorage.clearZone()
+        }
     }
     
     func prepare() {
         Log("SyncTokenHandler: - prepare", module: .cloudSync)
-        clearAll()
+        lock.withLock { clearAll() }
     }
     
+    /// Has to be called while holding the lock
     private func clearAll() {
         databaseChangeToken = nil
         zoneChangeToken = nil

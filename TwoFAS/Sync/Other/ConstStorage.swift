@@ -28,6 +28,7 @@ enum ConstStorage {
     private static let KeyUsername = "KeyCloudUsername"
     private static let KeyCloudEnabled = "KeyCloudEnabled"
     private static let KeyCloudMigratedToV3 = "KeyCloudMigratedToV3"
+    private static let KeySyncResetRequired = "KeySyncResetRequired"
     
     private static let userDefaults = UserDefaults.standard
     
@@ -120,6 +121,16 @@ enum ConstStorage {
         get { userDefaults.bool(forKey: KeyCloudMigratedToV3) }
         set {
             userDefaults.set(newValue, forKey: KeyCloudMigratedToV3)
+            userDefaults.synchronize()
+        }
+    }
+    
+    /// The local Sync cache can't be trusted (e.g. it can't be decrypted) – reset from scratch before the next sync.
+    /// Persistent, so a reset that couldn't be done right away isn't lost.
+    static var syncResetRequired: Bool {
+        get { userDefaults.bool(forKey: KeySyncResetRequired) }
+        set {
+            userDefaults.set(newValue, forKey: KeySyncResetRequired)
             userDefaults.synchronize()
         }
     }

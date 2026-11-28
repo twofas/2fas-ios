@@ -221,8 +221,8 @@ extension MainRepositoryImpl {
         syncMigration.currentEncryption
     }
     
-    func cloudVerifyUserPassword(_ password: String) -> Bool {
-        syncMigration.verifyUserPassword(password)
+    func cloudVerifyUserPassword(_ password: String, completion: @escaping (Bool) -> Void) {
+        syncMigration.verifyUserPassword(password, completion: completion)
     }
     
     // Encryption

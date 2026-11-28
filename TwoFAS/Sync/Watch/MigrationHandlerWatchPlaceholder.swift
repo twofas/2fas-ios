@@ -28,6 +28,7 @@ final class MigrationHandlerWatchPlaceholder: MigrationHandling {
     var isMigrating: Bool { false }
     var isMigratingInV1Zone: Bool { false }
     
+    @MainActor
     func checkIfMigrationNeeded() async {}
     func migrateIfNeeded() -> Bool { false }
 }

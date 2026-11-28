@@ -190,6 +190,14 @@ extension MainRepositoryImpl {
 
         logDataChange.logNewServiceAdded(with: result)
     }
+
+    var deletionsCount: (services: Int, sections: Int) {
+        storage.deletionsCount
+    }
+
+    func removeAllDeletions() {
+        storage.removeAllDeletions()
+    }
     #endif
 
     func updateService(

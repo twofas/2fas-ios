@@ -162,7 +162,7 @@ private extension SelectFromGalleryPresenter {
     }
     
     func handleService(_ code: Code) {
-        Log("SelectFromGalleryPresenter: Found code: \(code)")
+        Log("SelectFromGalleryPresenter: Found code")
         if interactor.codeExists(code) {
             flowController.toDuplicatedCode { [weak self] in
                 self?.interactor.addSelectedCode(code, force: true)

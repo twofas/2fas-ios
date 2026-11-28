@@ -29,6 +29,20 @@ import CommonWatch
 final class ServiceCacheEntity: NSManagedObject {
     @nonobjc private static let entityName = "ServiceCacheEntity"
     
+    /// Valid only for the current bytes of `encryptedContent`. Not a transient attribute, so filling it never marks
+    /// the object as updated.
+    let contentCache = SealedContentCache<ServiceSensitiveContent>()
+    /// Valid only for the current bytes of `encryptedMetadata`
+    let metadataCache = SealedContentCache<Data>()
+    
+    override func didTurnIntoFault() {
+        super.didTurnIntoFault()
+        contentCache.clear()
+        metadataCache.clear()
+    }
+    
+    /// `secret` and `metadata` in plain text. Nothing is inserted when they can't be sealed – a reset of the cache is
+    /// scheduled then, as the cache would miss the record.
     @nonobjc static func create(
         on context: NSManagedObjectContext,
         metadata: Data,
@@ -54,18 +68,46 @@ final class ServiceCacheEntity: NSManagedObject {
         tokenType: String,
         source: String
     ) {
+        let content = ServiceSensitiveContent(
+            secret: secret.uppercased(),
+            name: name,
+            additionalInfo: additionalInfo,
+            rawIssuer: rawIssuer,
+            otpAuth: otpAuth,
+            labelTitle: labelTitle,
+            serviceTypeID: serviceTypeID,
+            iconTypeID: iconTypeID
+        )
+        let secretHash: Data
+        let sealed: Data
+        let sealedMetadata: Data
+        do {
+            guard let cipher = context.localStorageCipher else { throw SealedEntity.Failure.missingCipher }
+            // The hash is part of the associated data, so the key has to exist before hashing
+            try cipher.prepareForWriting()
+            secretHash = try Self.secretHash(for: content.secret, cipher: cipher)
+            sealed = try contentCodec.seal(content, hashes: [secretHash], cipher: cipher)
+            sealedMetadata = try sealMetadata(metadata, secretHash: secretHash, cipher: cipher)
+        } catch {
+            Log(
+                "\(entityName) - can't seal new entity: \(SealedEntity.describe(error))",
+                module: .cloudSync,
+                severity: .error
+            )
+            ConstStorage.syncResetRequired = true
+            return
+        }
+        
         let service = NSEntityDescription.insertNewObject(
             forEntityName: entityName,
             into: context
         ) as! ServiceCacheEntity
         
-        service.metadata = metadata
-        service.name = name
-        service.secret = secret
-        service.serviceTypeID = serviceTypeID
-        service.additionalInfo = additionalInfo
-        service.rawIssuer = rawIssuer
-        service.otpAuth = otpAuth
+        service.secretHash = secretHash
+        service.encryptedContent = sealed
+        service.contentCache.store(content, sealed: sealed)
+        service.encryptedMetadata = sealedMetadata
+        service.metadataCache.store(metadata, sealed: sealedMetadata)
         service.creationDate = creationDate
         service.modificationDate = modificationDate
         if let tokenPeriod {
@@ -73,9 +115,7 @@ final class ServiceCacheEntity: NSManagedObject {
         }
         service.tokenLength = NSNumber(value: tokenLength)
         service.badgeColor = badgeColor
-        service.iconTypeID = iconTypeID
         service.labelColor = labelColor
-        service.labelTitle = labelTitle
         service.iconType = iconType
         service.sectionID = sectionID
         service.sectionOrder = sectionOrder
@@ -91,22 +131,23 @@ final class ServiceCacheEntity: NSManagedObject {
         listItems(on: context)
     }
 
+    /// `secret` in plain text, in any case
     @nonobjc static func delete(on context: NSManagedObjectContext, identifiedBy secret: String) {
         guard let service = findService(on: context, secret: secret) else { return }
         delete(on: context, serviceEntity: service)
     }
     
-    @nonobjc static func delete(on context: NSManagedObjectContext, identifiedBy entryID: UUID) {
-        guard let service = findService(on: context, entryID: entryID) else { return }
-        delete(on: context, serviceEntity: service)
+    /// Doesn't open the content, so it removes also the entries that can't be decrypted
+    @nonobjc static func deleteAll(on context: NSManagedObjectContext) {
+        listItems(on: context).forEach {
+            delete(on: context, serviceEntity: $0)
+        }
     }
     
-    @nonobjc static func findService(on context: NSManagedObjectContext, entryID: UUID) -> ServiceCacheEntity? {
-        findService(on: context, predicate: NSPredicate(format: "entryID == %@", entryID as CVarArg))
-    }
-    
+    /// `secret` in plain text, in any case. `nil` also when the hash can't be computed.
     @nonobjc static func findService(on context: NSManagedObjectContext, secret: Secret) -> ServiceCacheEntity? {
-        findService(on: context, predicate: NSPredicate(format: "secret == %@", secret))
+        guard let secretHash = Self.secretHash(for: secret, on: context) else { return nil }
+        return findService(on: context, predicate: NSPredicate(format: "secretHash == %@", secretHash as NSData))
     }
         
     @nonobjc private static func findService(

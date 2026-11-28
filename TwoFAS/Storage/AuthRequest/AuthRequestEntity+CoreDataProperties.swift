@@ -25,9 +25,10 @@ extension AuthRequestEntity {
         NSFetchRequest<AuthRequestEntity>(entityName: "AuthRequestEntity")
     }
 
-    @NSManaged var secret: String
-    @NSManaged var extensionID: String
-    @NSManaged var domain: String
+    @NSManaged var secretHash: Data
+    @NSManaged var domainHash: Data
+    @NSManaged var encryptedContent: Data
+    @NSManaged var extensionIDHash: Data
     @NSManaged var lastUsed: Date
     @NSManaged var usedCount: Int32
     @NSManaged var creationDate: Date

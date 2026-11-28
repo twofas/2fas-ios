@@ -43,13 +43,12 @@ final class StorageRepositoryImpl: StorageRepository {
     // MARK: - StorageRepository Protocol implementation
     
     var hasServices: Bool {
-        listAllNotTrashed().count > 0
+        ServiceEntity.countNotTrashed(on: context) > 0
     }
     
     func trashService(_ serviceData: ServiceData) -> (deleted: String, modified: [String]) {
-        let encryptedSecret = serviceData.secret.encrypt()
-        ServiceEntity.markAsTrashed(on: context, encryptedSecret: encryptedSecret)
-        guard let serviceAfterTrashing = ServiceEntity.getService(on: context, encryptedSecret: encryptedSecret) else {
+        ServiceEntity.markAsTrashed(on: context, secret: serviceData.secret)
+        guard let serviceAfterTrashing = ServiceEntity.getService(on: context, secret: serviceData.secret) else {
             Log("Can't find item to trash for service: \(serviceData.debugServiceType)", module: .storage)
             save()
             return (deleted: serviceData.secret, modified: [])
@@ -61,7 +60,7 @@ final class StorageRepositoryImpl: StorageRepository {
         sectionList.updateOrder()
         
         let modified = listUpdatedServices()
-            .map({ $0.secret.decrypt() })
+            .readableSecrets
         
         save()
         
@@ -69,8 +68,7 @@ final class StorageRepositoryImpl: StorageRepository {
     }
     
     func untrashService(_ serviceData: ServiceData) -> (added: String?, modified: [String]) {
-        let encryptedSecret = serviceData.secret.encrypt()
-        guard let serviceForUntrasing = ServiceEntity.getService(on: context, encryptedSecret: encryptedSecret) else {
+        guard let serviceForUntrasing = ServiceEntity.getService(on: context, secret: serviceData.secret) else {
             Log("Can't find item to untrash for service: \(serviceData.debugServiceType)", module: .storage)
             return (added: nil, modified: [])
         }
@@ -90,17 +88,17 @@ final class StorageRepositoryImpl: StorageRepository {
         sectionList.append(serviceForUntrasing)
         sectionList.updateOrder()
         
-        ServiceEntity.markAsUntrashed(on: context, encryptedSecret: encryptedSecret)
+        ServiceEntity.markAsUntrashed(on: context, secret: serviceData.secret)
         
-        let serviceForUntrasingDecryptedString = serviceForUntrasing.secret.decrypt()
+        let untrashedSecret = serviceForUntrasing.content?.secret
         
         let modified = listUpdatedServices()
-            .map({ $0.secret.decrypt() })
-            .filter({ $0 != serviceForUntrasingDecryptedString })
+            .readableSecrets
+            .filter({ $0 != untrashedSecret })
         
         save()
         
-        return (added: serviceForUntrasingDecryptedString, modified: modified)
+        return (added: untrashedSecret, modified: modified)
     }
     
     func listTrashedServices() -> [ServiceData] {
@@ -110,7 +108,7 @@ final class StorageRepositoryImpl: StorageRepository {
     }
     
     func serviceExists(for secret: String) -> ServiceExistenceStatus {
-        guard let service = ServiceEntity.getService(on: context, encryptedSecret: secret.encrypt()) else {
+        guard let service = ServiceEntity.getService(on: context, secret: secret) else {
             return .no
         }
         if service.isTrashed.boolValue == true {
@@ -120,7 +118,7 @@ final class StorageRepositoryImpl: StorageRepository {
     }
     
     func trashedService(for secret: String) -> ServiceData? {
-        ServiceEntity.getService(on: context, encryptedSecret: secret.encrypt())?
+        ServiceEntity.getService(on: context, secret: secret)?
             .toServiceData()
     }
     
@@ -149,12 +147,11 @@ final class StorageRepositoryImpl: StorageRepository {
         tokenType: TokenType,
         source: ServiceSource
     ) -> String {
-        let encryptedSecret = secret.encrypt()
         let date = Date()
         ServiceEntity.create(
             on: coreDataStack.context,
             name: name,
-            encryptedSecret: encryptedSecret,
+            secret: secret,
             serviceTypeID: serviceTypeID,
             additionalInfo: additionalInfo,
             rawIssuer: rawIssuer,
@@ -201,14 +198,13 @@ final class StorageRepositoryImpl: StorageRepository {
         sectionID: SectionID?,
         source: ServiceSource
     ) -> String {
-        let encryptedSecret = secret.encrypt()
         let date = Date()
         let targetSectionServicesCount = ServiceEntity.listAll(on: context, sectionID: sectionID).count
         
         ServiceEntity.create(
             on: coreDataStack.context,
             name: name,
-            encryptedSecret: encryptedSecret,
+            secret: secret,
             serviceTypeID: serviceTypeID,
             additionalInfo: additionalInfo,
             rawIssuer: rawIssuer,
@@ -247,12 +243,10 @@ final class StorageRepositoryImpl: StorageRepository {
         labelTitle: String,
         counter: Int?
     ) -> String {
-        let encryptedSecret = serviceData.secret.encrypt()
-        
         ServiceEntity.update(
             on: coreDataStack.context,
             name: name,
-            encryptedSecret: encryptedSecret,
+            secret: serviceData.secret,
             additionalInfo: additionalInfo,
             modificationDate: Date(),
             badgeColor: badgeColor?.rawValue,
@@ -271,14 +265,14 @@ final class StorageRepositoryImpl: StorageRepository {
     func deleteServices(_ services: [ServiceData]) {
         services.forEach {
             Log("Deleting Service: \($0.debugServiceType)", module: .storage)
-            ServiceEntity.delete(on: context, encryptedSecret: $0.secret.encrypt())
+            ServiceEntity.delete(on: context, secret: $0.secret)
         }
         save()
     }
     
     func deleteService(_ serviceData: ServiceData) {
         Log("Deleting Service: \(serviceData.debugServiceType)", module: .storage)
-        ServiceEntity.delete(on: context, encryptedSecret: serviceData.secret.encrypt())
+        ServiceEntity.delete(on: context, secret: serviceData.secret)
         save()
     }
     
@@ -315,7 +309,7 @@ final class StorageRepositoryImpl: StorageRepository {
     }
     
     func findService(for secret: String) -> ServiceData? {
-        ServiceEntity.findService(on: context, encryptedSecret: secret.encrypt())?
+        ServiceEntity.findService(on: context, secret: secret)?
             .toServiceData()
     }
     
@@ -325,8 +319,7 @@ final class StorageRepositoryImpl: StorageRepository {
     }
     
     func countServicesNotTrashed() -> Int {
-        ServiceEntity.listAllNotTrashed(on: coreDataStack.context)
-            .count
+        ServiceEntity.countNotTrashed(on: coreDataStack.context)
     }
     
     func incrementCounter(for secret: String) -> String? {

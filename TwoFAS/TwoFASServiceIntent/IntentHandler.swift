@@ -28,11 +28,9 @@ import Content
 final class IntentHandler: INExtension, SelectServiceIntentHandling {
     private let domain = "2FAS_Widget"
     
-    private lazy var protection = Protection()
-    private lazy var serviceHandler: WidgetServiceHandlerType = {
-        EncryptionHolder.initialize(with: protection.localKeyEncryption)
-        return Storage(readOnly: true, logError: nil).widgetService
-    }()
+    private var protection: Protection { AccessManager.protection }
+    /// Through `AccessManager` – it reopens the store when the main app migrated it or replaced the key
+    private var serviceHandler: WidgetServiceHandlerType { AccessManager.serviceHandler }
     
     func provideServiceOptionsCollection(
         for intent: SelectServiceIntent,

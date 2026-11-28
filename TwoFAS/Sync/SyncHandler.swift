@@ -24,6 +24,7 @@ import Common
 import CommonWatch
 #endif
 import CloudKit
+import CoreData
 
 final class SyncHandler {
     private let logHandler: LogHandler
@@ -35,6 +36,9 @@ final class SyncHandler {
     private let migrationHandler: MigrationHandling
     private let requirementCheck: RequirementCheckHandling
     private let reencryptionHandler: ReencryptionHandling
+    private let localReset: SyncLocalReset
+    private let isSyncDeferred: Bool
+    private let syncContext: () -> NSManagedObjectContext
     
     private var isSyncing = false
     private var applyingChanges = false
@@ -52,6 +56,10 @@ final class SyncHandler {
     
     var container: CKContainer { cloudKit.container }
     
+    /// - Parameter isSyncDeferred: Sync doesn't run in this launch – a stack was opened in memory because its migration
+    ///   was deferred. `firstStart()` only schedules a reset then.
+    /// - Parameter syncContext: The context of the Sync store. Evaluated lazily – the store is loaded (and migrated)
+    ///   only on first use.
     init(
         itemHandler: ItemHandler,
         commonItemHandler: CommonItemHandler,
@@ -61,7 +69,10 @@ final class SyncHandler {
         mergeHandler: MergeHandler,
         migrationHandler: MigrationHandling,
         requirementCheck: RequirementCheckHandling,
-        reencryptionHandler: ReencryptionHandling
+        reencryptionHandler: ReencryptionHandling,
+        localReset: SyncLocalReset,
+        isSyncDeferred: Bool,
+        syncContext: @autoclosure @escaping () -> NSManagedObjectContext
     ) {
         self.itemHandler = itemHandler
         self.commonItemHandler = commonItemHandler
@@ -72,6 +83,9 @@ final class SyncHandler {
         self.migrationHandler = migrationHandler
         self.requirementCheck = requirementCheck
         self.reencryptionHandler = reencryptionHandler
+        self.localReset = localReset
+        self.isSyncDeferred = isSyncDeferred
+        self.syncContext = syncContext
         
         cloudKit.initialize()
         
@@ -93,6 +107,10 @@ final class SyncHandler {
         cloudKit.quotaExceeded = { [weak self] in
             Log("SyncHandler - Quota exceeded!", module: .cloudSync)
             self?.handleNotificationCompletionHandlerError()
+            // Sync stays enabled and is tried again later: it mustn't be left as still in progress, and the log of
+            // the changes waiting to be sent is kept
+            self?.isSyncing = false
+            self?.applyingChanges = false
             self?.quotaExceeded?()
         }
         cloudKit.userDisablediCloud = { [weak self] in
@@ -140,25 +158,53 @@ final class SyncHandler {
     
     func firstStart() {
         Log("SyncHandler - first start!", module: .cloudSync)
-        
-        logHandler.deleteAll()
-        itemHandler.purge()
-        ConstStorage.clearZone()
-        modificationQueue.clear()
-        
-        commonItemHandler.logFirstImport()
+        SyncStoreIntegrity.startFromScratch(on: syncContext(), isDeferred: isSyncDeferred) {
+            logHandler.deleteAll()
+            itemHandler.purge()
+            ConstStorage.clearZone()
+            modificationQueue.clear()
+            
+            commonItemHandler.logFirstImport()
+        }
     }
     
     func synchronize() {
-        guard !isSyncing else {
+        let cipherState = SyncStoreIntegrity.cipherState(of: syncContext())
+        // Before anything reads the cache – never while a sync is in progress, as that one still uses the cache
+        let preflight = SyncPreflight.decide(
+            cipherState: cipherState,
+            isDeferred: isSyncDeferred,
+            isSyncing: isSyncing,
+            resetRequired: ConstStorage.syncResetRequired,
+            isCacheReadable: { SyncStoreIntegrity.verify(context: syncContext()) }
+        )
+        if let result = preflight.notificationResult {
+            completeNotification(with: result)
+        }
+        switch preflight {
+        case .notAllowed:
+            Log(
+                "SyncHandler - Can't start sync. Local storage key state: \(cipherState), "
+                + "deferred for this launch: \(isSyncDeferred). Exiting",
+                module: .cloudSync
+            )
+            return
+        case .inProgress:
             Log("SyncHandler - Can't start sync. Already in progress. Exiting", module: .cloudSync)
             return
+        case .resetFirst:
+            guard resetCache() else {
+                completeNotification(with: .failed)
+                return
+            }
+        case .proceed:
+            break
         }
         Log("SyncHandler - Sync Handler: synchronizing", module: .cloudSync)
         isSyncing = true
         startedSync?()
         
-        Task {
+        Task { @MainActor in
             await migrationHandler.checkIfMigrationNeeded()
             modificationQueue.clear()
             cloudKit.cloudSync()
@@ -318,6 +364,28 @@ final class SyncHandler {
         fromNotificationCompletionHandler = nil
     }
     
+    private func completeNotification(with result: BackgroundFetchResult) {
+        fromNotificationCompletionHandler?(result)
+        fromNotificationCompletionHandler = nil
+    }
+    
+    /// Resets the cache from scratch (a reset is scheduled or the cache can't be decrypted). `false` when the first
+    /// import couldn't be logged or the cache still can't be decrypted afterwards – it mustn't be synced then.
+    private func resetCache() -> Bool {
+        Log("SyncHandler - Resetting the cache from scratch", module: .cloudSync)
+        guard localReset.perform() else { return false }
+        guard SyncStoreIntegrity.verify(context: syncContext()) else {
+            Log(
+                "SyncHandler - Can't start sync. The cache can't be decrypted after a reset",
+                module: .cloudSync,
+                severity: .error
+            )
+            ConstStorage.syncResetRequired = true
+            return false
+        }
+        return true
+    }
+    
     private func resetStack() {
         Log("SyncHandler - Sync Handler: resetStack", module: .cloudSync)
         isSyncing = false
@@ -337,6 +405,11 @@ final class SyncHandler {
     private func saveCloudDataToLocalDatabase() -> Bool {
         Log("SyncHandler - Sending current cloud state to local database", module: .cloudSync)
         let cloudData = itemHandler.listAllCommonItems()
+        // A part of the cache couldn't be decrypted while it was read – it would look like deletions in the cloud
+        guard !ConstStorage.syncResetRequired else {
+            Log("SyncHandler - The cache can't be decrypted. Not setting data, reset scheduled", module: .cloudSync)
+            return false
+        }
         let didSetNewData = commonItemHandler.setItems(cloudData)
         Log("SyncHandler - Sync completed! Did set new data: \(didSetNewData)", module: .cloudSync)
         #if DEBUG

@@ -39,8 +39,28 @@ enum DebugAction: Hashable {
     case trashAllServices
     case restoreAllServices
     case emptyTrash
+    case removeAllTombstones
     case reloadPushToken
     case unpairAllBrowsers
+    // Local storage key – the app closes itself afterwards, the effect shows in the next launch
+    case removeLocalStorageKey
+    case replaceLocalStorageKey
+    case forgetLocalStorageKeyID
+    case setLostKeyCounterBeforeWipe
+    case resetLostKeyCounter
+    case keychainUnavailableOnce
+    case keychainUnavailableFiveTimes
+
+    /// The action ends the app: what it changes is read when the app starts
+    var closesApp: Bool {
+        switch self {
+        case .removeLocalStorageKey, .replaceLocalStorageKey, .forgetLocalStorageKeyID,
+             .keychainUnavailableOnce, .keychainUnavailableFiveTimes:
+            true
+        default:
+            false
+        }
+    }
 }
 
 enum DebugGenerateCount: Int, CaseIterable, Identifiable {

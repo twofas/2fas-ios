@@ -26,7 +26,7 @@ protocol EncryptedByUserPasswordSyncModuleInteracting: AnyObject {
     var syncFailure: ((CloudState.NotAvailableReason) -> Void)? { get set }
     
     func setPassword(_ password: String)
-    func verifyPassword(_ password: String) -> Bool
+    func verifyPassword(_ password: String, completion: @escaping (Bool) -> Void)
     func removePassword()
     func setApplayinChanges()
 }
@@ -64,8 +64,8 @@ extension EncryptedByUserPasswordSyncModuleInteractor: EncryptedByUserPasswordSy
         syncMigrationInteractor.setMissingUserPassword(password)
     }
     
-    func verifyPassword(_ password: String) -> Bool {
-        syncMigrationInteractor.verifyPassword(password)
+    func verifyPassword(_ password: String, completion: @escaping (Bool) -> Void) {
+        syncMigrationInteractor.verifyPassword(password, completion: completion)
     }
     
     func removePassword() {

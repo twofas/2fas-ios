@@ -22,6 +22,9 @@ import CloudKit
 import CommonWatch
 
 public enum SyncInstanceWatch {
+    public static let storeName = "Sync"
+    
+    private static var coreDataStack: CoreDataStack!
     private static var cloudHandler: CloudHandlerType!
     private static var logDataChangeImpl: LogDataChangeImpl!
     private static var syncEncryptionHandler: SyncEncryptionWatchHandler!
@@ -31,8 +34,11 @@ public enum SyncInstanceWatch {
         commonServiceHandler: CommonServiceHandler,
         reference: Data,
         localEncryptionKeyData: Data,
+        cipher: LocalStorageCipher,
         errorLog: @escaping (String) -> Void
     ) {
+        let coreDataStack = makeCoreDataStack(cipher: cipher)
+        Self.coreDataStack = coreDataStack
         coreDataStack.logError = { errorLog($0) }
         let zoneManager = ZoneManager()
         let cloudKit = CloudKit(zoneManager: zoneManager)
@@ -85,6 +91,14 @@ public enum SyncInstanceWatch {
             encryptionHandler: syncEncryptionHandler,
             infoHandler: infoHandler
         )
+        let localReset = SyncLocalReset(
+            store: coreDataStack,
+            clearInfoCache: infoHandler.purge,
+            clearCheckpoints: ConstStorage.clearZone,
+            clearPendingTokens: cloudKit.clear,
+            clearQueue: modificationQueue.clear,
+            logFirstImport: commonItemHandler.logFirstImport
+        )
         let syncHandler = SyncHandler(
             itemHandler: itemHandler,
             commonItemHandler: commonItemHandler,
@@ -94,7 +108,11 @@ public enum SyncInstanceWatch {
             mergeHandler: mergeHandler,
             migrationHandler: migrationHandler,
             requirementCheck: requirementCheckHandler,
-            reencryptionHandler: ReencryptionHandlerWatchPlaceholder()
+            reencryptionHandler: ReencryptionHandlerWatchPlaceholder(),
+            localReset: localReset,
+            // The watch never migrates – its stores are never opened in memory
+            isSyncDeferred: false,
+            syncContext: coreDataStack.context
         )
         syncEncryptionHandler.initialize()
         let cloudAvailability = CloudAvailability(container: syncHandler.container)
@@ -126,16 +144,33 @@ public enum SyncInstanceWatch {
         logDataChangeImpl
     }
     
+    /// The local Sync cache is reset from scratch before the next sync (also after a restart)
+    public static func scheduleResetFromScratch() {
+        ConstStorage.syncResetRequired = true
+    }
+    
+    /// `true` only when a readable store of another model version exists. Not for a missing or unreadable store.
+    public static func isStoreIncompatibleWithCurrentModel() -> Bool {
+        CoreDataStack.storeCompatibility(name: storeName, bundle: Bundle(for: SyncHandler.self)) == .incompatible
+    }
+    
     public static func migrateStoreIfNeeded() {
         coreDataStack.performInBackground { context in
             Log("Migrating if needed. Trigger value \(context.hasChanges)", module: .cloudSync)
         }
     }
     
-    private static let coreDataStack = CoreDataStack(
-        readOnly: false,
-        name: "Sync",
-        bundle: Bundle(for: SyncHandler.self),
-        migrator: nil
-    )
+    /// - Parameter storeDirectory: Directory of `Sync.sqlite`. `nil` – the app group container.
+    static func makeCoreDataStack(cipher: LocalStorageCipher, storeDirectory: URL? = nil) -> CoreDataStack {
+        CoreDataStack(
+            readOnly: false,
+            name: storeName,
+            bundle: Bundle(for: SyncHandler.self),
+            migrator: nil,
+            storeDirectory: storeDirectory,
+            // The objects keep what was opened – each entry is decrypted once, not on every sync
+            retainsViewContextObjects: true,
+            configureContext: { $0.setLocalStorageCipher(cipher) }
+        )
+    }
 }

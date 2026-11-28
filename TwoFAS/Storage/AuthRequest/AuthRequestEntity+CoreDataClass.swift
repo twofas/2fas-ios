@@ -29,26 +29,67 @@ import CommonWatch
 final class AuthRequestEntity: NSManagedObject {
     @nonobjc private static let entityName = "AuthRequestEntity"
     
+    /// Valid only for the current bytes of `encryptedContent`
+    let contentCache = SealedContentCache<AuthRequestSensitiveContent>()
+    
+    override func didTurnIntoFault() {
+        super.didTurnIntoFault()
+        contentCache.clear()
+    }
+    
     @nonobjc static func create(
         on context: NSManagedObjectContext,
         secret: String,
         extensionID: ExtensionID,
         domain: String
     ) {
+        let content = AuthRequestSensitiveContent(
+            secret: secret.uppercased(),
+            domain: domain,
+            extensionID: extensionID
+        )
+        let secretHash: Data
+        let domainHash: Data
+        let extensionIDHash: Data
+        let sealed: Data
+        do {
+            guard let cipher = context.localStorageCipher else { throw SealedEntity.Failure.missingCipher }
+            // The hashes are part of the associated data, so the key has to exist before hashing
+            try cipher.prepareForWriting()
+            secretHash = try Self.secretHash(for: content.secret, cipher: cipher)
+            domainHash = try Self.domainHash(for: content.domain, cipher: cipher)
+            extensionIDHash = try Self.extensionIDHash(for: content.extensionID, cipher: cipher)
+            sealed = try contentCodec.seal(
+                content,
+                hashes: [secretHash, domainHash, extensionIDHash],
+                cipher: cipher
+            )
+        } catch {
+            Log(
+                "\(entityName) - can't seal new entity: \(SealedEntity.describe(error))",
+                module: .storage,
+                severity: .error
+            )
+            assertionFailure("\(entityName) - can't seal new entity")
+            return
+        }
+        
         let auth = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as! AuthRequestEntity
         
         let date = Date()
         
-        auth.secret = secret
-        auth.extensionID = extensionID
-        auth.domain = domain
+        auth.secretHash = secretHash
+        auth.domainHash = domainHash
+        auth.encryptedContent = sealed
+        auth.contentCache.store(content, sealed: sealed)
+        auth.extensionIDHash = extensionIDHash
         auth.creationDate = date
         auth.lastUsed = date
         auth.usedCount = 1
     }
     
     @nonobjc static func delete(on context: NSManagedObjectContext, identifiedByObjectID objectID: NSManagedObjectID) {
-        let auths = listAll(on: context)
+        let auths = fetch(on: context)
         guard let authForDeletition = auths.first(where: { $0.objectID == objectID })
         else { Log("Can't find auth in local storage", module: .storage); return }
         delete(on: context, authEntity: authForDeletition)
@@ -58,7 +99,7 @@ final class AuthRequestEntity: NSManagedObject {
         on context: NSManagedObjectContext,
         identifiedByObjectID objectID: NSManagedObjectID
     ) {
-        let auths = listAll(on: context)
+        let auths = fetch(on: context)
         guard let authForUpdate = auths.first(where: { $0.objectID == objectID })
         else { Log("Can't find auth in local storage", module: .storage); return }
         
@@ -67,11 +108,30 @@ final class AuthRequestEntity: NSManagedObject {
     }
     
     @nonobjc static func removeAll(on context: NSManagedObjectContext) {
-        let all = listAll(on: context)
+        let all = fetch(on: context)
         all.forEach { context.delete($0) }
     }
     
+    /// Sorted by domain (decrypted, in memory), then by creation date
     @nonobjc static func listAll(
+        on context: NSManagedObjectContext,
+        filterOptions: AuthRequestFilterOptions = .all
+    ) -> [AuthRequestEntity] {
+        let entities = fetch(on: context, filterOptions: filterOptions)
+        let domains: [String] = entities.map { $0.domain }
+        let order: [Int] = entities.indices.sorted { lhs, rhs in
+            if domains[lhs] != domains[rhs] {
+                return domains[lhs] < domains[rhs]
+            }
+            return lhs < rhs
+        }
+        return order.map { entities[$0] }
+    }
+    
+    // MARK: - Private
+    
+    /// Sorted by creation date, nothing is decrypted
+    @nonobjc private static func fetch(
         on context: NSManagedObjectContext,
         filterOptions: AuthRequestFilterOptions = .all
     ) -> [AuthRequestEntity] {
@@ -81,7 +141,6 @@ final class AuthRequestEntity: NSManagedObject {
             fetchRequest.predicate = predicate
         }
         fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "domain", ascending: true),
             NSSortDescriptor(key: "creationDate", ascending: true)
         ]
         
@@ -97,8 +156,6 @@ final class AuthRequestEntity: NSManagedObject {
         
         return list
     }
-    
-    // MARK: - Private
     
     @nonobjc private static func delete(on context: NSManagedObjectContext, authEntity: AuthRequestEntity) {
         context.delete(authEntity)

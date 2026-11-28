@@ -60,11 +60,16 @@ extension ServiceAppEntity {
             guard AccessManager.protection.extensionsStorage.areWidgetsEnabled else {
                 throw SelectServiceError.errorNotEnabled
             }
-            guard AccessManager.serviceHandler.hasServices() else {
+            let storage = AccessManager.storage
+            guard !storage.isLocalDataUnavailable else {
+                throw SelectServiceError.errorLocalDataUnavailable
+            }
+            let serviceHandler = storage.widgetService
+            guard serviceHandler.hasServices() else {
                 throw SelectServiceError.errorNoServices
             }
-            
-            let all: [WidgetCategory] = AccessManager.serviceHandler.listAll(search: nil, exclude: [])
+
+            let all: [WidgetCategory] = serviceHandler.listAll(search: nil, exclude: [])
             let sections = all.map({ category -> ItemSection<ServiceAppEntity> in
                 let services: [Item] = category.services
                     .map({ service in
@@ -112,12 +117,17 @@ enum SelectServiceError: Error, CustomLocalizedStringResourceConvertible {
     case errorNotEnabled
     case errorNotEnabledNoServices
     case errorNoServices
-    
+    case errorLocalDataUnavailable
+
     var localizedStringResource: LocalizedStringResource {
         switch self {
         case .errorNotEnabled: LocalizedStringResource("widget__not_enabled")
         case .errorNotEnabledNoServices: LocalizedStringResource("widget__not_enabled_no_services")
         case .errorNoServices: LocalizedStringResource("widget__no_services")
+        case .errorLocalDataUnavailable: LocalizedStringResource(
+            "widget__local_data_unavailable",
+            defaultValue: "Open 2FAS to load your services"
+        )
         }
     }
 }

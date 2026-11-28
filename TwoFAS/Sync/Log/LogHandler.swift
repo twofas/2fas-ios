@@ -38,19 +38,40 @@ final class LogHandler {
         self.coreDataStack = coreDataStack
     }
     
-    func logFirstImport(entityIDs: [String], kind: RecordType) {
+    /// A failed entry schedules a reset of the cache – a sync without it would trash the items missing in the cloud.
+    /// - Returns: Whether every entry was logged.
+    @discardableResult
+    func logFirstImport(entityIDs: [String], kind: RecordType) -> Bool {
+        // Every entry would fail the same way – checked once instead of logging a failure per entry
+        do {
+            guard let cipher = coreDataStack.context.localStorageCipher else {
+                throw SealedEntity.Failure.missingCipher
+            }
+            try cipher.prepareForWriting()
+        } catch {
+            Log(
+                "LogEntity - can't seal new entities: \(SealedEntity.describe(error))",
+                module: .cloudSync,
+                severity: .error
+            )
+            ConstStorage.syncResetRequired = true
+            return false
+        }
         var counter: Int = 0
+        var loggedAll = true
         entityIDs.forEach {
-            LogEntity.create(
+            let logged = LogEntity.create(
                 on: coreDataStack.context,
                 entityID: $0,
                 action: LogActionType.created.rawValue,
                 date: Date.distantPast.addingTimeInterval((60 * 60 * 24) * Double(counter)),
                 kind: kind.rawValue
             )
+            loggedAll = loggedAll && logged
             counter += 1
         }
         coreDataStack.save()
+        return loggedAll
     }
     
     func log(entityID: String, actionType: LogActionType, kind: RecordType) {
@@ -63,12 +84,42 @@ final class LogHandler {
                 delete(identifiedBy: entityID)
                 createLogEntry(with: entityID, actionType: .modified, kind: kind)
             } else if currentLogAction == .modified || currentLogAction == .created {
-                updateDate(for: entityID)
+                entity.date = Date()
                 coreDataStack.save()
             }
         } else {
             createLogEntry(with: entityID, actionType: actionType, kind: kind)
         }
+    }
+    
+    /// The same outcome as logging the modification of every entity one by one, but with a single fetch and a single
+    /// save – deleting or moving an item on a long list modifies every item behind it.
+    func logModified(entityIDs: [String], kind: RecordType) {
+        guard entityIDs.count > 1 else {
+            entityIDs.forEach { log(entityID: $0, actionType: .modified, kind: kind) }
+            return
+        }
+        Log("LogHandler - log. actionType: modified, kind: \(kind), count: \(entityIDs.count)", module: .cloudSync)
+        let context = coreDataStack.context
+        let existing = LogEntity.findLogs(on: context, entityIDs: entityIDs)
+        var logged = Set<String>()
+        for entityID in entityIDs where logged.insert(entityID).inserted {
+            if let entity = existing[entityID] {
+                // An entity logged as deleted stays deleted
+                if let action = LogActionType(rawValue: entity.action), action != .deleted {
+                    entity.date = Date()
+                }
+            } else {
+                LogEntity.create(
+                    on: context,
+                    entityID: entityID,
+                    action: LogActionType.modified.rawValue,
+                    date: Date(),
+                    kind: kind.rawValue
+                )
+            }
+        }
+        coreDataStack.save()
     }
     
     func listAll() -> [LogEntity] { LogEntity.listAll(on: coreDataStack.context) }

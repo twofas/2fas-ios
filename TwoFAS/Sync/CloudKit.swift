@@ -61,8 +61,14 @@ final class CloudKit {
     private var deletedRecords: [DeletedItem] = []
     
     private var collectedActions: [CloudKitAction] = []
+    private var consecutiveRetries = 0
     
     private let syncTokenHandler = SyncTokenHandler()
+    /// Everything this class keeps between the steps of a sync – the fetched records, the collected errors, the
+    /// current operation, the retries – is read and changed only on this queue: the calls from outside and every
+    /// block of an operation (CloudKit calls them on queues of its own) hop onto it. What goes out (the
+    /// callbacks) goes to the main queue.
+    private let stateQueue = DispatchQueue(label: "com.2fas.cloudKit.state", qos: .utility)
     private let zoneManager: ZoneManaging
     
     init(zoneManager: ZoneManaging) {
@@ -76,17 +82,21 @@ final class CloudKit {
     
     func cloudSync() {
         Log("CloudKit - cloudSync()", module: .cloudSync)
+        stateQueue.async { [weak self] in
+            self?.startSync()
+        }
+    }
+    
+    /// On `stateQueue`
+    private func startSync() {
         collectedActions = []
         zoneUpdated = false
-
-        DispatchQueue.global(qos: .utility).async { [weak self] in
-            self?.syncTokenHandler.prepare()
-            
-            self?.creatingCustomZone { [weak self] in
-                self?.subscribeToChanges { [weak self] in
-                    self?.fetchDatabaseChanges { [weak self] in
-                        self?.fetchZoneChanges()
-                    }
+        syncTokenHandler.prepare()
+        
+        creatingCustomZone { [weak self] in
+            self?.subscribeToChanges { [weak self] in
+                self?.fetchDatabaseChanges { [weak self] in
+                    self?.fetchZoneChanges()
                 }
             }
         }
@@ -101,35 +111,39 @@ final class CloudKit {
         let operation = CKModifyRecordZonesOperation(recordZonesToSave: [zone], recordZoneIDsToDelete: [])
         
         operation.perRecordZoneSaveBlock = { [weak self] _, result in
-            Log("CloudKit - perRecordZoneSaveBlock", module: .cloudSync)
-            switch result {
-            case .success(let savedRecordZone):
-                if savedRecordZone == zone {
-                    Log("CloudKit - perRecordZoneSaveBlock - zone initiated", module: .cloudSync)
-                    self?.syncTokenHandler.setZoneInitiated()
-                } else {
-                    Log("CloudKit - perRecordZoneSaveBlock - no zone, purging cache!", module: .cloudSync)
-                    self?.purgeCache { [weak self] in
-                        self?.retryAction()
+            self?.stateQueue.async { [weak self] in
+                Log("CloudKit - perRecordZoneSaveBlock", module: .cloudSync)
+                switch result {
+                case .success(let savedRecordZone):
+                    if savedRecordZone == zone {
+                        Log("CloudKit - perRecordZoneSaveBlock - zone initiated", module: .cloudSync)
+                        self?.syncTokenHandler.setZoneInitiated()
+                    } else {
+                        Log("CloudKit - perRecordZoneSaveBlock - no zone, purging cache!", module: .cloudSync)
+                        self?.purgeCache { [weak self] in
+                            self?.retryAction()
+                        }
                     }
+                case .failure(let error):
+                    self?.savePartialOperationError(error)
+                    Log("CloudKit - perRecordZoneSaveBlock - handling error: \(error)", module: .cloudSync)
                 }
-            case .failure(let error):
-                self?.savePartialOperationError(error)
-                Log("CloudKit - perRecordZoneSaveBlock - handling error: \(error)", module: .cloudSync)
             }
         }
         
         operation.modifyRecordZonesResultBlock = { [weak self] result in
-            Log("CloudKit - modifyRecordZonesResultBlock", module: .cloudSync)
-            switch result {
-            case .success:
-                Log("CloudKit - modifyRecordZonesResultBlock - success", module: .cloudSync)
-                self?.handleOperationResult(error: nil) {
-                    continueOperation()
+            self?.stateQueue.async { [weak self] in
+                Log("CloudKit - modifyRecordZonesResultBlock", module: .cloudSync)
+                switch result {
+                case .success:
+                    Log("CloudKit - modifyRecordZonesResultBlock - success", module: .cloudSync)
+                    self?.handleOperationResult(error: nil) {
+                        continueOperation()
+                    }
+                case .failure(let error):
+                    Log("CloudKit - modifyRecordZonesResultBlock - handling error: \(error)", module: .cloudSync)
+                    self?.handleOperationResult(error: error)
                 }
-            case .failure(let error):
-                Log("CloudKit - modifyRecordZonesResultBlock - handling error: \(error)", module: .cloudSync)
-                self?.handleOperationResult(error: error)
             }
         }
         operation.queuePriority = .high
@@ -154,31 +168,38 @@ final class CloudKit {
         operation.qualityOfService = .userInitiated
         
         operation.perSubscriptionSaveBlock = { [weak self] _, result in
-            switch result {
-            case .success(let savedSubscription):
-                Log("CloudKit - perSubscriptionSaveBlock - no error", module: .cloudSync)
-                if savedSubscription == subscription {
-                    Log("CloudKit - perSubscriptionSaveBlock - success", module: .cloudSync)
-                    self?.syncTokenHandler.setNotificationsInitiated()
+            self?.stateQueue.async { [weak self] in
+                switch result {
+                case .success(let savedSubscription):
+                    Log("CloudKit - perSubscriptionSaveBlock - no error", module: .cloudSync)
+                    if savedSubscription == subscription {
+                        Log("CloudKit - perSubscriptionSaveBlock - success", module: .cloudSync)
+                        self?.syncTokenHandler.setNotificationsInitiated()
+                    }
+                    Log(
+                        "CloudKit - perSubscriptionSaveBlock - Can't subscribe but there's no error",
+                        module: .cloudSync
+                    )
+                case .failure(let error):
+                    self?.savePartialOperationError(error)
+                    Log("CloudKit - perSubscriptionSaveBlock - error: \(error)", module: .cloudSync)
                 }
-                Log("CloudKit - perSubscriptionSaveBlock - Can't subscribe but there's no error", module: .cloudSync)
-            case .failure(let error):
-                self?.savePartialOperationError(error)
-                Log("CloudKit - perSubscriptionSaveBlock - error: \(error)", module: .cloudSync)
             }
         }
         
         operation.modifySubscriptionsResultBlock = { [weak self] result in
-            Log("CloudKit - modifySubscriptionsResultBlock", module: .cloudSync)
-            switch result {
-            case .success:
-                Log("CloudKit - modifySubscriptionsResultBlock - success", module: .cloudSync)
-                self?.handleOperationResult(error: nil) {
-                    continueOperation()
+            self?.stateQueue.async { [weak self] in
+                Log("CloudKit - modifySubscriptionsResultBlock", module: .cloudSync)
+                switch result {
+                case .success:
+                    Log("CloudKit - modifySubscriptionsResultBlock - success", module: .cloudSync)
+                    self?.handleOperationResult(error: nil) {
+                        continueOperation()
+                    }
+                case .failure(let error):
+                    Log("CloudKit - modifySubscriptionsResultBlock - error: \(error)", module: .cloudSync)
+                    self?.handleOperationResult(error: error)
                 }
-            case .failure(let error):
-                Log("CloudKit - modifySubscriptionsResultBlock - error: \(error)", module: .cloudSync)
-                self?.handleOperationResult(error: error)
             }
         }
         
@@ -192,24 +213,32 @@ final class CloudKit {
         let operation = CKFetchDatabaseChangesOperation(previousServerChangeToken: ConstStorage.databaseChangeToken)
         operation.fetchAllChanges = true
         operation.recordZoneWithIDChangedBlock = { [weak self] recordZoneId in
-            self?.zoneChanged(with: recordZoneId)
+            self?.stateQueue.async { [weak self] in
+                self?.zoneChanged(with: recordZoneId)
+            }
         }
         operation.recordZoneWithIDWasPurgedBlock = { [weak self] recordZoneId in
-            self?.zoneWasPurged(with: recordZoneId)
+            self?.stateQueue.async { [weak self] in
+                self?.zoneWasPurged(with: recordZoneId)
+            }
         }
         operation.recordZoneWithIDWasDeletedBlock = { [weak self] recordZoneId in
-            self?.zoneWasDeleted(with: recordZoneId)
+            self?.stateQueue.async { [weak self] in
+                self?.zoneWasDeleted(with: recordZoneId)
+            }
         }
         operation.fetchDatabaseChangesResultBlock = { [weak self] result in
-            Log("CloudKit - fetchDatabaseChangesResultBlock", module: .cloudSync)
-            switch result {
-            case .success((let serverChangeToken, _ )):
-                Log("CloudKit - fetchDatabaseChangesResultBlock - obtained new database token", module: .cloudSync)
-                self?.syncTokenHandler.setDatabaseChangeToken(serverChangeToken)
-                continueOperation()
-            case .failure(let error):
-                Log("CloudKit - fetchDatabaseChangesResultBlock - error \(error)", module: .cloudSync)
-                self?.handleOperationResult(error: error)
+            self?.stateQueue.async { [weak self] in
+                Log("CloudKit - fetchDatabaseChangesResultBlock", module: .cloudSync)
+                switch result {
+                case .success((let serverChangeToken, _ )):
+                    Log("CloudKit - fetchDatabaseChangesResultBlock - obtained new database token", module: .cloudSync)
+                    self?.syncTokenHandler.setDatabaseChangeToken(serverChangeToken)
+                    continueOperation()
+                case .failure(let error):
+                    Log("CloudKit - fetchDatabaseChangesResultBlock - error \(error)", module: .cloudSync)
+                    self?.handleOperationResult(error: error)
+                }
             }
         }
         
@@ -248,49 +277,59 @@ final class CloudKit {
         )
         operation.fetchAllChanges = true
         operation.recordWasChangedBlock = { [weak self] recordID, result in
-            Log("CloudKit - recordWasChangedBlock", module: .cloudSync)
-            #if DEBUG
-            Log("CloudKit - recordWasChangedBlock - recordID: \(recordID)", module: .cloudSync, save: false)
-            #endif
-            switch result {
-            case .success(let record):
-                Log("CloudKit - recordWasChangedBlock - success", module: .cloudSync)
-                self?.recordChanged(record)
-            case .failure(let error):
-                self?.savePartialOperationError(error)
-                Log("CloudKit - recordWasChangedBlock - errror: \(error)", module: .cloudSync)
+            self?.stateQueue.async { [weak self] in
+                Log("CloudKit - recordWasChangedBlock", module: .cloudSync)
+                #if DEBUG
+                Log("CloudKit - recordWasChangedBlock - recordID: \(recordID)", module: .cloudSync, save: false)
+                #endif
+                switch result {
+                case .success(let record):
+                    Log("CloudKit - recordWasChangedBlock - success", module: .cloudSync)
+                    self?.recordChanged(record)
+                case .failure(let error):
+                    self?.savePartialOperationError(error)
+                    Log("CloudKit - recordWasChangedBlock - errror: \(error)", module: .cloudSync)
+                }
             }
         }
         operation.recordWithIDWasDeletedBlock = { [weak self] deletedRecordId, deletedRecordType in
-            self?.recordDeleted(deletedRecordId, of: deletedRecordType)
+            self?.stateQueue.async { [weak self] in
+                self?.recordDeleted(deletedRecordId, of: deletedRecordType)
+            }
         }
         operation.recordZoneChangeTokensUpdatedBlock = { [weak self] _, recordZoneToken, _ in
-            self?.recordZoneTokenUpdated(recordZoneToken)
+            self?.stateQueue.async { [weak self] in
+                self?.recordZoneTokenUpdated(recordZoneToken)
+            }
         }
         operation.recordZoneFetchResultBlock = { [weak self] _, result in
-            Log("CloudKit - recordZoneFetchResultBlock", module: .cloudSync)
-            switch result {
-            case .success((let serverChangeToken, _, _)):
-                Log("CloudKit - recordZoneFetchResultBlock - success", module: .cloudSync)
-                self?.handleOperationResult(error: nil) { [weak self] in
-                    self?.recordZoneTokenUpdated(serverChangeToken)
+            self?.stateQueue.async { [weak self] in
+                Log("CloudKit - recordZoneFetchResultBlock", module: .cloudSync)
+                switch result {
+                case .success((let serverChangeToken, _, _)):
+                    Log("CloudKit - recordZoneFetchResultBlock - success", module: .cloudSync)
+                    self?.handleOperationResult(error: nil) { [weak self] in
+                        self?.recordZoneTokenUpdated(serverChangeToken)
+                    }
+                case .failure(let error):
+                    Log("CloudKit - recordZoneFetchResultBlock - error: \(error)", module: .cloudSync)
+                    self?.handleOperationResult(error: error)
                 }
-            case .failure(let error):
-                Log("CloudKit - recordZoneFetchResultBlock - error: \(error)", module: .cloudSync)
-                self?.handleOperationResult(error: error)
             }
         }
         operation.fetchRecordZoneChangesResultBlock = { [weak self] result in
-            Log("CloudKit - fetchRecordZoneChangesResultBlock", module: .cloudSync)
-            switch result {
-            case .success:
-                Log("CloudKit - fetchRecordZoneChangesResultBlock - success", module: .cloudSync)
-                self?.handleOperationResult(error: nil) { [weak self] in
-                    self?.finishedFetchingZoneChange()
+            self?.stateQueue.async { [weak self] in
+                Log("CloudKit - fetchRecordZoneChangesResultBlock", module: .cloudSync)
+                switch result {
+                case .success:
+                    Log("CloudKit - fetchRecordZoneChangesResultBlock - success", module: .cloudSync)
+                    self?.handleOperationResult(error: nil) { [weak self] in
+                        self?.finishedFetchingZoneChange()
+                    }
+                case .failure(let error):
+                    Log("CloudKit - fetchRecordZoneChangesResultBlock - error: \(error)", module: .cloudSync)
+                    self?.handleOperationResult(error: error)
                 }
-            case .failure(let error):
-                Log("CloudKit - fetchRecordZoneChangesResultBlock - error: \(error)", module: .cloudSync)
-                self?.handleOperationResult(error: error)
             }
         }
 
@@ -298,6 +337,13 @@ final class CloudKit {
     }
     
     func modifyRecord(recordsToSave: [CKRecord]?, recordIDsToDelete: [CKRecord.ID]?) {
+        stateQueue.async { [weak self] in
+            self?.startModifyingRecords(recordsToSave: recordsToSave, recordIDsToDelete: recordIDsToDelete)
+        }
+    }
+    
+    /// On `stateQueue`
+    private func startModifyingRecords(recordsToSave: [CKRecord]?, recordIDsToDelete: [CKRecord.ID]?) {
         Log(
             "CloudKit - modifyRecord \(recordsToSave?.count ?? 0), \(recordIDsToDelete?.count ?? 0)",
             module: .cloudSync
@@ -309,47 +355,53 @@ final class CloudKit {
         operation.qualityOfService = .userInitiated
         
         operation.perRecordDeleteBlock = { [weak self] recordID, result in
-            switch result {
-            case .success:
-                Log("CloudKit - perRecordDeleteBlock - success", module: .cloudSync)
-                #if DEBUG
-                Log("CloudKit - perRecordDeleteBlock - recordID: \(recordID)", module: .cloudSync, save: false)
-                #endif
-            case .failure(let error):
-                self?.savePartialOperationError(error)
-                Log("CloudKit - perRecordDeleteBlock - error: \(error)", module: .cloudSync)
+            self?.stateQueue.async { [weak self] in
+                switch result {
+                case .success:
+                    Log("CloudKit - perRecordDeleteBlock - success", module: .cloudSync)
+                    #if DEBUG
+                    Log("CloudKit - perRecordDeleteBlock - recordID: \(recordID)", module: .cloudSync, save: false)
+                    #endif
+                case .failure(let error):
+                    self?.savePartialOperationError(error)
+                    Log("CloudKit - perRecordDeleteBlock - error: \(error)", module: .cloudSync)
+                }
             }
         }
         operation.perRecordSaveBlock = { [weak self] recordID, result in
-            switch result {
-            case .success(let record):
-                Log("CloudKit - perRecordSaveBlock - success", module: .cloudSync)
-                #if DEBUG
-                Log(
-                    "CloudKit - perRecordSaveBlock - recordID: \(recordID),\n\nrecord: \(record)",
-                    module: .cloudSync,
-                    save: false
-                )
-                #endif
-            case .failure(let error):
-                self?.savePartialOperationError(error)
-                let nsError = error as NSError
-                Log(
-                    "CloudKit - perRecordSaveBlock - error domain: \(nsError.domain), code: \(nsError.code)",
-                    module: .cloudSync
-                )
+            self?.stateQueue.async { [weak self] in
+                switch result {
+                case .success(let record):
+                    Log("CloudKit - perRecordSaveBlock - success", module: .cloudSync)
+                    #if DEBUG
+                    Log(
+                        "CloudKit - perRecordSaveBlock - recordID: \(recordID),\n\nrecord: \(record)",
+                        module: .cloudSync,
+                        save: false
+                    )
+                    #endif
+                case .failure(let error):
+                    self?.savePartialOperationError(error)
+                    let nsError = error as NSError
+                    Log(
+                        "CloudKit - perRecordSaveBlock - error domain: \(nsError.domain), code: \(nsError.code)",
+                        module: .cloudSync
+                    )
+                }
             }
         }
         operation.modifyRecordsResultBlock = { [weak self] result in
-            switch result {
-            case .success:
-                Log("CloudKit - modifyRecordsResultBlock - success", module: .cloudSync)
-                self?.handleOperationResult(error: nil) { [weak self] in
-                    self?.changesSaved()
+            self?.stateQueue.async { [weak self] in
+                switch result {
+                case .success:
+                    Log("CloudKit - modifyRecordsResultBlock - success", module: .cloudSync)
+                    self?.handleOperationResult(error: nil) { [weak self] in
+                        self?.changesSaved()
+                    }
+                case .failure(let error):
+                    Log("CloudKit - modifyRecordsResultBlock - error: \(error)", module: .cloudSync)
+                    self?.handleOperationResult(error: error)
                 }
-            case .failure(let error):
-                Log("CloudKit - modifyRecordsResultBlock - error: \(error)", module: .cloudSync)
-                self?.handleOperationResult(error: error)
             }
         }
 
@@ -359,8 +411,16 @@ final class CloudKit {
     func clear() {
         Log("CloudKit - clear", module: .cloudSync)
         syncTokenHandler.prepare()
-        clearRecordChanges()
-        collectedActions = []
+        stateQueue.async { [weak self] in
+            guard let self else { return }
+            clearRecordChanges()
+            collectedActions = []
+            cancelOperation()
+        }
+    }
+    
+    /// On `stateQueue`
+    private func cancelOperation() {
         operation?.cancel()
         operation = nil
     }
@@ -414,6 +474,7 @@ final class CloudKit {
     private func handleOperationResult(error: Error?, next: Callback? = nil) {
         Log("CloudKit - handleOperationResult: \(String(describing: error))", module: .cloudSync)
         if error == nil && collectedActions.isEmpty {
+            consecutiveRetries = 0
             next?()
             return
         }
@@ -426,12 +487,14 @@ final class CloudKit {
             return
         }
         switch mostImportant {
-        case .retry(let after): retryAction(after)
+        case .retry(let after): retryAction(backedOff(after))
         case .purgeAndRetry(let after):
+            let after = backedOff(after)
             purgeCache { [weak self] in
                 self?.retryAction(after)
             }
         case .resetAndRetry(let after):
+            let after = backedOff(after)
             resetCache { [weak self] in
                 self?.retryAction(after)
             }
@@ -490,40 +553,36 @@ final class CloudKit {
     private func finishedFetchingZoneChange() {
         Log("CloudKit - finishedFetchingZoneChange", module: .cloudSync)
         zoneUpdated = false
+        // Handed over to the main queue – nothing of the state is read there
+        let deletedRecords = deletedRecords
+        let changedRecords = changedRecords
+        clearRecordChanges()
         
         DispatchQueue.main.async {
             #if os(iOS)
-            if UIApplication.shared.applicationState == .background {
-                self.abortSync?()
-                self.syncTokenHandler.prepare()
-                self.clearRecordChanges()
-                self.operation?.cancel()
-                self.operation = nil
-                return
-            }
+            let isInBackground = UIApplication.shared.applicationState == .background
             #elseif os(watchOS)
-            if WKApplication.shared()
-                .applicationState == .background || WKApplication.shared().applicationState == .inactive {
+            let isInBackground = WKApplication.shared().applicationState == .background
+                || WKApplication.shared().applicationState == .inactive
+            #endif
+            if isInBackground {
                 self.abortSync?()
                 self.syncTokenHandler.prepare()
-                self.clearRecordChanges()
-                self.operation?.cancel()
-                self.operation = nil
+                self.stateQueue.async {
+                    self.cancelOperation()
+                }
                 return
             }
-            #endif
             
-            if !self.deletedRecords.isEmpty {
+            if !deletedRecords.isEmpty {
                 Log("CloudKit - deletedRecords not empty", module: .cloudSync)
-                self.deletedEntries?(self.deletedRecords.map { (name: $0.record.recordName, type: $0.type) })
+                self.deletedEntries?(deletedRecords.map { (name: $0.record.recordName, type: $0.type) })
             }
             
-            if !self.changedRecords.isEmpty {
+            if !changedRecords.isEmpty {
                 Log("CloudKit - changedRecords not empty", module: .cloudSync)
-                self.updatedEntries?(self.changedRecords)
+                self.updatedEntries?(changedRecords)
             }
-            
-            self.clearRecordChanges()
 
             self.fetchFinishedSuccessfuly?()
             self.syncTokenHandler.commitChanges()
@@ -540,8 +599,10 @@ final class CloudKit {
     private func resetCache(cacheReseted: Callback? = nil) {
         DispatchQueue.main.async {
             self.resetStack?()
-            self.purgeCache {
-                cacheReseted?()
+            self.stateQueue.async {
+                self.purgeCache {
+                    cacheReseted?()
+                }
             }
         }
     }
@@ -558,11 +619,20 @@ final class CloudKit {
         }
     }
     
+    /// The delay doubled for every retry in a row (2 s, 4 s, 8 s … up to 30 min): an error that keeps coming back –
+    /// e.g. a zone that can't be created while the storage is full – mustn't be retried every 2 seconds forever.
+    /// Reset by an operation that succeeds.
+    private func backedOff(_ retryIn: TimeInterval) -> TimeInterval {
+        let delay = CloudKitRetryBackoff.delay(for: retryIn, consecutiveRetries: consecutiveRetries)
+        consecutiveRetries += 1
+        return delay
+    }
+    
     private func retryAction(_ retryIn: TimeInterval = 2.0) {
         Log("CloudKit - Preparing to retry sync in \(retryIn)", module: .cloudSync)
-        DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + retryIn) {
+        stateQueue.asyncAfter(deadline: .now() + retryIn) {
             Log("CloudKit - Scheduled sync -> syncing", module: .cloudSync)
-            self.cloudSync()
+            self.startSync()
         }
     }
 }

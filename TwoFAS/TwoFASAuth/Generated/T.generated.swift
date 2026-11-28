@@ -972,8 +972,8 @@ internal enum T {
     internal static let errorOpenTheApp = T.tr("Localizable", "extension__error_open_the_app", fallback: "Open the app and check if Browser Extension is properly paired")
     /// Error while sending the Token
     internal static let errorWhileSending = T.tr("Localizable", "extension__error_while_sending", fallback: "Error while sending the Token")
-    /// Your services are unavailable right now. Open the 2FAS app and try again.
-    internal static let localDataUnavailable = T.tr("Localizable", "extension__local_data_unavailable", fallback: "Your services are unavailable right now. Open the 2FAS app and try again.")
+    /// Your services are unavailable right now. Open the 2FAS Auth and try again.
+    internal static let localDataUnavailable = T.tr("Localizable", "extension__local_data_unavailable", fallback: "Your services are unavailable right now. Open the 2FAS Auth and try again.")
     /// Open the app and select a service for this domain
     internal static let notPairedContent = T.tr("Localizable", "extension__not_paired_content", fallback: "Open the app and select a service for this domain")
     /// This website is not paired
@@ -1649,34 +1649,34 @@ internal enum T {
     internal static func keyLostAutoReset(_ p1: Int) -> String {
       return T.tr("Localizable", "storage__key_lost_auto_reset", p1, fallback: "If the key is still missing, the local data will be reset automatically. App launches left before that: %d")
     }
-    /// 2FAS can't find the key that protects the data stored on this device. The key never leaves the device it was created on, so this usually happens after restoring a backup or moving to a new device.
+    /// 2FAS Auth can't find the key that protects the data stored on this device. The key never leaves the device it was created on, so this usually happens after restoring a backup or moving to a new device.
     /// 
     /// If this is the same device and nothing was restored, close 2FAS completely and open it again, or restart your device – nothing is removed for now.
     /// 
     /// If you know the key is gone, reset the local data. Services synced with iCloud will be downloaded again; other services have to be imported from your backup file.
-    internal static let keyLostMsg = T.tr("Localizable", "storage__key_lost_msg", fallback: "2FAS can't find the key that protects the data stored on this device. The key never leaves the device it was created on, so this usually happens after restoring a backup or moving to a new device.\n\nIf this is the same device and nothing was restored, close 2FAS completely and open it again, or restart your device – nothing is removed for now.\n\nIf you know the key is gone, reset the local data. Services synced with iCloud will be downloaded again; other services have to be imported from your backup file.")
+    internal static let keyLostMsg = T.tr("Localizable", "storage__key_lost_msg", fallback: "2FAS Auth can't find the key that protects the data stored on this device. The key never leaves the device it was created on, so this usually happens after restoring a backup or moving to a new device.\n\nIf this is the same device and nothing was restored, close 2FAS completely and open it again, or restart your device – nothing is removed for now.\n\nIf you know the key is gone, reset the local data. Services synced with iCloud will be downloaded again; other services have to be imported from your backup file.")
     /// Your data can't be unlocked
     internal static let keyLostTitle = T.tr("Localizable", "storage__key_lost_title", fallback: "Your data can't be unlocked")
-    /// 2FAS can't access the key that protects your data right now, so your services can't be shown. Your data is safe and nothing was changed.
+    /// 2FAS Auth can't access the key that protects your data right now, so your services can't be shown. Your data is safe and nothing was changed.
     /// 
     /// Try again in a moment. If that doesn't help, close 2FAS completely and open it again, or restart your device.
     /// 
-    /// If nothing helps, you can reset the local data. This removes the services stored on this device – services synced with iCloud will be downloaded again.
-    internal static let localDataUnavailableMsg = T.tr("Localizable", "storage__local_data_unavailable_msg", fallback: "2FAS can't access the key that protects your data right now, so your services can't be shown. Your data is safe and nothing was changed.\n\nTry again in a moment. If that doesn't help, close 2FAS completely and open it again, or restart your device.\n\nIf nothing helps, you can reset the local data. This removes the services stored on this device – services synced with iCloud will be downloaded again.")
+    /// If that doesn't help, you can reset the local data. This removes the services stored on this device – services synced with iCloud will be downloaded again.
+    internal static let localDataUnavailableMsg = T.tr("Localizable", "storage__local_data_unavailable_msg", fallback: "2FAS Auth can't access the key that protects your data right now, so your services can't be shown. Your data is safe and nothing was changed.\n\nTry again in a moment. If that doesn't help, close 2FAS completely and open it again, or restart your device.\n\nIf that doesn't help, you can reset the local data. This removes the services stored on this device – services synced with iCloud will be downloaded again.")
     /// Your data is temporarily unavailable
     internal static let localDataUnavailableTitle = T.tr("Localizable", "storage__local_data_unavailable_title", fallback: "Your data is temporarily unavailable")
-    /// 2FAS couldn't update the data stored on this device to the new format. Your data wasn't changed.
+    /// 2FAS Auth couldn't update the data stored on this device to the new format. Your data wasn't changed.
     /// 
     /// Try again. If it keeps failing, free up some storage space and restart your device.
     /// 
-    /// As a last resort you can reset the local data. This removes the services stored on this device – services synced with iCloud will be downloaded again.
-    internal static let migrationFailedMsg = T.tr("Localizable", "storage__migration_failed_msg", fallback: "2FAS couldn't update the data stored on this device to the new format. Your data wasn't changed.\n\nTry again. If it keeps failing, free up some storage space and restart your device.\n\nAs a last resort you can reset the local data. This removes the services stored on this device – services synced with iCloud will be downloaded again.")
+    /// As a last resort you can reset the local data. This removes the services stored on this device. Services synced with iCloud will be downloaded again.
+    internal static let migrationFailedMsg = T.tr("Localizable", "storage__migration_failed_msg", fallback: "2FAS Auth couldn't update the data stored on this device to the new format. Your data wasn't changed.\n\nTry again. If it keeps failing, free up some storage space and restart your device.\n\nAs a last resort you can reset the local data. This removes the services stored on this device. Services synced with iCloud will be downloaded again.")
     /// Your data couldn't be updated
     internal static let migrationFailedTitle = T.tr("Localizable", "storage__migration_failed_title", fallback: "Your data couldn't be updated")
     /// Reset
     internal static let resetConfirmAction = T.tr("Localizable", "storage__reset_confirm_action", fallback: "Reset")
-    /// All services stored on this device will be removed. This can't be undone. Services synced with iCloud will be downloaded again.
-    internal static let resetConfirmMsg = T.tr("Localizable", "storage__reset_confirm_msg", fallback: "All services stored on this device will be removed. This can't be undone. Services synced with iCloud will be downloaded again.")
+    /// All services stored on this device will be removed. This action cannot be undone. Services synced with iCloud will be downloaded again.
+    internal static let resetConfirmMsg = T.tr("Localizable", "storage__reset_confirm_msg", fallback: "All services stored on this device will be removed. This action cannot be undone. Services synced with iCloud will be downloaded again.")
     /// Reset local data?
     internal static let resetConfirmTitle = T.tr("Localizable", "storage__reset_confirm_title", fallback: "Reset local data?")
     /// Reset local data
@@ -1691,8 +1691,8 @@ internal enum T {
     internal static let addDescription = T.tr("Localizable", "tokens__add_description", fallback: "Point your camera at the screen to scan the QR code.")
     /// Enter the Secret Key manually
     internal static let addEnterManual = T.tr("Localizable", "tokens__add_enter_manual", fallback: "Enter the Secret Key manually")
-    /// Upload screenshot with the QR code
-    internal static let addFromGallery = T.tr("Localizable", "tokens__add_from_gallery", fallback: "Upload screenshot with the QR code")
+    /// Upload screenshot with QR code
+    internal static let addFromGallery = T.tr("Localizable", "tokens__add_from_gallery", fallback: "Upload screenshot with QR code")
     /// Add group
     internal static let addGroup = T.tr("Localizable", "tokens__add_group", fallback: "Add group")
     /// Additional info
@@ -2178,8 +2178,8 @@ internal enum T {
     internal static let introStep6 = T.tr("Localizable", "watch__intro_step6", fallback: "You can now close this window. Sync can take some time.")
   }
   internal enum Widget {
-    /// Open 2FAS to load your services
-    internal static let localDataUnavailable = T.tr("Localizable", "widget__local_data_unavailable", fallback: "Open 2FAS to load your services")
+    /// Open 2FAS Auth to load your services
+    internal static let localDataUnavailable = T.tr("Localizable", "widget__local_data_unavailable", fallback: "Open 2FAS Auth to load your services")
     /// My secured account
     internal static let mySecuredAccount = T.tr("Localizable", "widget__my_secured_account", fallback: "My secured account")
     /// Hold and select service to activate widget...
